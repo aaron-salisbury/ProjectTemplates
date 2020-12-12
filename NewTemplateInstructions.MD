@@ -12,7 +12,7 @@ This process must be done for each project that you want your template to genera
 
 Get each of your projects to the point that you want to use them as the basis of a complete template.
 
-For each one, go to File -> Export Template..., then select 'Project Template' and in the drop-down control select the project.
+For each one, go to Project -> Export Template..., then select 'Project Template' and in the drop-down control select the project.
 
 On the next screen, you can give your template a simple name and description, but the combined template name and description we do later will be the ones that users ultimately see. Leave the automatic import option unchecked. No need for a special icon here either.
 
