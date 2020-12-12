@@ -172,3 +172,14 @@ Step 6: Build and Use
 Now you can build the VSIX project, by right-clicking it and selected Build or Rebuild. Then navigate to the bin folder of the project and either in Debug or Release (depending on how you built it) double-click on the VSIX file. After closing Visual Studio, the extension will install and the next time you run Visual Studio the template will be available to use when you go to create a new project.
 
 If you ever add more templates to the extension project or update the existing one, go into the manifest file and increment the version number. Then rebuild and then double-click that VSIX file again. The new version will install.
+
+References
+----------
+
+- https://blog.jayway.com/2015/03/13/visual-studio-how-to-create-a-solution-template-with-multiple-projects/
+- https://docs.microsoft.com/en-us/nuget/visual-studio-extensibility/visual-studio-templates
+- https://docs.microsoft.com/en-us/visualstudio/extensibility/how-to-use-wizards-with-project-templates?view=vs-2019
+- https://medium.com/@alexandre.malavasi/how-to-create-project-templates-and-extension-for-visual-studio-2019-7fe0b6423b8b
+- https://www.automatetheplanet.com/visual-studio-templates-installer/
+- https://docs.microsoft.com/en-us/visualstudio/ide/template-parameters?view=vs-2019
+- https://docs.microsoft.com/en-us/visualstudio/ide/how-to-create-multi-project-templates?view=vs-2019
