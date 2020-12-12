@@ -16,7 +16,7 @@ For each one, go to File -> Export Template..., then select 'Project Template' a
 
 On the next screen, you can give your template a simple name and description, but the combined template name and description we do later will be the ones that users ultimately see. Leave the automatic import option unchecked. No need for a special icon here either.
 
-The project template zip files should be exported to 'C:\Users\{your-user-name}\Documents\Visual Studio {visual-studio-version}\My Exported Templates'
+The project template zip files should be exported to C -> Users -> your-user-name -> Documents -> Visual Studio visual-studio-version -> My Exported Templates
 
 Step 3: Edit Generated Project Templates
 ----------------------------------------
@@ -32,46 +32,62 @@ Extract each zipped project template. In each class that has references to anoth
 Similarly, to preserve the reference to that project, open the csproj and find the ProjectReference element.
 
   - If it looks like:
+  
+```xml
     <ProjectReference Include="..\OtherProject.Core\OtherProject.Core.csproj">
       <Project>{bebcbf6c-fa12-429d-add3-d0bdfc63654b}</Project>
       <Name>OtherProject</Name>
     </ProjectReference>
+```
 
   - Make it look like:
+  
+```xml
     <ProjectReference Include="..\$ext_safeprojectname$.Core\$ext_safeprojectname$.Core.csproj">
       <Project>{bebcbf6c-fa12-429d-add3-d0bdfc63654b}</Project>
       <Name>$ext_safeprojectname$.Core</Name>
     </ProjectReference>
+```
 
 While in the csproj, we can update the path to any nuget packages that later we will include in a VSIX project.
 
   - If the package reference looks like:
+  
+```xml
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.10.0\lib\net45\Serilog.dll</HintPath>
     </Reference>
+```
 
   - Make it look like by stepping up one directory:
+  
+```xml
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Serilog.2.10.0\lib\net45\Serilog.dll</HintPath>
     </Reference>
+```
 
 Finally open/edit the .vstemplate file. We need add instructions for the project template wizard to install the nuget packages.
 
-Add the following as a child element of <VSTemplate>:
-
+Add the following as a child element of VSTemplate:
+  
+```xml
   <WizardExtension>
     <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
-
-Then, below that and as another child of <VSTemplate>:
-
+```
+  
+Then, below that and as another child of VSTemplate:
+  
+```xml
   <WizardData>
     <packages repository="extension" repositoryId="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d">
         <package id="Serilog" version="2.10.0" />
         <package id="System.ComponentModel.Annotations" version="5.0.0" />
     </packages>
   </WizardData>
+```
 
 Replace the repositoryId property value with the Product ID from the VSIX project's manifest that we made note of earlier.
 
@@ -92,6 +108,7 @@ Next create a new text file and save it to the folder as Root.vstemplate
 
 Copy and paste the following into the text file:
 
+```xml
 <VSTemplate Version="3.0.0" Type="ProjectGroup" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
   <TemplateData>
     <Name>Template Name</Name>
@@ -119,6 +136,7 @@ Copy and paste the following into the text file:
     </ProjectCollection>
   </TemplateContent>
 </VSTemplate>
+```
 
 Replace the Name, Description, DefaultName, and Icon element values with your own information. You can copy the generic template icon into the new root folder from one of the generated template folders, or use your own value in that element.
 
