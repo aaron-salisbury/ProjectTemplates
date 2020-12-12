@@ -1,0 +1,42 @@
+﻿<mui:ModernWindow
+        x:Class="Win7App.ShellWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Win7App"
+        mc:Ignorable="d"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        Height="700" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Base/Resources/SampleAppIcon.ico"
+        ContentSource="/Views/Introduction.xaml"
+        DataContext="{Binding ShellWindowViewModel, Source={StaticResource Locator}}"
+        Title="{Binding Title}" IsTitleVisible="True"
+        TitleLinks="{Binding TitleLinks}">
+
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="Welcome">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Introduction" Source="/Views/Introduction.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="Tools">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="UUID Generator" Source="/Views/SampleTools/UUIDGenerator.xaml" />
+                <mui:Link DisplayName="Flat UI Color Picker" Source="/Views/SampleTools/FlatUIColorPicker.xaml" />
+                <mui:Link DisplayName="Line Sorter" Source="/Views/SampleTools/LineSorter.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="Log">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Messages" Source="/Views/Log.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="Settings" GroupKey="settings">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Software" Source="/Views/Settings.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+</mui:ModernWindow>

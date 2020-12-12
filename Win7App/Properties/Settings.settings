@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Win7App.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SampleApp</Value>
+    </Setting>
+    <Setting Name="ThemeSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Dark</Value>
+    </Setting>
+    <Setting Name="AccentColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#FF3399FF</Value>
+    </Setting>
+    <Setting Name="FontSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Large</Value>
+    </Setting>
+    <Setting Name="SelectedPalette" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Metro</Value>
+    </Setting>
+    <Setting Name="DefaultHelpURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://github.com/aaron-salisbury/ProjectTemplates</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
