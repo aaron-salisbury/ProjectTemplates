@@ -19,4 +19,4 @@ The next time you start Visual Studio, the project templates will be available f
 
 Included project templates:
 
-  - Windows 7 App Solution Template (.NET Framework 4.5.1)
+  - Windows 7 App Solution Template (WPF / .NET Framework 4.5.1)
