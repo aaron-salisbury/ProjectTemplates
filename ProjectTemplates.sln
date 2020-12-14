@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7Core", "Win7Core\Win7Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7App", "Win7App\Win7App.csproj", "{5CEC4C93-D266-476C-8084-BDE6EB390610}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPCore", "WinXPCore\WinXPCore.csproj", "{80BD64E7-C069-4B51-AC8A-6072E102BF37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPApp", "WinXPApp\WinXPApp.csproj", "{94F7C0A5-038D-459A-8535-FD0152A290DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{5CEC4C93-D266-476C-8084-BDE6EB390610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CEC4C93-D266-476C-8084-BDE6EB390610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CEC4C93-D266-476C-8084-BDE6EB390610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80BD64E7-C069-4B51-AC8A-6072E102BF37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80BD64E7-C069-4B51-AC8A-6072E102BF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80BD64E7-C069-4B51-AC8A-6072E102BF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80BD64E7-C069-4B51-AC8A-6072E102BF37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94F7C0A5-038D-459A-8535-FD0152A290DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94F7C0A5-038D-459A-8535-FD0152A290DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94F7C0A5-038D-459A-8535-FD0152A290DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94F7C0A5-038D-459A-8535-FD0152A290DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
