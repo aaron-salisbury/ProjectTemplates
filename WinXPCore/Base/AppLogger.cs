@@ -27,7 +27,7 @@ namespace WinXPCore.Base
 
             TargetWithLayout target = new InvocableMemoryTarget(INVOCABLE_MEMORY_TARGET_NAME, MEMORY_TARGET_NAME)
             {
-                Layout = "${shortdate} ${time} [${level:uppercase=true}] ${message}" // https://nlog-project.org/config/?tab=layout-renderers
+                Layout = "${shortdate} ${time} [${level:format=FullName}] ${message}" // https://nlog-project.org/config/?tab=layout-renderers
             };
 
             config.AddRuleForAllLevels(target);
