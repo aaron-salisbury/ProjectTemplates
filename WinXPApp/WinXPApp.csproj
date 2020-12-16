@@ -85,6 +85,12 @@
     <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SampleTools\UUIDGeneratorUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\SampleTools\UUIDGeneratorUC.Designer.cs">
+      <DependentUpon>UUIDGeneratorUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShellForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LogUC.resx">
       <DependentUpon>LogUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SampleTools\UUIDGeneratorUC.resx">
+      <DependentUpon>UUIDGeneratorUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>

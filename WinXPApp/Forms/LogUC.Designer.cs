@@ -53,16 +53,15 @@ namespace WinXPApp.Forms
             // 
             // 
             this.tbLogs.CustomButton.Image = null;
-            this.tbLogs.CustomButton.Location = new System.Drawing.Point(710, 1);
+            this.tbLogs.CustomButton.Location = new System.Drawing.Point(352, 1);
             this.tbLogs.CustomButton.Name = "";
-            this.tbLogs.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.tbLogs.CustomButton.Size = new System.Drawing.Size(379, 379);
             this.tbLogs.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.tbLogs.CustomButton.TabIndex = 1;
             this.tbLogs.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.tbLogs.CustomButton.UseSelectable = true;
             this.tbLogs.CustomButton.Visible = false;
-            this.tbLogs.Lines = new string[] {
-        "metroTextBox1"};
+            this.tbLogs.Lines = new string[0];
             this.tbLogs.Location = new System.Drawing.Point(6, 29);
             this.tbLogs.MaxLength = 32767;
             this.tbLogs.Multiline = true;
@@ -76,7 +75,6 @@ namespace WinXPApp.Forms
             this.tbLogs.ShortcutsEnabled = true;
             this.tbLogs.Size = new System.Drawing.Size(732, 381);
             this.tbLogs.TabIndex = 2;
-            this.tbLogs.Text = "metroTextBox1";
             this.tbLogs.UseSelectable = true;
             this.tbLogs.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.tbLogs.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);

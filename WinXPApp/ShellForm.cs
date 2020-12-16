@@ -1,5 +1,4 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Windows.Forms;
 using WinXPApp.Base;
 using WinXPApp.Forms;
@@ -9,8 +8,6 @@ namespace WinXPApp
 {
     public partial class ShellForm : BaseForm
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         public ShellForm()
         {
             InitializeComponent();
@@ -19,11 +16,6 @@ namespace WinXPApp
 
             AppLogger.SetTargetInvoking(logUC1.UpdateLogs);
             AppearanceManager.LoadBaseSettings(this);
-
-            for(int i = 1; i < 101; i++)
-            {
-                _logger.Info($"Test {i}");
-            }
         }
 
         private void SettingsLink_Click(object sender, EventArgs e)

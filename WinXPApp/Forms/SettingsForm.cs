@@ -22,9 +22,6 @@ namespace WinXPApp.Forms
 
             LoadThemesComboBox();
 
-
-
-
             LoadStylesList();
         }
 
