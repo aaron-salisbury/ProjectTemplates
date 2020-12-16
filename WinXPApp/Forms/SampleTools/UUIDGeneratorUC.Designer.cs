@@ -143,6 +143,7 @@ namespace WinXPApp.Forms
             this.Controls.Add(this.metroLabel1);
             this.Name = "UUIDGeneratorUC";
             this.Size = new System.Drawing.Size(601, 298);
+            this.Load += new System.EventHandler(this.UUIDGeneratorUC_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

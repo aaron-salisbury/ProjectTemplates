@@ -39,11 +39,11 @@ namespace WinXPApp
             this.metroTabPage5 = new MetroFramework.Controls.MetroTabPage();
             this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
+            this.logUC1 = new WinXPApp.Forms.LogUC();
             this.settingsLink = new MetroFramework.Controls.MetroLink();
             this.helpLink = new MetroFramework.Controls.MetroLink();
             this.panelSettingsHelp = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.logUC1 = new WinXPApp.Forms.LogUC();
             this.mainTabControl.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
@@ -65,7 +65,7 @@ namespace WinXPApp
             this.mainTabControl.Location = new System.Drawing.Point(20, 60);
             this.mainTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 2;
+            this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(810, 470);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.UseSelectable = true;
@@ -194,6 +194,17 @@ namespace WinXPApp
             this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage3.VerticalScrollbarSize = 10;
             // 
+            // logUC1
+            // 
+            this.logUC1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.logUC1.BackColor = System.Drawing.Color.Transparent;
+            this.logUC1.Location = new System.Drawing.Point(22, 10);
+            this.logUC1.Name = "logUC1";
+            this.logUC1.Size = new System.Drawing.Size(764, 425);
+            this.logUC1.TabIndex = 2;
+            // 
             // settingsLink
             // 
             this.settingsLink.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -237,17 +248,6 @@ namespace WinXPApp
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1, 15);
             this.panel1.TabIndex = 4;
-            // 
-            // logUC1
-            // 
-            this.logUC1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.logUC1.BackColor = System.Drawing.Color.Transparent;
-            this.logUC1.Location = new System.Drawing.Point(22, 10);
-            this.logUC1.Name = "logUC1";
-            this.logUC1.Size = new System.Drawing.Size(764, 425);
-            this.logUC1.TabIndex = 2;
             // 
             // ShellForm
             // 
