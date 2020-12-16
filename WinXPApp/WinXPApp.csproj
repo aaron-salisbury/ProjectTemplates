@@ -76,6 +76,12 @@
     <Compile Include="Forms\LogUC.Designer.cs">
       <DependentUpon>LogUC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SampleTools\FlatUIColorPickerUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\SampleTools\FlatUIColorPickerUC.Designer.cs">
+      <DependentUpon>FlatUIColorPickerUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LogUC.resx">
       <DependentUpon>LogUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SampleTools\FlatUIColorPickerUC.resx">
+      <DependentUpon>FlatUIColorPickerUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SampleTools\UUIDGeneratorUC.resx">
       <DependentUpon>UUIDGeneratorUC.cs</DependentUpon>

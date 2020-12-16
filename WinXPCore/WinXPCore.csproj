@@ -62,10 +62,16 @@
     <Compile Include="Base\LoggableObject.cs" />
     <Compile Include="Base\ValidatableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleDataAccess\CRUD.cs" />
+    <Compile Include="SampleTools\FlatColor.cs" />
+    <Compile Include="SampleTools\FlatUIColorPicker.cs" />
     <Compile Include="SampleTools\UUIDGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SampleDataAccess\FlatColors.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
