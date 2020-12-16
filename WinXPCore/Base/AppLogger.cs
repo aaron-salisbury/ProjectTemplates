@@ -25,7 +25,10 @@ namespace WinXPCore.Base
         {
             LoggingConfiguration config = new LoggingConfiguration();
 
-            Target target = new InvocableMemoryTarget(INVOCABLE_MEMORY_TARGET_NAME, MEMORY_TARGET_NAME);
+            TargetWithLayout target = new InvocableMemoryTarget(INVOCABLE_MEMORY_TARGET_NAME, MEMORY_TARGET_NAME)
+            {
+                Layout = "${shortdate} ${time} [${level:uppercase=true}] ${message}" // https://nlog-project.org/config/?tab=layout-renderers
+            };
 
             config.AddRuleForAllLevels(target);
 
