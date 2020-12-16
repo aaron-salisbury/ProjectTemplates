@@ -8,6 +8,8 @@ namespace Win7Core.SampleTools
 {
     public class UUIDGenerator : ValidatableModel
     {
+        private ILogger _logger { get; set; }
+
         private bool _capitalize;
         public bool Capitalize
         {
@@ -28,11 +30,16 @@ namespace Win7Core.SampleTools
             set { _uUID = value; RaisePropertyChanged(nameof(UUID)); }
         }
 
-        public bool Initiate(ILogger logger)
+        public UUIDGenerator(AppLogger appLogger)
+        {
+            _logger = appLogger.Logger;
+        }
+
+        public bool Initiate()
         {
             try
             {
-                logger.Information("Beginning to generate new UUID.");
+                _logger.Information("Beginning to generate new UUID.");
 
                 Guid newGuid = Guid.NewGuid();
 
@@ -40,12 +47,12 @@ namespace Win7Core.SampleTools
                     ? newGuid.ToString().ToUpper()
                     : newGuid.ToString();
 
-                logger.Information($"Generated new UUID, {UUID}");
+                _logger.Information($"Generated new UUID, {UUID}");
                 return true;
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                _logger.Error(e.Message);
                 return false;
             }
         }

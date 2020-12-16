@@ -13,7 +13,7 @@ namespace Win7App.ViewModels.SampleTools
 
         public LineSorterViewModel()
         {
-            LineSorter = new LineSorter();
+            LineSorter = new LineSorter(AppLogger);
             ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(), () => !IsBusy);
         }
 
@@ -41,7 +41,7 @@ namespace Win7App.ViewModels.SampleTools
             Task.Run(() =>
             {
                 // Do long running synchronous work here...
-                bool processIsSuccessful = LineSorter.Initiate(AppLogger.Logger);
+                bool processIsSuccessful = LineSorter.Initiate();
 
                 tcs.SetResult(processIsSuccessful);
             }).ConfigureAwait(false);

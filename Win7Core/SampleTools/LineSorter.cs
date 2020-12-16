@@ -10,6 +10,8 @@ namespace Win7Core.SampleTools
 {
     public class LineSorter : ValidatableModel
     {
+        private ILogger _logger { get; set; }
+
         public List<string> SortTypes
         {
             get => new List<string>() { "Alphabetical", "Reverse Alphabetical" };
@@ -30,18 +32,19 @@ namespace Win7Core.SampleTools
             set { _textToSort = value; RaisePropertyChanged(nameof(TextToSort)); }
         }
 
-        public LineSorter()
+        public LineSorter(AppLogger appLogger)
         {
+            _logger = appLogger.Logger;
             SelectedSortType = SortTypes.First();
         }
 
-        public bool Initiate(ILogger logger)
+        public bool Initiate()
         {
             try
             {
                 if (!string.IsNullOrEmpty(TextToSort))
                 {
-                    logger.Information("Beginning to sort lines.");
+                    _logger.Information("Beginning to sort lines.");
 
                     List<string> lines = TextToSort.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
 
@@ -54,18 +57,18 @@ namespace Win7Core.SampleTools
 
                     TextToSort = new StringBuilder(string.Join("\r\n", lines.ToArray())).ToString();
 
-                    logger.Information("Successfully sorted lines.");
+                    _logger.Information("Successfully sorted lines.");
                 }
                 else
                 {
-                    logger.Warning("Attempted to sort empty text.");
+                    _logger.Warning("Attempted to sort empty text.");
                 }
 
                 return true;
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                _logger.Error(e.Message);
                 return false;
             }
         }

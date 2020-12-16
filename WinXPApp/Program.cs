@@ -22,7 +22,7 @@ namespace WinXPApp
 
         private static void OnApplicationExit(object sender, EventArgs e)
         {
-            NLog.LogManager.Shutdown();
+            AppLogger.Shutdown();
         }
     }
 }

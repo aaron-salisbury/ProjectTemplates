@@ -29,6 +29,7 @@ namespace WinXPApp
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
             this.mainTabControl = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.introductionUC1 = new WinXPApp.Forms.IntroductionUC();
@@ -256,6 +257,7 @@ namespace WinXPApp
             this.ClientSize = new System.Drawing.Size(850, 550);
             this.Controls.Add(this.panelSettingsHelp);
             this.Controls.Add(this.mainTabControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(425, 260);
             this.Name = "ShellForm";
             this.Style = MetroFramework.MetroColorStyle.Default;

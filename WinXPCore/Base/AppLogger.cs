@@ -35,6 +35,11 @@ namespace WinXPCore.Base
             LogManager.Configuration = config;
         }
 
+        public static void Shutdown()
+        {
+            LogManager.Shutdown();
+        }
+
         /// <summary>
         /// Do something when new log is added.
         /// </summary>

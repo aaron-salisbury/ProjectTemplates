@@ -16,7 +16,7 @@ namespace Win7App.ViewModels.SampleTools
 
         public UUIDGeneratorViewModel()
         {
-            UUIDGenerator = new UUIDGenerator();
+            UUIDGenerator = new UUIDGenerator(AppLogger);
             ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(), () => !IsBusy);
             CopyUUIDCommand = new RelayCommand(() => Clipboard.SetText(UUIDGenerator.UUID ?? string.Empty));
         }
@@ -45,7 +45,7 @@ namespace Win7App.ViewModels.SampleTools
             Task.Run(() =>
             {
                 // Do long running synchronous work here...
-                bool processIsSuccessful = UUIDGenerator.Initiate(AppLogger.Logger);
+                bool processIsSuccessful = UUIDGenerator.Initiate();
 
                 tcs.SetResult(processIsSuccessful);
             }).ConfigureAwait(false);

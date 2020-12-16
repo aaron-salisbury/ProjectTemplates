@@ -8,6 +8,8 @@ namespace Win7Core.SampleTools
 {
     public class FlatUIColorPicker : ValidatableModel
     {
+        private ILogger _logger { get; set; }
+
         private List<FlatColor> _flatColors;
         public List<FlatColor> FlatColors
         {
@@ -15,20 +17,25 @@ namespace Win7Core.SampleTools
             set { _flatColors = value; RaisePropertyChanged(nameof(FlatColors)); }
         }
 
-        public bool SetFlatColors(ILogger logger)
+        public FlatUIColorPicker(AppLogger appLogger)
+        {
+            _logger = appLogger.Logger;
+        }
+
+        public bool SetFlatColors()
         {
             try
             {
-                logger.Information("Attempting to read colors from resource.");
+                _logger.Information("Attempting to read colors from resource.");
 
                 FlatColors = CRUD.ReadAllFlatColors();
 
-                logger.Information("Successfully retrieved colors from resource.");
+                _logger.Information("Successfully retrieved colors from resource.");
                 return true;
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                _logger.Error(e.Message);
                 return false;
             }
         }

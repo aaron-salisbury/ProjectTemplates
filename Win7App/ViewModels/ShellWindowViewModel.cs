@@ -50,7 +50,6 @@ namespace Win7App.ViewModels
         public ShellWindowViewModel()
         {
             AppLogger = new AppLogger();
-            AppLogger.Logger.Information("Launched application.");
 
             HelpURL = Properties.Settings.Default.DefaultHelpURL;
 

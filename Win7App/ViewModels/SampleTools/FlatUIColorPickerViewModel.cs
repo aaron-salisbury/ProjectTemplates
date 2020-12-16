@@ -29,8 +29,8 @@ namespace Win7App.ViewModels.SampleTools
 
         public FlatUIColorPickerViewModel()
         {
-            FlatUIColorPicker = new FlatUIColorPicker();
-            FlatUIColorPicker.SetFlatColors(AppLogger.Logger);
+            FlatUIColorPicker = new FlatUIColorPicker(AppLogger);
+            FlatUIColorPicker.SetFlatColors();
             ColorClickCommand = new RelayCommand<string>((s) => SelectColor(s));
             CopyHexCommand = new RelayCommand(() => Clipboard.SetText(SelectedHex ?? string.Empty));
         }
