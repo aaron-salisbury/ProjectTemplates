@@ -1,11 +1,6 @@
 ﻿using MetroFramework.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using WinXPCore.SampleTools;
 
@@ -49,8 +44,8 @@ namespace WinXPApp.Forms.SampleTools
             tlpColors.RowCount = GetNumberOfRows(_flatUIColorPicker.FlatColors.Count);
             tlpColors.ColumnCount = Convert.ToInt32(Math.Ceiling((decimal)_flatUIColorPicker.FlatColors.Count / tlpColors.RowCount));
 
-            float rowRercent = 100 / tlpColors.RowCount;
-            float columnRercent = 100 / tlpColors.ColumnCount;
+            float rowRercent = 100F / tlpColors.RowCount;
+            float columnRercent = 100F / tlpColors.ColumnCount;
 
             for (int i = 0; i < tlpColors.RowCount; i++)
             {
@@ -69,23 +64,22 @@ namespace WinXPApp.Forms.SampleTools
                 {
                     if (flatColorIndex < _flatUIColorPicker.FlatColors.Count)
                     {
-                        string colorHex = _flatUIColorPicker.FlatColors[flatColorIndex].Hex;
+                        FlatColor flatColor = _flatUIColorPicker.FlatColors[flatColorIndex++];
 
                         MetroTile colorTile = new MetroTile()
                         {
                             UseCustomBackColor = true,
-                            BackColor = ColorTranslator.FromHtml(colorHex),
+                            BackColor = ColorTranslator.FromHtml(flatColor.Hex),
+                            Tag = flatColor,
                             Margin = new Padding(1),
                             Anchor = (AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom)
-                            //Command = flatUIColorPickerViewModel.ColorClickCommand,
-                            //CommandParameter = colorHex
                         };
+
+                        colorTile.Click += new EventHandler(ColorTile_OnClick);
 
                         tlpColors.Controls.Add(colorTile);
                         tlpColors.SetRow(colorTile, row);
                         tlpColors.SetColumn(colorTile, column);
-
-                        flatColorIndex++;
                     }
                 }
             }
@@ -100,6 +94,20 @@ namespace WinXPApp.Forms.SampleTools
             }
 
             return numRows;
+        }
+
+        private void ColorTile_OnClick(object sender, EventArgs e)
+        {
+            MetroTile colorTile = (MetroTile)sender;
+            FlatColor flatColor = (FlatColor)colorTile.Tag;
+
+            txtName.Text = flatColor.Name;
+            txtHex.Text = flatColor.Hex;
+        }
+
+        private void BtnCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtHex.Text ?? string.Empty);
         }
     }
 }

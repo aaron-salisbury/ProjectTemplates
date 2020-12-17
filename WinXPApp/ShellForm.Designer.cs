@@ -68,7 +68,7 @@ namespace WinXPApp
             this.mainTabControl.Location = new System.Drawing.Point(20, 60);
             this.mainTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 1;
+            this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(810, 470);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.UseSelectable = true;

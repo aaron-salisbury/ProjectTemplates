@@ -61,6 +61,7 @@
     <Compile Include="Base\DataSourceMemoryTarget.cs" />
     <Compile Include="Base\LoggableObject.cs" />
     <Compile Include="Base\ValidatableModel.cs" />
+    <Compile Include="Base\ValidationAttributes\LettersNumbersDashes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleDataAccess\CRUD.cs" />
     <Compile Include="SampleTools\FlatColor.cs" />
@@ -72,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SampleDataAccess\FlatColors.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Base\DataAnnotationValidation\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

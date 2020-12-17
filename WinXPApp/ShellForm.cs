@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using WinXPApp.Base;
 using WinXPApp.Forms;
 using WinXPCore.Base;
@@ -12,10 +11,11 @@ namespace WinXPApp
         {
             InitializeComponent();
 
-            FormClosing += new FormClosingEventHandler(ShellForm_FormClosing);
-
-            AppLogger.SetTargetInvoking(logUC1.UpdateLogs);
             AppearanceManager.LoadBaseSettings(this);
+            AppLogger.SetTargetInvoking(logUC1.UpdateLogs);
+            logUC1.UpdateLogs(AppLogger.GetLogs()); // Load logs that may have been written before delegate could be set.
+
+            mainTabControl.SelectedIndex = 0; // Sometimes the designer will regenerate this at a different index, but it should always initialize at 0.
         }
 
         private void SettingsLink_Click(object sender, EventArgs e)
@@ -29,11 +29,6 @@ namespace WinXPApp
         private void HelpLink_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(Properties.Settings.Default.HelpLink);
-        }
-
-        private void ShellForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //TODO: Might need this in the future.
         }
     }
 }

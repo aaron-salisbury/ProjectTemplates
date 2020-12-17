@@ -136,6 +136,7 @@ namespace WinXPApp.Forms.SampleTools
             this.btnCopy.TabIndex = 5;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseSelectable = true;
+            this.btnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
             // tlpColors
             // 
@@ -152,13 +153,15 @@ namespace WinXPApp.Forms.SampleTools
             this.tlpColors.RowCount = 2;
             this.tlpColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpColors.Size = new System.Drawing.Size(414, 414);
+            this.tlpColors.Size = new System.Drawing.Size(621, 414);
             this.tlpColors.TabIndex = 6;
             // 
             // FlatUIColorPickerUC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.tlpColors);
             this.Controls.Add(this.btnCopy);
