@@ -29,6 +29,7 @@ namespace WinXPApp
         /// </summary>
         private void InitializeComponent()
         {
+            WinXPCore.SampleTools.LineSorter lineSorter1 = new WinXPCore.SampleTools.LineSorter();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
             this.mainTabControl = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
@@ -40,6 +41,7 @@ namespace WinXPApp
             this.metroTabPage5 = new MetroFramework.Controls.MetroTabPage();
             this.flatUIColorPickerUC1 = new WinXPApp.Forms.SampleTools.FlatUIColorPickerUC();
             this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
+            this.lineSorterUC1 = new WinXPApp.Forms.SampleTools.LineSorterUC();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
             this.logUC1 = new WinXPApp.Forms.LogUC();
             this.settingsLink = new MetroFramework.Controls.MetroLink();
@@ -52,6 +54,7 @@ namespace WinXPApp
             this.toolsTabControl.SuspendLayout();
             this.metroTabPage4.SuspendLayout();
             this.metroTabPage5.SuspendLayout();
+            this.metroTabPage6.SuspendLayout();
             this.metroTabPage3.SuspendLayout();
             this.panelSettingsHelp.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +71,7 @@ namespace WinXPApp
             this.mainTabControl.Location = new System.Drawing.Point(20, 60);
             this.mainTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.SelectedIndex = 1;
             this.mainTabControl.Size = new System.Drawing.Size(810, 470);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.UseSelectable = true;
@@ -125,7 +128,7 @@ namespace WinXPApp
             this.toolsTabControl.Location = new System.Drawing.Point(3, 3);
             this.toolsTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.toolsTabControl.Name = "toolsTabControl";
-            this.toolsTabControl.SelectedIndex = 1;
+            this.toolsTabControl.SelectedIndex = 0;
             this.toolsTabControl.Size = new System.Drawing.Size(796, 425);
             this.toolsTabControl.TabIndex = 2;
             this.toolsTabControl.UseSelectable = true;
@@ -148,7 +151,7 @@ namespace WinXPApp
             // uuidGeneratorUC1
             // 
             this.uuidGeneratorUC1.BackColor = System.Drawing.Color.Transparent;
-            this.uuidGeneratorUC1.Location = new System.Drawing.Point(28, 31);
+            this.uuidGeneratorUC1.Location = new System.Drawing.Point(30, 25);
             this.uuidGeneratorUC1.Name = "uuidGeneratorUC1";
             this.uuidGeneratorUC1.Size = new System.Drawing.Size(599, 304);
             this.uuidGeneratorUC1.TabIndex = 2;
@@ -170,14 +173,20 @@ namespace WinXPApp
             // 
             // flatUIColorPickerUC1
             // 
+            this.flatUIColorPickerUC1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flatUIColorPickerUC1.AutoSize = true;
+            this.flatUIColorPickerUC1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flatUIColorPickerUC1.BackColor = System.Drawing.Color.Transparent;
-            this.flatUIColorPickerUC1.Location = new System.Drawing.Point(28, 31);
+            this.flatUIColorPickerUC1.Location = new System.Drawing.Point(30, 25);
             this.flatUIColorPickerUC1.Name = "flatUIColorPickerUC1";
-            this.flatUIColorPickerUC1.Size = new System.Drawing.Size(696, 318);
+            this.flatUIColorPickerUC1.Size = new System.Drawing.Size(421, 314);
             this.flatUIColorPickerUC1.TabIndex = 2;
             // 
             // metroTabPage6
             // 
+            this.metroTabPage6.Controls.Add(this.lineSorterUC1);
             this.metroTabPage6.HorizontalScrollbarBarColor = true;
             this.metroTabPage6.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage6.HorizontalScrollbarSize = 10;
@@ -189,6 +198,20 @@ namespace WinXPApp
             this.metroTabPage6.VerticalScrollbarBarColor = true;
             this.metroTabPage6.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage6.VerticalScrollbarSize = 10;
+            // 
+            // lineSorterUC1
+            // 
+            this.lineSorterUC1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineSorterUC1.BackColor = System.Drawing.Color.Transparent;
+            lineSorter1.SelectedSortType = "Alphabetical";
+            lineSorter1.TextToSort = null;
+            this.lineSorterUC1.LineSorter = lineSorter1;
+            this.lineSorterUC1.Location = new System.Drawing.Point(31, 25);
+            this.lineSorterUC1.Name = "lineSorterUC1";
+            this.lineSorterUC1.Size = new System.Drawing.Size(754, 360);
+            this.lineSorterUC1.TabIndex = 2;
             // 
             // metroTabPage3
             // 
@@ -280,6 +303,8 @@ namespace WinXPApp
             this.toolsTabControl.ResumeLayout(false);
             this.metroTabPage4.ResumeLayout(false);
             this.metroTabPage5.ResumeLayout(false);
+            this.metroTabPage5.PerformLayout();
+            this.metroTabPage6.ResumeLayout(false);
             this.metroTabPage3.ResumeLayout(false);
             this.panelSettingsHelp.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -304,6 +329,7 @@ namespace WinXPApp
         private Forms.UUIDGeneratorUC uuidGeneratorUC1;
         private Forms.LogUC logUC1;
         private Forms.SampleTools.FlatUIColorPickerUC flatUIColorPickerUC1;
+        private Forms.SampleTools.LineSorterUC lineSorterUC1;
     }
 }
 

@@ -66,6 +66,7 @@
     <Compile Include="SampleDataAccess\CRUD.cs" />
     <Compile Include="SampleTools\FlatColor.cs" />
     <Compile Include="SampleTools\FlatUIColorPicker.cs" />
+    <Compile Include="SampleTools\LineSorter.cs" />
     <Compile Include="SampleTools\UUIDGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
