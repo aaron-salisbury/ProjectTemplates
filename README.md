@@ -19,4 +19,5 @@ The next time you start Visual Studio, the project templates will be available f
 
 Included project templates:
 
+  - Windows XP App Solution Template (WinForms / .NET Framework 3.5)
   - Windows 7 App Solution Template (WPF / .NET Framework 4.5.1)
