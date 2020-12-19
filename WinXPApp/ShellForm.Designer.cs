@@ -29,7 +29,6 @@ namespace WinXPApp
         /// </summary>
         private void InitializeComponent()
         {
-            WinXPCore.SampleTools.LineSorter lineSorter1 = new WinXPCore.SampleTools.LineSorter();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
             this.mainTabControl = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
@@ -205,8 +204,6 @@ namespace WinXPApp
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lineSorterUC1.BackColor = System.Drawing.Color.Transparent;
-            lineSorter1.SelectedSortType = "Alphabetical";
-            lineSorter1.TextToSort = null;
             this.lineSorterUC1.Location = new System.Drawing.Point(31, 25);
             this.lineSorterUC1.Name = "lineSorterUC1";
             this.lineSorterUC1.Size = new System.Drawing.Size(841, 417);
