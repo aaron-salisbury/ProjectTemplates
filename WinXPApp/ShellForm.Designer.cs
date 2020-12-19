@@ -72,7 +72,7 @@ namespace WinXPApp
             this.mainTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 1;
-            this.mainTabControl.Size = new System.Drawing.Size(810, 470);
+            this.mainTabControl.Size = new System.Drawing.Size(897, 527);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.UseSelectable = true;
             // 
@@ -85,7 +85,7 @@ namespace WinXPApp
             this.metroTabPage1.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage1.Name = "metroTabPage1";
             this.metroTabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.metroTabPage1.Size = new System.Drawing.Size(802, 431);
+            this.metroTabPage1.Size = new System.Drawing.Size(889, 488);
             this.metroTabPage1.TabIndex = 0;
             this.metroTabPage1.Text = "welcome";
             this.metroTabPage1.VerticalScrollbarBarColor = true;
@@ -97,7 +97,7 @@ namespace WinXPApp
             this.introductionUC1.BackColor = System.Drawing.Color.Transparent;
             this.introductionUC1.Location = new System.Drawing.Point(7, 25);
             this.introductionUC1.Name = "introductionUC1";
-            this.introductionUC1.Size = new System.Drawing.Size(722, 393);
+            this.introductionUC1.Size = new System.Drawing.Size(876, 457);
             this.introductionUC1.TabIndex = 2;
             // 
             // metroTabPage2
@@ -109,7 +109,7 @@ namespace WinXPApp
             this.metroTabPage2.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage2.Name = "metroTabPage2";
             this.metroTabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.metroTabPage2.Size = new System.Drawing.Size(802, 431);
+            this.metroTabPage2.Size = new System.Drawing.Size(889, 488);
             this.metroTabPage2.TabIndex = 1;
             this.metroTabPage2.Text = "tools";
             this.metroTabPage2.VerticalScrollbarBarColor = true;
@@ -128,8 +128,8 @@ namespace WinXPApp
             this.toolsTabControl.Location = new System.Drawing.Point(3, 3);
             this.toolsTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.toolsTabControl.Name = "toolsTabControl";
-            this.toolsTabControl.SelectedIndex = 0;
-            this.toolsTabControl.Size = new System.Drawing.Size(796, 425);
+            this.toolsTabControl.SelectedIndex = 2;
+            this.toolsTabControl.Size = new System.Drawing.Size(883, 482);
             this.toolsTabControl.TabIndex = 2;
             this.toolsTabControl.UseSelectable = true;
             // 
@@ -141,7 +141,7 @@ namespace WinXPApp
             this.metroTabPage4.HorizontalScrollbarSize = 10;
             this.metroTabPage4.Location = new System.Drawing.Point(4, 37);
             this.metroTabPage4.Name = "metroTabPage4";
-            this.metroTabPage4.Size = new System.Drawing.Size(788, 384);
+            this.metroTabPage4.Size = new System.Drawing.Size(875, 441);
             this.metroTabPage4.TabIndex = 3;
             this.metroTabPage4.Text = "UUID GENERATOR";
             this.metroTabPage4.VerticalScrollbarBarColor = true;
@@ -192,7 +192,7 @@ namespace WinXPApp
             this.metroTabPage6.HorizontalScrollbarSize = 10;
             this.metroTabPage6.Location = new System.Drawing.Point(4, 37);
             this.metroTabPage6.Name = "metroTabPage6";
-            this.metroTabPage6.Size = new System.Drawing.Size(788, 384);
+            this.metroTabPage6.Size = new System.Drawing.Size(875, 441);
             this.metroTabPage6.TabIndex = 5;
             this.metroTabPage6.Text = "LINE SORTER";
             this.metroTabPage6.VerticalScrollbarBarColor = true;
@@ -210,7 +210,7 @@ namespace WinXPApp
             this.lineSorterUC1.LineSorter = lineSorter1;
             this.lineSorterUC1.Location = new System.Drawing.Point(31, 25);
             this.lineSorterUC1.Name = "lineSorterUC1";
-            this.lineSorterUC1.Size = new System.Drawing.Size(754, 360);
+            this.lineSorterUC1.Size = new System.Drawing.Size(841, 417);
             this.lineSorterUC1.TabIndex = 2;
             // 
             // metroTabPage3
@@ -222,7 +222,7 @@ namespace WinXPApp
             this.metroTabPage3.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage3.Name = "metroTabPage3";
             this.metroTabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.metroTabPage3.Size = new System.Drawing.Size(802, 431);
+            this.metroTabPage3.Size = new System.Drawing.Size(889, 488);
             this.metroTabPage3.TabIndex = 2;
             this.metroTabPage3.Text = "log";
             this.metroTabPage3.VerticalScrollbarBarColor = true;
@@ -237,7 +237,7 @@ namespace WinXPApp
             this.logUC1.BackColor = System.Drawing.Color.Transparent;
             this.logUC1.Location = new System.Drawing.Point(22, 10);
             this.logUC1.Name = "logUC1";
-            this.logUC1.Size = new System.Drawing.Size(764, 425);
+            this.logUC1.Size = new System.Drawing.Size(848, 479);
             this.logUC1.TabIndex = 2;
             // 
             // settingsLink
@@ -270,7 +270,7 @@ namespace WinXPApp
             this.panelSettingsHelp.Controls.Add(this.panel1);
             this.panelSettingsHelp.Controls.Add(this.helpLink);
             this.panelSettingsHelp.Controls.Add(this.settingsLink);
-            this.panelSettingsHelp.Location = new System.Drawing.Point(603, 6);
+            this.panelSettingsHelp.Location = new System.Drawing.Point(690, 6);
             this.panelSettingsHelp.Name = "panelSettingsHelp";
             this.panelSettingsHelp.Size = new System.Drawing.Size(167, 30);
             this.panelSettingsHelp.TabIndex = 3;
@@ -288,7 +288,7 @@ namespace WinXPApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(850, 550);
+            this.ClientSize = new System.Drawing.Size(937, 607);
             this.Controls.Add(this.panelSettingsHelp);
             this.Controls.Add(this.mainTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Win7App"
         mc:Ignorable="d"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-        Height="700" MinWidth="1000"
+        Height="607" MinWidth="937"
         WindowStartupLocation="CenterScreen"
         Icon="/Base/Resources/SampleAppIcon.ico"
         ContentSource="/Views/Introduction.xaml"

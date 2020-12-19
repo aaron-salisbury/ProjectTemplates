@@ -14,7 +14,7 @@
         <ScrollViewer>
             <StackPanel >
                 <TextBlock Text="{Binding Title}" Style="{StaticResource Heading1}" Margin="0,0,0,8"/>
-                <mui:BBCodeBlock Margin="0,0,0,32" BBCode="This is a sample application generated from Aaron Salisbury's WPF (Windows 7) project template." />
+                <mui:BBCodeBlock Margin="0,0,0,32" BBCode="This is a sample application generated from Aaron Salisbury's Windows 7 App Solution Template." />
                 <TextBlock Text="DESIGN PATTERN" Style="{StaticResource Heading2}" />
                 <mui:BBCodeBlock Margin="0,0,0,32" BBCode="This project uses [url=http://www.mvvmlight.net/]MVVM Light Toolkit[/url] to implement the MVVM design pattern. MVVM separates views from models, which allows for projects that are cleaner, easier to extend, and testable. The WPF project references a core project for models and other business layer logic." />
                 <TextBlock Text="LOGGING" Style="{StaticResource Heading2}" />
@@ -22,7 +22,7 @@
                 <TextBlock Text="APPEARANCE" Style="{StaticResource Heading2}" />
                 <mui:BBCodeBlock Margin="0,0,0,32" BBCode="The WPF app leverages the [url=https://github.com/firstfloorsoftware/mui]Modern UI[/url] NuGet package for some navigation and various themes, controls, and styles.&#13;&#10;&#13;&#10;The appearance can be changed on the fly. Make sure you visit the [url=/Views/Settings.xaml]settings[/url] to adapt the appearance to your preference." />
                 <TextBlock Text="USE" Style="{StaticResource Heading2}" />
-                <mui:BBCodeBlock Margin="0,0,0,32" BBCode="Aaron Salisbury's WPF (Windows 7) project template is released under [url=https://mit-license.org/]The MIT License[/url]." />
+                <mui:BBCodeBlock Margin="0,0,0,32" BBCode="Aaron Salisbury's Windows 7 App Solution Template is released under [url=https://mit-license.org/]The MIT License[/url]." />
             </StackPanel>
         </ScrollViewer>
     </Grid>
