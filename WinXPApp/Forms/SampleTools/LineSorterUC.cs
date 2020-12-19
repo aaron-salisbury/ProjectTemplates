@@ -6,16 +6,16 @@ namespace WinXPApp.Forms.SampleTools
 {
     public partial class LineSorterUC : UserControl
     {
-        public LineSorter LineSorter { get; set; }
+        private LineSorter _lineSorter { get; set; }
 
         public LineSorterUC()
         {
             InitializeComponent();
 
-            LineSorter = new LineSorter();
+            _lineSorter = new LineSorter();
 
-            cbSortTypes.DataSource = LineSorter.SortTypes;
-            cbSortTypes.SelectedItem = LineSorter.SelectedSortType;
+            cbSortTypes.DataSource = _lineSorter.SortTypes;
+            cbSortTypes.SelectedItem = _lineSorter.SelectedSortType;
         }
 
         private void BtnSelectAll_Click(object sender, EventArgs e)
@@ -26,14 +26,14 @@ namespace WinXPApp.Forms.SampleTools
 
         private void BtnSort_Click(object sender, EventArgs e)
         {
-            LineSorter.TextToSort = tbTextToSort.Text;
-            LineSorter.Initiate();
-            tbTextToSort.Text = LineSorter.TextToSort;
+            _lineSorter.TextToSort = tbTextToSort.Text;
+            _lineSorter.Initiate();
+            tbTextToSort.Text = _lineSorter.TextToSort;
         }
 
         private void CbSortTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LineSorter.SelectedSortType = cbSortTypes.SelectedItem.ToString();
+            _lineSorter.SelectedSortType = cbSortTypes.SelectedItem.ToString();
         }
     }
 }

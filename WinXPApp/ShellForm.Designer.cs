@@ -71,7 +71,7 @@ namespace WinXPApp
             this.mainTabControl.Location = new System.Drawing.Point(20, 60);
             this.mainTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 1;
+            this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(897, 527);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.UseSelectable = true;
@@ -128,7 +128,7 @@ namespace WinXPApp
             this.toolsTabControl.Location = new System.Drawing.Point(3, 3);
             this.toolsTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.toolsTabControl.Name = "toolsTabControl";
-            this.toolsTabControl.SelectedIndex = 2;
+            this.toolsTabControl.SelectedIndex = 0;
             this.toolsTabControl.Size = new System.Drawing.Size(883, 482);
             this.toolsTabControl.TabIndex = 2;
             this.toolsTabControl.UseSelectable = true;
@@ -207,7 +207,6 @@ namespace WinXPApp
             this.lineSorterUC1.BackColor = System.Drawing.Color.Transparent;
             lineSorter1.SelectedSortType = "Alphabetical";
             lineSorter1.TextToSort = null;
-            this.lineSorterUC1.LineSorter = lineSorter1;
             this.lineSorterUC1.Location = new System.Drawing.Point(31, 25);
             this.lineSorterUC1.Name = "lineSorterUC1";
             this.lineSorterUC1.Size = new System.Drawing.Size(841, 417);

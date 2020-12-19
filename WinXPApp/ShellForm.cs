@@ -15,7 +15,9 @@ namespace WinXPApp
             AppLogger.SetTargetInvoking(logUC1.UpdateLogs);
             logUC1.UpdateLogs(AppLogger.GetLogs()); // Load logs that may have been written before delegate could be set.
 
-            mainTabControl.SelectedIndex = 0; // Sometimes the designer will regenerate this at a different index, but it should always initialize at 0.
+            // Sometimes the designer will regenerate the selected idex of a tab control to be something different, but they should always initialize at 0.
+            mainTabControl.SelectedIndex = 0;
+            toolsTabControl.SelectedIndex = 0;
         }
 
         private void SettingsLink_Click(object sender, EventArgs e)
