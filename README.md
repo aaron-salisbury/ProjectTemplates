@@ -19,7 +19,8 @@ To install the extension, download and extract this repository, open the solutio
 
 The next time you start Visual Studio, the project templates will be available for use when creating a new project.
 
-Included project templates:
+Included Project Templates
+--------------------------
 
   - Windows XP App Solution Template (WinForms / .NET Framework 3.5)
   - Windows 7 App Solution Template (WPF / .NET Framework 4.5.1)
