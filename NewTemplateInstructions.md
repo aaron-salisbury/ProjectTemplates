@@ -50,7 +50,7 @@ Similarly, to preserve the reference to that project, open the csproj and find t
 ```
 
 While in the csproj, we can update the path to any nuget packages that later we will include in a VSIX project.
-*Can skip this step if the package references are not pathed, like in UWP projects.
+*Can SKIP this step if the package references are not pathed, like in UWP projects.
 
   - If the package reference looks like:
   
@@ -69,7 +69,7 @@ While in the csproj, we can update the path to any nuget packages that later we 
 ```
 
 Finally open/edit the .vstemplate file. We need add instructions for the project template wizard to install the nuget packages.
-*Can skip these two wizard steps if the package references are not pathed, like in UWP projects.
+*Can SKIP these two wizard steps if the package references are not pathed, like in UWP projects.
 
 Add the following as a child element of VSTemplate:
   
