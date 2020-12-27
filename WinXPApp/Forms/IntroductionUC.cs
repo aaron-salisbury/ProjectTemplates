@@ -1,13 +1,5 @@
-﻿using MetroFramework.Controls;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Windows.Forms;
-using WinXPApp.Base.Extensions;
 
 namespace WinXPApp.Forms
 {
@@ -30,7 +22,7 @@ namespace WinXPApp.Forms
 
         private void mitLink_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://mit-license.org/");
+            System.Diagnostics.Process.Start("https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE");
         }
     }
 }

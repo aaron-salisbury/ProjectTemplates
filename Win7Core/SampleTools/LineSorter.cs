@@ -1,10 +1,10 @@
-﻿using Win7Core.Base;
-using Serilog;
+﻿using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using Win7Core.Base;
 
 namespace Win7Core.SampleTools
 {

@@ -41,7 +41,7 @@
             
             <StackPanel>
                 <Label>New UUID</Label>
-                <TextBox Width="300" Text="{Binding Path=UUIDGenerator.UUID, ValidatesOnNotifyDataErrors=True, Mode=TwoWay}" />
+                <TextBox Width="300" Text="{Binding Path=UUIDGenerator.UUID, Mode=TwoWay}" IsReadOnly="true" IsEnabled="False" />
             </StackPanel>
         </StackPanel>
     </StackPanel>

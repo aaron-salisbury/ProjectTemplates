@@ -163,7 +163,7 @@ namespace WinXPApp
             this.metroTabPage5.HorizontalScrollbarSize = 10;
             this.metroTabPage5.Location = new System.Drawing.Point(4, 37);
             this.metroTabPage5.Name = "metroTabPage5";
-            this.metroTabPage5.Size = new System.Drawing.Size(788, 384);
+            this.metroTabPage5.Size = new System.Drawing.Size(875, 441);
             this.metroTabPage5.TabIndex = 4;
             this.metroTabPage5.Text = "FLAT UI COLOR PICKER";
             this.metroTabPage5.VerticalScrollbarBarColor = true;

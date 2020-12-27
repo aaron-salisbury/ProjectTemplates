@@ -1,8 +1,8 @@
-﻿using Win7Core.Base;
-using Win7Core.SampleDataAccess;
-using Serilog;
+﻿using Serilog;
 using System;
 using System.Collections.Generic;
+using Win7Core.Base;
+using Win7Core.SampleDataAccess;
 
 namespace Win7Core.SampleTools
 {

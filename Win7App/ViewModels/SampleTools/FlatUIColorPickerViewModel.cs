@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Win7Core.SampleTools;
 using System.Linq;
 using System.Windows;
+using Win7Core.SampleTools;
 
 namespace Win7App.ViewModels.SampleTools
 {

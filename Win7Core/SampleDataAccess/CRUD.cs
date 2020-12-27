@@ -1,9 +1,9 @@
-﻿using Win7Core.SampleTools;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using Win7Core.SampleTools;
 
 namespace Win7Core.SampleDataAccess
 {

@@ -1,8 +1,8 @@
-﻿using Win7Core.Base;
-using Win7Core.Base.ValidationAttributes;
-using Serilog;
+﻿using Serilog;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Win7Core.Base;
+using Win7Core.Base.ValidationAttributes;
 
 namespace Win7Core.SampleTools
 {

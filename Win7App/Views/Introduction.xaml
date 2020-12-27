@@ -22,7 +22,7 @@
                 <TextBlock Text="APPEARANCE" Style="{StaticResource Heading2}" />
                 <mui:BBCodeBlock Margin="0,0,0,32" BBCode="The WPF app leverages the [url=https://github.com/firstfloorsoftware/mui]Modern UI[/url] NuGet package for some navigation and various themes, controls, and styles.&#13;&#10;&#13;&#10;The appearance can be changed on the fly. Make sure you visit the [url=/Views/Settings.xaml]settings[/url] to adapt the appearance to your preference." />
                 <TextBlock Text="USE" Style="{StaticResource Heading2}" />
-                <mui:BBCodeBlock Margin="0,0,0,32" BBCode="Aaron Salisbury's Windows 7 App Solution Template is released under [url=https://mit-license.org/]The MIT License[/url]." />
+                <mui:BBCodeBlock Margin="0,0,0,32" BBCode="Aaron Salisbury's Windows 7 App Solution Template is released under [url=https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE]The MIT License[/url]." />
             </StackPanel>
         </ScrollViewer>
     </Grid>
