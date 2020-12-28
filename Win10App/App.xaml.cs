@@ -36,7 +36,11 @@ namespace Win10App
 
         private void OnAppUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            // TODO: Log and handle the exception as appropriate to your scenario.
+            //TODO: Log and handle the exception as appropriate to your scenario. Possibly save user/app data. The following is a generic implementation:
+            e.Handled = true;
+            string message = $"We are sorry, but something just went very wrong. 🙈\n\nError: {e.Message}";
+            Windows.UI.Popups.MessageDialog messageDialog = new Windows.UI.Popups.MessageDialog(message);
+            messageDialog.ShowAsync().GetResults();
             // For more info see https://docs.microsoft.com/uwp/api/windows.ui.xaml.application.unhandledexception
         }
 

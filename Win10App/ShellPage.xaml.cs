@@ -13,7 +13,6 @@ namespace Win10App
         public ShellPage()
         {
             InitializeComponent();
-
             DataContext = ViewModel;
             ViewModel.Initialize(shellFrame, navigationView, KeyboardAccelerators);
         }

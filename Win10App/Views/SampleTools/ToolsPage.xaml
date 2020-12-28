@@ -5,28 +5,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Win10App.Base.Behaviors"
-    xmlns:helpers="using:Win10App.Base.Helpers">
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls">
 
     <winui:NavigationView 
-        x:Name="SampleToolsNavView" 
+        x:Name="NavView" 
         IsBackButtonVisible="Collapsed" 
         IsBackEnabled="False"
         IsSettingsVisible="False" 
         Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
         PaneDisplayMode="Top"
         IsPaneToggleButtonVisible="False"
-        Loaded="SampleToolsNavView_Loaded"
-        ItemInvoked="SampleToolsNavView_ItemInvoked">
-        
-        <!--<winui:NavigationView.MenuItems>
-            <winui:NavigationViewItem Content="UUID Generator" />
-            <winui:NavigationViewItem Content="Flat UI Color Picker" />
-            <winui:NavigationViewItem Content="Line Sorter" />
-        </winui:NavigationView.MenuItems>-->
+        Loaded="NavView_Loaded"
+        ItemInvoked="NavView_ItemInvoked">
 
         <ScrollViewer>
             <Frame x:Name="ContentFrame" Padding="12,0,12,12" IsTabStop="True" />

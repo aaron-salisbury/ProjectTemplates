@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Threading;
 using System.Threading.Tasks;
 using Win10App.Base.Helpers;
 using Win10Core.SampleTools;
-using Windows.ApplicationModel.DataTransfer;
 
 namespace Win10App.ViewModels
 {

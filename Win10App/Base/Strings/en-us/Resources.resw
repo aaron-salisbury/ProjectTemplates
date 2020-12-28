@@ -121,10 +121,6 @@
     <value>Sample App</value>
     <comment>Application display name</comment>
   </data>
-  <data name="AppDescription" xml:space="preserve">
-    <value>Win10App</value>
-    <comment>Application description</comment>
-  </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
     <value>Choose Theme</value>
     <comment>Choose theme text for Settings</comment>
