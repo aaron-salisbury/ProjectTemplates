@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Win10App.Base.Helpers;
+using Win10App.Base.Extensions;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;

@@ -125,11 +125,12 @@
     <Compile Include="Base\Behaviors\NavigationViewHeaderMode.cs" />
     <Compile Include="Base\Extensions\EnumExtensions.cs" />
     <Compile Include="Base\Helpers\ComboBoxEnumItem.cs" />
+    <Compile Include="Base\Helpers\ElementFinder.cs" />
     <Compile Include="Base\Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Base\Helpers\NavHelper.cs" />
     <Compile Include="Base\Helpers\PlatformShim.cs" />
-    <Compile Include="Base\Helpers\ResourceExtensions.cs" />
-    <Compile Include="Base\Helpers\SettingsStorageExtensions.cs" />
+    <Compile Include="Base\Extensions\ResourceExtensions.cs" />
+    <Compile Include="Base\Extensions\SettingsStorageExtensions.cs" />
     <Compile Include="Base\Services\ActivationService.cs" />
     <Compile Include="Base\Services\NavigationServiceEx.cs" />
     <Compile Include="Base\Services\ThemeSelectorService.cs" />

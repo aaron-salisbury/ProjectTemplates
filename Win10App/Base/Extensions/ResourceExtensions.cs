@@ -1,6 +1,6 @@
 ﻿using Windows.ApplicationModel.Resources;
 
-namespace Win10App.Base.Helpers
+namespace Win10App.Base.Extensions
 {
     internal static class ResourceExtensions
     {

@@ -2,7 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Win10App.Base.Helpers;
+using Win10App.Base.Extensions;
 using Win10App.Base.Services;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
