@@ -4,19 +4,22 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using WinXPCore.Base;
+using WinXPCore.Base.DataAnnotationValidation;
 
 namespace WinXPCore.SampleTools
 {
     public class LineSorter : ValidatableModel
     {
-        public List<string> SortTypes
+        public enum SortTypes
         {
-            get => new List<string>() { "Alphabetical", "Reverse Alphabetical" };
+            Alphabetical,
+            [Display(Name = "Reverse Alphabetical")]
+            ReverseAlphabetical
         }
 
-        private string _selectedSortType;
+        private SortTypes _selectedSortType;
         [Required]
-        public string SelectedSortType
+        public SortTypes SelectedSortType
         {
             get => _selectedSortType;
             set => _selectedSortType = value;
@@ -31,7 +34,7 @@ namespace WinXPCore.SampleTools
 
         public LineSorter()
         {
-            SelectedSortType = SortTypes.First();
+            SelectedSortType = SortTypes.Alphabetical;
         }
 
         public bool Initiate()
@@ -46,7 +49,7 @@ namespace WinXPCore.SampleTools
 
                     lines.Sort();
 
-                    if (string.Equals(SelectedSortType, "Reverse Alphabetical"))
+                    if (SelectedSortType == SortTypes.ReverseAlphabetical)
                     {
                         lines.Reverse();
                     }

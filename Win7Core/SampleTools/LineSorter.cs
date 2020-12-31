@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Win7Core.Base;
+using Win7Core.Base.Extensions;
 
 namespace Win7Core.SampleTools
 {
@@ -12,18 +13,26 @@ namespace Win7Core.SampleTools
     {
         private ILogger _logger { get; set; }
 
-        public List<string> SortTypes
+        public enum SortTypes
         {
-            get => new List<string>() { "Alphabetical", "Reverse Alphabetical" };
+            Alphabetical,
+            [Display(Name = "Reverse Alphabetical")]
+            ReverseAlphabetical
         }
 
-        private string _selectedSortType;
+        private SortTypes _selectedSortType;
         [Required]
-        public string SelectedSortType
+        public SortTypes SelectedSortType
         {
             get => _selectedSortType;
-            set { _selectedSortType = value; RaisePropertyChanged(nameof(SelectedSortType)); }
+            set
+            {
+                _selectedSortType = value;
+                RaisePropertyChanged(nameof(SelectedSortType));
+            }
         }
+
+        public static string GetSortTypeDisplayName(SortTypes sortType) => sortType.GetAttribute<DisplayAttribute>()?.Name ?? sortType.ToString();
 
         private string _textToSort;
         public string TextToSort
@@ -35,7 +44,7 @@ namespace Win7Core.SampleTools
         public LineSorter(AppLogger appLogger)
         {
             _logger = appLogger.Logger;
-            SelectedSortType = SortTypes.First();
+            SelectedSortType = SortTypes.Alphabetical;
         }
 
         public bool Initiate()
@@ -50,7 +59,7 @@ namespace Win7Core.SampleTools
 
                     lines.Sort();
 
-                    if (string.Equals(SelectedSortType, "Reverse Alphabetical"))
+                    if (SelectedSortType == SortTypes.ReverseAlphabetical)
                     {
                         lines.Reverse();
                     }

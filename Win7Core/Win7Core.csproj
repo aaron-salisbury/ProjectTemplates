@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\AppLogger.cs" />
+    <Compile Include="Base\Extensions\EnumExtensions.cs" />
     <Compile Include="Base\ObservableObject.cs" />
     <Compile Include="SampleDataAccess\CRUD.cs" />
     <Compile Include="Base\ValidatableModel.cs" />

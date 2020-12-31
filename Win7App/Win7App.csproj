@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Base\ComboBoxEnumItem.cs" />
     <Compile Include="Base\Extensions\AppearanceManagerExtensions.cs" />
     <Compile Include="Base\Extensions\StringExtensions.cs" />
     <Compile Include="Base\LoadedEvent\DelegateLoadedAction.cs" />

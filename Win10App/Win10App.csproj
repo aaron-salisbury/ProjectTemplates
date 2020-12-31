@@ -123,6 +123,8 @@
     <Compile Include="Base\Activation\DefaultActivationHandler.cs" />
     <Compile Include="Base\Behaviors\NavigationViewHeaderBehavior.cs" />
     <Compile Include="Base\Behaviors\NavigationViewHeaderMode.cs" />
+    <Compile Include="Base\Extensions\EnumExtensions.cs" />
+    <Compile Include="Base\Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="Base\Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Base\Helpers\NavHelper.cs" />
     <Compile Include="Base\Helpers\PlatformShim.cs" />

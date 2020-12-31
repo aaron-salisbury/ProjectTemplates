@@ -21,8 +21,10 @@
                     <ComboBox 
                         Header="Sort Type"
                         Width="175" 
-                        ItemsSource="{Binding LineSorter.SortTypes}" 
-                        SelectedValue="{Binding LineSorter.SelectedSortType, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"  />
+                        ItemsSource="{Binding SortTypes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        SelectedItem="{Binding SelectedSortType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedValuePath="Value" 
+                        DisplayMemberPath="Text" />
                 </StackPanel>
                 
                 <StackPanel Margin="0,16,0,8" Orientation="Horizontal">

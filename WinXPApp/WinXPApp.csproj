@@ -61,6 +61,8 @@
   <ItemGroup>
     <Compile Include="Base\AppearanceManager.cs" />
     <Compile Include="Base\Extensions\ControlExtensions.cs" />
+    <Compile Include="Base\Extensions\EnumExtensions.cs" />
+    <Compile Include="Base\Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>

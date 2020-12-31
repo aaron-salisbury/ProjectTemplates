@@ -37,7 +37,11 @@
 
                 <StackPanel>
                     <Label>Sort Type</Label>
-                    <ComboBox Width="175" ItemsSource="{Binding LineSorter.SortTypes}" SelectedValue="{Binding LineSorter.SelectedSortType, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=LostFocus}"  />
+                    <ComboBox Width="175" 
+                              ItemsSource="{Binding SortTypes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              SelectedItem="{Binding SelectedSortType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              SelectedValuePath="Value" 
+                              DisplayMemberPath="Text" />
                 </StackPanel>
                 <StackPanel Margin="125,0,0,0">
                     <Button Content="Select All" HorizontalAlignment="Left" Click="SelectAll_Click" />
