@@ -58,6 +58,8 @@ namespace Win10App.Base.Services
 
         private async Task InitializeAsync()
         {
+            Helpers.UI.ApplyColorToTitleBar();
+
             await ThemeSelectorService.InitializeAsync().ConfigureAwait(false);
         }
 

@@ -131,6 +131,7 @@
     <Compile Include="Base\Helpers\PlatformShim.cs" />
     <Compile Include="Base\Extensions\ResourceExtensions.cs" />
     <Compile Include="Base\Extensions\SettingsStorageExtensions.cs" />
+    <Compile Include="Base\Helpers\UI.cs" />
     <Compile Include="Base\Services\ActivationService.cs" />
     <Compile Include="Base\Services\NavigationServiceEx.cs" />
     <Compile Include="Base\Services\ThemeSelectorService.cs" />
