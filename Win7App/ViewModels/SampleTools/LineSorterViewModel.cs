@@ -1,11 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Threading;
-using Win7Core.SampleTools;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Win7App.Base;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Win7App.Base;
+using Win7Core.SampleTools;
 
 namespace Win7App.ViewModels.SampleTools
 {
@@ -41,7 +39,9 @@ namespace Win7App.ViewModels.SampleTools
         public LineSorterViewModel()
         {
             LineSorter = new LineSorter(AppLogger);
-            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(), () => !IsBusy);
+
+            bool sortLinesfunction() => LineSorter.Initiate();
+            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(sortLinesfunction, ExecuteTaskCommand), () => !IsBusy);
 
             SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()
@@ -51,38 +51,6 @@ namespace Win7App.ViewModels.SampleTools
             SelectedSortType = SortTypes
                 .Where(cbi => cbi.Value == (int)LineSorter.SelectedSortType)
                 .First();
-        }
-
-        private async Task InitiateProcessAsync()
-        {
-            try
-            {
-                IsBusy = true;
-                await ExportDataAsync().ConfigureAwait(false);
-            }
-            finally
-            {
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                {
-                    IsBusy = false;
-                    ExecuteTaskCommand.RaiseCanExecuteChanged();
-                });
-            }
-        }
-
-        private Task<bool> ExportDataAsync()
-        {
-            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-
-            Task.Run(() =>
-            {
-                // Do long running synchronous work here...
-                bool processIsSuccessful = LineSorter.Initiate();
-
-                tcs.SetResult(processIsSuccessful);
-            }).ConfigureAwait(false);
-
-            return tcs.Task;
         }
     }
 }

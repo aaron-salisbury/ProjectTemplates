@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Win10App.ViewModels;
+using Windows.UI.Xaml.Controls;
 
 namespace Win10App.Views
 {
@@ -7,6 +8,7 @@ namespace Win10App.Views
         public IntroductionPage()
         {
             this.InitializeComponent();
+            DataContext = ViewModelLocator.Current.IntroductionViewModel;
         }
     }
 }

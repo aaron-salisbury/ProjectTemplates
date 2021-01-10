@@ -1,9 +1,13 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
 using GalaSoft.MvvmLight;
-using Win7Core.Base;
-using Win7App.Base.LoadedEvent;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
+using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Win7App.Base.LoadedEvent;
+using Win7Core.Base;
 
 namespace Win7App.ViewModels
 {
@@ -69,6 +73,42 @@ namespace Win7App.ViewModels
             };
             modernDialog.Buttons = new Button[] { modernDialog.OkButton };
             modernDialog.ShowDialog();
+        }
+
+        /// <summary>
+        /// Tie a RelayCommand to a long running synchronous process that returns a bool indicating whether it completed successfully.
+        /// </summary>
+        /// <param name="longRunningFunction">Action that performs long running synchronous process.</param>
+        /// <param name="taskCommand">The command that when raised triggers this work.</param>
+        /// <returns></returns>
+        public async Task InitiateProcessAsync(Func<bool> longRunningFunction, RelayCommand taskCommand)
+        {
+            try
+            {
+                IsBusy = true;
+                await InitiateProcess(longRunningFunction).ConfigureAwait(false);
+            }
+            finally
+            {
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    IsBusy = false;
+                    taskCommand.RaiseCanExecuteChanged();
+                });
+            }
+        }
+
+        private Task<bool> InitiateProcess(Func<bool> longRunningFunction)
+        {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+            Task.Run(() =>
+            {
+                bool processIsSuccessful = longRunningFunction.Invoke();
+                tcs.SetResult(processIsSuccessful);
+            }).ConfigureAwait(false);
+
+            return tcs.Task;
         }
     }
 }

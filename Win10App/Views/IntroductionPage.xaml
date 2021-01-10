@@ -9,41 +9,37 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="{StaticResource SmallLeftRightMargin}">
-            <TextBlock Style="{StaticResource HeadingTextStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,10">
-                Sample App
-            </TextBlock>
-            <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,20">
-                This is a sample application generated from Aaron Salisbury's Windows 10 App Solution Template.
-            </TextBlock>
+            <TextBlock Text="{Binding AppDisplayName, Mode=OneWay}" Style="{StaticResource HeadingTextStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,10" />
+            <TextBlock x:Uid="Settings_AboutDescription" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,20" />
 
             <TextBlock Style="{StaticResource HeadingTextStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,10">
                 Design Patern
             </TextBlock>
             <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,20">
-            <Span xml:space="preserve">This project uses <Hyperlink NavigateUri="http://www.mvvmlight.net/">MVVM Light Toolkit</Hyperlink> to implement the MVVM design pattern. MVVM separates views from models, which allows for projects that are cleaner, easier to extend, and testable. The UWP project references a core project for models and other business layer logic.</Span>
+                <Span xml:space="preserve">This project uses <Hyperlink NavigateUri="http://www.mvvmlight.net/">MVVM Light Toolkit</Hyperlink> to implement the MVVM design pattern. MVVM separates views from models, which allows for projects that are cleaner, easier to extend, and testable. The UWP project references a core project for models and other business layer logic.</Span>
             </TextBlock>
 
             <TextBlock Style="{StaticResource HeadingTextStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,10">
                 Logging
             </TextBlock>
             <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,20">
-            <Span xml:space="preserve">Both projects share an implementation of the easy and powerful <Hyperlink NavigateUri="https://serilog.net/">Serilog</Hyperlink> (<Run FontStyle="Italic">AppLogger.cs</Run>).</Span>
+                <Span xml:space="preserve">Both projects share an implementation of the easy and powerful <Hyperlink NavigateUri="https://serilog.net/">Serilog</Hyperlink> (<Run FontStyle="Italic">AppLogger.cs</Run>).</Span>
             </TextBlock>
 
             <TextBlock Style="{StaticResource HeadingTextStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,10">
                 Appearance
             </TextBlock>
             <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,20">
-            <Span xml:space="preserve">The app leverages the <Hyperlink NavigateUri="https://docs.microsoft.com/en-us/windows/apps/fluent-design-system">Fluent Design System</Hyperlink> principles built into UWP and incorporates <Hyperlink NavigateUri="https://github.com/microsoft/microsoft-ui-xaml">Microsoft.UI.Xaml</Hyperlink> backward-compatible versions of Windows UI controls, styles, and materials.</Span>
-            <LineBreak />
-            <Span>The theme can be changed on the fly. Make sure you visit the settings to adapt the theme to your preference.</Span>
+                <Span xml:space="preserve">The app leverages the <Hyperlink NavigateUri="https://docs.microsoft.com/en-us/windows/apps/fluent-design-system">Fluent Design System</Hyperlink> principles built into UWP and incorporates <Hyperlink NavigateUri="https://github.com/microsoft/microsoft-ui-xaml">Microsoft.UI.Xaml</Hyperlink> backward-compatible versions of Windows UI controls, styles, and materials.</Span>
+                <LineBreak />
+                <Span>The theme can be changed on the fly. Make sure you visit the settings to adapt the theme to your preference.</Span>
             </TextBlock>
 
             <TextBlock Style="{StaticResource HeadingTextStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,10">
                 Use
             </TextBlock>
             <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,20">
-            <Span xml:space="preserve">Aaron Salisbury's Windows 10 App Solution Template is released under <Hyperlink NavigateUri="https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE">The MIT License</Hyperlink>.</Span>
+                <Span xml:space="preserve">Aaron Salisbury's Windows 10 App Solution Template is released under <Hyperlink NavigateUri="https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE">The MIT License</Hyperlink>.</Span>
             </TextBlock>
         </StackPanel>
     </ScrollViewer>
