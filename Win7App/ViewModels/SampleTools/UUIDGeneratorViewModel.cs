@@ -17,8 +17,8 @@ namespace Win7App.ViewModels.SampleTools
             UUIDGenerator = new UUIDGenerator(AppLogger);
             CopyUUIDCommand = new RelayCommand(() => Clipboard.SetText(UUIDGenerator.UUID ?? string.Empty));
 
-            bool sortLinesfunction() => UUIDGenerator.Initiate();
-            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(sortLinesfunction, ExecuteTaskCommand), () => !IsBusy);
+            bool sortLinesFunction() => UUIDGenerator.Initiate();
+            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(sortLinesFunction, ExecuteTaskCommand), () => !IsBusy);
         }
     }
 }

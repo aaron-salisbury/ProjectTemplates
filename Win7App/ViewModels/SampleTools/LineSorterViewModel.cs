@@ -40,8 +40,8 @@ namespace Win7App.ViewModels.SampleTools
         {
             LineSorter = new LineSorter(AppLogger);
 
-            bool sortLinesfunction() => LineSorter.Initiate();
-            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(sortLinesfunction, ExecuteTaskCommand), () => !IsBusy);
+            bool sortLinesFunction() => LineSorter.Initiate();
+            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(sortLinesFunction, ExecuteTaskCommand), () => !IsBusy);
 
             SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()
