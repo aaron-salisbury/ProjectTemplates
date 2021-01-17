@@ -2,7 +2,7 @@
 using NLog.Targets;
 using System.Collections.Generic;
 
-namespace WinXPCore.Base
+namespace WinXPCore.Base.Logging
 {
     [Target("InvocableMemory")]
     public class InvocableMemoryTarget : TargetWithLayout

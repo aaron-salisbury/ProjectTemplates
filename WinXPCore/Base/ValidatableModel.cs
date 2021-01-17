@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using WinXPCore.Base.DataAnnotationValidation;
+using WinXPCore.Base.Logging;
 
 namespace WinXPCore.Base
 {

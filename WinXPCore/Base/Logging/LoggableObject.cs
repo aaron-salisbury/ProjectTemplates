@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WinXPCore.Base
+namespace WinXPCore.Base.Logging
 {
     public class LoggableObject
     {

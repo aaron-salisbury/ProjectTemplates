@@ -1,4 +1,4 @@
-﻿All these C# files in DataAnnotationValidation could be deleted if you update the library to target .Net Framework 4.0 or above.
+﻿All these C# files in DataAnnotationValidation could be deleted if you update the library to target .Net Framework 4.0 or higher.
 
 These are copied from the System.ComponentModel.DataAnnotations namespace to act as a shim while targeting .Net Framework 3.5.
 

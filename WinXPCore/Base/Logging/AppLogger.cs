@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using WinXPCore.Base.Logging;
 
 namespace WinXPCore.Base
 {
