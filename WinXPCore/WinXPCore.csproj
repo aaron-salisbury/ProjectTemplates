@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\AppLogger.cs" />
+    <Compile Include="Base\Logging\AppLogger.cs" />
     <Compile Include="Base\DataAnnotationValidation\DataAnnotationsResources.cs" />
     <Compile Include="Base\DataAnnotationValidation\DisplayAttribute.cs" />
     <Compile Include="Base\DataAnnotationValidation\IValidatableObject.cs" />
@@ -58,8 +58,8 @@
     <Compile Include="Base\DataAnnotationValidation\ValidationException.cs" />
     <Compile Include="Base\DataAnnotationValidation\ValidationResult.cs" />
     <Compile Include="Base\DataAnnotationValidation\Validator.cs" />
-    <Compile Include="Base\DataSourceMemoryTarget.cs" />
-    <Compile Include="Base\LoggableObject.cs" />
+    <Compile Include="Base\Logging\DataSourceMemoryTarget.cs" />
+    <Compile Include="Base\Logging\LoggableObject.cs" />
     <Compile Include="Base\ValidatableModel.cs" />
     <Compile Include="Base\ValidationAttributes\LettersNumbersDashes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
