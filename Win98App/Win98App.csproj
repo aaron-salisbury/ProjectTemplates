@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Base\Assets\Icons\SampleAppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -56,7 +59,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ShellForm.resx">
+      <DependentUpon>ShellForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -72,6 +79,17 @@
       <Project>{c76cb175-9bca-44d5-b006-1caaed0dd9b2}</Project>
       <Name>Win98Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Base\Assets\Icons\about.png" />
+    <Content Include="Base\Assets\Attributions.txt" />
+    <Content Include="Base\Assets\Icons\exit.png" />
+    <Content Include="Base\Assets\Icons\home.png" />
+    <Content Include="Base\Assets\Icons\log.png" />
+    <Content Include="Base\Assets\Icons\Sample Tools\color-picker.png" />
+    <Content Include="Base\Assets\Icons\Sample Tools\generator.png" />
+    <Content Include="Base\Assets\Icons\Sample Tools\line-sorter.png" />
+    <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
