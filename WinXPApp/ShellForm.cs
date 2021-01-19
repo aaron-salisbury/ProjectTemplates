@@ -23,7 +23,7 @@ namespace WinXPApp
         private void SettingsLink_Click(object sender, EventArgs e)
         {
             SettingsForm settingsForm = new SettingsForm(this);
-            settingsForm.Activated += (o, ae) => { Enabled = false; };
+            settingsForm.Activated += (o, ea) => { Enabled = false; };
             settingsForm.FormClosed += (o, fce) => { Enabled = true; };
             settingsForm.Show();
         }

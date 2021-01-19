@@ -30,7 +30,7 @@ namespace Win98App
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
-            this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,20 +41,20 @@ namespace Win98App
             this.UUIDGeneratorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FlatUIColorPickerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LineSorterMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainMenuStrip.SuspendLayout();
+            this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // MainMenuStrip
+            // MenuStrip
             // 
-            this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenuItem,
             this.ToolsMenuItem,
             this.HelpMenuItem});
-            this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.MainMenuStrip.Name = "MainMenuStrip";
-            this.MainMenuStrip.Size = new System.Drawing.Size(800, 24);
-            this.MainMenuStrip.TabIndex = 0;
-            this.MainMenuStrip.Text = "menuStrip1";
+            this.MenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.MenuStrip.Name = "MenuStrip";
+            this.MenuStrip.Size = new System.Drawing.Size(800, 24);
+            this.MenuStrip.TabIndex = 0;
+            this.MenuStrip.Text = "menuStrip1";
             // 
             // FileMenuItem
             // 
@@ -138,12 +138,12 @@ namespace Win98App
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.MainMenuStrip);
+            this.Controls.Add(this.MenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ShellForm";
             this.Text = "Form1";
-            this.MainMenuStrip.ResumeLayout(false);
-            this.MainMenuStrip.PerformLayout();
+            this.MenuStrip.ResumeLayout(false);
+            this.MenuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,7 +151,7 @@ namespace Win98App
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip MainMenuStrip;
+        private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem HomeMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;

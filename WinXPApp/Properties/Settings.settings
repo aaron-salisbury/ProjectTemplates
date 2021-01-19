@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="HelpLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://github.com/aaron-salisbury</Value>
+      <Value Profile="(Default)">https://github.com/aaron-salisbury/ProjectTemplates</Value>
     </Setting>
     <Setting Name="Style" Type="MetroFramework.MetroColorStyle" Scope="User">
       <Value Profile="(Default)">Blue</Value>
