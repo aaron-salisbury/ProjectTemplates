@@ -19,7 +19,7 @@ namespace WinXPApp.Forms.SampleTools
 
         private void SetupColorPanel()
         {
-            //TODO: Panel isn't changing size with its parent form.
+            //TODO: Panel only changes size with its parent form at the bottom. It's supposed to towards the right as well.
 
             _flatUIColorPicker = new FlatUIColorPicker();
             _flatUIColorPicker.SetFlatColors();
