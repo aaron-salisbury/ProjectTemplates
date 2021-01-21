@@ -48,9 +48,17 @@
     <Compile Include="Base\Logging\AppLogger.cs" />
     <Compile Include="Base\Logging\InvocableInMemoryTraceListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleDataAccess\CRUD.cs" />
+    <Compile Include="SampleTools\FlatColor.cs" />
+    <Compile Include="SampleTools\FlatUIColorPicker.cs" />
+    <Compile Include="SampleTools\LineSorter.cs" />
+    <Compile Include="SampleTools\UUIDGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SampleDataAccess\FlatColors.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
