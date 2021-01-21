@@ -35,17 +35,19 @@ namespace Win98App
             this.HomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UUIDGeneratorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FlatUIColorPickerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LineSorterMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainContentPanel = new System.Windows.Forms.Panel();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuStrip
             // 
+            this.MenuStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenuItem,
             this.ToolsMenuItem,
@@ -69,15 +71,17 @@ namespace Win98App
             // 
             this.HomeMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("HomeMenuItem.Image")));
             this.HomeMenuItem.Name = "HomeMenuItem";
-            this.HomeMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.HomeMenuItem.Size = new System.Drawing.Size(180, 22);
             this.HomeMenuItem.Text = "&Home";
+            this.HomeMenuItem.Click += new System.EventHandler(this.HomeMenuItem_Click);
             // 
             // ExitMenuItem
             // 
             this.ExitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExitMenuItem.Image")));
             this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.ExitMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ExitMenuItem.Text = "E&xit";
+            this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
             // ToolsMenuItem
             // 
@@ -88,6 +92,30 @@ namespace Win98App
             this.ToolsMenuItem.Name = "ToolsMenuItem";
             this.ToolsMenuItem.Size = new System.Drawing.Size(46, 20);
             this.ToolsMenuItem.Text = "&Tools";
+            // 
+            // UUIDGeneratorMenuItem
+            // 
+            this.UUIDGeneratorMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("UUIDGeneratorMenuItem.Image")));
+            this.UUIDGeneratorMenuItem.Name = "UUIDGeneratorMenuItem";
+            this.UUIDGeneratorMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UUIDGeneratorMenuItem.Text = "&UUID Generator";
+            this.UUIDGeneratorMenuItem.Click += new System.EventHandler(this.UUIDGeneratorMenuItem_Click);
+            // 
+            // FlatUIColorPickerMenuItem
+            // 
+            this.FlatUIColorPickerMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("FlatUIColorPickerMenuItem.Image")));
+            this.FlatUIColorPickerMenuItem.Name = "FlatUIColorPickerMenuItem";
+            this.FlatUIColorPickerMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.FlatUIColorPickerMenuItem.Text = "Flat UI &Color Picker";
+            this.FlatUIColorPickerMenuItem.Click += new System.EventHandler(this.FlatUIColorPickerMenuItem_Click);
+            // 
+            // LineSorterMenuItem
+            // 
+            this.LineSorterMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("LineSorterMenuItem.Image")));
+            this.LineSorterMenuItem.Name = "LineSorterMenuItem";
+            this.LineSorterMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LineSorterMenuItem.Text = "Line Sorter";
+            this.LineSorterMenuItem.Click += new System.EventHandler(this.LineSorterMenuItem_Click);
             // 
             // HelpMenuItem
             // 
@@ -112,32 +140,20 @@ namespace Win98App
             this.AboutMenuItem.Size = new System.Drawing.Size(107, 22);
             this.AboutMenuItem.Text = "&About";
             // 
-            // UUIDGeneratorMenuItem
+            // MainContentPanel
             // 
-            this.UUIDGeneratorMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("UUIDGeneratorMenuItem.Image")));
-            this.UUIDGeneratorMenuItem.Name = "UUIDGeneratorMenuItem";
-            this.UUIDGeneratorMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.UUIDGeneratorMenuItem.Text = "&UUID Generator";
-            // 
-            // FlatUIColorPickerMenuItem
-            // 
-            this.FlatUIColorPickerMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("FlatUIColorPickerMenuItem.Image")));
-            this.FlatUIColorPickerMenuItem.Name = "FlatUIColorPickerMenuItem";
-            this.FlatUIColorPickerMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.FlatUIColorPickerMenuItem.Text = "Flat UI &Color Picker";
-            // 
-            // LineSorterMenuItem
-            // 
-            this.LineSorterMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("LineSorterMenuItem.Image")));
-            this.LineSorterMenuItem.Name = "LineSorterMenuItem";
-            this.LineSorterMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.LineSorterMenuItem.Text = "Line Sorter";
+            this.MainContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainContentPanel.Location = new System.Drawing.Point(0, 24);
+            this.MainContentPanel.Name = "MainContentPanel";
+            this.MainContentPanel.Size = new System.Drawing.Size(800, 426);
+            this.MainContentPanel.TabIndex = 1;
             // 
             // ShellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.MainContentPanel);
             this.Controls.Add(this.MenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ShellForm";
@@ -162,6 +178,7 @@ namespace Win98App
         private System.Windows.Forms.ToolStripMenuItem UUIDGeneratorMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FlatUIColorPickerMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LineSorterMenuItem;
+        private System.Windows.Forms.Panel MainContentPanel;
     }
 }
 
