@@ -115,7 +115,7 @@ namespace WinXPApp.Forms.SampleTools
             this.tbTextToSort.SelectionLength = 0;
             this.tbTextToSort.SelectionStart = 0;
             this.tbTextToSort.ShortcutsEnabled = true;
-            this.tbTextToSort.Size = new System.Drawing.Size(735, 439);
+            this.tbTextToSort.Size = new System.Drawing.Size(735, 441);
             this.tbTextToSort.TabIndex = 5;
             this.tbTextToSort.UseSelectable = true;
             this.tbTextToSort.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));

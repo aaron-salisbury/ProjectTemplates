@@ -1,4 +1,6 @@
-﻿using MetroFramework.Forms;
+﻿using MetroFramework;
+using MetroFramework.Components;
+using MetroFramework.Forms;
 using WinXPApp.Base;
 
 namespace WinXPApp.Forms

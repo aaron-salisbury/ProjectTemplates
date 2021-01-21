@@ -33,14 +33,8 @@ namespace WinXPApp
             this.mainTabControl = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.introductionUC1 = new WinXPApp.Forms.IntroductionUC();
-            this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
-            this.toolsTabControl = new MetroFramework.Controls.MetroTabControl();
-            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
-            this.uuidGeneratorUC1 = new WinXPApp.Forms.UUIDGeneratorUC();
-            this.metroTabPage5 = new MetroFramework.Controls.MetroTabPage();
-            this.flatUIColorPickerUC1 = new WinXPApp.Forms.SampleTools.FlatUIColorPickerUC();
-            this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
-            this.lineSorterUC1 = new WinXPApp.Forms.SampleTools.LineSorterUC();
+            this.ToolsTabPage = new MetroFramework.Controls.MetroTabPage();
+            this.toolsNavigatorUC1 = new WinXPApp.Forms.SampleTools.ToolsNavigatorUC();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
             this.logUC1 = new WinXPApp.Forms.LogUC();
             this.settingsLink = new MetroFramework.Controls.MetroLink();
@@ -49,11 +43,7 @@ namespace WinXPApp
             this.panel1 = new System.Windows.Forms.Panel();
             this.mainTabControl.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
-            this.metroTabPage2.SuspendLayout();
-            this.toolsTabControl.SuspendLayout();
-            this.metroTabPage4.SuspendLayout();
-            this.metroTabPage5.SuspendLayout();
-            this.metroTabPage6.SuspendLayout();
+            this.ToolsTabPage.SuspendLayout();
             this.metroTabPage3.SuspendLayout();
             this.panelSettingsHelp.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +51,7 @@ namespace WinXPApp
             // mainTabControl
             // 
             this.mainTabControl.Controls.Add(this.metroTabPage1);
-            this.mainTabControl.Controls.Add(this.metroTabPage2);
+            this.mainTabControl.Controls.Add(this.ToolsTabPage);
             this.mainTabControl.Controls.Add(this.metroTabPage3);
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
@@ -70,7 +60,7 @@ namespace WinXPApp
             this.mainTabControl.Location = new System.Drawing.Point(20, 60);
             this.mainTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.SelectedIndex = 1;
             this.mainTabControl.Size = new System.Drawing.Size(897, 527);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.UseSelectable = true;
@@ -99,115 +89,30 @@ namespace WinXPApp
             this.introductionUC1.Size = new System.Drawing.Size(876, 457);
             this.introductionUC1.TabIndex = 2;
             // 
-            // metroTabPage2
+            // ToolsTabPage
             // 
-            this.metroTabPage2.Controls.Add(this.toolsTabControl);
-            this.metroTabPage2.HorizontalScrollbarBarColor = true;
-            this.metroTabPage2.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage2.HorizontalScrollbarSize = 10;
-            this.metroTabPage2.Location = new System.Drawing.Point(4, 35);
-            this.metroTabPage2.Name = "metroTabPage2";
-            this.metroTabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.metroTabPage2.Size = new System.Drawing.Size(889, 488);
-            this.metroTabPage2.TabIndex = 1;
-            this.metroTabPage2.Text = "tools";
-            this.metroTabPage2.VerticalScrollbarBarColor = true;
-            this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage2.VerticalScrollbarSize = 10;
+            this.ToolsTabPage.Controls.Add(this.toolsNavigatorUC1);
+            this.ToolsTabPage.HorizontalScrollbarBarColor = true;
+            this.ToolsTabPage.HorizontalScrollbarHighlightOnWheel = false;
+            this.ToolsTabPage.HorizontalScrollbarSize = 10;
+            this.ToolsTabPage.Location = new System.Drawing.Point(4, 35);
+            this.ToolsTabPage.Name = "ToolsTabPage";
+            this.ToolsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ToolsTabPage.Size = new System.Drawing.Size(889, 488);
+            this.ToolsTabPage.TabIndex = 1;
+            this.ToolsTabPage.Text = "tools";
+            this.ToolsTabPage.VerticalScrollbarBarColor = true;
+            this.ToolsTabPage.VerticalScrollbarHighlightOnWheel = false;
+            this.ToolsTabPage.VerticalScrollbarSize = 10;
             // 
-            // toolsTabControl
+            // toolsNavigatorUC1
             // 
-            this.toolsTabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.toolsTabControl.Controls.Add(this.metroTabPage4);
-            this.toolsTabControl.Controls.Add(this.metroTabPage5);
-            this.toolsTabControl.Controls.Add(this.metroTabPage6);
-            this.toolsTabControl.Cursor = System.Windows.Forms.Cursors.Default;
-            this.toolsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolsTabControl.FontSize = MetroFramework.MetroTabControlSize.Small;
-            this.toolsTabControl.Location = new System.Drawing.Point(3, 3);
-            this.toolsTabControl.Margin = new System.Windows.Forms.Padding(0);
-            this.toolsTabControl.Name = "toolsTabControl";
-            this.toolsTabControl.SelectedIndex = 0;
-            this.toolsTabControl.Size = new System.Drawing.Size(883, 482);
-            this.toolsTabControl.TabIndex = 2;
-            this.toolsTabControl.UseSelectable = true;
-            // 
-            // metroTabPage4
-            // 
-            this.metroTabPage4.Controls.Add(this.uuidGeneratorUC1);
-            this.metroTabPage4.HorizontalScrollbarBarColor = true;
-            this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.HorizontalScrollbarSize = 10;
-            this.metroTabPage4.Location = new System.Drawing.Point(4, 37);
-            this.metroTabPage4.Name = "metroTabPage4";
-            this.metroTabPage4.Size = new System.Drawing.Size(875, 441);
-            this.metroTabPage4.TabIndex = 3;
-            this.metroTabPage4.Text = "UUID GENERATOR";
-            this.metroTabPage4.VerticalScrollbarBarColor = true;
-            this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.VerticalScrollbarSize = 10;
-            // 
-            // uuidGeneratorUC1
-            // 
-            this.uuidGeneratorUC1.BackColor = System.Drawing.Color.Transparent;
-            this.uuidGeneratorUC1.Location = new System.Drawing.Point(30, 25);
-            this.uuidGeneratorUC1.Name = "uuidGeneratorUC1";
-            this.uuidGeneratorUC1.Size = new System.Drawing.Size(599, 304);
-            this.uuidGeneratorUC1.TabIndex = 2;
-            // 
-            // metroTabPage5
-            // 
-            this.metroTabPage5.Controls.Add(this.flatUIColorPickerUC1);
-            this.metroTabPage5.HorizontalScrollbarBarColor = true;
-            this.metroTabPage5.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage5.HorizontalScrollbarSize = 10;
-            this.metroTabPage5.Location = new System.Drawing.Point(4, 37);
-            this.metroTabPage5.Name = "metroTabPage5";
-            this.metroTabPage5.Size = new System.Drawing.Size(875, 441);
-            this.metroTabPage5.TabIndex = 4;
-            this.metroTabPage5.Text = "FLAT UI COLOR PICKER";
-            this.metroTabPage5.VerticalScrollbarBarColor = true;
-            this.metroTabPage5.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage5.VerticalScrollbarSize = 10;
-            // 
-            // flatUIColorPickerUC1
-            // 
-            this.flatUIColorPickerUC1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flatUIColorPickerUC1.AutoSize = true;
-            this.flatUIColorPickerUC1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flatUIColorPickerUC1.BackColor = System.Drawing.Color.Transparent;
-            this.flatUIColorPickerUC1.Location = new System.Drawing.Point(30, 25);
-            this.flatUIColorPickerUC1.Name = "flatUIColorPickerUC1";
-            this.flatUIColorPickerUC1.Size = new System.Drawing.Size(421, 314);
-            this.flatUIColorPickerUC1.TabIndex = 2;
-            // 
-            // metroTabPage6
-            // 
-            this.metroTabPage6.Controls.Add(this.lineSorterUC1);
-            this.metroTabPage6.HorizontalScrollbarBarColor = true;
-            this.metroTabPage6.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage6.HorizontalScrollbarSize = 10;
-            this.metroTabPage6.Location = new System.Drawing.Point(4, 37);
-            this.metroTabPage6.Name = "metroTabPage6";
-            this.metroTabPage6.Size = new System.Drawing.Size(875, 441);
-            this.metroTabPage6.TabIndex = 5;
-            this.metroTabPage6.Text = "LINE SORTER";
-            this.metroTabPage6.VerticalScrollbarBarColor = true;
-            this.metroTabPage6.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage6.VerticalScrollbarSize = 10;
-            // 
-            // lineSorterUC1
-            // 
-            this.lineSorterUC1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineSorterUC1.BackColor = System.Drawing.Color.Transparent;
-            this.lineSorterUC1.Location = new System.Drawing.Point(31, 25);
-            this.lineSorterUC1.Name = "lineSorterUC1";
-            this.lineSorterUC1.Size = new System.Drawing.Size(841, 417);
-            this.lineSorterUC1.TabIndex = 2;
+            this.toolsNavigatorUC1.BackColor = System.Drawing.Color.Transparent;
+            this.toolsNavigatorUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolsNavigatorUC1.Location = new System.Drawing.Point(3, 3);
+            this.toolsNavigatorUC1.Name = "toolsNavigatorUC1";
+            this.toolsNavigatorUC1.Size = new System.Drawing.Size(883, 482);
+            this.toolsNavigatorUC1.TabIndex = 2;
             // 
             // metroTabPage3
             // 
@@ -295,12 +200,7 @@ namespace WinXPApp
             this.Theme = MetroFramework.MetroThemeStyle.Default;
             this.mainTabControl.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);
-            this.metroTabPage2.ResumeLayout(false);
-            this.toolsTabControl.ResumeLayout(false);
-            this.metroTabPage4.ResumeLayout(false);
-            this.metroTabPage5.ResumeLayout(false);
-            this.metroTabPage5.PerformLayout();
-            this.metroTabPage6.ResumeLayout(false);
+            this.ToolsTabPage.ResumeLayout(false);
             this.metroTabPage3.ResumeLayout(false);
             this.panelSettingsHelp.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -311,21 +211,15 @@ namespace WinXPApp
 
         private MetroFramework.Controls.MetroTabControl mainTabControl;
         private MetroFramework.Controls.MetroTabPage metroTabPage1;
-        private MetroFramework.Controls.MetroTabPage metroTabPage2;
+        private MetroFramework.Controls.MetroTabPage ToolsTabPage;
         private MetroFramework.Controls.MetroTabPage metroTabPage3;
-        private MetroFramework.Controls.MetroTabPage metroTabPage4;
-        private MetroFramework.Controls.MetroTabPage metroTabPage5;
-        private MetroFramework.Controls.MetroTabPage metroTabPage6;
-        private MetroFramework.Controls.MetroTabControl toolsTabControl;
         private MetroFramework.Controls.MetroLink helpLink;
         private MetroFramework.Controls.MetroLink settingsLink;
         private System.Windows.Forms.Panel panelSettingsHelp;
         private System.Windows.Forms.Panel panel1;
         private Forms.IntroductionUC introductionUC1;
-        private Forms.UUIDGeneratorUC uuidGeneratorUC1;
         private Forms.LogUC logUC1;
-        private Forms.SampleTools.FlatUIColorPickerUC flatUIColorPickerUC1;
-        private Forms.SampleTools.LineSorterUC lineSorterUC1;
+        private Forms.SampleTools.ToolsNavigatorUC toolsNavigatorUC1;
     }
 }
 

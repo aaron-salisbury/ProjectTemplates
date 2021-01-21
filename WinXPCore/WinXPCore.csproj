@@ -60,6 +60,7 @@
     <Compile Include="Base\DataAnnotationValidation\Validator.cs" />
     <Compile Include="Base\Logging\DataSourceMemoryTarget.cs" />
     <Compile Include="Base\Logging\LoggableObject.cs" />
+    <Compile Include="Base\ObservableObject.cs" />
     <Compile Include="Base\ValidatableModel.cs" />
     <Compile Include="Base\ValidationAttributes\LettersNumbersDashes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
