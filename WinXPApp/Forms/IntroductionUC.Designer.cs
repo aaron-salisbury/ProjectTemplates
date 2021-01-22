@@ -255,7 +255,7 @@ namespace WinXPApp.Forms
             this.Controls.Add(this.mfLink);
             this.Controls.Add(this.nlogLink);
             this.Name = "IntroductionUC";
-            this.Size = new System.Drawing.Size(891, 453);
+            this.Size = new System.Drawing.Size(891, 536);
             this.ResumeLayout(false);
             this.PerformLayout();
 
