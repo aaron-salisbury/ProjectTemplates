@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Linq;
 using Win10App.Base.Helpers;
 using Win10App.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace Win10App.Views
 {
     public sealed partial class FlatUIColorPickerPage : Page
     {
+        private const double SELECTED_TILE_STROKE_THICKNESS = 4D;
+
         public FlatUIColorPickerPage()
         {
             InitializeComponent();
@@ -43,19 +47,25 @@ namespace Win10App.Views
                     {
                         string colorHex = flatUIColorPickerViewModel.FlatUIColorPicker.FlatColors[flatColorIndex].Hex;
 
-                        Button colorButton = new Button
+                        // Using Rectangle instead of Button because in UWP the hardcoded Button OnHover changes make this tool difficult to use.
+                        Windows.UI.Xaml.Shapes.Rectangle colorTile = new Windows.UI.Xaml.Shapes.Rectangle
                         {
-                            Background = PlatformShim.BrushConverterConvertFrom(colorHex),
-                            Command = flatUIColorPickerViewModel.ColorClickCommand,
-                            CommandParameter = colorHex,
+                            Fill = PlatformShim.BrushConverterConvertFrom(colorHex),
                             Margin = new Thickness(1, 1, 1, 1),
                             HorizontalAlignment = HorizontalAlignment.Stretch,
-                            VerticalAlignment = VerticalAlignment.Stretch
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            Tag = colorHex,
+                            Stroke = Application.Current.Resources["ButtonBorderThemeBrush"] as Windows.UI.Xaml.Media.Brush,
+                            StrokeThickness = string.Equals(ViewModelLocator.Current.FlatUIColorPickerViewModel.SelectedHex, colorHex)
+                                ? SELECTED_TILE_STROKE_THICKNESS
+                                : 0D
                         };
 
-                        Grid.SetRow(colorButton, row);
-                        Grid.SetColumn(colorButton, column);
-                        flatColorGrid.Children.Add(colorButton);
+                        colorTile.PointerPressed += new PointerEventHandler(ColorTile_Click);
+
+                        Grid.SetRow(colorTile, row);
+                        Grid.SetColumn(colorTile, column);
+                        flatColorGrid.Children.Add(colorTile);
 
                         flatColorIndex++;
                     }
@@ -77,6 +87,21 @@ namespace Win10App.Views
             }
 
             return numRows;
+        }
+
+        private void ColorTile_Click(object sender, PointerRoutedEventArgs e)
+        {
+            foreach (Windows.UI.Xaml.Shapes.Rectangle colorRectangle in ((Grid)MainGrid.Children[1]).Children.Select(uie => uie as Windows.UI.Xaml.Shapes.Rectangle))
+            {
+                colorRectangle.StrokeThickness = 0D;
+            }
+
+            Windows.UI.Xaml.Shapes.Rectangle colorTile = (Windows.UI.Xaml.Shapes.Rectangle)sender;
+
+            colorTile.StrokeThickness = SELECTED_TILE_STROKE_THICKNESS;
+
+            // Rectangles do not have Command or Command Parameter properties, so manually firing.
+            ViewModelLocator.Current.FlatUIColorPickerViewModel.ColorClickCommand.Execute(colorTile.Tag);
         }
     }
 }
