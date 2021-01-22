@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Win98App.Forms
 {
@@ -13,6 +7,11 @@ namespace Win98App.Forms
         public IntroductionUC()
         {
             InitializeComponent();
+        }
+
+        private void LicenseLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE");
         }
     }
 }

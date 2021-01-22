@@ -6,7 +6,7 @@ namespace Win98App
 {
     public partial class ShellForm : Form
     {
-        private readonly Padding _defaultContentAreaPadding = new Padding(10);
+        private readonly Padding _defaultContentAreaPadding = new Padding(15);
 
         public ShellForm()
         {
