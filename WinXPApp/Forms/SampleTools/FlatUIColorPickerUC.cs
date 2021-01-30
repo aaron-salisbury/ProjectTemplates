@@ -102,7 +102,7 @@ namespace WinXPApp.Forms.SampleTools
             HexTextBox.Text = flatColor.Hex;
         }
 
-        private void BtnCopy_Click(object sender, EventArgs e)
+        private void BtnCopy_OnClick(object sender, EventArgs e)
         {
             Clipboard.SetText(HexTextBox.Text ?? string.Empty);
         }

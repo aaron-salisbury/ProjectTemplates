@@ -136,7 +136,7 @@ namespace WinXPApp.Forms.SampleTools
             this.CopyButton.TabIndex = 5;
             this.CopyButton.Text = "Copy";
             this.CopyButton.UseSelectable = true;
-            this.CopyButton.Click += new System.EventHandler(this.BtnCopy_Click);
+            this.CopyButton.Click += new System.EventHandler(this.BtnCopy_OnClick);
             // 
             // ColorsTLP
             // 

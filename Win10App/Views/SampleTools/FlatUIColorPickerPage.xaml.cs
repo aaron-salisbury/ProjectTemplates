@@ -61,7 +61,7 @@ namespace Win10App.Views
                                 : 0D
                         };
 
-                        colorTile.PointerPressed += new PointerEventHandler(ColorTile_Click);
+                        colorTile.PointerPressed += new PointerEventHandler(ColorTile_OnClick);
 
                         Grid.SetRow(colorTile, row);
                         Grid.SetColumn(colorTile, column);
@@ -89,7 +89,7 @@ namespace Win10App.Views
             return numRows;
         }
 
-        private void ColorTile_Click(object sender, PointerRoutedEventArgs e)
+        private void ColorTile_OnClick(object sender, PointerRoutedEventArgs e)
         {
             foreach (Windows.UI.Xaml.Shapes.Rectangle colorRectangle in ((Grid)MainGrid.Children[1]).Children.Select(uie => uie as Windows.UI.Xaml.Shapes.Rectangle))
             {

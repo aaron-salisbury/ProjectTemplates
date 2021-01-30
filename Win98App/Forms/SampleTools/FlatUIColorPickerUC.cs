@@ -100,7 +100,7 @@ namespace Win98App.Forms.SampleTools
             HexTextBox.Text = flatColor.Hex;
         }
 
-        private void CopyButton_Click(object sender, EventArgs e)
+        private void CopyButton_OnClick(object sender, EventArgs e)
         {
             Clipboard.SetText(HexTextBox.Text ?? string.Empty);
         }

@@ -90,7 +90,7 @@ namespace Win98App.Forms.SampleTools
             this.CopyButton.TabIndex = 5;
             this.CopyButton.Text = "Copy";
             this.CopyButton.UseVisualStyleBackColor = true;
-            this.CopyButton.Click += new System.EventHandler(this.CopyButton_Click);
+            this.CopyButton.Click += new System.EventHandler(this.CopyButton_OnClick);
             // 
             // ColorsTLP
             // 
