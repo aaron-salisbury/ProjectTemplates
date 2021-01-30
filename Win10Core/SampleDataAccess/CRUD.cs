@@ -7,7 +7,7 @@ using Win10Core.SampleTools;
 
 namespace Win10Core.SampleDataAccess
 {
-    public class CRUD
+    public static class CRUD
     {
         public static List<FlatColor> ReadAllFlatColors()
         {

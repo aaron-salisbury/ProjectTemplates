@@ -30,12 +30,12 @@ namespace WinXPApp.Forms.SampleTools
         private void InitializeComponent()
         {
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.txtName = new MetroFramework.Controls.MetroTextBox();
+            this.NameTextBox = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.txtHex = new MetroFramework.Controls.MetroTextBox();
+            this.HexTextBox = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.btnCopy = new MetroFramework.Controls.MetroButton();
-            this.tlpColors = new System.Windows.Forms.TableLayoutPanel();
+            this.CopyButton = new MetroFramework.Controls.MetroButton();
+            this.ColorsTLP = new System.Windows.Forms.TableLayoutPanel();
             this.SuspendLayout();
             // 
             // metroLabel1
@@ -47,36 +47,36 @@ namespace WinXPApp.Forms.SampleTools
             this.metroLabel1.TabIndex = 0;
             this.metroLabel1.Text = "Name";
             // 
-            // txtName
+            // NameTextBox
             // 
             // 
             // 
             // 
-            this.txtName.CustomButton.Image = null;
-            this.txtName.CustomButton.Location = new System.Drawing.Point(220, 1);
-            this.txtName.CustomButton.Name = "";
-            this.txtName.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.txtName.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtName.CustomButton.TabIndex = 1;
-            this.txtName.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtName.CustomButton.UseSelectable = true;
-            this.txtName.CustomButton.Visible = false;
-            this.txtName.Enabled = false;
-            this.txtName.Lines = new string[0];
-            this.txtName.Location = new System.Drawing.Point(94, 36);
-            this.txtName.MaxLength = 32767;
-            this.txtName.Name = "txtName";
-            this.txtName.PasswordChar = '\0';
-            this.txtName.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtName.SelectedText = "";
-            this.txtName.SelectionLength = 0;
-            this.txtName.SelectionStart = 0;
-            this.txtName.ShortcutsEnabled = true;
-            this.txtName.Size = new System.Drawing.Size(242, 23);
-            this.txtName.TabIndex = 1;
-            this.txtName.UseSelectable = true;
-            this.txtName.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtName.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.NameTextBox.CustomButton.Image = null;
+            this.NameTextBox.CustomButton.Location = new System.Drawing.Point(220, 1);
+            this.NameTextBox.CustomButton.Name = "";
+            this.NameTextBox.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.NameTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.NameTextBox.CustomButton.TabIndex = 1;
+            this.NameTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.NameTextBox.CustomButton.UseSelectable = true;
+            this.NameTextBox.CustomButton.Visible = false;
+            this.NameTextBox.Enabled = false;
+            this.NameTextBox.Lines = new string[0];
+            this.NameTextBox.Location = new System.Drawing.Point(94, 36);
+            this.NameTextBox.MaxLength = 32767;
+            this.NameTextBox.Name = "NameTextBox";
+            this.NameTextBox.PasswordChar = '\0';
+            this.NameTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.NameTextBox.SelectedText = "";
+            this.NameTextBox.SelectionLength = 0;
+            this.NameTextBox.SelectionStart = 0;
+            this.NameTextBox.ShortcutsEnabled = true;
+            this.NameTextBox.Size = new System.Drawing.Size(242, 23);
+            this.NameTextBox.TabIndex = 1;
+            this.NameTextBox.UseSelectable = true;
+            this.NameTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.NameTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // metroLabel2
             // 
@@ -87,36 +87,36 @@ namespace WinXPApp.Forms.SampleTools
             this.metroLabel2.TabIndex = 2;
             this.metroLabel2.Text = "Hex";
             // 
-            // txtHex
+            // HexTextBox
             // 
             // 
             // 
             // 
-            this.txtHex.CustomButton.Image = null;
-            this.txtHex.CustomButton.Location = new System.Drawing.Point(220, 1);
-            this.txtHex.CustomButton.Name = "";
-            this.txtHex.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.txtHex.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtHex.CustomButton.TabIndex = 1;
-            this.txtHex.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtHex.CustomButton.UseSelectable = true;
-            this.txtHex.CustomButton.Visible = false;
-            this.txtHex.Enabled = false;
-            this.txtHex.Lines = new string[0];
-            this.txtHex.Location = new System.Drawing.Point(94, 79);
-            this.txtHex.MaxLength = 32767;
-            this.txtHex.Name = "txtHex";
-            this.txtHex.PasswordChar = '\0';
-            this.txtHex.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtHex.SelectedText = "";
-            this.txtHex.SelectionLength = 0;
-            this.txtHex.SelectionStart = 0;
-            this.txtHex.ShortcutsEnabled = true;
-            this.txtHex.Size = new System.Drawing.Size(242, 23);
-            this.txtHex.TabIndex = 3;
-            this.txtHex.UseSelectable = true;
-            this.txtHex.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtHex.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.HexTextBox.CustomButton.Image = null;
+            this.HexTextBox.CustomButton.Location = new System.Drawing.Point(220, 1);
+            this.HexTextBox.CustomButton.Name = "";
+            this.HexTextBox.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.HexTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.HexTextBox.CustomButton.TabIndex = 1;
+            this.HexTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.HexTextBox.CustomButton.UseSelectable = true;
+            this.HexTextBox.CustomButton.Visible = false;
+            this.HexTextBox.Enabled = false;
+            this.HexTextBox.Lines = new string[0];
+            this.HexTextBox.Location = new System.Drawing.Point(94, 79);
+            this.HexTextBox.MaxLength = 32767;
+            this.HexTextBox.Name = "HexTextBox";
+            this.HexTextBox.PasswordChar = '\0';
+            this.HexTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.HexTextBox.SelectedText = "";
+            this.HexTextBox.SelectionLength = 0;
+            this.HexTextBox.SelectionStart = 0;
+            this.HexTextBox.ShortcutsEnabled = true;
+            this.HexTextBox.Size = new System.Drawing.Size(242, 23);
+            this.HexTextBox.TabIndex = 3;
+            this.HexTextBox.UseSelectable = true;
+            this.HexTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.HexTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // metroLabel3
             // 
@@ -128,33 +128,33 @@ namespace WinXPApp.Forms.SampleTools
             this.metroLabel3.TabIndex = 4;
             this.metroLabel3.Text = "FLAT UI COLOR PICKER";
             // 
-            // btnCopy
+            // CopyButton
             // 
-            this.btnCopy.Location = new System.Drawing.Point(343, 79);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(75, 23);
-            this.btnCopy.TabIndex = 5;
-            this.btnCopy.Text = "Copy";
-            this.btnCopy.UseSelectable = true;
-            this.btnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
+            this.CopyButton.Location = new System.Drawing.Point(343, 79);
+            this.CopyButton.Name = "CopyButton";
+            this.CopyButton.Size = new System.Drawing.Size(75, 23);
+            this.CopyButton.TabIndex = 5;
+            this.CopyButton.Text = "Copy";
+            this.CopyButton.UseSelectable = true;
+            this.CopyButton.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
-            // tlpColors
+            // ColorsTLP
             // 
-            this.tlpColors.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ColorsTLP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tlpColors.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tlpColors.CausesValidation = false;
-            this.tlpColors.ColumnCount = 2;
-            this.tlpColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpColors.Location = new System.Drawing.Point(4, 134);
-            this.tlpColors.Name = "tlpColors";
-            this.tlpColors.RowCount = 2;
-            this.tlpColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpColors.Size = new System.Drawing.Size(621, 414);
-            this.tlpColors.TabIndex = 6;
+            this.ColorsTLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ColorsTLP.CausesValidation = false;
+            this.ColorsTLP.ColumnCount = 2;
+            this.ColorsTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ColorsTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ColorsTLP.Location = new System.Drawing.Point(4, 134);
+            this.ColorsTLP.Name = "ColorsTLP";
+            this.ColorsTLP.RowCount = 2;
+            this.ColorsTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ColorsTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ColorsTLP.Size = new System.Drawing.Size(621, 414);
+            this.ColorsTLP.TabIndex = 6;
             // 
             // FlatUIColorPickerUC
             // 
@@ -163,12 +163,12 @@ namespace WinXPApp.Forms.SampleTools
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.tlpColors);
-            this.Controls.Add(this.btnCopy);
+            this.Controls.Add(this.ColorsTLP);
+            this.Controls.Add(this.CopyButton);
             this.Controls.Add(this.metroLabel3);
-            this.Controls.Add(this.txtHex);
+            this.Controls.Add(this.HexTextBox);
             this.Controls.Add(this.metroLabel2);
-            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.metroLabel1);
             this.Name = "FlatUIColorPickerUC";
             this.Size = new System.Drawing.Size(628, 563);
@@ -180,11 +180,11 @@ namespace WinXPApp.Forms.SampleTools
         #endregion
 
         private MetroFramework.Controls.MetroLabel metroLabel1;
-        private MetroFramework.Controls.MetroTextBox txtName;
+        private MetroFramework.Controls.MetroTextBox NameTextBox;
         private MetroFramework.Controls.MetroLabel metroLabel2;
-        private MetroFramework.Controls.MetroTextBox txtHex;
+        private MetroFramework.Controls.MetroTextBox HexTextBox;
         private MetroFramework.Controls.MetroLabel metroLabel3;
-        private MetroFramework.Controls.MetroButton btnCopy;
-        private System.Windows.Forms.TableLayoutPanel tlpColors;
+        private MetroFramework.Controls.MetroButton CopyButton;
+        private System.Windows.Forms.TableLayoutPanel ColorsTLP;
     }
 }

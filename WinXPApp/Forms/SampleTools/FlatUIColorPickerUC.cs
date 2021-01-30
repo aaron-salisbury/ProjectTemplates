@@ -19,48 +19,43 @@ namespace WinXPApp.Forms.SampleTools
 
         private void SetupColorPanel()
         {
-            //TODO: Panel only changes size with its parent form at the bottom. It's supposed to towards the right as well.
-
-            _flatUIColorPicker = new FlatUIColorPicker();
-            _flatUIColorPicker.SetFlatColors();
-
-            tlpColors.SuspendLayout();
-
-            tlpColors.Controls.Clear();
-            tlpColors.RowStyles.Clear();
-            tlpColors.ColumnStyles.Clear();
+            ColorsTLP.Controls.Clear();
+            ColorsTLP.RowStyles.Clear();
+            ColorsTLP.ColumnStyles.Clear();
+            ColorsTLP.AutoSize = true;
+            ColorsTLP.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ColorsTLP.Anchor = (AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom);
 
             BuildColorTiles();
-
-            tlpColors.AutoSize = true;
-            tlpColors.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            tlpColors.Anchor = (AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom);
-
-            tlpColors.ResumeLayout(true);
         }
 
         private void BuildColorTiles()
         {
-            tlpColors.RowCount = GetNumberOfRows(_flatUIColorPicker.FlatColors.Count);
-            tlpColors.ColumnCount = Convert.ToInt32(Math.Ceiling((decimal)_flatUIColorPicker.FlatColors.Count / tlpColors.RowCount));
+            ColorsTLP.SuspendLayout();
 
-            float rowRercent = 100F / tlpColors.RowCount;
-            float columnRercent = 100F / tlpColors.ColumnCount;
+            _flatUIColorPicker = new FlatUIColorPicker();
+            _flatUIColorPicker.SetFlatColors();
 
-            for (int i = 0; i < tlpColors.RowCount; i++)
+            ColorsTLP.RowCount = GetNumberOfRows(_flatUIColorPicker.FlatColors.Count);
+            ColorsTLP.ColumnCount = Convert.ToInt32(Math.Ceiling((decimal)_flatUIColorPicker.FlatColors.Count / ColorsTLP.RowCount));
+
+            float rowRercent = 100F / ColorsTLP.RowCount;
+            float columnRercent = 100F / ColorsTLP.ColumnCount;
+
+            for (int i = 0; i < ColorsTLP.RowCount; i++)
             {
-                tlpColors.RowStyles.Add(new RowStyle(SizeType.Percent, rowRercent));
+                ColorsTLP.RowStyles.Add(new RowStyle(SizeType.Percent, rowRercent));
             }
 
-            for (int i = 0; i < tlpColors.ColumnCount; i++)
+            for (int i = 0; i < ColorsTLP.ColumnCount; i++)
             {
-                tlpColors.RowStyles.Add(new RowStyle(SizeType.Percent, columnRercent));
+                ColorsTLP.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, columnRercent));
             }
 
             int flatColorIndex = 0;
-            for (int row = 0; row < tlpColors.RowCount; row++)
+            for (int row = 0; row < ColorsTLP.RowCount; row++)
             {
-                for (int column = 0; column < tlpColors.ColumnCount; column++)
+                for (int column = 0; column < ColorsTLP.ColumnCount; column++)
                 {
                     if (flatColorIndex < _flatUIColorPicker.FlatColors.Count)
                     {
@@ -77,12 +72,14 @@ namespace WinXPApp.Forms.SampleTools
 
                         colorTile.Click += new EventHandler(ColorTile_OnClick);
 
-                        tlpColors.Controls.Add(colorTile);
-                        tlpColors.SetRow(colorTile, row);
-                        tlpColors.SetColumn(colorTile, column);
+                        ColorsTLP.Controls.Add(colorTile);
+                        ColorsTLP.SetRow(colorTile, row);
+                        ColorsTLP.SetColumn(colorTile, column);
                     }
                 }
             }
+
+            ColorsTLP.ResumeLayout(true);
         }
 
         private static int GetNumberOfRows(int totalItemCount)
@@ -101,13 +98,13 @@ namespace WinXPApp.Forms.SampleTools
             MetroTile colorTile = (MetroTile)sender;
             FlatColor flatColor = (FlatColor)colorTile.Tag;
 
-            txtName.Text = flatColor.Name;
-            txtHex.Text = flatColor.Hex;
+            NameTextBox.Text = flatColor.Name;
+            HexTextBox.Text = flatColor.Hex;
         }
 
         private void BtnCopy_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(txtHex.Text ?? string.Empty);
+            Clipboard.SetText(HexTextBox.Text ?? string.Empty);
         }
     }
 }

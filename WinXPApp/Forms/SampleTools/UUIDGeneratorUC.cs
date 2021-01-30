@@ -44,17 +44,17 @@ namespace WinXPApp.Forms
         //TODO: Try to replace manual validating with binding.
         private void SetAndValidateUUID()
         {
-            txtNewUUID.Text = _uuidGenerator.UUID;
+            NewGuidTextBox.Text = _uuidGenerator.UUID;
 
             string errorMessage = _uuidGenerator[nameof(UUIDGenerator.UUID)];
 
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                _uuidErrorProvider.SetError(txtNewUUID, errorMessage);
+                _uuidErrorProvider.SetError(NewGuidTextBox, errorMessage);
             }
             else
             {
-                _uuidErrorProvider.SetError(txtNewUUID, string.Empty);
+                _uuidErrorProvider.SetError(NewGuidTextBox, string.Empty);
             }
         }
     }

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Xml;
 using Win98Core.SampleTools;
 
 namespace Win98Core.SampleDataAccess
 {
-    public class CRUD
+    public static class CRUD
     {
         private const string FLAT_COLOR_ELEMENT_NAME = "FlatColor";
 
@@ -15,16 +14,14 @@ namespace Win98Core.SampleDataAccess
         {
             List<FlatColor> flatColors = new List<FlatColor>();
 
-            XmlReader reader = XmlReader.Create(GetEmbeddedResourceText("Win98Core.SampleDataAccess.FlatColors.xml"));
+            XmlTextReader reader = new XmlTextReader(new StringReader(GetEmbeddedResourceText("Win98Core.SampleDataAccess.FlatColors.xml")));
             reader.ReadToFollowing(FLAT_COLOR_ELEMENT_NAME);
 
             do
             {
-                reader.MoveToFirstAttribute();
-
                 flatColors.Add(new FlatColor
                 {
-                    Hex = reader.Value,
+                    Hex = reader.GetAttribute("hex"),
                     Name = reader.ReadElementContentAsString()
                 });
             } while (reader.ReadToFollowing(FLAT_COLOR_ELEMENT_NAME));

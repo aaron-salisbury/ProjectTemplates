@@ -32,9 +32,9 @@ namespace WinXPApp.Forms
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.txtNewUUID = new MetroFramework.Controls.MetroTextBox();
-            this.btnGenerate = new MetroFramework.Controls.MetroButton();
-            this.btnCopy = new MetroFramework.Controls.MetroButton();
+            this.NewGuidTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.GenerateButton = new MetroFramework.Controls.MetroButton();
+            this.CopyButton = new MetroFramework.Controls.MetroButton();
             this.cbCapitalize = new MetroFramework.Controls.MetroCheckBox();
             this.SuspendLayout();
             // 
@@ -66,56 +66,56 @@ namespace WinXPApp.Forms
             this.metroLabel3.TabIndex = 3;
             this.metroLabel3.Text = "New UUID";
             // 
-            // txtNewUUID
+            // NewGuidTextBox
             // 
             // 
             // 
             // 
-            this.txtNewUUID.CustomButton.Image = null;
-            this.txtNewUUID.CustomButton.Location = new System.Drawing.Point(229, 1);
-            this.txtNewUUID.CustomButton.Name = "";
-            this.txtNewUUID.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.txtNewUUID.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtNewUUID.CustomButton.TabIndex = 1;
-            this.txtNewUUID.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtNewUUID.CustomButton.UseSelectable = true;
-            this.txtNewUUID.CustomButton.Visible = false;
-            this.txtNewUUID.Enabled = false;
-            this.txtNewUUID.Lines = new string[0];
-            this.txtNewUUID.Location = new System.Drawing.Point(125, 101);
-            this.txtNewUUID.MaxLength = 32767;
-            this.txtNewUUID.Name = "txtNewUUID";
-            this.txtNewUUID.PasswordChar = '\0';
-            this.txtNewUUID.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtNewUUID.SelectedText = "";
-            this.txtNewUUID.SelectionLength = 0;
-            this.txtNewUUID.SelectionStart = 0;
-            this.txtNewUUID.ShortcutsEnabled = true;
-            this.txtNewUUID.Size = new System.Drawing.Size(251, 23);
-            this.txtNewUUID.TabIndex = 4;
-            this.txtNewUUID.UseSelectable = true;
-            this.txtNewUUID.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtNewUUID.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.NewGuidTextBox.CustomButton.Image = null;
+            this.NewGuidTextBox.CustomButton.Location = new System.Drawing.Point(229, 1);
+            this.NewGuidTextBox.CustomButton.Name = "";
+            this.NewGuidTextBox.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.NewGuidTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.NewGuidTextBox.CustomButton.TabIndex = 1;
+            this.NewGuidTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.NewGuidTextBox.CustomButton.UseSelectable = true;
+            this.NewGuidTextBox.CustomButton.Visible = false;
+            this.NewGuidTextBox.Enabled = false;
+            this.NewGuidTextBox.Lines = new string[0];
+            this.NewGuidTextBox.Location = new System.Drawing.Point(125, 101);
+            this.NewGuidTextBox.MaxLength = 32767;
+            this.NewGuidTextBox.Name = "NewGuidTextBox";
+            this.NewGuidTextBox.PasswordChar = '\0';
+            this.NewGuidTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.NewGuidTextBox.SelectedText = "";
+            this.NewGuidTextBox.SelectionLength = 0;
+            this.NewGuidTextBox.SelectionStart = 0;
+            this.NewGuidTextBox.ShortcutsEnabled = true;
+            this.NewGuidTextBox.Size = new System.Drawing.Size(251, 23);
+            this.NewGuidTextBox.TabIndex = 4;
+            this.NewGuidTextBox.UseSelectable = true;
+            this.NewGuidTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.NewGuidTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // btnGenerate
+            // GenerateButton
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(125, 72);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(75, 23);
-            this.btnGenerate.TabIndex = 1;
-            this.btnGenerate.Text = "Generate";
-            this.btnGenerate.UseSelectable = true;
-            this.btnGenerate.Click += new System.EventHandler(this.BtnGenerate_Click);
+            this.GenerateButton.Location = new System.Drawing.Point(125, 72);
+            this.GenerateButton.Name = "GenerateButton";
+            this.GenerateButton.Size = new System.Drawing.Size(75, 23);
+            this.GenerateButton.TabIndex = 1;
+            this.GenerateButton.Text = "Generate";
+            this.GenerateButton.UseSelectable = true;
+            this.GenerateButton.Click += new System.EventHandler(this.BtnGenerate_Click);
             // 
-            // btnCopy
+            // CopyButton
             // 
-            this.btnCopy.Location = new System.Drawing.Point(207, 71);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(75, 23);
-            this.btnCopy.TabIndex = 2;
-            this.btnCopy.Text = "Copy";
-            this.btnCopy.UseSelectable = true;
-            this.btnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
+            this.CopyButton.Location = new System.Drawing.Point(207, 71);
+            this.CopyButton.Name = "CopyButton";
+            this.CopyButton.Size = new System.Drawing.Size(75, 23);
+            this.CopyButton.TabIndex = 2;
+            this.CopyButton.Text = "Copy";
+            this.CopyButton.UseSelectable = true;
+            this.CopyButton.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
             // cbCapitalize
             // 
@@ -135,9 +135,9 @@ namespace WinXPApp.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.cbCapitalize);
-            this.Controls.Add(this.btnCopy);
-            this.Controls.Add(this.btnGenerate);
-            this.Controls.Add(this.txtNewUUID);
+            this.Controls.Add(this.CopyButton);
+            this.Controls.Add(this.GenerateButton);
+            this.Controls.Add(this.NewGuidTextBox);
             this.Controls.Add(this.metroLabel3);
             this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.metroLabel1);
@@ -154,9 +154,9 @@ namespace WinXPApp.Forms
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroLabel metroLabel3;
-        private MetroFramework.Controls.MetroTextBox txtNewUUID;
-        private MetroFramework.Controls.MetroButton btnGenerate;
-        private MetroFramework.Controls.MetroButton btnCopy;
+        private MetroFramework.Controls.MetroTextBox NewGuidTextBox;
+        private MetroFramework.Controls.MetroButton GenerateButton;
+        private MetroFramework.Controls.MetroButton CopyButton;
         private MetroFramework.Controls.MetroCheckBox cbCapitalize;
     }
 }
