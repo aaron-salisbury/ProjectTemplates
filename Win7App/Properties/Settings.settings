@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SampleApp</Value>
+      <Value Profile="(Default)">Sample App</Value>
     </Setting>
     <Setting Name="ThemeSource" Type="System.String" Scope="User">
       <Value Profile="(Default)">Dark</Value>

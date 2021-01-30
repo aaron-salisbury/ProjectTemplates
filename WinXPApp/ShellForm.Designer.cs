@@ -196,7 +196,7 @@ namespace WinXPApp
             this.MinimumSize = new System.Drawing.Size(425, 260);
             this.Name = "ShellForm";
             this.Style = MetroFramework.MetroColorStyle.Default;
-            this.Text = "SampleApp";
+            this.Text = "Form1";
             this.Theme = MetroFramework.MetroThemeStyle.Default;
             this.mainTabControl.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);

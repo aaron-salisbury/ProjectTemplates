@@ -12,6 +12,8 @@ namespace Win98App
         {
             InitializeComponent();
 
+            Text = Properties.Settings.Default.ApplicationFriendlyName;
+
             MainContentPanel.Controls.Add(new IntroductionUC { Padding = _defaultContentAreaPadding });
         }
 

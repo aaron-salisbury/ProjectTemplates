@@ -58,5 +58,17 @@ namespace WinXPApp.Properties {
                 this["Theme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sample App")]
+        public string ApplicationFriendlyName {
+            get {
+                return ((string)(this["ApplicationFriendlyName"]));
+            }
+            set {
+                this["ApplicationFriendlyName"] = value;
+            }
+        }
     }
 }

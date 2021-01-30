@@ -11,5 +11,8 @@
     <Setting Name="Theme" Type="MetroFramework.MetroThemeStyle" Scope="User">
       <Value Profile="(Default)">Light</Value>
     </Setting>
+    <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sample App</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

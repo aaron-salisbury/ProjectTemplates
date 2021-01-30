@@ -14,6 +14,8 @@ namespace WinXPApp
         {
             InitializeComponent();
 
+            Text = Properties.Settings.Default.ApplicationFriendlyName;
+
             AppearanceManager.LoadBaseSettings(this);
             AppLogger.SetTargetInvoking(logUC1.UpdateLogs);
             logUC1.UpdateLogs(AppLogger.GetLogs()); // Load logs that may have been written before delegate could be set.
