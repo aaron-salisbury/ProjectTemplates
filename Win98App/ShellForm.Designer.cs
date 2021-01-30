@@ -130,15 +130,16 @@ namespace Win98App
             // 
             this.LogMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("LogMenuItem.Image")));
             this.LogMenuItem.Name = "LogMenuItem";
-            this.LogMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.LogMenuItem.Size = new System.Drawing.Size(180, 22);
             this.LogMenuItem.Text = "&Log";
             // 
             // AboutMenuItem
             // 
             this.AboutMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutMenuItem.Image")));
             this.AboutMenuItem.Name = "AboutMenuItem";
-            this.AboutMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.AboutMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AboutMenuItem.Text = "&About";
+            this.AboutMenuItem.Click += new System.EventHandler(this.AboutMenuItem_Click);
             // 
             // MainContentPanel
             // 

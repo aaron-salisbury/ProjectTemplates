@@ -34,5 +34,30 @@ namespace Win98App.Properties {
                 this["ApplicationFriendlyName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("This is a sample application generated from Aaron Salisbury\'s Windows 98 App Solu" +
+            "tion Template.")]
+        public string AboutDescription {
+            get {
+                return ((string)(this["AboutDescription"]));
+            }
+            set {
+                this["AboutDescription"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/aaron-salisbury/ProjectTemplates")]
+        public string ApplicationLink {
+            get {
+                return ((string)(this["ApplicationLink"]));
+            }
+            set {
+                this["ApplicationLink"] = value;
+            }
+        }
     }
 }

@@ -5,5 +5,11 @@
     <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Sample App</Value>
     </Setting>
+    <Setting Name="AboutDescription" Type="System.String" Scope="User">
+      <Value Profile="(Default)">This is a sample application generated from Aaron Salisbury's Windows 98 App Solution Template.</Value>
+    </Setting>
+    <Setting Name="ApplicationLink" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://github.com/aaron-salisbury/ProjectTemplates</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
