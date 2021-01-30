@@ -60,7 +60,7 @@ namespace Win98App.Forms.SampleTools
             // CapitalizeCheckBox
             // 
             this.CapitalizeCheckBox.AutoSize = true;
-            this.CapitalizeCheckBox.Location = new System.Drawing.Point(91, 43);
+            this.CapitalizeCheckBox.Location = new System.Drawing.Point(80, 44);
             this.CapitalizeCheckBox.Name = "CapitalizeCheckBox";
             this.CapitalizeCheckBox.Size = new System.Drawing.Size(15, 14);
             this.CapitalizeCheckBox.TabIndex = 2;
@@ -68,7 +68,7 @@ namespace Win98App.Forms.SampleTools
             // 
             // GenerateButton
             // 
-            this.GenerateButton.Location = new System.Drawing.Point(105, 97);
+            this.GenerateButton.Location = new System.Drawing.Point(94, 98);
             this.GenerateButton.Margin = new System.Windows.Forms.Padding(0);
             this.GenerateButton.Name = "GenerateButton";
             this.GenerateButton.Size = new System.Drawing.Size(75, 23);
@@ -79,7 +79,7 @@ namespace Win98App.Forms.SampleTools
             // 
             // CopyButton
             // 
-            this.CopyButton.Location = new System.Drawing.Point(186, 97);
+            this.CopyButton.Location = new System.Drawing.Point(175, 98);
             this.CopyButton.Margin = new System.Windows.Forms.Padding(0);
             this.CopyButton.Name = "CopyButton";
             this.CopyButton.Size = new System.Drawing.Size(75, 23);
@@ -91,10 +91,10 @@ namespace Win98App.Forms.SampleTools
             // NewGuidTextBox
             // 
             this.NewGuidTextBox.Enabled = false;
-            this.NewGuidTextBox.Location = new System.Drawing.Point(105, 125);
+            this.NewGuidTextBox.Location = new System.Drawing.Point(94, 126);
             this.NewGuidTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.NewGuidTextBox.Name = "NewGuidTextBox";
-            this.NewGuidTextBox.Size = new System.Drawing.Size(235, 20);
+            this.NewGuidTextBox.Size = new System.Drawing.Size(233, 20);
             this.NewGuidTextBox.TabIndex = 5;
             // 
             // label3

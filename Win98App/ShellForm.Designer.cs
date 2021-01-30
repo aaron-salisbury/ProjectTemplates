@@ -54,7 +54,7 @@ namespace Win98App
             this.HelpMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(800, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(759, 24);
             this.MenuStrip.TabIndex = 0;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -147,17 +147,18 @@ namespace Win98App
             this.MainContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainContentPanel.Location = new System.Drawing.Point(0, 24);
             this.MainContentPanel.Name = "MainContentPanel";
-            this.MainContentPanel.Size = new System.Drawing.Size(800, 426);
+            this.MainContentPanel.Size = new System.Drawing.Size(759, 387);
             this.MainContentPanel.TabIndex = 1;
             // 
             // ShellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(759, 411);
             this.Controls.Add(this.MainContentPanel);
             this.Controls.Add(this.MenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(365, 365);
             this.Name = "ShellForm";
             this.Text = "Form1";
             this.MenuStrip.ResumeLayout(false);

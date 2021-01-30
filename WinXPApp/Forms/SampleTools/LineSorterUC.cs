@@ -40,28 +40,28 @@ namespace WinXPApp.Forms.SampleTools
                 .Where(cbi => cbi.Value == (int)_lineSorter.SelectedSortType)
                 .First();
 
-            cbSortTypes.DataSource = SortTypes;
-            cbSortTypes.SelectedItem = selectedComboBoxEnumItem;
-            cbSortTypes.ValueMember = nameof(ComboBoxEnumItem.Value);
-            cbSortTypes.DisplayMember = nameof(ComboBoxEnumItem.Text);
+            SortTypeComboBox.DataSource = SortTypes;
+            SortTypeComboBox.SelectedItem = selectedComboBoxEnumItem;
+            SortTypeComboBox.ValueMember = nameof(ComboBoxEnumItem.Value);
+            SortTypeComboBox.DisplayMember = nameof(ComboBoxEnumItem.Text);
         }
 
         private void BtnSelectAll_Click(object sender, EventArgs e)
         {
-            tbTextToSort.Focus();
-            tbTextToSort.SelectAll();
+            SortTextTextBox.Focus();
+            SortTextTextBox.SelectAll();
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
         {
-            _lineSorter.TextToSort = tbTextToSort.Text;
+            _lineSorter.TextToSort = SortTextTextBox.Text;
             _lineSorter.Initiate();
-            tbTextToSort.Text = _lineSorter.TextToSort;
+            SortTextTextBox.Text = _lineSorter.TextToSort;
         }
 
         private void CbSortTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBoxEnumItem selectedComboBoxEnumItem = cbSortTypes.SelectedItem as ComboBoxEnumItem;
+            ComboBoxEnumItem selectedComboBoxEnumItem = SortTypeComboBox.SelectedItem as ComboBoxEnumItem;
             _lineSorter.SelectedSortType = (LineSorter.SortTypes)Convert.ToInt32(selectedComboBoxEnumItem.Value);
         }
     }
