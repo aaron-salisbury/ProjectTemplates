@@ -35,13 +35,13 @@ namespace Win98App
         private void FlatUIColorPickerMenuItem_Click(object sender, EventArgs e)
         {
             MainContentPanel.Controls.Clear();
-            MainContentPanel.Controls.Add(new Forms.SampleTools.FlatUIColorPickerUC { Padding = _defaultContentAreaPadding });
+            MainContentPanel.Controls.Add(new Forms.SampleTools.FlatUIColorPickerUC { Padding = _defaultContentAreaPadding, Dock = DockStyle.Fill });
         }
 
         private void LineSorterMenuItem_Click(object sender, EventArgs e)
         {
             MainContentPanel.Controls.Clear();
-            MainContentPanel.Controls.Add(new Forms.SampleTools.LineSorterUC { Padding = _defaultContentAreaPadding });
+            MainContentPanel.Controls.Add(new Forms.SampleTools.LineSorterUC { Padding = _defaultContentAreaPadding, Dock = DockStyle.Fill });
         }
     }
 }

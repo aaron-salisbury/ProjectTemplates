@@ -71,7 +71,7 @@ namespace Win98App
             // 
             this.HomeMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("HomeMenuItem.Image")));
             this.HomeMenuItem.Name = "HomeMenuItem";
-            this.HomeMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.HomeMenuItem.Size = new System.Drawing.Size(107, 22);
             this.HomeMenuItem.Text = "&Home";
             this.HomeMenuItem.Click += new System.EventHandler(this.HomeMenuItem_Click);
             // 
@@ -79,7 +79,7 @@ namespace Win98App
             // 
             this.ExitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExitMenuItem.Image")));
             this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ExitMenuItem.Size = new System.Drawing.Size(107, 22);
             this.ExitMenuItem.Text = "E&xit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
@@ -97,7 +97,7 @@ namespace Win98App
             // 
             this.UUIDGeneratorMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("UUIDGeneratorMenuItem.Image")));
             this.UUIDGeneratorMenuItem.Name = "UUIDGeneratorMenuItem";
-            this.UUIDGeneratorMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UUIDGeneratorMenuItem.Size = new System.Drawing.Size(174, 22);
             this.UUIDGeneratorMenuItem.Text = "&UUID Generator";
             this.UUIDGeneratorMenuItem.Click += new System.EventHandler(this.UUIDGeneratorMenuItem_Click);
             // 
@@ -105,7 +105,7 @@ namespace Win98App
             // 
             this.FlatUIColorPickerMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("FlatUIColorPickerMenuItem.Image")));
             this.FlatUIColorPickerMenuItem.Name = "FlatUIColorPickerMenuItem";
-            this.FlatUIColorPickerMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.FlatUIColorPickerMenuItem.Size = new System.Drawing.Size(174, 22);
             this.FlatUIColorPickerMenuItem.Text = "Flat UI &Color Picker";
             this.FlatUIColorPickerMenuItem.Click += new System.EventHandler(this.FlatUIColorPickerMenuItem_Click);
             // 
@@ -113,7 +113,7 @@ namespace Win98App
             // 
             this.LineSorterMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("LineSorterMenuItem.Image")));
             this.LineSorterMenuItem.Name = "LineSorterMenuItem";
-            this.LineSorterMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LineSorterMenuItem.Size = new System.Drawing.Size(174, 22);
             this.LineSorterMenuItem.Text = "Line Sorter";
             this.LineSorterMenuItem.Click += new System.EventHandler(this.LineSorterMenuItem_Click);
             // 
@@ -142,6 +142,8 @@ namespace Win98App
             // 
             // MainContentPanel
             // 
+            this.MainContentPanel.AutoSize = true;
+            this.MainContentPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MainContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainContentPanel.Location = new System.Drawing.Point(0, 24);
             this.MainContentPanel.Name = "MainContentPanel";
