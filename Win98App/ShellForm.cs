@@ -14,13 +14,13 @@ namespace Win98App
 
             Text = Properties.Settings.Default.ApplicationFriendlyName;
 
-            MainContentPanel.Controls.Add(new IntroductionUC { Padding = _defaultContentAreaPadding });
+            MainContentPanel.Controls.Add(new IntroductionUC { Padding = _defaultContentAreaPadding, Dock = DockStyle.Fill });
         }
 
         private void HomeMenuItem_Click(object sender, EventArgs e)
         {
             MainContentPanel.Controls.Clear();
-            MainContentPanel.Controls.Add(new IntroductionUC { Padding = _defaultContentAreaPadding });
+            MainContentPanel.Controls.Add(new IntroductionUC { Padding = _defaultContentAreaPadding, Dock = DockStyle.Fill });
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
