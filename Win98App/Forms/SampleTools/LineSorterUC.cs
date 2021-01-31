@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Win98App.Base.Extensions;
 using Win98App.Base.Helpers;
 using Win98Core.SampleTools;
 
@@ -30,10 +31,9 @@ namespace Win98App.Forms.SampleTools
 
         private void PrepareSortTypeComboBox()
         {
-            //TODO: The sort type ToString should call an extension method to add a space between the words.
             SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()
-                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = st.ToString() })
+                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = st.ToString().SplitPascalCase() })
                 .ToList();
 
             ComboBoxEnumItem selectedComboBoxEnumItem = SortTypes
