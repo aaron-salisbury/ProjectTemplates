@@ -12,7 +12,7 @@ namespace Win98Core.Base
     // http://codebetter.com/davidhayden/2006/02/19/enterprise-library-2-0-logging-application-block/
     public static class AppLogger
     {
-        private static readonly LogWriter _writer;
+        private static LogWriter _writer;
 
         private static readonly InvocableInMemoryTraceListener _inMemoryTraceListener;
 
@@ -33,9 +33,8 @@ namespace Win98Core.Base
 
         private static InvocableInMemoryTraceListener ConfigureInMemoryTraceListener()
         {
-            // The formatter is responsible for the look of the message. 
-            // Notice the tokens: {timestamp}, {newline}, {message}, {category}
-            string textFormatterTemplate = "Timestamp: { timestamp }{ newline}" + "Message: { message} { newline}" + "Category: { category} { newline}";
+            // The formatter is responsible for the look of the message.
+            string textFormatterTemplate = "UTC {timestamp(yyyy-MM-dd HH:mm:ss.ff)} [{category}] {message}";
             TextFormatter formatter = new TextFormatter(textFormatterTemplate);
 
             // Log messages to an in memory collection.
@@ -51,15 +50,16 @@ namespace Win98Core.Base
             // Assigning a non-existant LogSource for Logging Application Block Special Sources I don’t care about.
             LogSource nonExistantLogSource = new LogSource("Empty");
 
-            // I want all messages with a category of “Error” or “Debug” to get distributed to all TraceListeners in my mainLogSource.
+            // I want all messages, of any category, to get distributed to all TraceListeners in my mainLogSource.
             IDictionary<string, LogSource> traceSources = new Dictionary<string, LogSource>();
-            traceSources.Add(LogCategories.Error.ToString(), mainLogSource);
-            traceSources.Add(LogCategories.Debug.ToString(), mainLogSource);
+            foreach (LogCategories logCategory in Enum.GetValues(typeof(LogCategories)))
+            {
+                traceSources.Add(logCategory.ToString(), mainLogSource);
+            }
 
             // Gluing it all together.
             // No filters at this time.
-            // Not yet logging a couple of the Special Sources: 
-            // All Events and Events not using “Error” or “Debug” categories.
+            // Not yet logging a couple of the Special Sources.
             return new LogWriter(
                 new ILogFilter[0],
                 traceSources,

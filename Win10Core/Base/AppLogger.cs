@@ -5,7 +5,6 @@ using Serilog.Formatting;
 using Serilog.Formatting.Display;
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -28,7 +27,7 @@ namespace Win10Core.Base
 
     public class InMemorySink : ObservableObject, ILogEventSink
     {
-        readonly ITextFormatter _textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{Exception}", CultureInfo.InvariantCulture);
+        readonly ITextFormatter _textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss:ff} [{Level}] {Message}{Exception}", CultureInfo.InvariantCulture);
 
         public ConcurrentQueue<string> Events { get; } = new ConcurrentQueue<string>();
 

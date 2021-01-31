@@ -132,6 +132,7 @@ namespace Win98App
             this.LogMenuItem.Name = "LogMenuItem";
             this.LogMenuItem.Size = new System.Drawing.Size(180, 22);
             this.LogMenuItem.Text = "&Log";
+            this.LogMenuItem.Click += new System.EventHandler(this.LogMenuItem_Click);
             // 
             // AboutMenuItem
             // 

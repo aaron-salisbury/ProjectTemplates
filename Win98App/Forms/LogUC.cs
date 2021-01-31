@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WinXPCore.Base;
+using Win98Core.Base;
 
-namespace WinXPApp.Forms
+namespace Win98App.Forms
 {
     public partial class LogUC : UserControl
     {
@@ -17,7 +17,7 @@ namespace WinXPApp.Forms
             LogsTextBox.Text = string.Join(Environment.NewLine, ((List<string>)logs).ToArray());
         }
 
-        private void BtnDownload_Click(object sender, System.EventArgs e)
+        private void DownloadButton_Click(object sender, EventArgs e)
         {
             AppLogger.OpenLog();
         }
