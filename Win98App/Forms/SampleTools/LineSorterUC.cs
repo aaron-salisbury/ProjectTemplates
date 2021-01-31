@@ -7,6 +7,7 @@ using Win98Core.SampleTools;
 
 namespace Win98App.Forms.SampleTools
 {
+    //TODO: This user control's design layout, among others, doesn't match the runtime's.
     public partial class LineSorterUC : UserControl
     {
         private LineSorter _lineSorter { get; set; }
@@ -29,6 +30,7 @@ namespace Win98App.Forms.SampleTools
 
         private void PrepareSortTypeComboBox()
         {
+            //TODO: The sort type ToString should call an extension method to add a space between the words.
             SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()
                 .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = st.ToString() })

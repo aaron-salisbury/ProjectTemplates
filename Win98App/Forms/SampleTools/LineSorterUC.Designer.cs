@@ -61,7 +61,7 @@ namespace Win98App.Forms.SampleTools
             this.SortTypeComboBox.FormattingEnabled = true;
             this.SortTypeComboBox.Location = new System.Drawing.Point(95, 57);
             this.SortTypeComboBox.Name = "SortTypeComboBox";
-            this.SortTypeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SortTypeComboBox.Size = new System.Drawing.Size(136, 21);
             this.SortTypeComboBox.TabIndex = 2;
             this.SortTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.SortTypeComboBox_SelectedIndexChanged);
             // 
