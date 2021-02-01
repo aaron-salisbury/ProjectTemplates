@@ -34,7 +34,7 @@ namespace Win98Core.Base
         private static InvocableInMemoryTraceListener ConfigureInMemoryTraceListener()
         {
             // The formatter is responsible for the look of the message.
-            string textFormatterTemplate = "UTC {timestamp(yyyy-MM-dd HH:mm:ss.ff)} [{category}] {message}";
+            string textFormatterTemplate = "{timestamp(yyyy-MM-dd HH:mm:ss.ff)} UTC [{category}] {message}";
             TextFormatter formatter = new TextFormatter(textFormatterTemplate);
 
             // Log messages to an in memory collection.
