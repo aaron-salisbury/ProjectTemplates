@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Win98Core.Base;
 
 namespace Win98Core.SampleTools
 {
-    public class UUIDGenerator
+    public class UUIDGenerator : ValidatableModel
     {
         private bool _capitalize;
         public bool Capitalize
@@ -39,6 +41,31 @@ namespace Win98Core.SampleTools
                 AppLogger.Write(e.Message, AppLogger.LogCategories.Error);
                 return false;
             }
+        }
+
+        public override bool Validate()
+        {
+            Errors = new List<string>();
+
+            if (!string.IsNullOrEmpty(UUID))
+            {
+                if (UUID.Length != 36)
+                {
+                    Errors.Add("The UUID must be 36 characters long.");
+                }
+
+                if (!Regex.IsMatch(UUID, @"^[^\s\,]+$"))
+                {
+                    Errors.Add("The UUID cannot have spaces.");
+                }
+
+                if (!Regex.IsMatch(UUID, @"^[a-zA-Z0-9-]+$"))
+                {
+                    Errors.Add("The UUID may only contain letters, numbers, and dashes.");
+                }
+            }
+
+            return Errors.Count == 0;
         }
     }
 }
