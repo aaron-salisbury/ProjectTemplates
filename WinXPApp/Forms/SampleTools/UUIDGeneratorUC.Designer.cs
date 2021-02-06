@@ -109,7 +109,7 @@ namespace WinXPApp.Forms
             // 
             // CopyButton
             // 
-            this.CopyButton.Location = new System.Drawing.Point(207, 71);
+            this.CopyButton.Location = new System.Drawing.Point(206, 72);
             this.CopyButton.Name = "CopyButton";
             this.CopyButton.Size = new System.Drawing.Size(75, 23);
             this.CopyButton.TabIndex = 2;

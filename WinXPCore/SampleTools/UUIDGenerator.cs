@@ -18,7 +18,7 @@ namespace WinXPCore.SampleTools
         // If we wanted, these validations could be combined, but this is to demonstrate different options for writting data annotation validations.
         // System.ComponentModel.DataAnnotations comes with standard ones like StringLength and the ability to write regular expressions directly.
         // Or we can also write our own custom rules like LettersNumbersDashes by inheriting from ValidationAttribute and overwriting the IsValid method.
-        [StringLength(36, ErrorMessage = "The {0} must be {1} characters long.")]
+        [StringExactLength(36, ErrorMessage = "The {0} must be 36 characters long.")]
         [RegularExpression(@"^[^\s\,]+$", ErrorMessage = "The {0} cannot have spaces.")]
         [LettersNumbersDashes(ErrorMessage = "The {0} may only contain letters, numbers, and dashes.")]
         public string UUID

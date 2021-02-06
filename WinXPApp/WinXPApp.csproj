@@ -81,6 +81,9 @@
     <Compile Include="Base\Extensions\ControlExtensions.cs" />
     <Compile Include="Base\Extensions\EnumExtensions.cs" />
     <Compile Include="Base\Helpers\ComboBoxEnumItem.cs" />
+    <Compile Include="Base\Helpers\StandardErrorProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +197,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Base\Resources\ErrorSymbol.ico" />
     <Content Include="Base\Resources\SampleAppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
