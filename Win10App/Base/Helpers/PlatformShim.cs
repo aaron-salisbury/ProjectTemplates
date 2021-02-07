@@ -17,30 +17,30 @@ namespace Win10App.Base.Helpers
         {
             SolidColorBrush brush = null;
 
-            hex = hex.Replace("#", string.Empty);
-
-            byte a;
-            byte r;
-            byte g;
-            byte b;
-
-            if (hex.Length == 6)
+            if (!string.IsNullOrEmpty(hex))
             {
-                a = 255;
-                r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
-                g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
-                b = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+                hex = hex.Replace("#", string.Empty);
 
-                brush = new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
-            }
-            else if (hex.Length == 8)
-            {
-                a = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
-                r = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
-                g = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
-                b = (byte)(Convert.ToUInt32(hex.Substring(6, 2), 16));
+                byte a, r, g, b;
 
-                brush = new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
+                if (hex.Length == 6)
+                {
+                    a = 255;
+                    r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
+                    g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
+                    b = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+
+                    brush = new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
+                }
+                else if (hex.Length == 8)
+                {
+                    a = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
+                    r = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
+                    g = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+                    b = (byte)(Convert.ToUInt32(hex.Substring(6, 2), 16));
+
+                    brush = new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
+                }
             }
 
             return brush;
