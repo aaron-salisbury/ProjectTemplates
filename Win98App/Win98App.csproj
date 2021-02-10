@@ -145,14 +145,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Base\Assets\Icons\about.png" />
     <Content Include="Base\Assets\Attributions.txt" />
-    <Content Include="Base\Assets\Icons\exit.png" />
-    <Content Include="Base\Assets\Icons\home.png" />
-    <Content Include="Base\Assets\Icons\log.png" />
-    <Content Include="Base\Assets\Icons\Sample Tools\color-picker.png" />
-    <Content Include="Base\Assets\Icons\Sample Tools\generator.png" />
-    <Content Include="Base\Assets\Icons\Sample Tools\line-sorter.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\color-swatch.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\cross-circle-frame.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\home.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\monitor-window.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\question-frame.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\report.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\sort-alphabet.png" />
     <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

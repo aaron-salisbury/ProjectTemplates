@@ -1,26 +1,5 @@
 ﻿    Sample App Icon: 
-https://www.iconarchive.com/show/button-ui-system-folders-drives-icons-by-blackvariant/Utilities-icon.html
+    https://www.iconarchive.com/show/button-ui-system-folders-drives-icons-by-blackvariant/Utilities-icon.html
 
-    Home Icon:
-By Freepik at https://www.flaticon.com/free-icon/home_1946488
-
-    Exit Icon:
-By mavadee at https://www.flaticon.com/free-icon/logout_3580175
-
-    Log Icon:
-By Freepik at https://www.flaticon.com/free-icon/log-file-format_28811
-
-    About Icon:
-By bqlqn at https://www.flaticon.com/free-icon/about_2948059
-
-
-***** Sample Tools *****
-
-    Generator Icon:
-By Freepik at https://www.flaticon.com/free-icon/electric-generator_2695237
-
-    Color Picker Icon:
-By Freepik at https://www.flaticon.com/free-icon/eyedropper_3659715
-
-    Line Sorter Icon:
-By Catalin Fertu at https://www.flaticon.com/free-icon/sort-descending_54937
+    Icons by Yusuke Kamiyamane. Licensed under a Creative Commons Attribution 3.0 License.
+    https://p.yusukekamiyamane.com/
