@@ -34,7 +34,7 @@
 
             <winui:NavigationViewItem Content="Log" helpers:NavHelper.NavigateTo="Win10App.ViewModels.LogViewModel" Visibility="{Binding IsDebug}">
                 <winui:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8FD;"/>
+                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF0E3;"/>
                 </winui:NavigationViewItem.Icon>
             </winui:NavigationViewItem>
             
