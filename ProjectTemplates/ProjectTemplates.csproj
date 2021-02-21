@@ -58,7 +58,9 @@
     <None Include="Packages\MetroModernUI.1.4.0.0.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Packages\Microsoft.Practices.EnterpriseLibrary.Logging.2.0.0.nupkg" />
+    <None Include="Packages\Microsoft.Practices.EnterpriseLibrary.Logging.2.0.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Packages\ModernUI.WPF.1.0.9.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
