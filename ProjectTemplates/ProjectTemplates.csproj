@@ -49,18 +49,6 @@
     <Compile Include="ProjectTemplatesPackage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ProjectTemplates\Windows_10_App_Template.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="ProjectTemplates\Windows_7_App_Template.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="ProjectTemplates\Windows_XP_App_Template.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <None Include="Packages\Krypton.Components.Suite.4.5.9.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -86,10 +74,10 @@
     <None Include="Packages\System.ComponentModel.Annotations.5.0.0.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="ProjectTemplates\Windows_98_App_Template.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
+    <None Include="ProjectTemplates\Windows_10_App_Template.zip" />
+    <None Include="ProjectTemplates\Windows_7_App_Template.zip" />
+    <None Include="ProjectTemplates\Windows_98_App_Template.zip" />
+    <None Include="ProjectTemplates\Windows_XP_App_Template.zip" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
