@@ -143,7 +143,7 @@ Copy and paste the following into the text file:
 </VSTemplate>
 ```
 
-Replace the Name, Description, DefaultName, and Icon element values with your own information. You can copy the generic template icon into the new root folder from one of the generated template folders, or use your own value in that element. More about LanguageTag, PlatformTag, and ProjectTypeTag [here](https://docs.microsoft.com/en-us/visualstudio/extensibility/visual-studio-template-schema-reference).
+Replace the Name, Description, DefaultName, and Icon element values with your own information. You can copy the generic template icon into the new root folder from one of the generated template folders, or use your own value in that element. More about LanguageTag, PlatformTag, and ProjectTypeTag [here](https://docs.microsoft.com/en-us/visualstudio/ide/template-tags).
 
 In the ProjectCollection element, we need a ProjectTemplateLink for each project we generated templates for and want to combine into this root template. Name them how you want them to be generated, but using $safeprojectname$ will plug in what the user choose during the template wizard.
 
