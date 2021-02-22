@@ -49,6 +49,14 @@
     <Compile Include="ProjectTemplatesPackage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="SampleAppIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="Packages\Krypton.Components.Suite.4.5.9.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
