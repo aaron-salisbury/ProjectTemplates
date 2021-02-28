@@ -197,6 +197,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Base\Resources\Attributions.txt" />
     <Content Include="Base\Resources\ErrorSymbol.ico" />
     <Content Include="Base\Resources\SampleAppIcon.ico" />
   </ItemGroup>
