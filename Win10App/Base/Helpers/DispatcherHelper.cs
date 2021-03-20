@@ -10,11 +10,7 @@ namespace Win10App.Base.Helpers
 
     public static class DispatcherHelper
     {
-        public static CoreDispatcher UIDispatcher
-        {
-            get;
-            private set;
-        }
+        public static CoreDispatcher UIDispatcher { get; private set; }
 
         /// <summary>
         /// Executes an action on the UI thread. If this method is called
