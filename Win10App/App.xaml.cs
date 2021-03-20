@@ -1,4 +1,5 @@
 ﻿using System;
+using Win10App.Base.Helpers;
 using Win10App.Base.Services;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -51,7 +52,7 @@ namespace Win10App
 
         private UIElement CreateShell()
         {
-            GalaSoft.MvvmLight.Threading.DispatcherHelper.Initialize();
+            DispatcherHelper.Initialize();
             return new ShellPage();
         }
     }

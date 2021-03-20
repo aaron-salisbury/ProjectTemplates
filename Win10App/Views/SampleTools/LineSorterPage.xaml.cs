@@ -14,7 +14,7 @@ namespace Win10App.Views
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-             GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(SelectAllInTextBox);
+            Base.Helpers.DispatcherHelper.CheckBeginInvokeOnUI(SelectAllInTextBox);
         }
 
         private void SelectAllInTextBox()

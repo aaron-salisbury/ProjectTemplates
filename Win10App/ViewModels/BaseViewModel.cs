@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Threading;
 using System;
 using System.Threading.Tasks;
 using Win10Core.Base;
@@ -53,7 +52,7 @@ namespace Win10App.ViewModels
             }
             finally
             {
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                Base.Helpers.DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
                     IsBusy = false;
                     taskCommand.RaiseCanExecuteChanged();
@@ -69,7 +68,7 @@ namespace Win10App.ViewModels
             {
                 bool processIsSuccessful = false;
 
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                Base.Helpers.DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
                     processIsSuccessful = longRunningFunction.Invoke();
                 });

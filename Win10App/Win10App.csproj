@@ -125,6 +125,7 @@
     <Compile Include="Base\Behaviors\NavigationViewHeaderMode.cs" />
     <Compile Include="Base\Extensions\EnumExtensions.cs" />
     <Compile Include="Base\Helpers\ComboBoxEnumItem.cs" />
+    <Compile Include="Base\Helpers\DispatcherHelper.cs" />
     <Compile Include="Base\Helpers\ElementFinder.cs" />
     <Compile Include="Base\Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Base\Helpers\NavHelper.cs" />
