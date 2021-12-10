@@ -9,8 +9,15 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Win10App.Base.Behaviors"
-    xmlns:helpers="using:Win10App.Base.Helpers">
+    xmlns:helpers="using:Win10App.Base.Helpers"
+    xmlns:views="using:Win10App.Views">
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
     <winui:NavigationView 
         x:Name="navigationView"
         IsBackButtonVisible="Collapsed"
@@ -24,16 +31,16 @@
         <winui:NavigationView.MenuItems>
 
             <winui:NavigationViewItemSeparator/>
-            
-            <winui:NavigationViewItem Content="Welcome" Icon="Home" helpers:NavHelper.NavigateTo="Win10App.ViewModels.IntroductionViewModel" />
 
-            <winui:NavigationViewItem Content="Tools" helpers:NavHelper.NavigateTo="Win10App.ViewModels.ToolsViewModel">
+            <winui:NavigationViewItem Content="Welcome" Icon="Home" helpers:NavHelper.NavigateTo="views:IntroductionPage" />
+
+            <winui:NavigationViewItem Content="Tools" helpers:NavHelper.NavigateTo="views:ToolsPage">
                 <winui:NavigationViewItem.Icon>
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE90F;"/>
                 </winui:NavigationViewItem.Icon>
             </winui:NavigationViewItem>
 
-            <winui:NavigationViewItem Content="Log" helpers:NavHelper.NavigateTo="Win10App.ViewModels.LogViewModel" Visibility="{Binding IsDebug}">
+            <winui:NavigationViewItem Content="Log" helpers:NavHelper.NavigateTo="views:LogPage" Visibility="{Binding IsDebug}">
                 <winui:NavigationViewItem.Icon>
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF0E3;"/>
                 </winui:NavigationViewItem.Icon>

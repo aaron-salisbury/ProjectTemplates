@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ using WinUI = Microsoft.UI.Xaml.Controls;
 
 namespace Win10App.ViewModels
 {
-    public class BaseNavigableViewModel : ViewModelBase
+    public class BaseNavigableViewModel : Microsoft.Toolkit.Mvvm.ComponentModel.ObservableObject
     {
         private readonly KeyboardAccelerator _altLeftKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu);
         private readonly KeyboardAccelerator _backKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.GoBack);
@@ -24,21 +23,19 @@ namespace Win10App.ViewModels
         private IList<KeyboardAccelerator> _keyboardAccelerators;
         private WinUI.NavigationView _navigationView;
 
-        private WinUI.NavigationViewItem _selected;
-        public WinUI.NavigationViewItem Selected
-        {
-            get { return _selected; }
-            set { Set(ref _selected, value); }
-        }
-
         private bool _isBackEnabled;
         public bool IsBackEnabled
         {
             get { return _isBackEnabled; }
-            set { Set(ref _isBackEnabled, value); }
+            set { SetProperty(ref _isBackEnabled, value); }
         }
 
-        public static NavigationServiceEx NavigationService => ViewModelLocator.Current.NavigationService;
+        private WinUI.NavigationViewItem _selected;
+        public WinUI.NavigationViewItem Selected
+        {
+            get { return _selected; }
+            set { SetProperty(ref _selected, value); }
+        }
 
         private ICommand _loadedCommand;
         public ICommand LoadedCommand => _loadedCommand ?? (_loadedCommand = new RelayCommand(OnLoaded));
@@ -48,30 +45,12 @@ namespace Win10App.ViewModels
 
         public void Initialize(Frame frame, WinUI.NavigationView navigationView, IList<KeyboardAccelerator> keyboardAccelerators)
         {
-            _keyboardAccelerators = keyboardAccelerators;
             _navigationView = navigationView;
+            _keyboardAccelerators = keyboardAccelerators;
             NavigationService.Frame = frame;
+            NavigationService.NavigationFailed += Frame_NavigationFailed;
             NavigationService.Navigated += Frame_Navigated;
             _navigationView.BackRequested += OnBackRequested;
-            NavigationService.NavigationFailed += Frame_NavigationFailed;
-        }
-
-        private static KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null)
-        {
-            var keyboardAccelerator = new KeyboardAccelerator() { Key = key };
-            if (modifiers.HasValue)
-            {
-                keyboardAccelerator.Modifiers = modifiers.Value;
-            }
-
-            keyboardAccelerator.Invoked += OnKeyboardAcceleratorInvoked;
-            return keyboardAccelerator;
-        }
-
-        private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-        {
-            var result = NavigationService.GoBack();
-            args.Handled = result;
         }
 
         private async void OnLoaded()
@@ -87,19 +66,33 @@ namespace Win10App.ViewModels
         {
             if (args.IsSettingsInvoked)
             {
-                NavigationService.Navigate(typeof(SettingsViewModel).FullName, null, args.RecommendedNavigationTransitionInfo);
+                NavigationService.Navigate(typeof(SettingsPage), null, args.RecommendedNavigationTransitionInfo);
             }
-            else if (args.InvokedItemContainer is WinUI.NavigationViewItem selectedItem)
+            else
             {
-                var pageKey = selectedItem.GetValue(NavHelper.NavigateToProperty) as string;
-                NavigationService.Navigate(pageKey, null, args.RecommendedNavigationTransitionInfo);
+                var selectedItem = args.InvokedItemContainer as WinUI.NavigationViewItem;
+                var pageType = selectedItem?.GetValue(NavHelper.NavigateToProperty) as Type;
+
+                if (pageType != null)
+                {
+                    NavigationService.Navigate(pageType, null, args.RecommendedNavigationTransitionInfo);
+                }
             }
+        }
+
+        private void OnBackRequested(WinUI.NavigationView sender, WinUI.NavigationViewBackRequestedEventArgs args)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void Frame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            throw e.Exception;
         }
 
         private void Frame_Navigated(object sender, NavigationEventArgs e)
         {
             IsBackEnabled = NavigationService.CanGoBack;
-
             if (e.SourcePageType == typeof(SettingsPage))
             {
                 Selected = _navigationView.SettingsItem as WinUI.NavigationViewItem;
@@ -134,19 +127,26 @@ namespace Win10App.ViewModels
 
         private bool IsMenuItemForPageType(WinUI.NavigationViewItem menuItem, Type sourcePageType)
         {
-            var navigatedPageKey = NavigationService.GetNameOfRegisteredPage(sourcePageType);
-            var pageKey = menuItem.GetValue(NavHelper.NavigateToProperty) as string;
-            return pageKey == navigatedPageKey;
+            var pageType = menuItem.GetValue(NavHelper.NavigateToProperty) as Type;
+            return pageType == sourcePageType;
         }
 
-        private void OnBackRequested(WinUI.NavigationView sender, WinUI.NavigationViewBackRequestedEventArgs args)
+        private static KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null)
         {
-            NavigationService.GoBack();
+            var keyboardAccelerator = new KeyboardAccelerator() { Key = key };
+            if (modifiers.HasValue)
+            {
+                keyboardAccelerator.Modifiers = modifiers.Value;
+            }
+
+            keyboardAccelerator.Invoked += OnKeyboardAcceleratorInvoked;
+            return keyboardAccelerator;
         }
 
-        private void Frame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+        private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
-            throw e.Exception;
+            var result = NavigationService.GoBack();
+            args.Handled = result;
         }
     }
 }

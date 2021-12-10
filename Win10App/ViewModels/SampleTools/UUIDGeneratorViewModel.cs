@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using Microsoft.Toolkit.Mvvm.Input;
 using Win10App.Base.Helpers;
 using Win10Core.SampleTools;
 

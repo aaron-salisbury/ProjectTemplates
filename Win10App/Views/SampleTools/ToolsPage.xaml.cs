@@ -10,10 +10,7 @@ namespace Win10App.Views
 {
     public sealed partial class ToolsPage : Page
     {
-        private ToolsViewModel ViewModel
-        {
-            get => ViewModelLocator.Current.ToolsViewModel;
-        }
+        public ToolsViewModel ViewModel { get; } = new ToolsViewModel();
 
         public ToolsPage()
         {

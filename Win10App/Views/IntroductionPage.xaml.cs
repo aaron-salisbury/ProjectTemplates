@@ -5,10 +5,12 @@ namespace Win10App.Views
 {
     public sealed partial class IntroductionPage : Page
     {
+        public IntroductionViewModel ViewModel { get; } = new IntroductionViewModel();
+
         public IntroductionPage()
         {
             this.InitializeComponent();
-            DataContext = ViewModelLocator.Current.IntroductionViewModel;
+            DataContext = ViewModel;
         }
     }
 }

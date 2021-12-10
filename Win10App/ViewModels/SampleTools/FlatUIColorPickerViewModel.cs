@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using Microsoft.Toolkit.Mvvm.Input;
 using System.Linq;
 using Win10App.Base.Helpers;
 using Win10Core.SampleTools;
@@ -17,14 +17,14 @@ namespace Win10App.ViewModels
         public string SelectedName
         {
             get => _selectedName;
-            set => Set(ref _selectedName, value);
+            set => SetProperty(ref _selectedName, value);
         }
 
         private string _selectedHex;
         public string SelectedHex
         {
             get => _selectedHex;
-            set => Set(ref _selectedHex, value);
+            set => SetProperty(ref _selectedHex, value);
         }
 
         public FlatUIColorPickerViewModel()

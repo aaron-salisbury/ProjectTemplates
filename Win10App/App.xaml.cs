@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using Win10App.Base.Helpers;
 using Win10App.Base.Services;
+using Win10App.ViewModels;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -8,8 +10,11 @@ namespace Win10App
 {
     public sealed partial class App : Application
     {
-        private Lazy<ActivationService> _activationService;
+        public new static App Current => (App)Application.Current;
 
+        public IServiceProvider Services { get; }
+
+        private readonly Lazy<ActivationService> _activationService;
         private ActivationService ActivationService
         {
             get { return _activationService.Value; }
@@ -17,9 +22,23 @@ namespace Win10App
 
         public App()
         {
+            Services = ConfigureServices();
             InitializeComponent();
             UnhandledException += OnAppUnhandledException;
             _activationService = new Lazy<ActivationService>(CreateActivationService);
+        }
+
+        private static IServiceProvider ConfigureServices()
+        {
+            // https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/ioc
+
+            var services = new ServiceCollection();
+
+            // Viewmodels
+            services.AddSingleton<ShellViewModel>();
+            services.AddSingleton<FlatUIColorPickerViewModel>();
+
+            return services.BuildServiceProvider();
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
@@ -47,7 +66,7 @@ namespace Win10App
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(ViewModels.IntroductionViewModel), new Lazy<UIElement>(CreateShell));
+            return new ActivationService(typeof(Views.IntroductionPage), new Lazy<UIElement>(CreateShell));
         }
 
         private UIElement CreateShell()

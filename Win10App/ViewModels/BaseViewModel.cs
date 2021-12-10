@@ -1,5 +1,5 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;
 using Win10Core.Base;
@@ -7,17 +7,9 @@ using Windows.UI.Xaml;
 
 namespace Win10App.ViewModels
 {
-    public class BaseViewModel : ViewModelBase
+    public class BaseViewModel : Microsoft.Toolkit.Mvvm.ComponentModel.ObservableObject
     {
-        public ViewModelLocator Locator
-        {
-            get => ViewModelLocator.Current;
-        }
-
-        public AppLogger AppLogger
-        {
-            get => Locator.ShellViewModel.AppLogger;
-        }
+        public AppLogger AppLogger => App.Current.Services.GetService<ShellViewModel>().AppLogger;
 
         private bool _isBusy;
         public bool IsBusy
@@ -25,7 +17,7 @@ namespace Win10App.ViewModels
             get => _isBusy;
             set
             {
-                Set(ref _isBusy, value);
+                SetProperty(ref _isBusy, value);
                 ProgressBarVisibility = _isBusy ? Visibility.Visible : Visibility.Collapsed;
             }
         }
@@ -34,7 +26,7 @@ namespace Win10App.ViewModels
         public Visibility ProgressBarVisibility
         {
             get => _progressBarVisibility;
-            set => Set(ref _progressBarVisibility, value);
+            set => SetProperty(ref _progressBarVisibility, value);
         }
 
         /// <summary>
@@ -55,7 +47,7 @@ namespace Win10App.ViewModels
                 Base.Helpers.DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
                     IsBusy = false;
-                    taskCommand.RaiseCanExecuteChanged();
+                    taskCommand.NotifyCanExecuteChanged();
                 });
             }
         }

@@ -11,15 +11,11 @@ namespace Win10App.Base.Services
 {
     internal class ActivationService
     {
-        private readonly App _app;
         private readonly Type _defaultNavItem;
-        private Lazy<UIElement> _shell;
+        private readonly Lazy<UIElement> _shell;
 
-        private object _lastActivationArgs;
-
-        public ActivationService(App app, Type defaultNavItem, Lazy<UIElement> shell = null)
+        public ActivationService(Type defaultNavItem, Lazy<UIElement> shell = null)
         {
-            _app = app;
             _shell = shell;
             _defaultNavItem = defaultNavItem;
         }
@@ -44,7 +40,6 @@ namespace Win10App.Base.Services
             // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
             // will navigate to the first page
             await HandleActivationAsync(activationArgs);
-            _lastActivationArgs = activationArgs;
 
             if (IsInteractive(activationArgs))
             {

@@ -16,7 +16,7 @@
                 Design Patern
             </TextBlock>
             <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,20">
-                <Span xml:space="preserve">This project uses <Hyperlink NavigateUri="http://www.mvvmlight.net/">MVVM Light Toolkit</Hyperlink> to implement the MVVM design pattern. MVVM separates views from models, which allows for projects that are cleaner, easier to extend, and testable. The UWP project references a core project for models and other business layer logic.</Span>
+                <Span xml:space="preserve">This project uses <Hyperlink NavigateUri="https://github.com/CommunityToolkit/WindowsCommunityToolkit">Microsoft Toolkit</Hyperlink> to implement the MVVM design pattern. MVVM separates views from models, which allows for projects that are cleaner, easier to extend, and testable. The UWP project references a core project for models and other business layer logic.</Span>
             </TextBlock>
 
             <TextBlock Style="{StaticResource HeadingTextStyle}" TextWrapping="WrapWholeWords" Margin="0,0,0,10">

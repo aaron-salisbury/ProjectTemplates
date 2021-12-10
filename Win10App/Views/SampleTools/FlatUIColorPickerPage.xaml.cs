@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using Win10App.Base.Helpers;
 using Win10App.ViewModels;
@@ -12,10 +13,12 @@ namespace Win10App.Views
     {
         private const double SELECTED_TILE_STROKE_THICKNESS = 4D;
 
+        public FlatUIColorPickerViewModel ViewModel => (FlatUIColorPickerViewModel)DataContext;
+
         public FlatUIColorPickerPage()
         {
             InitializeComponent();
-            DataContext = ViewModelLocator.Current.FlatUIColorPickerViewModel;
+            DataContext = App.Current.Services.GetService<FlatUIColorPickerViewModel>();
             BuildDynamicColorGrid();
         }
 
@@ -56,7 +59,7 @@ namespace Win10App.Views
                             VerticalAlignment = VerticalAlignment.Stretch,
                             Tag = colorHex,
                             Stroke = Application.Current.Resources["ButtonBorderThemeBrush"] as Windows.UI.Xaml.Media.Brush,
-                            StrokeThickness = string.Equals(ViewModelLocator.Current.FlatUIColorPickerViewModel.SelectedHex, colorHex)
+                            StrokeThickness = string.Equals(App.Current.Services.GetService<FlatUIColorPickerViewModel>().SelectedHex, colorHex)
                                 ? SELECTED_TILE_STROKE_THICKNESS
                                 : 0D
                         };
@@ -101,7 +104,7 @@ namespace Win10App.Views
             colorTile.StrokeThickness = SELECTED_TILE_STROKE_THICKNESS;
 
             // Rectangles do not have Command or Command Parameter properties, so manually firing.
-            ViewModelLocator.Current.FlatUIColorPickerViewModel.ColorClickCommand.Execute(colorTile.Tag);
+            ViewModel.ColorClickCommand.Execute(colorTile.Tag);
         }
     }
 }

@@ -6,10 +6,7 @@ namespace Win10App.Views
 {
     public sealed partial class SettingsPage : Page
     {
-        private SettingsViewModel ViewModel
-        {
-            get => ViewModelLocator.Current.SettingsViewModel;
-        }
+        public SettingsViewModel ViewModel { get; } = new SettingsViewModel();
 
         public SettingsPage()
         {

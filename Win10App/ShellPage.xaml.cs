@@ -1,19 +1,17 @@
 ﻿using Win10App.ViewModels;
 using Windows.UI.Xaml.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Win10App
 {
     public sealed partial class ShellPage : Page
     {
-        private ShellViewModel ViewModel
-        {
-            get => ViewModelLocator.Current.ShellViewModel;
-        }
+        public ShellViewModel ViewModel => (ShellViewModel)DataContext;
 
         public ShellPage()
         {
             InitializeComponent();
-            DataContext = ViewModel;
+            DataContext = App.Current.Services.GetService<ShellViewModel>();
             ViewModel.Initialize(shellFrame, navigationView, KeyboardAccelerators);
         }
     }

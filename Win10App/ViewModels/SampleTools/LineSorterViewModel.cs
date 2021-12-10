@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,11 +19,7 @@ namespace Win10App.ViewModels
         public List<ComboBoxEnumItem> SortTypes
         {
             get => _sortTypes;
-            set
-            {
-                _sortTypes = value;
-                RaisePropertyChanged(nameof(SortTypes));
-            }
+            set => SetProperty(ref _sortTypes, value);
         }
 
         private ComboBoxEnumItem _selectedSortType;
@@ -32,8 +28,7 @@ namespace Win10App.ViewModels
             get => _selectedSortType;
             set
             {
-                _selectedSortType = value;
-                RaisePropertyChanged(nameof(SelectedSortType));
+                SetProperty(ref _selectedSortType, value);
                 LineSorter.SelectedSortType = (LineSorter.SortTypes)value.Value;
             }
         }

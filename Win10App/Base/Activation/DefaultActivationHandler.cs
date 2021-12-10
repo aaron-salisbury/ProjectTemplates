@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Win10App.Base.Services;
-using Win10App.ViewModels;
 using Windows.ApplicationModel.Activation;
 
 namespace Win10App.Base.Activation
 {
     internal class DefaultActivationHandler : ActivationHandler<IActivatedEventArgs>
     {
-        private readonly string _navElement;
-
-        public NavigationServiceEx NavigationService => ViewModelLocator.Current.NavigationService;
+        private readonly Type _navElement;
 
         public DefaultActivationHandler(Type navElement)
         {
-            _navElement = navElement.FullName;
+            _navElement = navElement;
         }
 
         protected override async Task HandleInternalAsync(IActivatedEventArgs args)

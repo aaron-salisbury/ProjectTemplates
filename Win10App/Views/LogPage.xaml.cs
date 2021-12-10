@@ -5,10 +5,12 @@ namespace Win10App.Views
 {
     public sealed partial class LogPage : Page
     {
+        public LogViewModel ViewModel { get; } = new LogViewModel();
+
         public LogPage()
         {
             InitializeComponent();
-            DataContext = ViewModelLocator.Current.LogViewModel;
+            DataContext = ViewModel;
         }
     }
 }
