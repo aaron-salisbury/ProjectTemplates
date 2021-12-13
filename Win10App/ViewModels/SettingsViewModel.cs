@@ -14,7 +14,6 @@ namespace Win10App.ViewModels
         public ElementTheme ElementTheme
         {
             get { return _elementTheme; }
-
             set { SetProperty(ref _elementTheme, value); }
         }
 
@@ -22,7 +21,6 @@ namespace Win10App.ViewModels
         public string VersionDescription
         {
             get { return _versionDescription; }
-
             set { SetProperty(ref _versionDescription, value); }
         }
 

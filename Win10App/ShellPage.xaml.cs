@@ -1,6 +1,6 @@
-﻿using Win10App.ViewModels;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Win10App.ViewModels;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Win10App
 {
