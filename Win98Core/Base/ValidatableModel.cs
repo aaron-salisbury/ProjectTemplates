@@ -5,9 +5,29 @@ namespace Win98Core.Base
 {
     public class ValidatableModel
     {
-        public List<string> Errors { get; set; } = new List<string>();
-        public string ErrorMessage { get => string.Join(Environment.NewLine, Errors.ToArray()); }
-        public bool IsValid { get => Validate(); }
+        private List<string> _errors;
+        public List<string> Errors
+        {
+            get { return _errors; }
+            set { _errors = value; }
+        }
+
+        public string ErrorMessage
+        {
+            get
+            {
+                if (Errors != null)
+                {
+                    return string.Join(Environment.NewLine, Errors.ToArray());
+                }
+                return null;
+            }
+        }
+
+        public bool IsValid
+        {
+            get { return Validate(); }
+        }
 
         public virtual bool Validate()
         {

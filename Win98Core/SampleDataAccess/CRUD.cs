@@ -19,11 +19,9 @@ namespace Win98Core.SampleDataAccess
 
             do
             {
-                flatColors.Add(new FlatColor
-                {
-                    Hex = reader.GetAttribute("hex"),
-                    Name = reader.ReadElementContentAsString()
-                });
+                string flatColorHex = reader.GetAttribute("hex");
+                string flatColorName = reader.ReadElementContentAsString();
+                flatColors.Add(new FlatColor(flatColorName, flatColorHex));
             } while (reader.ReadToFollowing(FLAT_COLOR_ELEMENT_NAME));
 
             return flatColors;

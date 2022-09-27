@@ -11,16 +11,32 @@ namespace Win98Core.Base.Logging
     [ConfigurationElementType(typeof(CustomTraceListenerData))]
     public class InvocableInMemoryTraceListener : CustomTraceListener
     {
-        public IList<string> Logs { get; } = new List<string>();
+        private readonly IList<string> _logs;
+        public IList<string> Logs
+        {
+            get { return _logs; }
+        }
 
-        public int MaxLogsCount { get; set; } = 1000;
+        private int _maxLogsCount;
+        public int MaxLogsCount
+        {
+            get { return _maxLogsCount; }
+            set { _maxLogsCount = value; }
+        }
 
         public delegate void MethodCall(IList<string> logs);
 
-        public MethodCall MethodToCall { get; set; }
+        private MethodCall _methodToCall;
+        public MethodCall MethodToCall
+        {
+            get { return _methodToCall; }
+            set { _methodToCall = value; }
+        }
 
         public InvocableInMemoryTraceListener(ILogFormatter formatter)
         {
+            _logs = new List<string>();
+            MaxLogsCount = 1000;
             Formatter = formatter;
         }
 

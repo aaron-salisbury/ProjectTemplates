@@ -17,15 +17,15 @@ namespace Win98Core.SampleTools
         private SortTypes _selectedSortType;
         public SortTypes SelectedSortType
         {
-            get => _selectedSortType;
-            set => _selectedSortType = value;
+            get { return _selectedSortType; }
+            set { _selectedSortType = value; }
         }
 
         private string _textToSort;
         public string TextToSort
         {
-            get => _textToSort;
-            set => _textToSort = value;
+            get { return _textToSort; }
+            set { _textToSort = value; }
         }
 
         public LineSorter()
@@ -41,7 +41,7 @@ namespace Win98Core.SampleTools
                 {
                     AppLogger.Write("Beginning to sort lines.", AppLogger.LogCategories.Information);
 
-                    List<string> lines = TextToSort.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
+                    List<string> lines = TextToSort.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
 
                     lines.Sort();
 

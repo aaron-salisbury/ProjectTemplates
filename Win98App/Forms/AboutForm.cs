@@ -24,9 +24,9 @@ namespace Win98App.Forms
             MaximumSize = modalSize;
             SizeGripStyle = SizeGripStyle.Hide;
 
-            Text = $"About {Properties.Settings.Default.ApplicationFriendlyName}";
+            Text = string.Format("About {0}", Properties.Settings.Default.ApplicationFriendlyName);
             AppNameLabel.Text = Properties.Settings.Default.ApplicationFriendlyName;
-            VersionLabel.Text = $"Version {Application.ProductVersion}";
+            VersionLabel.Text = string.Format("Version {0}", Application.ProductVersion);
             AppDescriptionLabel.Text = Properties.Settings.Default.AboutDescription;
         }
 

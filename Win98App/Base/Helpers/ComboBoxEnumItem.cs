@@ -7,7 +7,18 @@ namespace Win98App.Base.Helpers
     [Serializable]
     public class ComboBoxEnumItem
     {
-        public int Value { get; set; }
-        public string Text { get; set; }
+        private int _value;
+        public int Value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+
+        private string _text;
+        public string Text
+        {
+            get { return _text; }
+            set { _text = value; }
+        }
     }
 }

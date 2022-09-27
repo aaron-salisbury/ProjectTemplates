@@ -10,8 +10,8 @@ namespace Win98Core.SampleTools
         private List<FlatColor> _flatColors;
         public List<FlatColor> FlatColors
         {
-            get => _flatColors;
-            set =>_flatColors = value;
+            get { return _flatColors; }
+            set { _flatColors = value; }
         }
 
         public bool SetFlatColors()

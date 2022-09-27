@@ -7,7 +7,7 @@ namespace Win98App.Forms.SampleTools
 {
     public partial class UUIDGeneratorUC : UserControl
     {
-        private UUIDGenerator _uuidGenerator { get; set; }
+        private UUIDGenerator _uuidGenerator;
         private StandardErrorProvider _errorProvider;
 
         public UUIDGeneratorUC()

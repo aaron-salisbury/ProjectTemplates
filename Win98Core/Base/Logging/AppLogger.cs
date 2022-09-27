@@ -12,7 +12,7 @@ namespace Win98Core.Base
     // http://codebetter.com/davidhayden/2006/02/19/enterprise-library-2-0-logging-application-block/
     public static class AppLogger
     {
-        private static LogWriter _writer;
+        private static readonly LogWriter _writer;
 
         private static readonly InvocableInMemoryTraceListener _inMemoryTraceListener;
 
@@ -96,7 +96,12 @@ namespace Win98Core.Base
 
         public static List<string> GetLogs()
         {
-            return _inMemoryTraceListener?.Logs as List<string>;
+            if (_inMemoryTraceListener != null)
+            {
+                return _inMemoryTraceListener.Logs as List<string>;
+            }
+
+            return null;
         }
 
         public static string GetMessages()
@@ -108,10 +113,8 @@ namespace Win98Core.Base
         {
             try
             {
-                ProcessStartInfo processStartInfo = new ProcessStartInfo(PushMessagesToTempLogFile())
-                {
-                    UseShellExecute = true
-                };
+                ProcessStartInfo processStartInfo = new ProcessStartInfo(PushMessagesToTempLogFile());
+                processStartInfo.UseShellExecute = true;
 
                 Process.Start(processStartInfo);
                 Write("Opened log file.", LogCategories.Information);
@@ -129,14 +132,12 @@ namespace Win98Core.Base
             try
             {
                 string tempFileName = Path.GetTempFileName();
-                FileInfo fileInfo = new FileInfo(tempFileName)
-                {
-                    Attributes = FileAttributes.Temporary
-                };
+                FileInfo fileInfo = new FileInfo(tempFileName);
+                fileInfo.Attributes = FileAttributes.Temporary;
 
                 tempLogFile = Path.Combine(fileInfo.Directory.FullName, "log.txt");
 
-                Write($"Downloading log to {tempLogFile}", LogCategories.Information);
+                Write(string.Format("Downloading log to {0}", tempLogFile), LogCategories.Information);
 
                 if (File.Exists(tempLogFile))
                 {
@@ -155,7 +156,7 @@ namespace Win98Core.Base
             catch (Exception e)
             {
                 File.Delete(tempLogFile);
-                Write($"Failed to write error messages to file.{Environment.NewLine}{e.Message}", LogCategories.Error);
+                Write(string.Format("Failed to write error messages to file.{0}{1}", Environment.NewLine, e.Message), LogCategories.Error);
                 return null;
             }
         }

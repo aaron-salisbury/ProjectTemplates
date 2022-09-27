@@ -11,13 +11,13 @@ namespace Win98App.Forms.SampleTools
     //TODO: This user control's design layout, among others, doesn't match the runtime's.
     public partial class LineSorterUC : UserControl
     {
-        private LineSorter _lineSorter { get; set; }
+        private readonly LineSorter _lineSorter;
 
         private List<ComboBoxEnumItem> _sortTypes;
         public List<ComboBoxEnumItem> SortTypes
         {
-            get => _sortTypes;
-            set => _sortTypes = value;
+            get { return _sortTypes; }
+            set { _sortTypes = value; }
         }
 
         public LineSorterUC()
@@ -31,19 +31,26 @@ namespace Win98App.Forms.SampleTools
 
         private void PrepareSortTypeComboBox()
         {
-            SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
-                .Cast<LineSorter.SortTypes>()
-                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = st.ToString().SplitPascalCase() })
-                .ToList();
+            SortTypes = new List<ComboBoxEnumItem>();
+            ComboBoxEnumItem selectedComboBoxEnumItem = null;
 
-            ComboBoxEnumItem selectedComboBoxEnumItem = SortTypes
-                .Where(cbi => cbi.Value == (int)_lineSorter.SelectedSortType)
-                .First();
+            foreach (LineSorter.SortTypes sortType in Enum.GetValues(typeof(LineSorter.SortTypes)).Cast<LineSorter.SortTypes>())
+            {
+                ComboBoxEnumItem enumItem = new ComboBoxEnumItem();
+                enumItem.Value = (int)sortType;
+                enumItem.Text = StringExtensions.SplitPascalCase(sortType.ToString());
+                SortTypes.Add(enumItem);
+
+                if (selectedComboBoxEnumItem == null && enumItem.Value == (int)_lineSorter.SelectedSortType)
+                {
+                    selectedComboBoxEnumItem = enumItem;
+                }
+            }
 
             SortTypeComboBox.DataSource = SortTypes;
             SortTypeComboBox.SelectedItem = selectedComboBoxEnumItem;
-            SortTypeComboBox.ValueMember = nameof(ComboBoxEnumItem.Value);
-            SortTypeComboBox.DisplayMember = nameof(ComboBoxEnumItem.Text);
+            SortTypeComboBox.ValueMember = "Value"; // ComboBoxEnumItem.Value
+            SortTypeComboBox.DisplayMember = "Text"; // ComboBoxEnumItem.Text
         }
 
         private void SelectAllButton_Click(object sender, EventArgs e)

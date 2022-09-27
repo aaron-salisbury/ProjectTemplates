@@ -7,7 +7,7 @@ namespace Win98App.Forms.SampleTools
 {
     public partial class FlatUIColorPickerUC : UserControl
     {
-        private FlatUIColorPicker _flatUIColorPicker { get; set; }
+        private FlatUIColorPicker _flatUIColorPicker;
 
         public FlatUIColorPickerUC()
         {
@@ -60,13 +60,11 @@ namespace Win98App.Forms.SampleTools
                     {
                         FlatColor flatColor = _flatUIColorPicker.FlatColors[flatColorIndex++];
 
-                        Button colorTile = new Button()
-                        {
-                            BackColor = ColorTranslator.FromHtml(flatColor.Hex),
-                            Tag = flatColor,
-                            Margin = new Padding(1),
-                            Anchor = (AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom)
-                        };
+                        Button colorTile = new Button();
+                        colorTile.BackColor = ColorTranslator.FromHtml(flatColor.Hex);
+                        colorTile.Tag = flatColor;
+                        colorTile.Margin = new Padding(1);
+                        colorTile.Anchor = (AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom);
 
                         colorTile.Click += new EventHandler(ColorTile_OnClick);
 
