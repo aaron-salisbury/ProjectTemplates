@@ -6,7 +6,7 @@ namespace Win7App.ViewModels
     {
         public string Title
         {
-            get => Settings.Default.ApplicationFriendlyName;
+            get { return Settings.Default.ApplicationFriendlyName; }
         }
     }
 }

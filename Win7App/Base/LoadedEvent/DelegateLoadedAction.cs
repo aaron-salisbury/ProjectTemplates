@@ -13,7 +13,10 @@ namespace Win7App.Base.LoadedEvent
 
         public void ContentControlLoaded()
         {
-            LoadedActionDelegate?.Invoke();
+            if (LoadedActionDelegate != null)
+            {
+                LoadedActionDelegate.Invoke();
+            }
         }
     }
 }

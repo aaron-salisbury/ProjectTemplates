@@ -33,7 +33,7 @@ namespace Win7App.ViewModels
 
         public ViewModelLocator Locator
         {
-            get => (ViewModelLocator)Application.Current.FindResource("Locator");
+            get { return (ViewModelLocator)Application.Current.FindResource("Locator"); }
         }
 
         /// <summary>
@@ -41,13 +41,13 @@ namespace Win7App.ViewModels
         /// </summary>
         public AppLogger AppLogger
         {
-            get => Locator.ShellWindowViewModel.AppLogger;
+            get { return Locator.ShellWindowViewModel.AppLogger; }
         }
 
         private bool _isBusy;
         public bool IsBusy
         {
-            get => _isBusy;
+            get { return _isBusy; }
             set
             {
                 Set(ref _isBusy, value);
@@ -58,8 +58,8 @@ namespace Win7App.ViewModels
         private Visibility _progressBarVisibility = Visibility.Hidden;
         public Visibility ProgressBarVisibility
         {
-            get => _progressBarVisibility;
-            set => Set(ref _progressBarVisibility, value);
+            get { return _progressBarVisibility; }
+            set { Set(ref _progressBarVisibility, value); }
         }
 
         /// <summary>

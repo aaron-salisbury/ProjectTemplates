@@ -8,13 +8,13 @@ namespace Win7Core.SampleTools
 {
     public class UUIDGenerator : ValidatableModel
     {
-        private ILogger _logger { get; set; }
+        private readonly ILogger _logger;
 
         private bool _capitalize;
         public bool Capitalize
         {
-            get => _capitalize;
-            set { _capitalize = value; RaisePropertyChanged(nameof(Capitalize)); }
+            get { return _capitalize; }
+            set { _capitalize = value; RaisePropertyChanged("Capitalize"); }
         }
 
         private string _uUID;
@@ -26,8 +26,8 @@ namespace Win7Core.SampleTools
         [LettersNumbersDashes(ErrorMessage = "The {0} may only contain letters, numbers, and dashes.")]
         public string UUID
         {
-            get => _uUID;
-            set { _uUID = value; RaisePropertyChanged(nameof(UUID)); }
+            get { return _uUID; }
+            set { _uUID = value; RaisePropertyChanged("UUID"); }
         }
 
         public UUIDGenerator(AppLogger appLogger)
@@ -47,7 +47,7 @@ namespace Win7Core.SampleTools
                     ? newGuid.ToString().ToUpper()
                     : newGuid.ToString();
 
-                _logger.Information($"Generated new UUID, {UUID}");
+                _logger.Information(string.Format("Generated new UUID, {0}", UUID));
                 return true;
             }
             catch (Exception e)

@@ -25,8 +25,11 @@ namespace Win7App.Views
 
             Messenger.Default.Register<NavigationMessage>(this, p =>
             {
-                if (GetDescendantFromName(this, "ContentFrame") is ModernFrame frame)
+                FrameworkElement contentFrame = GetDescendantFromName(this, "ContentFrame");
+
+                if (contentFrame is ModernFrame)
                 {
+                    ModernFrame frame = contentFrame as ModernFrame;
                     frame.Source = new Uri(p.TargetPage, UriKind.Relative);
                 }
             });
@@ -43,8 +46,12 @@ namespace Win7App.Views
 
             for (var i = 0; i < count; i++)
             {
-                if (VisualTreeHelper.GetChild(parent, i) is FrameworkElement frameworkElement)
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is FrameworkElement)
                 {
+                    FrameworkElement frameworkElement = child as FrameworkElement;
+
                     if (frameworkElement.Name == name)
                     {
                         return frameworkElement;

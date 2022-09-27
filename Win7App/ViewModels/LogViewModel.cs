@@ -4,11 +4,15 @@ namespace Win7App.ViewModels
 {
     public class LogViewModel : BaseViewModel
     {
-        public RelayCommand DownloadCommand { get; }
+        private readonly RelayCommand _downloadCommand;
+        public RelayCommand DownloadCommand
+        {
+            get { return _downloadCommand; }
+        }
 
         public LogViewModel()
         {
-            DownloadCommand = new RelayCommand(() => DownloadLog(), () => !IsBusy);
+            _downloadCommand = new RelayCommand(() => DownloadLog(), () => !IsBusy);
         }
 
         private void DownloadLog()

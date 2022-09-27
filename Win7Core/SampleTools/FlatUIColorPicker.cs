@@ -8,13 +8,13 @@ namespace Win7Core.SampleTools
 {
     public class FlatUIColorPicker : ValidatableModel
     {
-        private ILogger _logger { get; set; }
+        private readonly ILogger _logger;
 
         private List<FlatColor> _flatColors;
         public List<FlatColor> FlatColors
         {
-            get => _flatColors;
-            set { _flatColors = value; RaisePropertyChanged(nameof(FlatColors)); }
+            get { return _flatColors; }
+            set { _flatColors = value; RaisePropertyChanged("FlatColors"); }
         }
 
         public FlatUIColorPicker(AppLogger appLogger)

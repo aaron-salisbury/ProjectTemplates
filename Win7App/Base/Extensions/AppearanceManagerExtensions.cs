@@ -5,11 +5,14 @@ namespace Win7App.Base.Extensions
 {
     internal static class AppearanceManagerExtensions
     {
+        private const string DARK_THEME = "Dark";
+        private const string FONT_LARGE = "Large";
+
         internal static void LoadAppearancesFromSettings(this AppearanceManager appearanceManager, Properties.Settings settings)
         {
             appearanceManager.AccentColor = (Color)ColorConverter.ConvertFromString(settings.AccentColor);
 
-            if (string.Equals(settings.ThemeSource, nameof(AppearanceManager.DarkThemeSource).GetFirstWord()))
+            if (string.Equals(settings.ThemeSource, DARK_THEME))
             {
                 appearanceManager.ThemeSource = AppearanceManager.DarkThemeSource;
             }
@@ -18,7 +21,7 @@ namespace Win7App.Base.Extensions
                 appearanceManager.ThemeSource = AppearanceManager.LightThemeSource;
             }
 
-            if (string.Equals(settings.FontSize, nameof(FontSize.Large)))
+            if (string.Equals(settings.FontSize, FONT_LARGE))
             {
                 appearanceManager.FontSize = FontSize.Large;
             }

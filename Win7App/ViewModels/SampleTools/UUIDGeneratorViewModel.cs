@@ -8,17 +8,23 @@ namespace Win7App.ViewModels.SampleTools
     {
         public UUIDGenerator UUIDGenerator { get; set; }
 
-        public RelayCommand ExecuteTaskCommand { get; }
+        private readonly RelayCommand _executeTaskCommand;
+        public RelayCommand ExecuteTaskCommand
+        {
+            get { return _executeTaskCommand; }
+        }
 
-        public RelayCommand CopyUUIDCommand { get; }
+        private readonly RelayCommand _copyUUIDCommand;
+        public RelayCommand CopyUUIDCommand
+        {
+            get { return _copyUUIDCommand; }
+        }
 
         public UUIDGeneratorViewModel()
         {
             UUIDGenerator = new UUIDGenerator(AppLogger);
-            CopyUUIDCommand = new RelayCommand(() => Clipboard.SetText(UUIDGenerator.UUID ?? string.Empty));
-
-            bool sortLinesFunction() => UUIDGenerator.Initiate();
-            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(sortLinesFunction, ExecuteTaskCommand), () => !IsBusy);
+            _copyUUIDCommand = new RelayCommand(() => Clipboard.SetText(UUIDGenerator.UUID ?? string.Empty));
+            _executeTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(UUIDGenerator.Initiate, ExecuteTaskCommand), () => !IsBusy);
         }
     }
 }

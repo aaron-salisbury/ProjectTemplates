@@ -9,7 +9,10 @@ namespace Win7Core.Base
 
         public virtual void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

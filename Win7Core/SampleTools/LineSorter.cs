@@ -11,7 +11,7 @@ namespace Win7Core.SampleTools
 {
     public class LineSorter : ValidatableModel
     {
-        private ILogger _logger { get; set; }
+        private readonly ILogger _logger;
 
         public enum SortTypes
         {
@@ -24,21 +24,30 @@ namespace Win7Core.SampleTools
         [Required]
         public SortTypes SelectedSortType
         {
-            get => _selectedSortType;
+            get { return _selectedSortType; }
             set
             {
                 _selectedSortType = value;
-                RaisePropertyChanged(nameof(SelectedSortType));
+                RaisePropertyChanged("SelectedSortType");
             }
         }
 
-        public static string GetSortTypeDisplayName(SortTypes sortType) => sortType.GetAttribute<DisplayAttribute>()?.Name ?? sortType.ToString();
+        public static string GetSortTypeDisplayName(SortTypes sortType)
+        {
+            DisplayAttribute displayAttribute = sortType.GetAttribute<DisplayAttribute>();
+            if (displayAttribute != null)
+            {
+                return displayAttribute.Name;
+            }
+
+            return sortType.ToString(); ;
+        }
 
         private string _textToSort;
         public string TextToSort
         {
-            get => _textToSort;
-            set { _textToSort = value; RaisePropertyChanged(nameof(TextToSort)); }
+            get { return _textToSort; }
+            set { _textToSort = value; RaisePropertyChanged("TextToSort"); }
         }
 
         public LineSorter(AppLogger appLogger)

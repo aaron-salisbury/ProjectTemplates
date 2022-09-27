@@ -11,7 +11,7 @@ namespace Win7Core.Base
 {
     public class ValidatableModel : ObservableObject, INotifyDataErrorInfo
     {
-        private ConcurrentDictionary<string, List<string>> _errorsByProperty = new ConcurrentDictionary<string, List<string>>();
+        private readonly ConcurrentDictionary<string, List<string>> _errorsByProperty = new ConcurrentDictionary<string, List<string>>();
 
         public override void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -28,18 +28,21 @@ namespace Win7Core.Base
 
         public void OnErrorsChanged(string propertyName)
         {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
+            if (ErrorsChanged != null)
+            {
+                ErrorsChanged.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            }        }
 
         public IEnumerable GetErrors(string propertyName)
         {
-            _errorsByProperty.TryGetValue(propertyName, out List<string> errorsForName);
+            List<string> errorsForName;
+            _errorsByProperty.TryGetValue(propertyName, out errorsForName);
             return errorsForName;
         }
 
         public bool HasErrors
         {
-            get => _errorsByProperty.Any(kv => kv.Value != null && kv.Value.Count > 0);
+            get { return _errorsByProperty.Any(kv => kv.Value != null && kv.Value.Count > 0); }
         }
 
         public void AddError(string propertyName, string errorMsg)
@@ -60,7 +63,8 @@ namespace Win7Core.Base
 
         public void ClearErrors(string propertyName)
         {
-            _errorsByProperty.TryRemove(propertyName, out List<string> value);
+            List<string> removedErrors;
+            _errorsByProperty.TryRemove(propertyName, out removedErrors);
             OnErrorsChanged(propertyName);
         }
 
@@ -75,7 +79,8 @@ namespace Win7Core.Base
             {
                 if (validationResults.All(r => r.MemberNames.All(m => m != error.Key)))
                 {
-                    _errorsByProperty.TryRemove(error.Key, out List<string> outs);
+                    List<string> outs;
+                    _errorsByProperty.TryRemove(error.Key, out outs);
                     OnErrorsChanged(error.Key);
                 }
             }
@@ -91,7 +96,8 @@ namespace Win7Core.Base
 
                 if (_errorsByProperty.ContainsKey(prop.Key))
                 {
-                    _errorsByProperty.TryRemove(prop.Key, out List<string> outs);
+                    List<string> outs;
+                    _errorsByProperty.TryRemove(prop.Key, out outs);
                 }
 
                 _errorsByProperty.TryAdd(prop.Key, messages);
@@ -107,7 +113,8 @@ namespace Win7Core.Base
             List<ValidationResult> validationResults = new List<ValidationResult>();
             Validator.TryValidateProperty(GetType().GetProperty(propertyName).GetValue(this), validationContext, validationResults);
             bool newErrorsWillBeAdded = false;
-            bool retreivedExistingList = _errorsByProperty.TryGetValue(propertyName, out List<string> existingErrorsForProperty);
+            List<string> existingErrorsForProperty;
+            bool retreivedExistingList = _errorsByProperty.TryGetValue(propertyName, out existingErrorsForProperty);
             List<string> errorMessages = new List<string>();
 
             byte newErrorsCount = 0;
@@ -133,7 +140,8 @@ namespace Win7Core.Base
             {
                 if (existingErrorsForProperty.Any())
                 {
-                    _errorsByProperty.TryRemove(propertyName, out List<string> value);
+                    List<string> outs;
+                    _errorsByProperty.TryRemove(propertyName, out outs);
                     OnErrorsChanged(propertyName);
                 }
             }

@@ -11,11 +11,10 @@ namespace Win7App.ViewModels
     {
         private const string PALETTE_METRO = "Metro";
         private const string PALETTE_WP = "Windows Phone";
-
-        private static readonly string _darkTheme = nameof(AppearanceManager.DarkThemeSource).GetFirstWord();
-        private static readonly string _lightTheme = nameof(AppearanceManager.LightThemeSource).GetFirstWord();
-        private static readonly string _fontSmall = nameof(FontSize.Small);
-        private static readonly string _fontLarge = nameof(FontSize.Large);
+        private const string DARK_THEME = "Dark";
+        private const string LIGHT_THEME = "Light";
+        private const string FONT_SMALL = "Small";
+        private const string FONT_LARGE = "Large";
 
         // 9 accent colors from metro design principles
         private readonly Color[] _metroAccentColors = new Color[]{
@@ -59,13 +58,20 @@ namespace Win7App.ViewModels
         private Link _selectedTheme;
         private string _selectedFontSize;
 
-        public LinkCollection Themes { get; } = new LinkCollection();
+        private readonly LinkCollection _themes;
+        public LinkCollection Themes
+        {
+            get { return _themes; }
+        }
 
         public SettingsAppearanceViewModel()
         {
-            // Add the default themes.
-            Themes.Add(new Link { DisplayName = _darkTheme, Source = AppearanceManager.DarkThemeSource });
-            Themes.Add(new Link { DisplayName = _lightTheme, Source = AppearanceManager.LightThemeSource });
+            _themes = new LinkCollection()
+            {
+                // Add the default themes.
+                new Link { DisplayName = DARK_THEME, Source = AppearanceManager.DarkThemeSource },
+                new Link { DisplayName = LIGHT_THEME, Source = AppearanceManager.LightThemeSource }
+            };
 
             _selectedPalette = Settings.Default.SelectedPalette;
             AppearanceManager.Current.LoadAppearancesFromSettings(Settings.Default);
@@ -79,7 +85,7 @@ namespace Win7App.ViewModels
             // Synchronize the selected viewmodel appearance values with the actual ones used by the appearance manager.
             SelectedTheme = Themes.FirstOrDefault(l => l.Source.Equals(AppearanceManager.Current.ThemeSource));
             SelectedAccentColor = AppearanceManager.Current.AccentColor;
-            SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? _fontLarge : _fontSmall;
+            SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FONT_LARGE : FONT_SMALL;
 
             SaveSettings();
         }
@@ -94,7 +100,7 @@ namespace Win7App.ViewModels
 
         public string[] FontSizes
         {
-            get { return new string[] { _fontSmall, _fontLarge }; }
+            get { return new string[] { FONT_SMALL, FONT_LARGE }; }
         }
 
         public string[] Palettes
@@ -162,7 +168,7 @@ namespace Win7App.ViewModels
                     _selectedFontSize = value;
                     OnPropertyChanged("SelectedFontSize");
 
-                    AppearanceManager.Current.FontSize = value == _fontLarge ? FontSize.Large : FontSize.Small;
+                    AppearanceManager.Current.FontSize = value == FONT_LARGE ? FontSize.Large : FontSize.Small;
                 }
             }
         }

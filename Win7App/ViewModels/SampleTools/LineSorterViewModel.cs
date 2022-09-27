@@ -11,27 +11,31 @@ namespace Win7App.ViewModels.SampleTools
     {
         public LineSorter LineSorter { get; set; }
 
-        public RelayCommand ExecuteTaskCommand { get; }
+        private readonly RelayCommand _executeTaskCommand;
+        public RelayCommand ExecuteTaskCommand
+        {
+            get { return _executeTaskCommand; }
+        }
 
         private List<ComboBoxEnumItem> _sortTypes;
         public List<ComboBoxEnumItem> SortTypes
         {
-            get => _sortTypes;
+            get { return _sortTypes; }
             set
             {
                 _sortTypes = value;
-                RaisePropertyChanged(nameof(SortTypes));
+                RaisePropertyChanged("SortTypes");
             }
         }
 
         private ComboBoxEnumItem _selectedSortType;
         public ComboBoxEnumItem SelectedSortType
         {
-            get => _selectedSortType;
+            get { return _selectedSortType; }
             set
             {
                 _selectedSortType = value;
-                RaisePropertyChanged(nameof(SelectedSortType));
+                RaisePropertyChanged("SelectedSortType");
                 LineSorter.SelectedSortType = (LineSorter.SortTypes)value.Value;
             }
         }
@@ -40,8 +44,7 @@ namespace Win7App.ViewModels.SampleTools
         {
             LineSorter = new LineSorter(AppLogger);
 
-            bool sortLinesFunction() => LineSorter.Initiate();
-            ExecuteTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(sortLinesFunction, ExecuteTaskCommand), () => !IsBusy);
+            _executeTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(LineSorter.Initiate, ExecuteTaskCommand), () => !IsBusy);
 
             SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()

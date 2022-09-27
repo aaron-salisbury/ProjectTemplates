@@ -9,14 +9,14 @@ namespace Win7App.ViewModels
 {
     public class ShellWindowViewModel : ViewModelBase
     {
-        private static Link _settingsUri = new Link { DisplayName = "Settings", Source = new Uri("/Views/Settings.xaml", UriKind.Relative) };
+        private static readonly Link _settingsUri = new Link { DisplayName = "Settings", Source = new Uri("/Views/Settings.xaml", UriKind.Relative) };
 
         public AppLogger AppLogger { get; set; }
 
         private string _helpURL;
         public string HelpURL
         {
-            get => _helpURL;
+            get { return _helpURL; }
             set
             {
                 Set(ref _helpURL, value);
@@ -27,7 +27,7 @@ namespace Win7App.ViewModels
         private Link _helpUri;
         public Link HelpUri
         {
-            get => _helpUri;
+            get { return _helpUri; }
             set
             {
                 Set(ref _helpUri, value);
@@ -38,13 +38,13 @@ namespace Win7App.ViewModels
         private LinkCollection _titleLinks = new LinkCollection();
         public LinkCollection TitleLinks
         {
-            get => _titleLinks;
-            set => Set(ref _titleLinks, value);
+            get { return _titleLinks; }
+            set { Set(ref _titleLinks, value); }
         }
 
         public string Title
         {
-            get => Settings.Default.ApplicationFriendlyName;
+            get { return Settings.Default.ApplicationFriendlyName; }
         }
 
         public ShellWindowViewModel()

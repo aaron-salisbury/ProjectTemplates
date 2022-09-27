@@ -57,7 +57,7 @@ namespace Win7Core.Base
 
                 tempLogFile = Path.Combine(fileInfo.Directory.FullName, "log.txt");
 
-                Logger.Information($"Downloading log to {tempLogFile}");
+                Logger.Information(string.Format("Downloading log to {0}", tempLogFile));
 
                 if (File.Exists(tempLogFile))
                 {
@@ -76,7 +76,7 @@ namespace Win7Core.Base
             catch (Exception e)
             {
                 File.Delete(tempLogFile);
-                Logger.Error($"Failed to write error messages to file.{Environment.NewLine}{e.Message}");
+                Logger.Error(string.Format("Failed to write error messages to file.{0}{1}", Environment.NewLine, e.Message));
                 return null;
             }
         }
@@ -86,7 +86,11 @@ namespace Win7Core.Base
     {
         readonly ITextFormatter _textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss:ff} [{Level}] {Message}{Exception}", CultureInfo.InvariantCulture);
 
-        public ConcurrentQueue<string> Events { get; } = new ConcurrentQueue<string>();
+        private readonly ConcurrentQueue<string> _events;
+        public ConcurrentQueue<string> Events
+        {
+            get { return _events; }
+        }
 
         private string _messages;
         public string Messages
@@ -99,9 +103,14 @@ namespace Win7Core.Base
             }
         }
 
+        public InMemorySink()
+        {
+            _events = new ConcurrentQueue<string>();
+        }
+
         public void Emit(LogEvent logEvent)
         {
-            if (logEvent == null) { throw new ArgumentNullException(nameof(logEvent)); }
+            if (logEvent == null) { throw new ArgumentNullException("LogEvent"); }
 
             StringWriter renderSpace = new StringWriter();
             _textFormatter.Format(logEvent, renderSpace);
