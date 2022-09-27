@@ -21,15 +21,15 @@ namespace WinXPCore.SampleTools
         [Required]
         public SortTypes SelectedSortType
         {
-            get => _selectedSortType;
-            set => _selectedSortType = value;
+            get { return _selectedSortType; }
+            set { _selectedSortType = value; }
         }
 
         private string _textToSort;
         public string TextToSort
         {
-            get => _textToSort;
-            set => _textToSort = value;
+            get { return _textToSort; }
+            set { _textToSort = value; }
         }
 
         public LineSorter()

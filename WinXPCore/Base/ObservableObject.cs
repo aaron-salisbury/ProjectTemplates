@@ -8,14 +8,20 @@ namespace WinXPCore.Base
 
         public virtual void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         public static event PropertyChangedEventHandler StaticPropertyChanged;
 
         public static void StaticRaisePropertyChanged(string propertyName)
         {
-            StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
+            if (StaticPropertyChanged != null)
+            {
+                StaticPropertyChanged.Invoke(null, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

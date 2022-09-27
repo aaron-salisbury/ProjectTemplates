@@ -22,7 +22,7 @@ namespace WinXPApp.Forms.SampleTools
         {
             // The KryptonNavigator control is not a part of the MetroModernUI package
             // so it doesn't respond to app style changes. Manually doing so here.
-            if (string.Equals(e.PropertyName, nameof(AppearanceManager.CurrentStyle)) || string.Equals(e.PropertyName, nameof(AppearanceManager.CurrentTheme)))
+            if (string.Equals(e.PropertyName, "CurrentStyle") || string.Equals(e.PropertyName, "CurrentTheme"))
             {
                 ConfigureDynamicNavDesign();
             }

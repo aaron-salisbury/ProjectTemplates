@@ -10,7 +10,7 @@ namespace WinXPCore.SampleTools
         private bool _capitalize;
         public bool Capitalize
         {
-            get => _capitalize;
+            get { return _capitalize; }
             set { _capitalize = value; }
         }
 
@@ -23,7 +23,7 @@ namespace WinXPCore.SampleTools
         [LettersNumbersDashes(ErrorMessage = "The {0} may only contain letters, numbers, and dashes.")]
         public string UUID
         {
-            get => _uUID;
+            get { return _uUID; }
             set { _uUID = value; }
         }
 
@@ -39,7 +39,7 @@ namespace WinXPCore.SampleTools
                     ? newGuid.ToString().ToUpper()
                     : newGuid.ToString();
 
-                Logger.Info($"Generated new UUID, {UUID}");
+                Logger.Info(string.Format("Generated new UUID, {0}", UUID));
                 return true;
             }
             catch (Exception e)

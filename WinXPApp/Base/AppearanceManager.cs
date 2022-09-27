@@ -13,16 +13,16 @@ namespace WinXPApp.Base
         private static MetroThemeStyle _currentTheme;
         public static MetroThemeStyle CurrentTheme
         {
-            get => _currentTheme;
-            set { _currentTheme = value; StaticRaisePropertyChanged(nameof(CurrentTheme)); }
+            get { return _currentTheme; }
+            set { _currentTheme = value; StaticRaisePropertyChanged("CurrentTheme"); }
                 
         }
 
         private static MetroColorStyle _currentStyle;
         public static MetroColorStyle CurrentStyle
         {
-            get => _currentStyle;
-            set { _currentStyle = value; StaticRaisePropertyChanged(nameof(CurrentStyle)); }
+            get { return _currentStyle; }
+            set { _currentStyle = value; StaticRaisePropertyChanged("CurrentStyle"); }
 
         }
 

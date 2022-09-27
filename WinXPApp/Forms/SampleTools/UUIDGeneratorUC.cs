@@ -7,7 +7,7 @@ namespace WinXPApp.Forms
 {
     public partial class UUIDGeneratorUC : UserControl
     {
-        private UUIDGenerator _uuidGenerator { get; set; }
+        private UUIDGenerator _uuidGenerator;
         private StandardErrorProvider _errorProvider;
 
         public UUIDGeneratorUC()
@@ -38,7 +38,7 @@ namespace WinXPApp.Forms
         {
             NewGuidTextBox.Text = _uuidGenerator.UUID;
 
-            string potentialErrorMessage = _uuidGenerator[nameof(UUIDGenerator.UUID)];
+            string potentialErrorMessage = _uuidGenerator["UUID"];
             _errorProvider.UpdateError(NewGuidTextBox, potentialErrorMessage);
         }
     }

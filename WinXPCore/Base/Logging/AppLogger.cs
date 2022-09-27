@@ -59,7 +59,12 @@ namespace WinXPCore.Base
         {
             InvocableMemoryTarget invocableMemoryTarget = GetInvocableMemoryTarget();
 
-            return invocableMemoryTarget?.MemoryTarget?.Logs as List<string>;
+            if (invocableMemoryTarget != null && invocableMemoryTarget.MemoryTarget != null)
+            {
+                return invocableMemoryTarget.MemoryTarget.Logs as List<string>;
+            }
+
+            return null;
         }
 
         public static string GetMessages()
@@ -99,7 +104,7 @@ namespace WinXPCore.Base
 
                 tempLogFile = Path.Combine(fileInfo.Directory.FullName, "log.txt");
 
-                Logger.Info($"Downloading log to {tempLogFile}");
+                Logger.Info(string.Format("Downloading log to {0}", tempLogFile));
 
                 if (File.Exists(tempLogFile))
                 { 
@@ -118,7 +123,7 @@ namespace WinXPCore.Base
             catch (Exception e)
             {
                 File.Delete(tempLogFile);
-                Logger.Error(e, $"Failed to write error messages to file.{Environment.NewLine}{e.Message}");
+                Logger.Error(e, string.Format("Failed to write error messages to file.{0}{1}", Environment.NewLine, e.Message));
                 return null;
             }
         }
