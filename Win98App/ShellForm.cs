@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Win98App.Forms;
-using Win98Core.Base;
+using Win98Core.Base.Logging;
 
 namespace Win98App
 {

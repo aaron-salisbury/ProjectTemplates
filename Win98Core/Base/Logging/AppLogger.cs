@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Win98Core.Base.Logging;
 
-namespace Win98Core.Base
+namespace Win98Core.Base.Logging
 {
     // http://codebetter.com/davidhayden/2006/02/19/enterprise-library-2-0-logging-application-block/
     public static class AppLogger

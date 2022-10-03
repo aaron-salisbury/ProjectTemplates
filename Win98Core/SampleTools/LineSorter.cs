@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Win98Core.Base;
+using Win98Core.Base.Logging;
 
 namespace Win98Core.SampleTools
 {

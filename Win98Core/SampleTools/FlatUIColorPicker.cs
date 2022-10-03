@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Win98Core.Base;
+using Win98Core.Base.Logging;
 using Win98Core.SampleDataAccess;
 
 namespace Win98Core.SampleTools
