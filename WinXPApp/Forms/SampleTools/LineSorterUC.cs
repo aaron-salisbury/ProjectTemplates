@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Win7App.Base.Extensions;
+using WinXPApp.Base.Extensions;
 using WinXPApp.Base.Helpers;
 using WinXPCore.Base.DataAnnotationValidation;
 using WinXPCore.SampleTools;

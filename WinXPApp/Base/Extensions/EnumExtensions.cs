@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Win7App.Base.Extensions
+namespace WinXPApp.Base.Extensions
 {
     public static class EnumExtensions
     {
