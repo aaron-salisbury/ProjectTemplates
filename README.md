@@ -5,7 +5,7 @@ Visual Studio extension for mostly legacy project templates just in case I find 
 
 The templates help me when I want to get a utility made quickly, by starting with a well architected solution that is familiar.
 
-For targeting Windows 10 I recommend [Windows Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WindowsTemplateStudio).
+For targeting Windows 10, or newer, I recommend [Windows Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WindowsTemplateStudio).
 
 Info
 ----
