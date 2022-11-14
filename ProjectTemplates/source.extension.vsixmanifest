@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.00.20" Language="en-US" Publisher="Aaron Salisbury" />
+        <Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.00.21" Language="en-US" Publisher="Aaron Salisbury" />
         <DisplayName>Windows Project Templates</DisplayName>
         <Description xml:space="preserve">Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario.
 
@@ -28,9 +28,9 @@ The templates help when you want to get a small utilities made quickly, by start
         <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\MetroModernUI.1.4.0.0.nupkg" Type="MetroModernUI.1.4.0.0.nupkg" />
         <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\ModernUI.WPF.1.0.9.nupkg" Type="ModernUI.WPF.1.0.9.nupkg" />
         <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\MvvmLightLibsStd10.5.4.1.1.nupkg" Type="MvvmLightLibsStd10.5.4.1.1.nupkg" />
-        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\NLog.4.7.7.nupkg" Type="NLog.4.7.7.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\NLog.5.0.5.nupkg" Type="NLog.5.0.5.nupkg" />
         <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\PatternsAndPractices.Logging.2.0.0.nupkg" Type="PatternsAndPractices.Logging.2.0.0.nupkg" />
-        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\Serilog.2.10.0.nupkg" Type="Serilog.2.10.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\Serilog.2.12.0.nupkg" Type="Serilog.2.12.0.nupkg" />
         <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\System.ComponentModel.Annotations.5.0.0.nupkg" Type="System.ComponentModel.Annotations.5.0.0.nupkg" />
 
         <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_98_App_Template.zip" />
