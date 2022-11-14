@@ -25,9 +25,9 @@ The default generation process is designed for a single project only. We need to
 
 Extract each zipped project template. In each class that has references to another project that we also templated, we need to modify its using statement using a parameter.
 
-  - If the statement looks like: using OtherProject.Core.Services;
+  - If the statement looks like: "using OtherProject.Core.Services;"
 
-  - Make it: using $ext_safeprojectname$.Core.Services;
+  - Make it: using "$ext_safeprojectname$.Core.Services;"
 
 Similarly, to preserve the reference to that project, open the csproj and find the ProjectReference element.
 
