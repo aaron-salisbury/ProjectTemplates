@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using Win10Core.Base;
@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 
 namespace Win10App.ViewModels
 {
-    public class BaseViewModel : Microsoft.Toolkit.Mvvm.ComponentModel.ObservableObject
+    public class BaseViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
         public AppLogger AppLogger => App.Current.Services.GetService<ShellViewModel>().AppLogger;
 

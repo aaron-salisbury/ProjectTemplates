@@ -1,4 +1,4 @@
-﻿using Microsoft.Toolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using WinUI = Microsoft.UI.Xaml.Controls;
 
 namespace Win10App.ViewModels
 {
-    public class BaseNavigableViewModel : Microsoft.Toolkit.Mvvm.ComponentModel.ObservableObject
+    public class BaseNavigableViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
         private readonly KeyboardAccelerator _altLeftKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu);
         private readonly KeyboardAccelerator _backKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.GoBack);
