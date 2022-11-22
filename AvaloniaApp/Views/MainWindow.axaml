@@ -5,13 +5,98 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApp.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="AvaloniaApp">
+        Icon="/Base/Assets/avalonia-logo.ico"
+        Title="AvaloniaApp"
+		TransparencyLevelHint="AcrylicBlur"
+		ExtendClientAreaToDecorationsHint="True">
 
+	<Window.Background>
+		<SolidColorBrush Opacity="0.75" Color="#272537" />
+	</Window.Background>
+	
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<Border>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="200" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="75" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<TextBlock Grid.Column="0" 
+					   Text="Avalonia"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Center"
+					   Foreground="White"
+					   FontSize="22" />
+
+			<StackPanel Grid.Row="1">
+				<RadioButton Content="Home"
+							 Height="50"
+							 Foreground="White"
+							 FontSize="14">
+					<RadioButton.Template>
+						<ControlTemplate TargetType="RadioButton">
+							<Grid VerticalAlignment="Stretch"
+								  HorizontalAlignment="Stretch"
+								  Background="{TemplateBinding Background}">
+
+								<TextBlock Text="{TemplateBinding Property=Content}" 
+										   VerticalAlignment="Center"
+										   Margin="50,0,0,0"/>
+							</Grid>
+						</ControlTemplate>
+					</RadioButton.Template>
+				</RadioButton>
+
+				<RadioButton Content="Discovery"
+							 Height="50"
+							 Foreground="White"
+							 FontSize="14">
+					<RadioButton.Template>
+						<ControlTemplate TargetType="RadioButton">
+							<Grid VerticalAlignment="Stretch"
+								  HorizontalAlignment="Stretch"
+								  Background="{TemplateBinding Background}">
+
+								<TextBlock Text="{TemplateBinding Property=Content}"
+										   VerticalAlignment="Center"
+										   Margin="50,0,0,0"/>
+							</Grid>
+						</ControlTemplate>
+					</RadioButton.Template>
+				</RadioButton>
+
+				<RadioButton Content="Featured"
+							 Height="50"
+							 Foreground="White"
+							 FontSize="14">
+					<RadioButton.Template>
+						<ControlTemplate TargetType="RadioButton">
+							<Grid VerticalAlignment="Stretch"
+								  HorizontalAlignment="Stretch"
+								  Background="{TemplateBinding Background}">
+
+								<TextBlock Text="{TemplateBinding Property=Content}"
+										   VerticalAlignment="Center"
+										   Margin="50,0,0,0"/>
+							</Grid>
+						</ControlTemplate>
+					</RadioButton.Template>
+				</RadioButton>
+			</StackPanel>
+			
+			<ContentControl Grid.Row="1"
+							Grid.Column="1"
+							Margin="10"
+							Content="{Binding CurrentView}"/>
+		</Grid>
+	</Border>
 
 </Window>

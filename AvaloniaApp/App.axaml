@@ -1,12 +1,14 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:AvaloniaApp"
+             xmlns:base="using:AvaloniaApp.Base"
              x:Class="AvaloniaApp.App">
+	
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <base:ViewLocator/>
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme Mode="Light"/>
+        <FluentTheme Mode="Dark"/>
     </Application.Styles>
+
 </Application>

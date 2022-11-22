@@ -5,6 +5,11 @@ namespace AvaloniaApp.ViewModels
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _greeting = "Welcome to Avalonia!";
+        private object _currentView;
+
+        public MainWindowViewModel()
+        {
+            _currentView = new IntroductionViewModel();
+        }
     }
 }

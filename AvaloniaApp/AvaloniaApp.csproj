@@ -8,8 +8,11 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Base\Assets\**" />
+    <AvaloniaXaml Remove="Models\**" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
@@ -24,7 +27,13 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.18" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.4.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\IntroductionView.axaml.cs">
+      <DependentUpon>IntroductionView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
