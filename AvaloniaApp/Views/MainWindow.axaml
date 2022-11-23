@@ -7,33 +7,51 @@
         Icon="/Base/Assets/avalonia-logo.ico"
         Title="AvaloniaApp"
 		TransparencyLevelHint="AcrylicBlur"
-		ExtendClientAreaToDecorationsHint="True">
-
-	<Window.Background>
-		<SolidColorBrush Opacity="0.75" Color="#272537" />
-	</Window.Background>
+		Background="Transparent">
 
 	<Border>
 		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="200" />
+				<ColumnDefinition Width="175" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="75" />
+				<RowDefinition Height="50" />
 				<RowDefinition />
 			</Grid.RowDefinitions>
 
+			<!-- Future nested navigation color: #141414 -->
+			
+			<!-- Main Menu Background -->
+			<Rectangle Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+				<Rectangle.Fill>
+					<SolidColorBrush Opacity="1" Color="#0A0A0A" />
+				</Rectangle.Fill>
+			</Rectangle>
+
+			<!-- Top Bar Background -->
+			<Rectangle Grid.Column="1" Grid.Row="0">
+				<Rectangle.Fill>
+					<SolidColorBrush Opacity="1" Color="#0A0A0A" />
+				</Rectangle.Fill>
+			</Rectangle>
+
+			<!-- Content Area Background -->
+			<Rectangle Grid.Column="1" Grid.Row="1">
+				<Rectangle.Fill>
+					<SolidColorBrush Opacity="1" Color="#1F1F1F" />
+				</Rectangle.Fill>
+			</Rectangle>
+			
 			<TextBlock Grid.Column="0" 
 					   Text="Avalonia"
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Center"
-					   Foreground="White"
 					   FontSize="22"
 					   Margin="20,0,0,0"/>
 
 			<StackPanel Grid.Row="1">
-				<RadioButton Content="Home"
+				<RadioButton Content="Welcome"
 							 Height="50"
 							 Foreground="White"
 							 FontSize="14"
@@ -53,7 +71,7 @@
 					</RadioButton.Template>
 				</RadioButton>
 
-				<RadioButton Content="Discovery"
+				<RadioButton Content="Tools"
 							 Height="50"
 							 Foreground="White"
 							 FontSize="14"
@@ -72,7 +90,7 @@
 					</RadioButton.Template>
 				</RadioButton>
 
-				<RadioButton Content="Featured"
+				<RadioButton Content="Log"
 							 Height="50"
 							 Foreground="White"
 							 FontSize="14">
@@ -90,9 +108,9 @@
 					</RadioButton.Template>
 				</RadioButton>
 			</StackPanel>
-			
-			<ContentControl Grid.Row="1"
-							Grid.Column="1"
+
+			<ContentControl Grid.Column="1" 
+							Grid.Row="1"
 							Margin="10"
 							Content="{Binding CurrentView}"/>
 		</Grid>
