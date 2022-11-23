@@ -29,6 +29,7 @@ namespace AvaloniaApp
 
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<IntroductionViewModel>();
+            services.AddSingleton<LogViewModel>();
             services.AddSingleton<ToolsViewModel>();
 
             return services.BuildServiceProvider();

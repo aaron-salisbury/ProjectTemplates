@@ -11,6 +11,7 @@ namespace AvaloniaApp.ViewModels
         private object? _currentView;
 
         public RelayCommand IntroductionViewCommand { get; }
+        public RelayCommand LogViewCommand { get; }
         public RelayCommand ToolsViewCommand { get; }
 
         public MainWindowViewModel()
@@ -18,6 +19,7 @@ namespace AvaloniaApp.ViewModels
             _currentView = new IntroductionViewModel();
 
             IntroductionViewCommand = new RelayCommand(() => { CurrentView = App.Current?.Services?.GetService<IntroductionViewModel>(); });
+            LogViewCommand = new RelayCommand(() => { CurrentView = App.Current?.Services?.GetService<LogViewModel>(); });
             ToolsViewCommand = new RelayCommand(() => { CurrentView = App.Current?.Services?.GetService<ToolsViewModel>(); });
         }
     }

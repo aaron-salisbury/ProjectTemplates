@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:material="using:Material.Icons.Avalonia"
+		
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApp.Views.MainWindow"
         Icon="/Base/Assets/avalonia-logo.ico"
         Title="AvaloniaApp"
@@ -50,63 +52,52 @@
 					   FontSize="22"
 					   Margin="20,0,0,0"/>
 
-			<StackPanel Grid.Row="1">
-				<RadioButton Content="Welcome"
-							 Height="50"
-							 Foreground="White"
-							 FontSize="14"
-							 IsChecked="True"
-							 Command="{Binding IntroductionViewCommand}">
-					<RadioButton.Template>
-						<ControlTemplate TargetType="RadioButton">
-							<Grid VerticalAlignment="Stretch"
-								  HorizontalAlignment="Stretch"
-								  Background="{TemplateBinding Background}">
+			<Button Grid.Column="0" 
+					Grid.Row="0" 
+					Background="Transparent" 
+					CornerRadius="0"
+					>
+				<material:MaterialIcon Kind="Menu" Height="20" Width="20" />
+			</Button>
 
-								<TextBlock Text="{TemplateBinding Property=Content}" 
-										   VerticalAlignment="Center"
-										   Margin="50,0,0,0"/>
-							</Grid>
-						</ControlTemplate>
-					</RadioButton.Template>
-				</RadioButton>
+			<!-- Icons: https://materialdesignicons.com/ -->
+			<StackPanel Grid.Column="0" Grid.Row="1">
 
-				<RadioButton Content="Tools"
-							 Height="50"
-							 Foreground="White"
-							 FontSize="14"
-							 Command="{Binding ToolsViewCommand}">
-					<RadioButton.Template>
-						<ControlTemplate TargetType="RadioButton">
-							<Grid VerticalAlignment="Stretch"
-								  HorizontalAlignment="Stretch"
-								  Background="{TemplateBinding Background}">
+				<Button Command="{Binding IntroductionViewCommand}" 
+						Height="50"
+						Width="175"
+						Background="Transparent"
+						CornerRadius="0"
+						VerticalContentAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<material:MaterialIcon Kind="Home" Height="20" Width="20" />
+						<TextBlock Text="Welcome" Margin="10,0,0,0" />
+					</StackPanel>
+				</Button>
 
-								<TextBlock Text="{TemplateBinding Property=Content}"
-										   VerticalAlignment="Center"
-										   Margin="50,0,0,0"/>
-							</Grid>
-						</ControlTemplate>
-					</RadioButton.Template>
-				</RadioButton>
-
-				<RadioButton Content="Log"
-							 Height="50"
-							 Foreground="White"
-							 FontSize="14">
-					<RadioButton.Template>
-						<ControlTemplate TargetType="RadioButton">
-							<Grid VerticalAlignment="Stretch"
-								  HorizontalAlignment="Stretch"
-								  Background="{TemplateBinding Background}">
-
-								<TextBlock Text="{TemplateBinding Property=Content}"
-										   VerticalAlignment="Center"
-										   Margin="50,0,0,0"/>
-							</Grid>
-						</ControlTemplate>
-					</RadioButton.Template>
-				</RadioButton>
+				<Button Command="{Binding ToolsViewCommand}" 
+						Height="50"
+						Width="175"
+						Background="Transparent"
+						CornerRadius="0"
+						VerticalContentAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<material:MaterialIcon Kind="Tools" Height="20" Width="20" />
+						<TextBlock Text="Tools" Margin="10,0,0,0" />
+					</StackPanel>
+				</Button>
+				
+				<Button Command="{Binding LogViewCommand}" 
+						Height="50"
+						Width="175"
+						Background="Transparent"
+						CornerRadius="0"
+						VerticalContentAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<material:MaterialIcon Kind="ClipboardList" Height="20" Width="20" />
+						<TextBlock Text="Log" Margin="10,0,0,0" />
+					</StackPanel>
+				</Button>
 			</StackPanel>
 
 			<ContentControl Grid.Column="1" 
