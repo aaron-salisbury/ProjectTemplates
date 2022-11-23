@@ -10,6 +10,28 @@
 		TransparencyLevelHint="AcrylicBlur"
 		Background="Transparent">
 
+	<Window.Styles>
+		<Style Selector="Button.menuBtn">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Height" Value="41"/>
+			<Setter Property="Width" Value="175"/>
+			<Setter Property="CornerRadius" Value="0"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="Button.menuBtn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+						<LinearGradientBrush.GradientStops>
+							<GradientStop Offset="0.5" Color="#1F1F1F" />
+							<GradientStop Offset="1.0" Color="#333333" />
+						</LinearGradientBrush.GradientStops>
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Styles>
+	
 	<Border>
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -43,55 +65,32 @@
 					<SolidColorBrush Opacity="1" Color="#1F1F1F" />
 				</Rectangle.Fill>
 			</Rectangle>
-			
-			<TextBlock Grid.Column="0" 
-					   Text="Avalonia"
-					   VerticalAlignment="Center"
-					   HorizontalAlignment="Center"
-					   FontSize="22"
-					   Margin="20,0,0,0"/>
 
 			<Button Grid.Column="0" 
 					Grid.Row="0" 
 					Background="Transparent" 
-					CornerRadius="0"
-					>
+					CornerRadius="0">
 				<material:MaterialIcon Kind="Menu" Height="20" Width="20" />
 			</Button>
 
 			<!-- Icons: https://materialdesignicons.com/ -->
 			<StackPanel Grid.Column="0" Grid.Row="1">
 
-				<Button Command="{Binding IntroductionViewCommand}" 
-						Height="50"
-						Width="175"
-						Background="Transparent"
-						CornerRadius="0"
-						VerticalContentAlignment="Center">
+				<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn">
 					<StackPanel Orientation="Horizontal">
 						<material:MaterialIcon Kind="Home" Height="20" Width="20" />
 						<TextBlock Text="Welcome" Margin="10,0,0,0" />
 					</StackPanel>
 				</Button>
 
-				<Button Command="{Binding ToolsViewCommand}" 
-						Height="50"
-						Width="175"
-						Background="Transparent"
-						CornerRadius="0"
-						VerticalContentAlignment="Center">
+				<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn">
 					<StackPanel Orientation="Horizontal">
 						<material:MaterialIcon Kind="Tools" Height="20" Width="20" />
 						<TextBlock Text="Tools" Margin="10,0,0,0" />
 					</StackPanel>
 				</Button>
 				
-				<Button Command="{Binding LogViewCommand}" 
-						Height="50"
-						Width="175"
-						Background="Transparent"
-						CornerRadius="0"
-						VerticalContentAlignment="Center">
+				<Button Command="{Binding LogViewCommand}" Classes="menuBtn">
 					<StackPanel Orientation="Horizontal">
 						<material:MaterialIcon Kind="ClipboardList" Height="20" Width="20" />
 						<TextBlock Text="Log" Margin="10,0,0,0" />
