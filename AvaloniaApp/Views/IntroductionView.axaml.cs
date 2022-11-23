@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaApp.Views
 {
@@ -7,6 +8,7 @@ namespace AvaloniaApp.Views
         public IntroductionView()
         {
             InitializeComponent();
+            DataContext = App.Current?.Services?.GetService<ViewModels.IntroductionViewModel>();
         }
     }
 }
