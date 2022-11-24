@@ -13,7 +13,13 @@
     <Compile Remove="Models\**" />
     <EmbeddedResource Remove="Models\**" />
     <None Remove="Models\**" />
+    <AvaloniaXaml Remove="Base\Styles\Colors.axaml" />
     <None Remove=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Base\Styles\Colors.axaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.

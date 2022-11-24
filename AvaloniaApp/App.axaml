@@ -12,4 +12,12 @@
 		<StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml" />
     </Application.Styles>
 
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source='/Base/Styles/Colors.axaml'/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+	
 </Application>

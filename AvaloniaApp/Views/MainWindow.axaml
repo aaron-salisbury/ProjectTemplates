@@ -23,8 +23,8 @@
 				<Setter.Value>
 					<LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
 						<LinearGradientBrush.GradientStops>
-							<GradientStop Offset="0.5" Color="#1F1F1F" />
-							<GradientStop Offset="1.0" Color="#333333" />
+							<GradientStop Offset="0.5" Color="{StaticResource DarkMenuBtnGradientStart}" />
+							<GradientStop Offset="1.0" Color="{StaticResource DarkMenuBtnGradientStop}" />
 						</LinearGradientBrush.GradientStops>
 					</LinearGradientBrush>
 				</Setter.Value>
@@ -43,65 +43,57 @@
 				<RowDefinition />
 			</Grid.RowDefinitions>
 
-			<!-- Future nested navigation color: #141414 -->
+			<!-- Top Bar -->
+			<Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+				<Border.Background>
+					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
+				</Border.Background>
+
+				<Button Background="Transparent" CornerRadius="0">
+					<material:MaterialIcon Kind="Menu" Height="20" Width="20" />
+				</Button>
+			</Border>
 			
-			<!-- Main Menu Background -->
-			<Rectangle Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-				<Rectangle.Fill>
-					<SolidColorBrush Opacity="1" Color="#0A0A0A" />
-				</Rectangle.Fill>
-			</Rectangle>
+			<!-- Main Menu -->
+			<Border Grid.Column="0" Grid.Row="1">
+				<Border.Background>
+					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
+				</Border.Background>
 
-			<!-- Top Bar Background -->
-			<Rectangle Grid.Column="1" Grid.Row="0">
-				<Rectangle.Fill>
-					<SolidColorBrush Opacity="1" Color="#0A0A0A" />
-				</Rectangle.Fill>
-			</Rectangle>
+				<!-- Icons: https://materialdesignicons.com/ -->
+				<StackPanel>
+					<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn">
+						<StackPanel Orientation="Horizontal">
+							<material:MaterialIcon Kind="Home" Height="20" Width="20" />
+							<TextBlock Text="Welcome" Margin="10,0,0,0" />
+						</StackPanel>
+					</Button>
 
-			<!-- Content Area Background -->
-			<Rectangle Grid.Column="1" Grid.Row="1">
-				<Rectangle.Fill>
-					<SolidColorBrush Opacity="1" Color="#1F1F1F" />
-				</Rectangle.Fill>
-			</Rectangle>
+					<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn">
+						<StackPanel Orientation="Horizontal">
+							<material:MaterialIcon Kind="Tools" Height="20" Width="20" />
+							<TextBlock Text="Tools" Margin="10,0,0,0" />
+						</StackPanel>
+					</Button>
 
-			<Button Grid.Column="0" 
-					Grid.Row="0" 
-					Background="Transparent" 
-					CornerRadius="0">
-				<material:MaterialIcon Kind="Menu" Height="20" Width="20" />
-			</Button>
+					<Button Command="{Binding LogViewCommand}" Classes="menuBtn">
+						<StackPanel Orientation="Horizontal">
+							<material:MaterialIcon Kind="ClipboardList" Height="20" Width="20" />
+							<TextBlock Text="Log" Margin="10,0,0,0" />
+						</StackPanel>
+					</Button>
+				</StackPanel>
+			</Border>
 
-			<!-- Icons: https://materialdesignicons.com/ -->
-			<StackPanel Grid.Column="0" Grid.Row="1">
-
-				<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn">
-					<StackPanel Orientation="Horizontal">
-						<material:MaterialIcon Kind="Home" Height="20" Width="20" />
-						<TextBlock Text="Welcome" Margin="10,0,0,0" />
-					</StackPanel>
-				</Button>
-
-				<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn">
-					<StackPanel Orientation="Horizontal">
-						<material:MaterialIcon Kind="Tools" Height="20" Width="20" />
-						<TextBlock Text="Tools" Margin="10,0,0,0" />
-					</StackPanel>
-				</Button>
+			<!-- Content Area -->
+			<Border Grid.Column="1" Grid.Row="1">
+				<Border.Background>
+					<SolidColorBrush Opacity="1" Color="{StaticResource DarkContentArea}" />
+				</Border.Background>
 				
-				<Button Command="{Binding LogViewCommand}" Classes="menuBtn">
-					<StackPanel Orientation="Horizontal">
-						<material:MaterialIcon Kind="ClipboardList" Height="20" Width="20" />
-						<TextBlock Text="Log" Margin="10,0,0,0" />
-					</StackPanel>
-				</Button>
-			</StackPanel>
+				<ContentControl Content="{Binding CurrentView}"/>
+			</Border>
 
-			<ContentControl Grid.Column="1" 
-							Grid.Row="1"
-							Margin="10"
-							Content="{Binding CurrentView}"/>
 		</Grid>
 	</Border>
 
