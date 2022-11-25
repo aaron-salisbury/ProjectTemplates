@@ -19,10 +19,21 @@
 			<Setter Property="Margin" Value="10,1.5,0,0"/>
 			<Setter Property="FontWeight" Value="Light"/>
 		</Style>
+		<Style Selector="Border.menuOpen">
+			<Setter Property="Width" Value="175"/>
+		</Style>
+		<Style Selector="Border.menuClosed">
+			<Setter Property="Width" Value="38"/>
+		</Style>
+		<Style Selector="Button.menuBtnOpen">
+			<Setter Property="Width" Value="175"/>
+		</Style>
+		<Style Selector="Button.menuBtnClosed">
+			<Setter Property="Width" Value="38"/>
+		</Style>
 		<Style Selector="Button.menuBtn">
 			<Setter Property="Background" Value="Transparent"/>
 			<Setter Property="Height" Value="38"/>
-			<Setter Property="Width" Value="175"/>
 			<Setter Property="CornerRadius" Value="0"/>
 			<Setter Property="VerticalContentAlignment" Value="Center"/>
 		</Style>
@@ -43,12 +54,12 @@
 	<Border>
 		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="175" />
-				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
 			<!-- Main Menu -->
-			<Border Grid.Column="0">
+			<Border Grid.Column="0" Name="MainMenuBorder" Classes="menuClosed">
 				<Border.Background>
 					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
 				</Border.Background>
@@ -62,38 +73,38 @@
 
 					<!-- Icons: https://materialdesignicons.com/ -->
 					<StackPanel Grid.Row="0">
-						<Button Background="Transparent" CornerRadius="0">
+						<Button Click="OnHamburgerClick" Classes="menuBtn" Width="38">
 							<material:MaterialIcon Kind="Menu" Classes="menuIco" />
 						</Button>
 						
 						<Separator Background="{StaticResource DarkSubMenu}" Height="1" Margin="0,1,0,1" />
 						
-						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn">
+						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn menuBtnClosed">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="Home" Classes="menuIco" />
-								<TextBlock Text="Welcome" Classes="menuTxt" />
+								<TextBlock Text="Welcome" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 
-						<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn">
+						<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn menuBtnClosed">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="Tools" Classes="menuIco" />
-								<TextBlock Text="Tools" Classes="menuTxt" />
+								<TextBlock Text="Tools" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 
-						<Button Command="{Binding LogViewCommand}" Classes="menuBtn">
+						<Button Command="{Binding LogViewCommand}" Classes="menuBtn menuBtnClosed">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="ClipboardList" Classes="menuIco" />
-								<TextBlock Text="Log" Classes="menuTxt" />
+								<TextBlock Text="Log" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 					</StackPanel>
 
-					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Classes="menuBtn">
+					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Classes="menuBtn menuBtnClosed">
 						<StackPanel Orientation="Horizontal">
 							<material:MaterialIcon Kind="CogOutline" Classes="menuIco" />
-							<TextBlock Text="Settings" Classes="menuTxt" />
+							<TextBlock Text="Settings" Classes="menuTxt" IsVisible="False" />
 						</StackPanel>
 					</Button>
 				</Grid>
