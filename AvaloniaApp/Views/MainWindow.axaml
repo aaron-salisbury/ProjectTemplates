@@ -11,9 +11,17 @@
 		Background="Transparent">
 
 	<Window.Styles>
+		<Style Selector="material|MaterialIcon.menuIco">
+			<Setter Property="Height" Value="19"/>
+			<Setter Property="Width" Value="19"/>
+		</Style>
+		<Style Selector="TextBlock.menuTxt">
+			<Setter Property="Margin" Value="10,1.5,0,0"/>
+			<Setter Property="FontWeight" Value="Light"/>
+		</Style>
 		<Style Selector="Button.menuBtn">
 			<Setter Property="Background" Value="Transparent"/>
-			<Setter Property="Height" Value="41"/>
+			<Setter Property="Height" Value="38"/>
 			<Setter Property="Width" Value="175"/>
 			<Setter Property="CornerRadius" Value="0"/>
 			<Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -50,7 +58,7 @@
 				</Border.Background>
 
 				<Button Background="Transparent" CornerRadius="0">
-					<material:MaterialIcon Kind="Menu" Height="20" Width="20" />
+					<material:MaterialIcon Kind="Menu" Classes="menuIco" />
 				</Button>
 			</Border>
 			
@@ -60,29 +68,44 @@
 					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
 				</Border.Background>
 
-				<!-- Icons: https://materialdesignicons.com/ -->
-				<StackPanel>
-					<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn">
-						<StackPanel Orientation="Horizontal">
-							<material:MaterialIcon Kind="Home" Height="20" Width="20" />
-							<TextBlock Text="Welcome" Margin="10,0,0,0" />
-						</StackPanel>
-					</Button>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
 
-					<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn">
-						<StackPanel Orientation="Horizontal">
-							<material:MaterialIcon Kind="Tools" Height="20" Width="20" />
-							<TextBlock Text="Tools" Margin="10,0,0,0" />
-						</StackPanel>
-					</Button>
+					<!-- Icons: https://materialdesignicons.com/ -->
+					<StackPanel Grid.Row="0">
+						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn">
+							<StackPanel Orientation="Horizontal">
+								<material:MaterialIcon Kind="Home" Classes="menuIco" />
+								<TextBlock Text="Welcome" Classes="menuTxt" />
+							</StackPanel>
+						</Button>
 
-					<Button Command="{Binding LogViewCommand}" Classes="menuBtn">
+						<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn">
+							<StackPanel Orientation="Horizontal">
+								<material:MaterialIcon Kind="Tools" Classes="menuIco" />
+								<TextBlock Text="Tools" Classes="menuTxt" />
+							</StackPanel>
+						</Button>
+
+						<Button Command="{Binding LogViewCommand}" Classes="menuBtn">
+							<StackPanel Orientation="Horizontal">
+								<material:MaterialIcon Kind="ClipboardList" Classes="menuIco" />
+								<TextBlock Text="Log" Classes="menuTxt" />
+							</StackPanel>
+						</Button>
+					</StackPanel>
+
+					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Classes="menuBtn">
 						<StackPanel Orientation="Horizontal">
-							<material:MaterialIcon Kind="ClipboardList" Height="20" Width="20" />
-							<TextBlock Text="Log" Margin="10,0,0,0" />
+							<material:MaterialIcon Kind="CogOutline" Classes="menuIco" />
+							<TextBlock Text="Settings" Classes="menuTxt" />
 						</StackPanel>
 					</Button>
-				</StackPanel>
+				</Grid>
 			</Border>
 
 			<!-- Content Area -->
