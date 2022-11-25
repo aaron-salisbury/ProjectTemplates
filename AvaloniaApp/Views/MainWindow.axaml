@@ -7,8 +7,8 @@
         x:Class="AvaloniaApp.Views.MainWindow"
         Icon="/Base/Assets/avalonia-logo.ico"
         Title="AvaloniaApp"
-		TransparencyLevelHint="AcrylicBlur"
-		Background="Transparent">
+		Background="Transparent"
+		TransparencyLevelHint="AcrylicBlur">
 
 	<Window.Styles>
 		<Style Selector="material|MaterialIcon.menuIco">
@@ -46,24 +46,9 @@
 				<ColumnDefinition Width="175" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="50" />
-				<RowDefinition />
-			</Grid.RowDefinitions>
 
-			<!-- Top Bar -->
-			<Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
-				<Border.Background>
-					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
-				</Border.Background>
-
-				<Button Background="Transparent" CornerRadius="0">
-					<material:MaterialIcon Kind="Menu" Classes="menuIco" />
-				</Button>
-			</Border>
-			
 			<!-- Main Menu -->
-			<Border Grid.Column="0" Grid.Row="1">
+			<Border Grid.Column="0">
 				<Border.Background>
 					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
 				</Border.Background>
@@ -77,6 +62,12 @@
 
 					<!-- Icons: https://materialdesignicons.com/ -->
 					<StackPanel Grid.Row="0">
+						<Button Background="Transparent" CornerRadius="0">
+							<material:MaterialIcon Kind="Menu" Classes="menuIco" />
+						</Button>
+						
+						<Separator Background="{StaticResource DarkSubMenu}" Height="1" Margin="0,1,0,1" />
+						
 						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="Home" Classes="menuIco" />
@@ -109,7 +100,7 @@
 			</Border>
 
 			<!-- Content Area -->
-			<Border Grid.Column="1" Grid.Row="1">
+			<Border Grid.Column="1">
 				<Border.Background>
 					<SolidColorBrush Opacity="1" Color="{StaticResource DarkContentArea}" />
 				</Border.Background>
