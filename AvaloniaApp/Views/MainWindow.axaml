@@ -74,7 +74,7 @@
 					<!-- Icons: https://materialdesignicons.com/ -->
 					<StackPanel Grid.Row="0">
 						<Button Click="OnHamburgerClick" Classes="menuBtn" Width="38">
-							<material:MaterialIcon Kind="Menu" Classes="menuIco" />
+							<material:MaterialIcon Kind="Menu" Name="HamburgerIcon" Classes="menuIco" />
 						</Button>
 						
 						<Separator Background="{StaticResource DarkSubMenu}" Height="1" Margin="0,1,0,1" />
@@ -101,9 +101,9 @@
 						</Button>
 					</StackPanel>
 
-					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Classes="menuBtn menuBtnClosed">
+					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Click="OnSettingsClick" Classes="menuBtn menuBtnClosed">
 						<StackPanel Orientation="Horizontal">
-							<material:MaterialIcon Kind="CogOutline" Classes="menuIco" />
+							<material:MaterialIcon Kind="CogOutline" Name="SettingsIcon" Classes="menuIco" />
 							<TextBlock Text="Settings" Classes="menuTxt" IsVisible="False" />
 						</StackPanel>
 					</Button>
