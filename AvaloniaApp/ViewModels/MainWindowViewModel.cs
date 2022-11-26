@@ -10,6 +10,9 @@ namespace AvaloniaApp.ViewModels
         [ObservableProperty]
         private object? _currentView;
 
+        [ObservableProperty]
+        private string _currentViewFriendly;
+
         public RelayCommand IntroductionViewCommand { get; }
         public RelayCommand LogViewCommand { get; }
         public RelayCommand SettingsViewCommand { get; }
@@ -27,11 +30,18 @@ namespace AvaloniaApp.ViewModels
         public MainWindowViewModel()
         {
             _currentView = new IntroductionViewModel();
+            _currentViewFriendly = "Welcome";
 
-            IntroductionViewCommand = new RelayCommand(() => { CurrentView = App.Current?.Services?.GetService<IntroductionViewModel>(); });
-            LogViewCommand = new RelayCommand(() => { CurrentView = App.Current?.Services?.GetService<LogViewModel>(); });
-            SettingsViewCommand = new RelayCommand(() => { CurrentView = App.Current?.Services?.GetService<SettingsViewModel>(); });
-            ToolsViewCommand = new RelayCommand(() => { CurrentView = App.Current?.Services?.GetService<ToolsViewModel>(); });
+            IntroductionViewCommand = new RelayCommand(() => { SetCurrentView<IntroductionViewModel>("Welcome"); });
+            LogViewCommand = new RelayCommand(() => { SetCurrentView<LogViewModel>(); });
+            SettingsViewCommand = new RelayCommand(() => { SetCurrentView<SettingsViewModel>(); });
+            ToolsViewCommand = new RelayCommand(() => { SetCurrentView<ToolsViewModel>(); });
+        }
+
+        private void SetCurrentView<T>(string? viewFriendlyName = null) where T : ObservableObject
+        {
+            CurrentView = App.Current?.Services?.GetService<T>();
+            CurrentViewFriendly = viewFriendlyName ?? typeof(T).Name.Replace("ViewModel", string.Empty);
         }
     }
 }

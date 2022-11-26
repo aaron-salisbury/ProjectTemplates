@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -6,7 +5,6 @@ using Avalonia.LogicalTree;
 using Avalonia.Styling;
 using Material.Icons.Avalonia;
 using System;
-using System.Linq;
 
 namespace AvaloniaApp.Views
 {
@@ -42,26 +40,21 @@ namespace AvaloniaApp.Views
 
             foreach (ILogical control in mainMenuBorder.GetLogicalDescendants())
             {
-                if (control is TextBlock)
+                if (control is TextBlock menuButtonText && menuButtonText.Classes.Contains("menuTxt"))
                 {
-                    TextBlock textControl = (TextBlock)control;
-                    if (textControl.Classes.Contains("menuTxt"))
-                    {
-                        textControl.IsVisible = !textControl.IsVisible;
-                    }
+                    menuButtonText.IsVisible = !menuButtonText.IsVisible;
                 }
-                else if (control is Button)
+                else if (control is Button menuButton)
                 {
-                    Button textButton = (Button)control;
-                    if (textButton.Classes.Contains("menuBtnOpen"))
+                    if (menuButton.Classes.Contains("menuBtnOpen"))
                     {
-                        textButton.Classes.Remove("menuBtnOpen");
-                        textButton.Classes.Add("menuBtnClosed");
+                        menuButton.Classes.Remove("menuBtnOpen");
+                        menuButton.Classes.Add("menuBtnClosed");
                     }
-                    else if (textButton.Classes.Contains("menuBtnClosed"))
+                    else if (menuButton.Classes.Contains("menuBtnClosed"))
                     {
-                        textButton.Classes.Remove("menuBtnClosed");
-                        textButton.Classes.Add("menuBtnOpen");
+                        menuButton.Classes.Remove("menuBtnClosed");
+                        menuButton.Classes.Add("menuBtnOpen");
                     }
                 }
             }
