@@ -15,6 +15,15 @@ namespace AvaloniaApp.ViewModels
         public RelayCommand SettingsViewCommand { get; }
         public RelayCommand ToolsViewCommand { get; }
 
+        public static bool IsDebug
+        {
+#if DEBUG
+            get { return true; }
+#else
+            get { return false; }
+#endif
+        }
+
         public MainWindowViewModel()
         {
             _currentView = new IntroductionViewModel();

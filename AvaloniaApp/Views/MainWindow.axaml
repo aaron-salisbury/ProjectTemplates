@@ -93,7 +93,7 @@
 							</StackPanel>
 						</Button>
 
-						<Button Command="{Binding LogViewCommand}" Classes="menuBtn menuBtnClosed">
+						<Button Command="{Binding LogViewCommand}" Classes="menuBtn menuBtnClosed" IsVisible="{Binding IsDebug}">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="ClipboardList" Classes="menuIco" />
 								<TextBlock Text="Log" Classes="menuTxt" IsVisible="False" />
