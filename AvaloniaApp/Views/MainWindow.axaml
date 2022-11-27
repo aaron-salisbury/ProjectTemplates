@@ -6,9 +6,7 @@
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApp.Views.MainWindow"
         Icon="/Base/Assets/avalonia-logo.ico"
-        Title="AvaloniaApp"
-		Background="Transparent"
-		TransparencyLevelHint="AcrylicBlur">
+        Title="AvaloniaApp">
 
 	<Window.Styles>
 		<Style Selector="material|MaterialIcon.menuIco">
@@ -18,6 +16,54 @@
 		<Style Selector="TextBlock.menuTxt">
 			<Setter Property="Margin" Value="10,1.5,0,0"/>
 			<Setter Property="FontWeight" Value="Light"/>
+		</Style>
+		<Style Selector="Separator.darkThemeSep">
+			<Setter Property="Background" Value="{StaticResource DarkSep}" />
+		</Style>
+		<Style Selector="Separator.lightThemeSep">
+			<Setter Property="Background" Value="{StaticResource LightSep}" />
+		</Style>
+		<Style Selector="Border.darkTheme1">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style Selector="Border.darkTheme2">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Opacity="1" Color="{StaticResource DarkSubMenu}" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style Selector="Border.darkTheme3">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Opacity="1" Color="{StaticResource DarkContentArea}" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style Selector="Border.lightTheme1">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Opacity="1" Color="{StaticResource LightMenu}" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style Selector="Border.lightTheme2">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Opacity="1" Color="{StaticResource LightSubMenu}" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style Selector="Border.lightTheme3">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Opacity="1" Color="{StaticResource LightContentArea}" />
+				</Setter.Value>
+			</Setter>
 		</Style>
 		<Style Selector="Border.menuOpen">
 			<Setter Property="Width" Value="175"/>
@@ -37,7 +83,7 @@
 			<Setter Property="CornerRadius" Value="0"/>
 			<Setter Property="VerticalContentAlignment" Value="Center"/>
 		</Style>
-		<Style Selector="Button.menuBtn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Style Selector="Button.darkThemeMenuBtn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
 			<Setter Property="Background">
 				<Setter.Value>
 					<LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
@@ -46,6 +92,13 @@
 							<GradientStop Offset="1.0" Color="{StaticResource DarkMenuBtnGradientStop}" />
 						</LinearGradientBrush.GradientStops>
 					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style Selector="Button.lightThemeMenuBtn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Opacity="1" Color="{StaticResource LightMenuBtn}" />
 				</Setter.Value>
 			</Setter>
 		</Style>
@@ -59,11 +112,7 @@
 			</Grid.ColumnDefinitions>
 
 			<!-- Main Menu -->
-			<Border Grid.Column="0" Name="MainMenuBorder" Classes="menuClosed">
-				<Border.Background>
-					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
-				</Border.Background>
-
+			<Border Grid.Column="0" Name="MainMenuBorder" Classes="menuClosed darkTheme1">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
@@ -73,27 +122,27 @@
 
 					<!-- Icons: https://materialdesignicons.com/ -->
 					<StackPanel Grid.Row="0">
-						<Button Click="OnHamburgerClick" Classes="menuBtn" Width="38">
+						<Button Click="OnHamburgerClick" Classes="menuBtn darkThemeMenuBtn" Width="38">
 							<material:MaterialIcon Kind="Menu" Name="HamburgerIcon" Classes="menuIco" />
 						</Button>
 						
-						<Separator Background="{StaticResource DarkSubMenu}" Height="1" Margin="0,1,0,1" />
+						<Separator Classes="darkThemeSep" Height="1" Margin="0,1,0,1" />
 						
-						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn menuBtnClosed">
+						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn menuBtnClosed darkThemeMenuBtn">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="Home" Classes="menuIco" />
 								<TextBlock Text="Welcome" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 
-						<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn menuBtnClosed">
+						<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn menuBtnClosed darkThemeMenuBtn">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="Tools" Classes="menuIco" />
 								<TextBlock Text="Tools" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 
-						<Button Command="{Binding LogViewCommand}" Classes="menuBtn menuBtnClosed" IsVisible="{Binding IsDebug}">
+						<Button Command="{Binding LogViewCommand}" Classes="menuBtn menuBtnClosed darkThemeMenuBtn" IsVisible="{Binding IsDebug}">
 							<StackPanel Orientation="Horizontal">
 								<material:MaterialIcon Kind="ClipboardList" Classes="menuIco" />
 								<TextBlock Text="Log" Classes="menuTxt" IsVisible="False" />
@@ -101,7 +150,7 @@
 						</Button>
 					</StackPanel>
 
-					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Click="OnSettingsClick" Classes="menuBtn menuBtnClosed">
+					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Click="OnSettingsClick" Classes="menuBtn menuBtnClosed darkThemeMenuBtn">
 						<StackPanel Orientation="Horizontal">
 							<material:MaterialIcon Kind="CogOutline" Name="SettingsIcon" Classes="menuIco" />
 							<TextBlock Text="Settings" Classes="menuTxt" IsVisible="False" />
@@ -117,22 +166,14 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<Border Grid.Row="0">
-					<Border.Background>
-						<SolidColorBrush Opacity="1" Color="{StaticResource DarkSubMenu}" />
-					</Border.Background>
-
+				<Border Grid.Row="0" Classes="darkTheme2">
 					<TextBlock Text="{Binding CurrentViewFriendly}" 
 							   FontSize="23" 
 							   Margin="40,00,0,0" 
 							   VerticalAlignment="Center" />
 				</Border>
 
-				<Border Grid.Row="1">
-					<Border.Background>
-						<SolidColorBrush Opacity="1" Color="{StaticResource DarkContentArea}" />
-					</Border.Background>
-
+				<Border Grid.Row="1" Classes="darkTheme3">
 					<ContentControl Content="{Binding CurrentView}" Padding="20" />
 				</Border>
 			</Grid>

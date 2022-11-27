@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Themes.Fluent;
@@ -22,19 +23,25 @@ namespace AvaloniaApp.Views
             if (sender is RadioButton appThemeRadioButton && 
                 Application.Current != null && 
                 Application.Current.Styles.Count > 1 && 
-                Application.Current.Styles[0] is FluentTheme fluentTheme)
+                Application.Current.Styles[0] is FluentTheme fluentTheme &&
+                Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                FluentThemeMode mode;
+
                 switch (appThemeRadioButton.Name)
                 {
                     case "LightRadioButton":
-                        fluentTheme.Mode = FluentThemeMode.Light;
+                        mode = FluentThemeMode.Light;
                         break;
 
                     case "DarkRadioButton":
                     default:
-                        fluentTheme.Mode = FluentThemeMode.Dark;
+                        mode = FluentThemeMode.Dark;
                         break;
                 }
+
+                fluentTheme.Mode = mode;
+                ((MainWindow)desktop.MainWindow).UpdateTheme(mode);
             }
 
             Cursor = new Cursor(StandardCursorType.Arrow);

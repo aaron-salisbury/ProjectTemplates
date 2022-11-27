@@ -1,10 +1,13 @@
+using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Styling;
+using Avalonia.Themes.Fluent;
 using Material.Icons.Avalonia;
 using System;
+using System.Linq;
 
 namespace AvaloniaApp.Views
 {
@@ -15,12 +18,35 @@ namespace AvaloniaApp.Views
             InitializeComponent();
         }
 
+        public void UpdateTheme(FluentThemeMode mode)
+        {
+            string oldMode = "light";
+            string newMode = "dark";
+
+            if (mode == FluentThemeMode.Light)
+            {
+                oldMode = "dark";
+                newMode = "light";
+            }
+
+            foreach (ILogical control in this.GetLogicalDescendants())
+            {
+                if (control is StyledElement element && element.Classes.Any(c => c.StartsWith($"{oldMode}Theme")))
+                {
+                    string oldClassName = element.Classes.Where(c => c.StartsWith($"{oldMode}Theme")).First();
+                    string newClassName = oldClassName.Replace(oldMode, newMode);
+                    element.Classes.Remove(oldClassName);
+                    element.Classes.Add(newClassName);
+                }
+            }
+        }
+
         private void OnHamburgerClick(object sender, RoutedEventArgs e)
         {
             // Animate button icon.
             MaterialIcon hamburgerIcon = this.FindControl<MaterialIcon>("HamburgerIcon");
 
-            var animation = new Avalonia.Animation.Animation()
+            Animation animation = new Animation()
             {
                 Duration = TimeSpan.FromSeconds(0.2),
                 Children =
@@ -73,9 +99,7 @@ namespace AvaloniaApp.Views
 
         private void OnSettingsClick(object sender, RoutedEventArgs e)
         {
-            MaterialIcon settingsIcon = this.FindControl<MaterialIcon>("SettingsIcon");
-
-            var animation = new Avalonia.Animation.Animation()
+            Animation animation = new Animation()
             {
                 Duration = TimeSpan.FromSeconds(0.4),
                 Children =
@@ -88,7 +112,7 @@ namespace AvaloniaApp.Views
                 }
             };
 
-            animation.RunAsync(settingsIcon, null);
+            animation.RunAsync(this.FindControl<MaterialIcon>("SettingsIcon"), null);
         }
     }
 }
