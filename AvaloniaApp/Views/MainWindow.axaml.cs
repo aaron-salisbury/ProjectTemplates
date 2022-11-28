@@ -16,6 +16,8 @@ namespace AvaloniaApp.Views
 {
     public partial class MainWindow : Window
     {
+        private Button _selectedNavButton;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,6 +29,9 @@ namespace AvaloniaApp.Views
                     StringComparison.OrdinalIgnoreCase) 
                 ? FluentThemeMode.Light 
                 : FluentThemeMode.Dark);
+
+            _selectedNavButton = this.FindControl<Button>("HomeBtn");
+            SetupNavButtonIndicators();
         }
 
         public void UpdateTheme(FluentThemeMode mode)
@@ -63,6 +68,38 @@ namespace AvaloniaApp.Views
             }
 
             Cursor = new Cursor(StandardCursorType.Arrow);
+        }
+
+        private void SetupNavButtonIndicators()
+        {
+            foreach (ILogical control in this.FindControl<Border>("MainMenuBorder").GetLogicalDescendants())
+            {
+                if (control is Button navButton && navButton.Classes.Contains("navBtn"))
+                {
+                    navButton.Click += OnNavButtonClick;
+                }
+            }
+
+            OnNavButtonClick(_selectedNavButton, null);
+        }
+
+        private void OnNavButtonClick(object? sender, RoutedEventArgs? e)
+        {
+            if (sender is Button clickedButton && _selectedNavButton != null)
+            {
+                Border? oldNavBtnBorder = _selectedNavButton.GetLogicalDescendants().Where(ld => ld is Border se && se.Classes.Contains("menuBtnIndicator")).FirstOrDefault() as Border;
+                if (oldNavBtnBorder != null)
+                {
+                    oldNavBtnBorder.Height = 0.0D;
+                }
+
+                Border? newNavBtnBorder = clickedButton.GetLogicalDescendants().Where(ld => ld is Border se && se.Classes.Contains("menuBtnIndicator")).FirstOrDefault() as Border;
+                if (newNavBtnBorder != null)
+                {
+                    newNavBtnBorder.Height = 19.0D;
+                    _selectedNavButton = clickedButton;
+                }
+            }
         }
 
         private void OnHamburgerClick(object sender, RoutedEventArgs e)
