@@ -6,7 +6,9 @@
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApp.Views.MainWindow"
         Icon="/Base/Assets/avalonia-logo.ico"
-        Title="AvaloniaApp">
+        Title="AvaloniaApp"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur">
 
 	<Window.Styles>
 		<!-- Regular styles. -->
@@ -35,42 +37,42 @@
 		<Style Selector="Border.darkTheme1">
 			<Setter Property="Background">
 				<Setter.Value>
-					<SolidColorBrush Opacity="1" Color="{StaticResource DarkMenu}" />
+					<SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="{StaticResource DarkMenu}" />
 				</Setter.Value>
 			</Setter>
 		</Style>
 		<Style Selector="Border.darkTheme2">
 			<Setter Property="Background">
 				<Setter.Value>
-					<SolidColorBrush Opacity="1" Color="{StaticResource DarkSubMenu}" />
+					<SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="{StaticResource DarkSubMenu}" />
 				</Setter.Value>
 			</Setter>
 		</Style>
 		<Style Selector="Border.darkTheme3">
 			<Setter Property="Background">
 				<Setter.Value>
-					<SolidColorBrush Opacity="1" Color="{StaticResource DarkContentArea}" />
+					<SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="{StaticResource DarkContentArea}" />
 				</Setter.Value>
 			</Setter>
 		</Style>
 		<Style Selector="Border.lightTheme1">
 			<Setter Property="Background">
 				<Setter.Value>
-					<SolidColorBrush Opacity="1" Color="{StaticResource LightMenu}" />
+					<SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="{StaticResource LightMenu}" />
 				</Setter.Value>
 			</Setter>
 		</Style>
 		<Style Selector="Border.lightTheme2">
 			<Setter Property="Background">
 				<Setter.Value>
-					<SolidColorBrush Opacity="1" Color="{StaticResource LightSubMenu}" />
+					<SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="{StaticResource LightSubMenu}" />
 				</Setter.Value>
 			</Setter>
 		</Style>
 		<Style Selector="Border.lightTheme3">
 			<Setter Property="Background">
 				<Setter.Value>
-					<SolidColorBrush Opacity="1" Color="{StaticResource LightContentArea}" />
+					<SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="{StaticResource LightContentArea}" />
 				</Setter.Value>
 			</Setter>
 		</Style>
@@ -79,7 +81,7 @@
 				<Setter.Value>
 					<LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
 						<LinearGradientBrush.GradientStops>
-							<GradientStop Offset="0.5" Color="{StaticResource DarkMenuBtnGradientStart}" />
+                            <GradientStop Offset="0.5" Color="{StaticResource DarkMenuBtnGradientStart}" />
 							<GradientStop Offset="1.0" Color="{StaticResource DarkMenuBtnGradientStop}" />
 						</LinearGradientBrush.GradientStops>
 					</LinearGradientBrush>
@@ -87,11 +89,7 @@
 			</Setter>
 		</Style>
 		<Style Selector="Button.lightThemeMenuBtn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="Background">
-				<Setter.Value>
-					<SolidColorBrush Opacity="1" Color="{StaticResource LightMenuBtn}" />
-				</Setter.Value>
-			</Setter>
+			<Setter Property="Background" Value="{StaticResource LightMenuBtn}" />
 		</Style>
 
 		<!-- Styles that get added/removed upon main menu open & close. -->

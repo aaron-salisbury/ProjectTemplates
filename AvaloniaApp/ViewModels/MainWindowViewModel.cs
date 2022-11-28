@@ -13,6 +13,9 @@ namespace AvaloniaApp.ViewModels
         [ObservableProperty]
         private string _currentViewFriendly;
 
+        [ObservableProperty]
+        private double _backgroundOpacity;
+
         public RelayCommand IntroductionViewCommand { get; }
         public RelayCommand LogViewCommand { get; }
         public RelayCommand SettingsViewCommand { get; }
@@ -31,6 +34,7 @@ namespace AvaloniaApp.ViewModels
         {
             _currentView = new IntroductionViewModel();
             _currentViewFriendly = "Welcome";
+            _backgroundOpacity = 1.0D;
 
             IntroductionViewCommand = new RelayCommand(() => { SetCurrentView<IntroductionViewModel>("Welcome"); });
             LogViewCommand = new RelayCommand(() => { SetCurrentView<LogViewModel>(); });
