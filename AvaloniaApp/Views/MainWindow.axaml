@@ -131,7 +131,7 @@
 							<material:MaterialIcon Kind="Menu" Name="HamburgerIcon" />
 						</Button>
 						
-						<Separator Classes="darkThemeSep" Height="1" Margin="0,1,0,1" />
+						<Separator Classes="darkThemeSep" Height="1" Margin="8,1,8,1" />
 						
 						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtnClosed darkThemeMenuBtn">
 							<StackPanel Orientation="Horizontal">
@@ -171,7 +171,7 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<Border Grid.Row="0" Classes="darkTheme2" Height="50">
+				<Border Grid.Row="0" Classes="darkTheme2" Height="60">
 					<TextBlock Text="{Binding CurrentViewFriendly}" 
 							   FontSize="23" 
 							   Margin="40,00,0,0" 

@@ -42,20 +42,20 @@ namespace AvaloniaApp.Views
             }
 
             // Update classes.
-            string oldMode = "light";
-            string newMode = "dark";
+            string oldMode = "lightTheme";
+            string newMode = "darkTheme";
 
             if (mode == FluentThemeMode.Light)
             {
-                oldMode = "dark";
-                newMode = "light";
+                oldMode = "darkTheme";
+                newMode = "lightTheme";
             }
 
             foreach (ILogical control in this.GetLogicalDescendants())
             {
-                if (control is StyledElement element && element.Classes.Any(c => c.StartsWith($"{oldMode}Theme")))
+                if (control is StyledElement element && element.Classes.Any(c => c.StartsWith(oldMode)))
                 {
-                    string oldClassName = element.Classes.Where(c => c.StartsWith($"{oldMode}Theme")).First();
+                    string oldClassName = element.Classes.Where(c => c.StartsWith(oldMode)).First();
                     string newClassName = oldClassName.Replace(oldMode, newMode);
                     element.Classes.Remove(oldClassName);
                     element.Classes.Add(newClassName);
@@ -125,13 +125,23 @@ namespace AvaloniaApp.Views
         {
             Animation animation = new Animation()
             {
-                Duration = TimeSpan.FromSeconds(0.4),
+                Duration = TimeSpan.FromSeconds(0.5),
                 Children =
                 {
                     new KeyFrame()
                     {
-                        Setters = { new Setter(Avalonia.Media.RotateTransform.AngleProperty, -180d) },
-                        KeyTime = TimeSpan.FromSeconds(0.0)
+                        KeyTime = TimeSpan.FromSeconds(0.0),
+                        Setters = { new Setter(Avalonia.Media.RotateTransform.AngleProperty, -25d) }
+                    },
+                     new KeyFrame()
+                    {
+                        KeyTime = TimeSpan.FromSeconds(0.20),
+                        Setters = { new Setter(Avalonia.Media.RotateTransform.AngleProperty, 0d) }
+                    },
+                    new KeyFrame()
+                    {
+                        KeyTime = TimeSpan.FromSeconds(0.25),
+                        Setters = { new Setter(Avalonia.Media.RotateTransform.AngleProperty, -180d) }
                     }
                 }
             };
