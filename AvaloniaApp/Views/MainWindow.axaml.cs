@@ -1,11 +1,14 @@
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
+using AvaloniaApp.ViewModels;
 using Material.Icons.Avalonia;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
@@ -16,10 +19,29 @@ namespace AvaloniaApp.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            UpdateTheme(
+                string.Equals(
+                    App.Current?.Services?.GetService<SettingsViewModel>()?.AppSettings?.ThemeMode, 
+                    "Light", 
+                    StringComparison.OrdinalIgnoreCase) 
+                ? FluentThemeMode.Light 
+                : FluentThemeMode.Dark);
         }
 
         public void UpdateTheme(FluentThemeMode mode)
         {
+            Cursor = new Cursor(StandardCursorType.Wait);
+
+            // Update fluent theme.
+            if (Application.Current != null &&
+                Application.Current.Styles.Count > 1 &&
+                Application.Current.Styles[0] is FluentTheme fluentTheme)
+            {
+                fluentTheme.Mode = mode;
+            }
+
+            // Update classes.
             string oldMode = "light";
             string newMode = "dark";
 
@@ -39,6 +61,8 @@ namespace AvaloniaApp.Views
                     element.Classes.Add(newClassName);
                 }
             }
+
+            Cursor = new Cursor(StandardCursorType.Arrow);
         }
 
         private void OnHamburgerClick(object sender, RoutedEventArgs e)

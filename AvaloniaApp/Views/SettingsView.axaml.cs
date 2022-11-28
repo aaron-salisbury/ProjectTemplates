@@ -1,15 +1,18 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Themes.Fluent;
+using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace AvaloniaApp.Views
 {
     public partial class SettingsView : UserControl
     {
+        public ViewModels.SettingsViewModel? ViewModel => DataContext as ViewModels.SettingsViewModel;
+
         public SettingsView()
         {
             InitializeComponent();
@@ -18,13 +21,11 @@ namespace AvaloniaApp.Views
 
         private void OnAppThemeRadioClick(object sender, RoutedEventArgs e)
         {
-            Cursor = new Cursor(StandardCursorType.Wait);
-
             if (sender is RadioButton appThemeRadioButton && 
                 Application.Current != null && 
-                Application.Current.Styles.Count > 1 && 
-                Application.Current.Styles[0] is FluentTheme fluentTheme &&
-                Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop &&
+                ViewModel != null &&
+                ViewModel.AppSettings != null)
             {
                 FluentThemeMode mode;
 
@@ -40,11 +41,11 @@ namespace AvaloniaApp.Views
                         break;
                 }
 
-                fluentTheme.Mode = mode;
-                ((MainWindow)desktop.MainWindow).UpdateTheme(mode);
-            }
+                ViewModel.AppSettings.ThemeMode = mode.ToString();
 
-            Cursor = new Cursor(StandardCursorType.Arrow);
+                ((MainWindow)desktop.MainWindow).UpdateTheme(mode);
+                Dispatcher.UIThread.InvokeAsync(ViewModel.Save, DispatcherPriority.Background);
+            }
         }
     }
 }

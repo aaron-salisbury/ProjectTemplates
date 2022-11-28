@@ -24,9 +24,7 @@ namespace AvaloniaApp
         private static IServiceProvider ConfigureServices()
         {
             // https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/ioc
-
             ServiceCollection services = new ServiceCollection();
-
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<IntroductionViewModel>();
             services.AddSingleton<LogViewModel>();

@@ -15,11 +15,12 @@
 						 Click="OnAppThemeRadioClick"
 						 Content="Dark"
 						 Name="DarkRadioButton"
-						 IsChecked="True" />
+						 IsChecked="{Binding IsDarkSelected}" />
 			<RadioButton GroupName="AppTheme"
 						 Click="OnAppThemeRadioClick"
 						 Content="Light"
-						 Name="LightRadioButton" />
+						 Name="LightRadioButton"
+						 IsChecked="{Binding !IsDarkSelected}" />
 		</StackPanel>
 		
 	</StackPanel>

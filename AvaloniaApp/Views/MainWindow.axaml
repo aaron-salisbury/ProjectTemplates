@@ -9,7 +9,14 @@
         Title="AvaloniaApp">
 
 	<Window.Styles>
-		<Style Selector="material|MaterialIcon.menuIco">
+		<!-- Regular styles. -->
+		<Style Selector="#MainMenuBorder Button">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Height" Value="38"/>
+			<Setter Property="CornerRadius" Value="0"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="#MainMenuBorder material|MaterialIcon">
 			<Setter Property="Height" Value="19"/>
 			<Setter Property="Width" Value="19"/>
 		</Style>
@@ -17,6 +24,8 @@
 			<Setter Property="Margin" Value="10,1.5,0,0"/>
 			<Setter Property="FontWeight" Value="Light"/>
 		</Style>
+
+		<!-- Styles that get added/removed upon theme change. -->
 		<Style Selector="Separator.darkThemeSep">
 			<Setter Property="Background" Value="{StaticResource DarkSep}" />
 		</Style>
@@ -65,24 +74,6 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		<Style Selector="Border.menuOpen">
-			<Setter Property="Width" Value="175"/>
-		</Style>
-		<Style Selector="Border.menuClosed">
-			<Setter Property="Width" Value="38"/>
-		</Style>
-		<Style Selector="Button.menuBtnOpen">
-			<Setter Property="Width" Value="175"/>
-		</Style>
-		<Style Selector="Button.menuBtnClosed">
-			<Setter Property="Width" Value="38"/>
-		</Style>
-		<Style Selector="Button.menuBtn">
-			<Setter Property="Background" Value="Transparent"/>
-			<Setter Property="Height" Value="38"/>
-			<Setter Property="CornerRadius" Value="0"/>
-			<Setter Property="VerticalContentAlignment" Value="Center"/>
-		</Style>
 		<Style Selector="Button.darkThemeMenuBtn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
 			<Setter Property="Background">
 				<Setter.Value>
@@ -101,6 +92,20 @@
 					<SolidColorBrush Opacity="1" Color="{StaticResource LightMenuBtn}" />
 				</Setter.Value>
 			</Setter>
+		</Style>
+
+		<!-- Styles that get added/removed upon main menu open & close. -->
+		<Style Selector="Border.menuOpen">
+			<Setter Property="Width" Value="175"/>
+		</Style>
+		<Style Selector="Border.menuClosed">
+			<Setter Property="Width" Value="38"/>
+		</Style>
+		<Style Selector="Button.menuBtnOpen">
+			<Setter Property="Width" Value="175"/>
+		</Style>
+		<Style Selector="Button.menuBtnClosed">
+			<Setter Property="Width" Value="38"/>
 		</Style>
 	</Window.Styles>
 	
@@ -122,37 +127,37 @@
 
 					<!-- Icons: https://materialdesignicons.com/ -->
 					<StackPanel Grid.Row="0">
-						<Button Click="OnHamburgerClick" Classes="menuBtn darkThemeMenuBtn" Width="38">
-							<material:MaterialIcon Kind="Menu" Name="HamburgerIcon" Classes="menuIco" />
+						<Button Click="OnHamburgerClick" Classes="darkThemeMenuBtn" Width="38">
+							<material:MaterialIcon Kind="Menu" Name="HamburgerIcon" />
 						</Button>
 						
 						<Separator Classes="darkThemeSep" Height="1" Margin="0,1,0,1" />
 						
-						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtn menuBtnClosed darkThemeMenuBtn">
+						<Button Command="{Binding IntroductionViewCommand}" Classes="menuBtnClosed darkThemeMenuBtn">
 							<StackPanel Orientation="Horizontal">
-								<material:MaterialIcon Kind="Home" Classes="menuIco" />
+								<material:MaterialIcon Kind="Home" />
 								<TextBlock Text="Welcome" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 
-						<Button Command="{Binding ToolsViewCommand}" Classes="menuBtn menuBtnClosed darkThemeMenuBtn">
+						<Button Command="{Binding ToolsViewCommand}" Classes="menuBtnClosed darkThemeMenuBtn">
 							<StackPanel Orientation="Horizontal">
-								<material:MaterialIcon Kind="Tools" Classes="menuIco" />
+								<material:MaterialIcon Kind="Tools" />
 								<TextBlock Text="Tools" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 
-						<Button Command="{Binding LogViewCommand}" Classes="menuBtn menuBtnClosed darkThemeMenuBtn" IsVisible="{Binding IsDebug}">
+						<Button Command="{Binding LogViewCommand}" Classes="menuBtnClosed darkThemeMenuBtn" IsVisible="{Binding IsDebug}">
 							<StackPanel Orientation="Horizontal">
-								<material:MaterialIcon Kind="ClipboardList" Classes="menuIco" />
+								<material:MaterialIcon Kind="ClipboardList" />
 								<TextBlock Text="Log" Classes="menuTxt" IsVisible="False" />
 							</StackPanel>
 						</Button>
 					</StackPanel>
 
-					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Click="OnSettingsClick" Classes="menuBtn menuBtnClosed darkThemeMenuBtn">
+					<Button Grid.Row="2" Command="{Binding SettingsViewCommand}" Click="OnSettingsClick" Classes="menuBtnClosed darkThemeMenuBtn">
 						<StackPanel Orientation="Horizontal">
-							<material:MaterialIcon Kind="CogOutline" Name="SettingsIcon" Classes="menuIco" />
+							<material:MaterialIcon Kind="CogOutline" Name="SettingsIcon" />
 							<TextBlock Text="Settings" Classes="menuTxt" IsVisible="False" />
 						</StackPanel>
 					</Button>
@@ -162,11 +167,11 @@
 			<!-- Content Area -->
 			<Grid Grid.Column="1">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="50" />
+					<RowDefinition Height="Auto" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<Border Grid.Row="0" Classes="darkTheme2">
+				<Border Grid.Row="0" Classes="darkTheme2" Height="50">
 					<TextBlock Text="{Binding CurrentViewFriendly}" 
 							   FontSize="23" 
 							   Margin="40,00,0,0" 
