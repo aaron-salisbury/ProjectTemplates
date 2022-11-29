@@ -6,5 +6,6 @@ namespace AvaloniaApp.Base
     public class Settings
     {
         public string? ThemeMode { get; set; }
+        public double? BackgroundOpacity { get; set; }
     }
 }

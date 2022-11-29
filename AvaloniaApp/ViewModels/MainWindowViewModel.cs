@@ -14,7 +14,7 @@ namespace AvaloniaApp.ViewModels
         private string _currentViewFriendly;
 
         [ObservableProperty]
-        private double _backgroundOpacity;
+        private SettingsViewModel? _settingsVM;
 
         public RelayCommand IntroductionViewCommand { get; }
         public RelayCommand LogViewCommand { get; }
@@ -34,7 +34,7 @@ namespace AvaloniaApp.ViewModels
         {
             _currentView = new IntroductionViewModel();
             _currentViewFriendly = "Welcome";
-            _backgroundOpacity = 1.0D;
+            _settingsVM = App.Current?.Services?.GetService<SettingsViewModel>();
 
             IntroductionViewCommand = new RelayCommand(() => { SetCurrentView<IntroductionViewModel>("Welcome"); });
             LogViewCommand = new RelayCommand(() => { SetCurrentView<LogViewModel>(); });

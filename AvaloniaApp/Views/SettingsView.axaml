@@ -22,6 +22,20 @@
 						 Name="LightRadioButton"
 						 IsChecked="{Binding !IsDarkSelected}" />
 		</StackPanel>
+
+        <StackPanel Margin="10,25,0,0">
+            <TextBlock Text="Set Background Opacity" FontWeight="Light" />
+            <Slider Name="BgOpacitySlider"
+					Ticks="0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0" 
+                    TickFrequency="0.125"
+                    TickPlacement="BottomRight"
+                    IsSnapToTickEnabled="True"
+                    Maximum="1"
+                    Width="162" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
+                    Value="{Binding BackgroundOpacity}" />
+        </StackPanel>
 		
 	</StackPanel>
 
