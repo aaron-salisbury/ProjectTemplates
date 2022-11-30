@@ -71,6 +71,8 @@ namespace AvaloniaApp.ViewModels
         {
             if (AppSettings != null)
             {
+                // Sync the stored object with the observable properties.
+                AppSettings.ThemeMode = IsDarkSelected ? "Dark" : "Light";
                 AppSettings.BackgroundOpacity = BackgroundOpacity;
 
                 FileInfo file = new FileInfo(Path.Combine(AppDirectoryPath ?? GetAppDirectoryPath(), SETTINGS_FILE_NAME));

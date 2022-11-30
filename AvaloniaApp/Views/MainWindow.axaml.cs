@@ -22,21 +22,17 @@ namespace AvaloniaApp.Views
         {
             InitializeComponent();
 
-            UpdateTheme(
-                string.Equals(
-                    App.Current?.Services?.GetService<SettingsViewModel>()?.AppSettings?.ThemeMode, 
-                    "Light", 
-                    StringComparison.OrdinalIgnoreCase) 
-                ? FluentThemeMode.Light 
-                : FluentThemeMode.Dark);
+            UpdateTheme(App.Current?.Services?.GetService<SettingsViewModel>()?.IsDarkSelected ?? true);
 
             _selectedNavButton = this.FindControl<Button>("HomeBtn");
             SetupNavButtonIndicators();
         }
 
-        public void UpdateTheme(FluentThemeMode mode)
+        public void UpdateTheme(bool isDarkSelected)
         {
             Cursor = new Cursor(StandardCursorType.Wait);
+
+            FluentThemeMode mode = isDarkSelected ? FluentThemeMode.Dark : FluentThemeMode.Light;
 
             // Update fluent theme.
             if (Application.Current != null &&

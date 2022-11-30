@@ -14,12 +14,10 @@
 			<RadioButton GroupName="AppTheme"
 						 Click="OnAppThemeRadioClick"
 						 Content="Dark"
-						 Name="DarkRadioButton"
 						 IsChecked="{Binding IsDarkSelected}" />
 			<RadioButton GroupName="AppTheme"
 						 Click="OnAppThemeRadioClick"
 						 Content="Light"
-						 Name="LightRadioButton"
 						 IsChecked="{Binding !IsDarkSelected}" />
 		</StackPanel>
 
