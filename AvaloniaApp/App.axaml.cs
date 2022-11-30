@@ -6,6 +6,7 @@ using AvaloniaApp.ViewModels.SampleTools;
 using AvaloniaApp.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 
 namespace AvaloniaApp
 {
@@ -25,11 +26,16 @@ namespace AvaloniaApp
         {
             // https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/ioc
             ServiceCollection services = new ServiceCollection();
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<IntroductionViewModel>();
-            services.AddSingleton<LogViewModel>();
-            services.AddSingleton<SettingsViewModel>();
-            services.AddSingleton<ToolsViewModel>();
+
+            // This app requires the naming convention that views end in "View" (Base.ViewLocator.cs)
+            // and ViewModels end in "ViewModel", and that nothing else ends in either.
+            foreach (Type appType in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                if (appType.Name.EndsWith("ViewModel"))
+                {
+                    services.AddSingleton(appType);
+                }
+            }
 
             return services.BuildServiceProvider();
         }
