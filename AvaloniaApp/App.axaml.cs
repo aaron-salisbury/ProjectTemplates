@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaApp.ViewModels;
-using AvaloniaApp.ViewModels.SampleTools;
 using AvaloniaApp.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
