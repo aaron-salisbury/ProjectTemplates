@@ -27,8 +27,8 @@ namespace AvaloniaApp
             // https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/ioc
             ServiceCollection services = new ServiceCollection();
 
-            // This app requires the naming convention that views end in "View" (Base.ViewLocator.cs)
-            // and ViewModels end in "ViewModel", and that nothing else ends in either.
+            // This app requires the naming convention that views end in "View" (Base.ViewLocator.cs),
+            // ViewModels end in "ViewModel", and that nothing else ends in either.
             foreach (Type appType in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if (appType.Name.EndsWith("ViewModel"))
