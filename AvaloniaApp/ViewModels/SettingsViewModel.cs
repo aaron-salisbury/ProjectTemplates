@@ -1,9 +1,10 @@
 ﻿using AvaloniaApp.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace AvaloniaApp.ViewModels
 {
@@ -50,7 +51,7 @@ namespace AvaloniaApp.ViewModels
             Settings defaultSettings = new Settings()
             { 
                 ThemeMode = "Dark",
-                BackgroundOpacity = 0.0D
+                BackgroundOpacity = 1.0D
             };
 
             string filePath = Path.Combine(AppDirectoryPath ?? GetAppDirectoryPath(), SETTINGS_FILE_NAME);
@@ -58,7 +59,7 @@ namespace AvaloniaApp.ViewModels
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                Settings loadedSettings = JsonConvert.DeserializeObject<Settings>(json);
+                Settings? loadedSettings = JsonSerializer.Deserialize<Settings>(json);
                 AppSettings = loadedSettings ?? defaultSettings;
             }
             else
@@ -80,7 +81,7 @@ namespace AvaloniaApp.ViewModels
                 if (file != null && file.Directory != null)
                 {
                     file.Directory.Create();
-                    string json = JsonConvert.SerializeObject(AppSettings);
+                    string json = JsonSerializer.Serialize(AppSettings);
 
                     File.WriteAllText(file.FullName, json);
                 }
