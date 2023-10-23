@@ -1,0 +1,20 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<!-- Add Controls for Previewer Here -->
+		</Border>
+	</Design.PreviewWith>
+
+	<Styles.Resources>
+		<ResourceDictionary>
+			<!-- Monokai Palette: https://raw.githubusercontent.com/andreall0/vscode-monokai-universe-theme/master/assets/palette.png -->
+			<SolidColorBrush x:Key="YellowAccent" Color="#DDBC5A" />
+			<SolidColorBrush x:Key="RedAccent" Color="#DA3E52" />
+			<SolidColorBrush x:Key="GreenAccent" Color="#9BCF6E" />
+			<SolidColorBrush x:Key="OrangeAccent" Color="#E6895B" />
+			<SolidColorBrush x:Key="BlueAccent" Color="#6DCDD9" />
+			<SolidColorBrush x:Key="LavenderAccent" Color="#9E92E3" />
+		</ResourceDictionary>
+	</Styles.Resources>
+</Styles>
