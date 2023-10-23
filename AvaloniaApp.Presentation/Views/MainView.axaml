@@ -28,15 +28,27 @@
 
 		<TabItem>
 			<TabItem.Header>
-				<material:MaterialIcon Classes="navBtnIcon" Kind="HomeOutline" />
+				<material:MaterialIcon Classes="navBtnIcon" Kind="Home" />
 			</TabItem.Header>
 			<Border Classes="viewBackground">
 				<Grid RowDefinitions="Auto,*">
-					<c:ViewHeaderControl Grid.Row="0" />
+					<c:ViewHeaderControl Grid.Row="0" FriendlyPageName="Introduction" />
 					<TextBlock Grid.Row="1" Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 				</Grid>
 			</Border>
 		</TabItem>
+
+        <TabItem>
+            <TabItem.Header>
+                <material:MaterialIcon Classes="navBtnIcon" Kind="Tools" />
+            </TabItem.Header>
+            <Border Classes="viewBackground">
+                <Grid RowDefinitions="Auto,*">
+                    <c:ViewHeaderControl Grid.Row="0" FriendlyPageName="Sample Tools" />
+                    <v:SampleToolsView Grid.Row="1" Margin="20" />
+                </Grid>
+            </Border>
+        </TabItem>
 
 		<TabItem Name="SettingsTabItem">
 			<TabItem.Header>

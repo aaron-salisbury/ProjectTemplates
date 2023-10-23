@@ -53,6 +53,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppInfo.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\Samples\SampleToolsView.axaml.cs">
+      <DependentUpon>SampleToolsView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApp.Presentation.Views.SampleToolsView"
+             xmlns:v="clr-namespace:AvaloniaApp.Presentation.Views">
+
+    <TabControl>
+        <TabItem Header="UUID Generator" FontSize="15">
+            <v:UUIDGeneratorView Margin="20" />
+        </TabItem>
+        <TabItem Header="Flat UI Color Picker" FontSize="15">
+            <TextBlock Text="Flat UI Color Picker View" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </TabItem>
+        <TabItem Header="Line Sorter" FontSize="15">
+            <TextBlock Text="Line Sorter View" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </TabItem>
+    </TabControl>
+</UserControl>
