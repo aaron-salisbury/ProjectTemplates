@@ -45,7 +45,7 @@
 			<Border Classes="viewBackground">
 				<Grid RowDefinitions="Auto,*">
 					<c:ViewHeaderControl Grid.Row="0" FriendlyPageName="Settings" />
-					<v:SettingsView Grid.Row="1" Margin="20,20,0,0" />
+					<v:SettingsView Grid.Row="1" Margin="20" />
 				</Grid>
 			</Border>
 		</TabItem>

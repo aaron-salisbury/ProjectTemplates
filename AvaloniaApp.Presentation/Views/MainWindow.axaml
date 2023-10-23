@@ -10,7 +10,6 @@
         x:Class="AvaloniaApp.Presentation.Views.MainWindow"
         Icon="/Base/Assets/icon.ico"
         WindowStartupLocation="CenterScreen"
-		Background="{DynamicResource SystemRegionColor}"
 		x:Name="Win"
 		ExtendClientAreaToDecorationsHint="True"
 		ExtendClientAreaChromeHints="Default"
@@ -23,8 +22,9 @@
 				   HorizontalAlignment="Center"
 				   VerticalAlignment="Center"
 				   FontSize="12"
-				   FontWeight="Bold"
-				   Foreground="{DynamicResource SystemBaseMediumColor}" />
+				   FontWeight="Bold" 
+				   Foreground="{DynamicResource SystemBaseMediumColor}" 
+				   IsHitTestVisible="False" />
 
 		<v:MainView Grid.Row="1" />
 
