@@ -12,8 +12,8 @@ namespace AvaloniaApp.Business.SampleTools
             set => SetProperty(ref _capitalize, value);
         }
 
-        private string _uUID;
-        public string UUID
+        private string? _uUID;
+        public string? UUID
         {
             get => _uUID;
             set => SetProperty(ref _uUID, value);
