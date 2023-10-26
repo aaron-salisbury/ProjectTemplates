@@ -16,7 +16,7 @@ namespace AvaloniaApp.Presentation.ViewModels
         IEnumerable<LineSorter.SortTypes> _sortTypes;
 
         [ObservableProperty]
-        LineSorter.SortTypes _selectedSortType;
+        int _selectedSortTypeIndex;
 
         [ObservableProperty]
         string? _text;
@@ -25,14 +25,14 @@ namespace AvaloniaApp.Presentation.ViewModels
         {
             _sortTypes = Enum.GetValues(typeof(LineSorter.SortTypes)).Cast<LineSorter.SortTypes>();
 
-            SelectedSortType = SortTypes.First();
+            _selectedSortTypeIndex = (int)SortTypes.First();
 
             SortCommand = new RelayCommand(Sort);
         }
 
         private void Sort()
         {
-            Text = LineSorter.Initiate(SelectedSortType, Text);
+            Text = LineSorter.Initiate((LineSorter.SortTypes)SelectedSortTypeIndex, Text);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Win7Core.SampleTools
                 return displayAttribute.Name;
             }
 
-            return sortType.ToString(); ;
+            return sortType.ToString();
         }
 
         private string _textToSort;

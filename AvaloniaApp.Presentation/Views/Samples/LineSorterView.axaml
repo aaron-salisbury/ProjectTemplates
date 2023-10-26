@@ -5,15 +5,21 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaApp.Presentation.Views.LineSorterView" 
              xmlns:vm="clr-namespace:AvaloniaApp.Presentation.ViewModels"
-			 x:DataType="vm:LineSorterViewModel">
+			 x:DataType="vm:LineSorterViewModel" 
+			 xmlns:cons="clr-namespace:AvaloniaApp.Presentation.Base.Converters;assembly=AvaloniaApp.Presentation">
 
+	<UserControl.Resources>
+		<cons:EnumToDisplayNameConverter x:Key="enumToDisplayNameConverter"/>
+	</UserControl.Resources>
+	
     <Border>
         <Grid RowDefinitions="Auto,10,Auto,10,*">
 
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
 				<TextBlock Text="Sort Type" VerticalAlignment="Center" Margin="0,0,10,0" />
-				<!-- TODO: Use display name, maybe by using GetAttribute() extension. -->
-				<ComboBox Width="200" ItemsSource="{Binding SortTypes}" SelectedItem="{Binding SelectedSortType}" />
+				<ComboBox Width="200" 
+						  ItemsSource="{Binding SortTypes, Converter={StaticResource enumToDisplayNameConverter}}" 
+						  SelectedIndex="{Binding SelectedSortTypeIndex}" />
 			</StackPanel>
 
 			<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="75,0,0,0">

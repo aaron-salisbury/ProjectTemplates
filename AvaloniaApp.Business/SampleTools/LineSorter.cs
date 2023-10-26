@@ -1,5 +1,4 @@
-﻿using AvaloniaApp.Business.Base.Extensions;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Text;
 
@@ -49,18 +48,6 @@ namespace AvaloniaApp.Business.SampleTools
             }
 
             return sortedText;
-        }
-
-        public static string GetSortTypeDisplayName(SortTypes sortType)
-        {
-            DisplayAttribute? displayAttribute = sortType.GetAttribute<DisplayAttribute>();
-
-            if (displayAttribute != null && displayAttribute.Name != null)
-            {
-                return displayAttribute.Name;
-            }
-
-            return sortType.ToString();
         }
     }
 }
