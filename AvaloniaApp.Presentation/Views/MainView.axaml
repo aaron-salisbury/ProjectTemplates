@@ -33,7 +33,7 @@
 			<Border Classes="viewBackground">
 				<Grid RowDefinitions="Auto,*">
 					<c:ViewHeaderControl Grid.Row="0" FriendlyPageName="Introduction" />
-					<TextBlock Grid.Row="1" Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <v:IntroductionView Grid.Row="1" Margin="20" />
 				</Grid>
 			</Border>
 		</TabItem>

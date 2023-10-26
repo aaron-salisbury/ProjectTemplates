@@ -5,6 +5,5 @@ namespace AvaloniaApp.Presentation.ViewModels;
 
 public partial class MainViewModel : BaseViewModel
 {
-    [ObservableProperty]
-    string _greeting = "Welcome to Avalonia!";
+
 }

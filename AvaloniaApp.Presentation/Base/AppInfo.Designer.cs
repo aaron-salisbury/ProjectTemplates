@@ -97,6 +97,15 @@ namespace AvaloniaApp.Presentation.Base {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE.
+        /// </summary>
+        internal static string LicenseURL {
+            get {
+                return ResourceManager.GetString("LicenseURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/aaron-salisbury/ProjectTemplates/blob/master/PrivacyPolicy.md.
         /// </summary>
         internal static string PrivacyURL {

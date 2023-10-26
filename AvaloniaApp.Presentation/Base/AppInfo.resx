@@ -129,6 +129,9 @@
   <data name="IssuesURL" xml:space="preserve">
     <value>https://github.com/aaron-salisbury/ProjectTemplates/issues</value>
   </data>
+  <data name="LicenseURL" xml:space="preserve">
+    <value>https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE</value>
+  </data>
   <data name="PrivacyURL" xml:space="preserve">
     <value>https://github.com/aaron-salisbury/ProjectTemplates/blob/master/PrivacyPolicy.md</value>
   </data>
