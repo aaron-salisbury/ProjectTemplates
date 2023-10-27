@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace AvaloniaApp.Presentation.ViewModels
@@ -18,8 +19,16 @@ namespace AvaloniaApp.Presentation.ViewModels
         [ObservableProperty]
         int _selectedSortTypeIndex;
 
-        [ObservableProperty]
         string? _text;
+        [Required]
+        public string? Text
+        {
+            get => _text;
+            set => SetProperty(ref _text, value, true);
+            //   Validation:
+            // https://docs.avaloniaui.net/docs/next/guides/development-guides/data-validation
+            // https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/observablevalidator
+        }
 
         public LineSorterViewModel()
         {

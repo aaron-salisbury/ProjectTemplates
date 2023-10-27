@@ -43,10 +43,7 @@
                 
                 <TextBlock Text="DESIGN PATTERN" Classes="header" />
                 <TextBlock Text="This solution follows a three-tier architecture, Data > Business > Presentation. For the presentation layer, the MVVM design pattern is used. MVVM separates views from models, which allows for projects that are cleaner, easier to extend, and testable." Classes="sectionContent" />
-                
-                <TextBlock Text="LOGGING" Classes="header" />
-                <TextBlock Text="//TODO:" Classes="sectionContent" />
-                
+
                 <TextBlock Text="APPEARANCE" Classes="header" />
                 <TextBlock Text="Avalonia uses a Fluent Design System that emphasizes modern, clean aesthetics, smooth animations, and intuitive interactions. It provides a consistent and polished look-and-feel across different platforms, while giving developers flexibility with our styling system." Classes="sectionContent" />
                 

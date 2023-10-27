@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AvaloniaApp.Presentation.Base
 {
-    public partial class BaseViewModel : ObservableObject
+    public partial class BaseViewModel : ObservableValidator
     {
         [ObservableProperty]
         private bool _isBusy;
