@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<FlatColors>
+  <FlatColor hex="#1abc9c">Turquoise</FlatColor>
+  <FlatColor hex="#2ecc71">Emerland</FlatColor>
+  <FlatColor hex="#3498db">Peterriver</FlatColor>
+  <FlatColor hex="#9b59b6">Amethyst</FlatColor>
+  <FlatColor hex="#34495e">Wetasphalt</FlatColor>
+  <FlatColor hex="#16a085">Greensea</FlatColor>
+  <FlatColor hex="#27ae60">Nephritis</FlatColor>
+  <FlatColor hex="#2980b9">Belizehole</FlatColor>
+  <FlatColor hex="#8e44ad">Wisteria</FlatColor>
+  <FlatColor hex="#2c3e50">Midnightblue</FlatColor>
+  <FlatColor hex="#f1c40f">Sunflower</FlatColor>
+  <FlatColor hex="#e67e22">Carrot</FlatColor>
+  <FlatColor hex="#e74c3c">Alizarin</FlatColor>
+  <FlatColor hex="#ecf0f1">Clouds</FlatColor>
+  <FlatColor hex="#95a5a6">Concrete</FlatColor>
+  <FlatColor hex="#f39c12">Orange</FlatColor>
+  <FlatColor hex="#d35400">Pumpkin</FlatColor>
+  <FlatColor hex="#c0392b">Pomegranate</FlatColor>
+  <FlatColor hex="#bdc3c7">Silver</FlatColor>
+  <FlatColor hex="#7f8c8d">Asbestos</FlatColor>
+</FlatColors>

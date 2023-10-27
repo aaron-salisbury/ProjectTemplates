@@ -11,7 +11,7 @@
             <v:UUIDGeneratorView Margin="20" />
         </TabItem>
         <TabItem Header="Flat UI Color Picker" FontSize="15">
-            <TextBlock Text="Flat UI Color Picker View" HorizontalAlignment="Center" VerticalAlignment="Center" />
+			<v:FlatUIColorPickerView Margin="20" />
         </TabItem>
         <TabItem Header="Line Sorter" FontSize="15">
 			<v:LineSorterView Margin="20" />
