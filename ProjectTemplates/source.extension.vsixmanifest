@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 	<Metadata>
-		<Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.01.00" Language="en-US" Publisher="Aaron Salisbury" />
+		<Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.02.00" Language="en-US" Publisher="Aaron Salisbury" />
 		<DisplayName>Windows Project Templates</DisplayName>
 		<Description xml:space="preserve">Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario. 
 
@@ -39,5 +39,6 @@ The templates help when you want to get a small utilities made quickly, by start
 		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_XP_App_Template.zip" />
 		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_7_App_Template.zip" />
 		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_10_App_Template.zip" />
+		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Avalonia_App_Template.zip" />
 	</Assets>
 </PackageManifest>
