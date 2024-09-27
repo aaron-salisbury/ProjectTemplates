@@ -1,4 +1,5 @@
-﻿using AvaloniaApp.Business.Modules.Sample.DomainServices;
+﻿using AvaloniaApp.Business.Modules.Sample.ApplicationServices;
+using AvaloniaApp.Business.Modules.Sample.DomainServices;
 using AvaloniaApp.Business.Modules.UserAccess.DomainServices;
 using AvaloniaApp.Data;
 using CaptaTrader.Business.Modules.UserAccess.ApplicationServices;
@@ -32,6 +33,7 @@ public static class Startup
 
         // Orchestrated public-facing services.
         services.AddScoped<IUserAccessService, UserAccessService>()
+            .AddScoped<ISampleToolsService, SampleToolsService>()
             .AddScoped<DomainInitializer, DomainInitializer>();
 
         return services;
