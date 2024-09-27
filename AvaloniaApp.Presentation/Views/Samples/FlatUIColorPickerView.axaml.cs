@@ -2,11 +2,11 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
-using AvaloniaApp.Data.Domains;
 using AvaloniaApp.Business.SampleTools;
 using System.Linq;
 using Avalonia.Interactivity;
 using Avalonia.Input;
+using AvaloniaApp.Data.Entities.Sample;
 
 namespace AvaloniaApp.Presentation.Views
 {
