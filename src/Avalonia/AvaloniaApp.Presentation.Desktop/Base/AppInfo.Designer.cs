@@ -97,7 +97,7 @@ namespace AvaloniaApp.Presentation.Desktop.Base {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE.
+        ///   Looks up a localized string similar to https://github.com/aaron-salisbury/ProjectTemplates/blob/master/license.
         /// </summary>
         internal static string LicenseURL {
             get {
@@ -106,7 +106,7 @@ namespace AvaloniaApp.Presentation.Desktop.Base {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/aaron-salisbury/ProjectTemplates/blob/master/PrivacyPolicy.md.
+        ///   Looks up a localized string similar to https://github.com/aaron-salisbury/ProjectTemplates/blob/master/privacy-policy.md.
         /// </summary>
         internal static string PrivacyURL {
             get {

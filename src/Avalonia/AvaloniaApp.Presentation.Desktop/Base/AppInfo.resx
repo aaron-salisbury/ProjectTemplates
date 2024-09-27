@@ -127,10 +127,10 @@
     <value>https://github.com/aaron-salisbury/ProjectTemplates/issues</value>
   </data>
   <data name="LicenseURL" xml:space="preserve">
-    <value>https://github.com/aaron-salisbury/ProjectTemplates/blob/master/LICENSE</value>
+    <value>https://github.com/aaron-salisbury/ProjectTemplates/blob/master/license</value>
   </data>
   <data name="PrivacyURL" xml:space="preserve">
-    <value>https://github.com/aaron-salisbury/ProjectTemplates/blob/master/PrivacyPolicy.md</value>
+    <value>https://github.com/aaron-salisbury/ProjectTemplates/blob/master/privacy-policy.md</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>1.0.0</value>
