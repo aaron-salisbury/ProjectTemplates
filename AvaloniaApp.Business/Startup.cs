@@ -31,7 +31,7 @@ public static class Startup
             .AddScoped<LineSorter, LineSorter>()
             .AddScoped<UUIDGenerator, UUIDGenerator>();
 
-        // Orchestrated public-facing services.
+        // Orchestrated public-facing (application) services.
         services.AddScoped<IUserAccessService, UserAccessService>()
             .AddScoped<ISampleToolsService, SampleToolsService>()
             .AddScoped<DomainInitializer, DomainInitializer>();
