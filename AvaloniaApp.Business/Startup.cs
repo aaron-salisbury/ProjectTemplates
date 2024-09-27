@@ -6,6 +6,7 @@ using CaptaTrader.Business.Modules.UserAccess.ApplicationServices;
 using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace AvaloniaApp.Business;

@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApp.Presentation.Desktop.Views.HomeView"
+			 xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
+             x:DataType="vm:HomeViewModel">
+
+	<UserControl.Styles>
+		<Style Selector="TextBlock.header">
+			<Setter Property="FontSize" Value="15" />
+			<Setter Property="FontWeight" Value="Bold" />
+			<Setter Property="Margin" Value="0,20,0,3" />
+		</Style>
+
+		<Style Selector="TextBlock.sectionContent">
+			<Setter Property="TextWrapping" Value="Wrap" />
+		</Style>
+
+		<Style Selector="Button.hyperlink">
+			<Setter Property="Template">
+				<ControlTemplate>
+					<TextBlock Text="{TemplateBinding Content}" Foreground="{StaticResource SystemAccentColor}" TextDecorations="Underline">
+						<TextBlock.Styles>
+							<Style Selector="TextBlock:pointerover">
+								<Setter Property="Foreground" Value="{StaticResource SystemAccentColorLight1}" />
+							</Style>
+						</TextBlock.Styles>
+					</TextBlock>
+				</ControlTemplate>
+			</Setter>
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0" />
+		</Style>
+	</UserControl.Styles>
+
+	<Border>
+		<ScrollViewer>
+			<StackPanel Margin="0,0,20,0">
+				<TextBlock Text="{Binding AppDisplayName}" FontSize="30" FontWeight="DemiBold" />
+				<TextBlock Text="{Binding AppDescription}" Classes="sectionContent" />
+
+				<TextBlock Text="DESIGN PATTERN" Classes="header" />
+				<TextBlock Text="{Binding DesignPatternBlurb}" Classes="sectionContent" />
+
+				<TextBlock Text="APPEARANCE" Classes="header" />
+				<TextBlock Text="{Binding AppearanceBlurb}" Classes="sectionContent" />
+
+				<TextBlock Text="USE" Classes="header" />
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="Aaron Salisbury's Avalonia App Solution Template is released under " />
+					<Button Classes="hyperlink" Content="The MIT License" Click="LicenseBtn_Click" />
+					<TextBlock Text="." />
+				</StackPanel>
+
+			</StackPanel>
+		</ScrollViewer>
+	</Border>
+</UserControl>

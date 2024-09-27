@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApp.Presentation.Desktop.Views.LogsView"
+             xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
+             x:DataType="vm:LogsViewModel"
+             xmlns:con="clr-namespace:AvaloniaApp.Presentation.Desktop.Base.Converters;assembly=AvaloniaApp">
+
+	<UserControl.Resources>
+		<con:DateFormatConverter x:Key="dateFormatConverter" />
+		<con:LogEventLevelToBrushConverter x:Key="logEventLevelToBrushConverter" />
+	</UserControl.Resources>
+
+	<Border>
+		<DataGrid ItemsSource="{Binding ErrorLogs}"
+                  IsReadOnly="True"
+                  GridLinesVisibility="All"
+                  BorderThickness="1"
+                  BorderBrush="Gray"
+                  CanUserSortColumns="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Timestamp" Binding="{Binding LogEvent.Timestamp, Converter={StaticResource dateFormatConverter}}"/>
+				<DataGridTemplateColumn Header="Level" Width="100">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding LogEvent.Level}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="{Binding LogEvent.Level, Converter={StaticResource logEventLevelToBrushConverter}}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="Message" Binding="{Binding Message}"/>
+				<DataGridTextColumn Header="Exception" Binding="{Binding LogEvent.Exception}" />
+			</DataGrid.Columns>
+		</DataGrid>
+	</Border>
+</UserControl>

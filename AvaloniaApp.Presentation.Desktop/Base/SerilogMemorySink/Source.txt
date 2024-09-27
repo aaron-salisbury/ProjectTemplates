@@ -1,0 +1,4 @@
+﻿https://github.com/AndrewKeepCoding/serilog-sinks-memorysink
+
+We just modified it slightly by adding the LogEmitted event handler to MemorySink.cs and
+we invoke that event for each LogEvent sent to MemorySink.AddLogs().

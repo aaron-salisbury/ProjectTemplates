@@ -20,7 +20,7 @@ public class DomainInitializer
         await _busControl.StartAsync();
     }
 
-    public void ShutdownAsync()
+    public void Shutdown()
     {
         _busControl.Stop();
     }

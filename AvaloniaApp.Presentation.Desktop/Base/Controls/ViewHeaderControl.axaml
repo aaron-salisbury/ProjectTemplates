@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApp.Presentation.Desktop.Base.Controls.ViewHeaderControl"
+             x:Name="VHC">
+
+    <Border Background="{DynamicResource SystemChromeMediumColor}" Height="60">
+        <Grid ColumnDefinitions="30,Auto,10,*,30" VerticalAlignment="Center">
+
+            <TextBlock Grid.Column="1"
+					   Text="{Binding FriendlyPageName, ElementName=VHC}"
+					   FontFamily="{StaticResource ViewHeadingFont}"
+					   FontSize="28"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Center" />
+
+            <ContentControl Grid.Column="3" Content="{Binding RibbonContent, ElementName=VHC}" />
+
+        </Grid>
+    </Border>
+</UserControl>

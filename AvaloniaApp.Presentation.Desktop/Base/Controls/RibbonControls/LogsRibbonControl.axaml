@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="60"
+             x:Class="AvaloniaApp.Presentation.Desktop.Base.Controls.LogsRibbonControl"
+             xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
+             x:DataType="vm:LogsViewModel"
+			 xmlns:material="using:Material.Icons.Avalonia"
+			 Background="Transparent">
+    
+    <UserControl.Styles>
+        <Style Selector="material|MaterialIcon.ribbonBtnIcon">
+            <Setter Property="Width" Value="25" />
+            <Setter Property="Height" Value="25" />
+        </Style>
+    </UserControl.Styles>
+
+    <Border>
+        <Grid ColumnDefinitions="*,Auto">
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+
+                <Button Command="{Binding ClearLogsCommand}"
+						Background="Transparent"
+						Foreground="{StaticResource OrangeAccent}"
+                        IsVisible="{Binding LogsExist}">
+                    <material:MaterialIcon Classes="ribbonBtnIcon" Kind="DeleteOutline" />
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

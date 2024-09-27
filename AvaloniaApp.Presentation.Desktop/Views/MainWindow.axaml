@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="AvaloniaApp.Presentation.Desktop.Views.MainWindow"
+		mc:Ignorable="d" d:DesignWidth="1366" d:DesignHeight="768"
+		MinWidth="1100" MinHeight="415"
+		Width="1100" Height="619"
+        xmlns:v="clr-namespace:AvaloniaApp.Presentation.Desktop.Views"
+        Icon="/Base/Assets/icon.ico"
+        WindowStartupLocation="CenterScreen"
+		x:Name="Win"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaChromeHints="Default"
+		ExtendClientAreaTitleBarHeightHint="-1">
+
+	<Grid x:Name="TitleBarAndContentGrid">
+
+		<TextBlock Grid.Row="0"
+				   Text="{Binding Title, ElementName=Win}"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontSize="12"
+				   FontWeight="Bold"
+				   Foreground="{DynamicResource SystemBaseMediumColor}"
+				   IsHitTestVisible="False" />
+
+		<v:MainView Grid.Row="1" />
+
+	</Grid>
+</Window>

@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApp.Presentation.Desktop.Views.SettingsView"
+             xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
+             x:DataType="vm:SettingsViewModel"
+			 xmlns:material="using:Material.Icons.Avalonia">
+
+	<Border>
+		<Grid RowDefinitions="Auto, Auto">
+
+			<!-- Settings -->
+
+			<!-- About -->
+			<StackPanel Grid.Row="1">
+				<TextBlock Text="About this Application" FontSize="18" FontWeight="Bold" Margin="0,0,0,6" />
+				<StackPanel Orientation="Vertical" >
+					<TextBlock Text="{Binding ApplicationInfo}" Margin="0,0,0,8" />
+					<StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+						<TextBlock Text="© " />
+						<TextBlock Text="{Binding CopyHolder}" />
+					</StackPanel>
+
+					<TextBlock TextWrapping="Wrap" Margin="0,0,0,4" Text="{Binding AppDescription}" />
+
+					<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+						<Button Classes="hyperlink" Content="Privacy Statement" Click="PrivacyBtn_Click" Margin="0,0,15,0" />
+						<Button Classes="hyperlink" Content="Issues" Click="IssuesBtn_Click" />
+					</StackPanel>
+				</StackPanel>
+			</StackPanel>
+
+		</Grid>
+	</Border>
+</UserControl>

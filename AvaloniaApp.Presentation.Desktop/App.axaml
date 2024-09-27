@@ -1,0 +1,26 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AvaloniaApp.Presentation.Desktop.App"
+             xmlns:base="using:AvaloniaApp.Presentation.Desktop.Base"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             RequestedThemeVariant="Dark">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+	<Application.DataTemplates>
+		<base:ViewLocator />
+	</Application.DataTemplates>
+
+	<Application.Styles>
+		<FluentTheme />
+		<materialIcons:MaterialIconStyles />
+		<StyleInclude Source="/Base/Styles/Colors.axaml" />
+		<StyleInclude Source="/Base/Styles/UserControlStyles.axaml" />
+		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+		<StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml" />
+	</Application.Styles>
+
+	<Application.Resources>
+		<FontFamily x:Key="ViewHeadingFont">avares://AvaloniaApp/Base/Assets/Fonts/akashi-font#Akashi</FontFamily>
+	</Application.Resources>
+	
+</Application>
