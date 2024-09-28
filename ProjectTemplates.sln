@@ -5,23 +5,23 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTemplates", "ProjectTemplates\ProjectTemplates.csproj", "{39551605-AD73-441C-9CDA-E3F40399716D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7Core", "src\Win7\Win7Core\Win7Core.csproj", "{BEBCBF6C-FA12-429D-ADD3-D0BDFC63654B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98Core", "src\DotNetFramework\Win98\Win98Core\Win98Core.csproj", "{C76CB175-9BCA-44D5-B006-1CAAED0DD9B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7App", "src\Win7\Win7App\Win7App.csproj", "{5CEC4C93-D266-476C-8084-BDE6EB390610}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98App", "src\DotNetFramework\Win98\Win98App\Win98App.csproj", "{FF4CE982-B293-4A7D-BBF2-651772FFDA76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPCore", "src\WinXP\WinXPCore\WinXPCore.csproj", "{80BD64E7-C069-4B51-AC8A-6072E102BF37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPCore", "src\DotNetFramework\WinXP\WinXPCore\WinXPCore.csproj", "{80BD64E7-C069-4B51-AC8A-6072E102BF37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPApp", "src\WinXP\WinXPApp\WinXPApp.csproj", "{94F7C0A5-038D-459A-8535-FD0152A290DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPApp", "src\DotNetFramework\WinXP\WinXPApp\WinXPApp.csproj", "{94F7C0A5-038D-459A-8535-FD0152A290DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98Core", "src\Win98\Win98Core\Win98Core.csproj", "{C76CB175-9BCA-44D5-B006-1CAAED0DD9B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7Core", "src\DotNetFramework\Win7\Win7Core\Win7Core.csproj", "{BEBCBF6C-FA12-429D-ADD3-D0BDFC63654B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98App", "src\Win98\Win98App\Win98App.csproj", "{FF4CE982-B293-4A7D-BBF2-651772FFDA76}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Business", "src\DotNet\DotNet.Business\DotNet.Business.csproj", "{E339A5AA-6160-42A6-8D06-A746AF91C280}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7App", "src\DotNetFramework\Win7\Win7App\Win7App.csproj", "{5CEC4C93-D266-476C-8084-BDE6EB390610}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Data", "src\DotNet\DotNet.Data\DotNet.Data.csproj", "{9EB7F757-4671-4EE3-AF62-31C68C116B1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaApp.Presentation.Desktop", "src\Avalonia\AvaloniaApp.Presentation.Desktop\AvaloniaApp.Presentation.Desktop.csproj", "{5384FFC5-45DF-4424-8228-EA122189927B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Business", "src\DotNet\DotNet.Business\DotNet.Business.csproj", "{E339A5AA-6160-42A6-8D06-A746AF91C280}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaApp.Presentation.Desktop", "src\DotNet\AvaloniaApp.Presentation.Desktop\AvaloniaApp.Presentation.Desktop.csproj", "{5384FFC5-45DF-4424-8228-EA122189927B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
