@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AvaloniaApp.Business\DotNet.Business.csproj" />
+    <ProjectReference Include="..\..\DotNet\DotNet.Business\DotNet.Business.csproj" />
   </ItemGroup>
 
   <ItemGroup>

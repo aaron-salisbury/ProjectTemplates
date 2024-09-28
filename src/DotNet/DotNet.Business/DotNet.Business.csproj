@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AvaloniaApp.Data\DotNet.Data.csproj" />
+    <ProjectReference Include="..\DotNet.Data\DotNet.Data.csproj" />
   </ItemGroup>
 
 </Project>
