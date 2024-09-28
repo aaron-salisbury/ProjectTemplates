@@ -5,13 +5,13 @@ Visual Studio extension for mostly legacy project templates just in case I find 
 
 The templates help me when I want to get a utility made quickly, by starting with a well architected solution that is familiar.
 
-For targeting Windows 10, or newer, I recommend [Windows Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WindowsTemplateStudio).
+For targeting specifically Windows, 10 or newer, I recommend [Windows Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WindowsTemplateStudio).
 
 Info
 ----
 The extension has project templates that create a sample application that targets specific generations of Windows and/or .Net frameworks and contain example screens and processes.
 
-Each solution contains two projects, the app project which should be set as the startup project, and a "Core" library. The core library is setup broadly for business logic, and really everything not specific to the app (presentation layer). For utilities that I know will always remain very small, two projects are plenty. If your app could be more than that however, it would be worth it to break the core library into say services, domains, models, etc. Whatever your design pattern calls for.
+Each legacy solution contains two projects, the app project which should be set as the startup project, and a "Core" library. The core library is setup broadly for business logic, and really everything not specific to the app (presentation layer). For utilities that I know will always remain very small, two projects are plenty. If your app could be more than that however, it would be worth it to break the core library into say services, domains, models, infrastructure, etc. Whatever your design pattern calls for.
 
 The sample applications used to generate those project templates are also included in this repository.
 
@@ -27,4 +27,3 @@ Included Project Templates
   - Windows 98 App Solution Template (WinForms / .NET Framework 2.0)
   - Windows XP App Solution Template (WinForms / .NET Framework 3.5)
   - Windows 7 App Solution Template (WPF / .NET Framework 4.5.1)
-  - Windows 10 App Solution Template (UWP / .NET Native)
