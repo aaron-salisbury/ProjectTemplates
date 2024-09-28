@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApp.Presentation.Desktop.Views.UUIDGeneratorView"
+             xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
+			 x:DataType="vm:UUIDGeneratorViewModel">
+
+	<Border>
+		<Grid ColumnDefinitions="Auto,10,Auto" RowDefinitions="Auto,10,Auto,10,Auto">
+
+			<TextBlock Grid.Column="0" Grid.Row="0" Text="Capitalize" VerticalAlignment="Center" />
+			<CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Capitalize}" />
+
+			<StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="2">
+				<Button Content="Generate" Command="{Binding GenerateCommand}" />
+				<Button Content="Copy" Click="CopyBtn_Click" Margin="5,0,0,0" />
+			</StackPanel>
+
+			<TextBlock Grid.Column="0" Grid.Row="4" Text="New UUID" VerticalAlignment="Center" />
+			<TextBox Grid.Column="2" Grid.Row="4" Text="{Binding UUID}" Width="350" IsReadOnly="true" />
+
+		</Grid>
+	</Border>
+</UserControl>

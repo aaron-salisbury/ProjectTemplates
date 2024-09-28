@@ -9,6 +9,6 @@ namespace AvaloniaApp.Business.Modules.Sample.ApplicationServices
 
         Task InitializeLineSortingAsync(SortTypes _selectedSortType, string? textToSort);
 
-        Task InitializeGUIDGenerationAsync();
+        Task InitializeGUIDGenerationAsync(bool shouldCapitalize = true);
     }
 }

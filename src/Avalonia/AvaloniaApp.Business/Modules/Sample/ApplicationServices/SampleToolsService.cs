@@ -27,9 +27,9 @@ namespace AvaloniaApp.Business.Modules.Sample.ApplicationServices
             await _lineSorter.InitiateAsync(_selectedSortType, textToSort);
         }
 
-        public async Task InitializeGUIDGenerationAsync()
+        public async Task InitializeGUIDGenerationAsync(bool shouldCapitalize = true)
         {
-            await _guidGenerator.InitiateAsync();
+            await _guidGenerator.InitiateAsync(shouldCapitalize);
         }
     }
 }

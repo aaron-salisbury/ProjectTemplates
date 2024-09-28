@@ -45,7 +45,7 @@
 			<Border Classes="viewBackground">
 				<Grid RowDefinitions="Auto,*">
 					<c:ViewHeaderControl Grid.Row="0" FriendlyPageName="Sample Tools" />
-					<!--<v:SampleToolsView Grid.Row="1" Margin="20" />-->
+					<v:SampleToolsView Grid.Row="1" Margin="20" />
 				</Grid>
 			</Border>
 		</TabItem>
