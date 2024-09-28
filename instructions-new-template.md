@@ -95,7 +95,9 @@ Replace the repositoryId property value with the Product ID from the VSIX projec
 
 Replace the id and version property values with the nuget packages from the packages.config file of your project.
 
-Step 4: Combine Templates into One Root Template
+Next in the .vstemplate file, XAML (for example) ProjectItems may have been generated with ReplaceParameters parameter values of 'false'. They should be set to true so namespaces in the markup get replaced with the appropriate template parameters.
+
+Step 4: Combine Templates into One Root Template 
 ------------------------------------------------
 
 Ultimately, we want the user to be able to select one template to generate all of our solution project structure.
