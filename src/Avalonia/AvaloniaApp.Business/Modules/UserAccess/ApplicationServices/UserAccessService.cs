@@ -1,5 +1,4 @@
-﻿using AvaloniaApp.Business.Modules.UserAccess;
-using AvaloniaApp.Business.Modules.UserAccess.DomainServices;
+﻿using AvaloniaApp.Business.Modules.UserAccess.DomainServices;
 using AvaloniaApp.Business.Modules.UserAccess.DTOs;
 using AvaloniaApp.Data;
 using AvaloniaApp.Data.Entities;
@@ -7,7 +6,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using System.Net;
 
-namespace CaptaTrader.Business.Modules.UserAccess.ApplicationServices;
+namespace AvaloniaApp.Business.Modules.UserAccess.ApplicationServices;
 
 public class UserAccessService : IUserAccessService
 {

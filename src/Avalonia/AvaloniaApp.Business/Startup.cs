@@ -1,8 +1,8 @@
 ﻿using AvaloniaApp.Business.Modules.Sample.ApplicationServices;
 using AvaloniaApp.Business.Modules.Sample.DomainServices;
+using AvaloniaApp.Business.Modules.UserAccess.ApplicationServices;
 using AvaloniaApp.Business.Modules.UserAccess.DomainServices;
 using AvaloniaApp.Data;
-using CaptaTrader.Business.Modules.UserAccess.ApplicationServices;
 using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;

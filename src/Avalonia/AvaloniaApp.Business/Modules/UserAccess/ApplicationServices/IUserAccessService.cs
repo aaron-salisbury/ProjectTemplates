@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using System.Net;
 
-namespace CaptaTrader.Business.Modules.UserAccess.ApplicationServices;
+namespace AvaloniaApp.Business.Modules.UserAccess.ApplicationServices;
 
 public interface IUserAccessService
 {
