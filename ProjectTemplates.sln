@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98Core", "src\Win98\Win9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98App", "src\Win98\Win98App\Win98App.csproj", "{FF4CE982-B293-4A7D-BBF2-651772FFDA76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Business", "src\Avalonia\AvaloniaApp.Business\DotNet.Business.csproj", "{E339A5AA-6160-42A6-8D06-A746AF91C280}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Business", "src\DotNet\DotNet.Business\DotNet.Business.csproj", "{E339A5AA-6160-42A6-8D06-A746AF91C280}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Data", "src\Avalonia\AvaloniaApp.Data\DotNet.Data.csproj", "{9EB7F757-4671-4EE3-AF62-31C68C116B1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Data", "src\DotNet\DotNet.Data\DotNet.Data.csproj", "{9EB7F757-4671-4EE3-AF62-31C68C116B1F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaApp.Presentation.Desktop", "src\Avalonia\AvaloniaApp.Presentation.Desktop\AvaloniaApp.Presentation.Desktop.csproj", "{5384FFC5-45DF-4424-8228-EA122189927B}"
 EndProject
