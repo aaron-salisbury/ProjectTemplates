@@ -25,32 +25,32 @@ The default generation process is designed for a single project only. We need to
 
 Extract each zipped project template. In each class that has references to another project that we also templated, we need to modify its using statement using a parameter.
 
-  - If the statement looks like: "using OtherProject.Core.Services;"
+  - If the statement looks like: "using MyApp.Data.Services;"
 
-  - Make it: using "$ext_safeprojectname$.Core.Services;"
+  - Make it: using "$ext_safeprojectname$.Data.Services;"
 
 Similarly, to preserve the reference to that project, open the csproj and find the ProjectReference element.
 
   - If it looks like:
   
 ```xml
-    <ProjectReference Include="..\OtherProject.Core\OtherProject.Core.csproj">
+    <ProjectReference Include="..\MyApp.Data\MyApp.Data.csproj">
       <Project>{bebcbf6c-fa12-429d-add3-d0bdfc63654b}</Project>
-      <Name>OtherProject</Name>
+      <Name>MyApp.Data</Name>
     </ProjectReference>
 ```
 
   - Make it look like:
   
 ```xml
-    <ProjectReference Include="..\$ext_safeprojectname$.Core\$ext_safeprojectname$.Core.csproj">
+    <ProjectReference Include="..\$ext_safeprojectname$.Data\$ext_safeprojectname$.Data.csproj">
       <Project>{bebcbf6c-fa12-429d-add3-d0bdfc63654b}</Project>
-      <Name>$ext_safeprojectname$.Core</Name>
+      <Name>$ext_safeprojectname$.Data</Name>
     </ProjectReference>
 ```
 
 While in the csproj, we can update the path to any nuget packages that later we will include in a VSIX project.
-*Can SKIP this step if the package references are not pathed, like in UWP projects.
+*Should only have to do this when targeting .Net Framework.
 
   - If the package reference looks like:
   
@@ -69,7 +69,7 @@ While in the csproj, we can update the path to any nuget packages that later we 
 ```
 
 Finally open/edit the .vstemplate file. We need add instructions for the project template wizard to install the nuget packages.
-*Can SKIP these two wizard steps if the package references are not pathed, like in UWP projects.
+*Should only have to do these wizard steps when targeting .Net Framework.
 
 Add the following as a child element of VSTemplate:
   
@@ -80,7 +80,7 @@ Add the following as a child element of VSTemplate:
   </WizardExtension>
 ```
   
-Then, below that and as another child of VSTemplate:
+Then, below that and as another child of VSTemplate, add the following. Replace the repositoryId property value with the Product ID from the VSIX project's manifest that we made note of earlier. Replace the id and version property values with the nuget packages from the packages.config file of your project.
   
 ```xml
   <WizardData>
@@ -91,11 +91,7 @@ Then, below that and as another child of VSTemplate:
   </WizardData>
 ```
 
-Replace the repositoryId property value with the Product ID from the VSIX project's manifest that we made note of earlier.
-
-Replace the id and version property values with the nuget packages from the packages.config file of your project.
-
-Next in the .vstemplate file, XAML (for example) ProjectItems may have been generated with ReplaceParameters parameter values of 'false'. They should be set to true so namespaces in the markup get replaced with the appropriate template parameters.
+Next in the .vstemplate file, XAML or manifest (for example) ProjectItems may have been generated with ReplaceParameters parameter values of 'false'. They should be set to true so namespaces in the markup get replaced with the appropriate template parameters.
 
 Step 4: Combine Templates into One Root Template 
 ------------------------------------------------
