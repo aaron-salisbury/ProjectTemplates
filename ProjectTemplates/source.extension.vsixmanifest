@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-	<Metadata>
-		<Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.02.00" Language="en-US" Publisher="Aaron Salisbury" />
-		<DisplayName>Windows Project Templates</DisplayName>
-		<Description xml:space="preserve">Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario. 
+    <Metadata>
+        <Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.02.00" Language="en-US" Publisher="Aaron Salisbury" />
+        <DisplayName>Windows Project Templates</DisplayName>
+        <Description xml:space="preserve">Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario. 
 
 The templates help when you want to get a small utilities made quickly, by starting with a well architected solution that is familiar.</Description>
-		<MoreInfo>https://github.com/aaron-salisbury/ProjectTemplates</MoreInfo>
-		<License>License.txt</License>
-		<Icon>SampleAppIcon.ico</Icon>
-		<Tags>legacy windows templates</Tags>
-	</Metadata>
-	<Installation>
-		<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
-			<ProductArchitecture>amd64</ProductArchitecture>
-		</InstallationTarget>
-	</Installation>
-	<Prerequisites>
-		<Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
-	</Prerequisites>
-	<Dependencies>
-		<Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-	</Dependencies>
-	<Assets>
-		<Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <MoreInfo>https://github.com/aaron-salisbury/ProjectTemplates</MoreInfo>
+        <License>License.txt</License>
+        <Icon>SampleAppIcon.ico</Icon>
+        <Tags>legacy windows templates</Tags>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
 
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\Krypton.Components.Suite.4.5.9.nupkg" Type="Krypton.Components.Suite.4.5.9.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\LinqBridge.1.3.0.nupkg" Type="LinqBridge.1.3.0.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\MetroModernUI.1.4.0.0.nupkg" Type="MetroModernUI.1.4.0.0.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\ModernUI.WPF.1.0.9.nupkg" Type="ModernUI.WPF.1.0.9.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\MvvmLightLibsStd10.5.4.1.1.nupkg" Type="MvvmLightLibsStd10.5.4.1.1.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\NLog.5.0.5.nupkg" Type="NLog.5.0.5.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\PatternsAndPractices.Logging.2.0.0.nupkg" Type="PatternsAndPractices.Logging.2.0.0.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\Serilog.2.12.0.nupkg" Type="Serilog.2.12.0.nupkg" />
-		<Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\System.ComponentModel.Annotations.5.0.0.nupkg" Type="System.ComponentModel.Annotations.5.0.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\Krypton.Components.Suite.4.5.9.nupkg" Type="Krypton.Components.Suite.4.5.9.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\LinqBridge.1.3.0.nupkg" Type="LinqBridge.1.3.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\MetroModernUI.1.4.0.0.nupkg" Type="MetroModernUI.1.4.0.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\ModernUI.WPF.1.0.9.nupkg" Type="ModernUI.WPF.1.0.9.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\MvvmLightLibsStd10.5.4.1.1.nupkg" Type="MvvmLightLibsStd10.5.4.1.1.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\NLog.5.0.5.nupkg" Type="NLog.5.0.5.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\PatternsAndPractices.Logging.2.0.0.nupkg" Type="PatternsAndPractices.Logging.2.0.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\Serilog.2.12.0.nupkg" Type="Serilog.2.12.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\System.ComponentModel.Annotations.5.0.0.nupkg" Type="System.ComponentModel.Annotations.5.0.0.nupkg" />
 
-		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_98_App_Template.zip" />
-		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_XP_App_Template.zip" />
-		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_7_App_Template.zip" />
-		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_10_App_Template.zip" />
-		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Avalonia_App_Template.zip" />
-	</Assets>
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_98_App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_XP_App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_7_App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_10_App_Template.zip" />
+    </Assets>
 </PackageManifest>
