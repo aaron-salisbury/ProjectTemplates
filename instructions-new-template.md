@@ -1,7 +1,7 @@
 Step 1: Create Visual Studio Extension Project
 ----------------------------------------------
 
-For our final template to be used in a way that maintains all the references to projects and nuget packages that we provide, we need to host it all in a Visual Studio extension that manage it all behind the scenes.
+For our final template to be used in a way that maintains all the references to projects and nuget packages that we provide, we need to host it all in a Visual Studio extension that manages it all behind the scenes.
 
 Create a VSIX project if you do not already have one. Right-click the VSIX project in the Solution Explorer and add a new folder, name it Packages. Add another new folder and name it ProjectTemplates. Open the file with the .vsixmanifest extension and make note of the Product ID in there. We will need it in a later step.
 
