@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Business.Modules.Sample.DTOs;
-using AvaloniaApp.Data.Entities.Sample;
+﻿using DotNet.Business.Modules.Sample.DTOs;
+using DotNet.Data.Entities.Sample;
 using Riok.Mapperly.Abstractions;
 
-namespace AvaloniaApp.Business.Modules.Sample
+namespace DotNet.Business.Modules.Sample
 {
     [Mapper]
     internal partial class SampleMapper

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvaloniaApp.Business.Modules.Sample.MessageContracts
+namespace DotNet.Business.Modules.Sample.MessageContracts
 {
     public record TextSorted
     {

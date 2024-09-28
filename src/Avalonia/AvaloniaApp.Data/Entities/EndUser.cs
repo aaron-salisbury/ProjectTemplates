@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace AvaloniaApp.Data.Entities;
+namespace DotNet.Data.Entities;
 
 [Index(nameof(UserName), IsUnique = true)]
 public class EndUser

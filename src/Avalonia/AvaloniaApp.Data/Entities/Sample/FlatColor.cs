@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvaloniaApp.Data.Entities.Sample
+namespace DotNet.Data.Entities.Sample
 {
     public record FlatColor
     {

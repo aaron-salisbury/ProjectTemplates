@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvaloniaApp.Data.Base.Extensions;
+namespace DotNet.Data.Base.Extensions;
 
 internal static class HttpClientExtensions
 {

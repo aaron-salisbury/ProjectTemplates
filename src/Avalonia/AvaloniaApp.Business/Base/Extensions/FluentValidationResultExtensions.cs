@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace AvaloniaApp.Business.Base.Extensions
+namespace DotNet.Business.Base.Extensions
 {
     public static class FluentValidationResultExtensions
     {

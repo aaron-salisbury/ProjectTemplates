@@ -1,7 +1,7 @@
-﻿using AvaloniaApp.Data.Database;
+﻿using DotNet.Data.Database;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AvaloniaApp.Data;
+namespace DotNet.Data;
 
 public class DataInitializer
 {

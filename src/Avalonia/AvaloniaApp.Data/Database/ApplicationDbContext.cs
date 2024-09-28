@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Data.Base;
-using AvaloniaApp.Data.Entities;
+﻿using DotNet.Data.Base;
+using DotNet.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AvaloniaApp.Data.Database;
+namespace DotNet.Data.Database;
 
 public class ApplicationDbContext : DbContext
 {

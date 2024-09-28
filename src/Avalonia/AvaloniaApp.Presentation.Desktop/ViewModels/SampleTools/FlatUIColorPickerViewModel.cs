@@ -1,5 +1,5 @@
-﻿using AvaloniaApp.Business.Modules.Sample.ApplicationServices;
-using AvaloniaApp.Business.Modules.Sample.DTOs;
+﻿using DotNet.Business.Modules.Sample.ApplicationServices;
+using DotNet.Business.Modules.Sample.DTOs;
 using AvaloniaApp.Presentation.Desktop.Base;
 using System.Collections.Generic;
 using System.Linq;

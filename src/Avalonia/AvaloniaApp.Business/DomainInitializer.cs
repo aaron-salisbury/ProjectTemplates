@@ -1,7 +1,7 @@
-﻿using AvaloniaApp.Data;
+﻿using DotNet.Data;
 using MassTransit;
 
-namespace AvaloniaApp.Business;
+namespace DotNet.Business;
 
 public class DomainInitializer
 {

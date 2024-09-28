@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using AvaloniaApp.Business;
+using DotNet.Business;
 using AvaloniaApp.Presentation.Desktop.Base;
 using AvaloniaApp.Presentation.Desktop.Base.Services;
 using AvaloniaApp.Presentation.Desktop.Views;

@@ -1,4 +1,4 @@
-﻿using AvaloniaApp.Business;
+﻿using DotNet.Business;
 
 namespace AvaloniaApp.Presentation.Desktop.Base;
 

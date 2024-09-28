@@ -1,15 +1,15 @@
-﻿using AvaloniaApp.Business.Modules.Sample.ApplicationServices;
-using AvaloniaApp.Business.Modules.Sample.DomainServices;
-using AvaloniaApp.Business.Modules.UserAccess.ApplicationServices;
-using AvaloniaApp.Business.Modules.UserAccess.DomainServices;
-using AvaloniaApp.Data;
+﻿using DotNet.Business.Modules.Sample.ApplicationServices;
+using DotNet.Business.Modules.Sample.DomainServices;
+using DotNet.Business.Modules.UserAccess.ApplicationServices;
+using DotNet.Business.Modules.UserAccess.DomainServices;
+using DotNet.Data;
 using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 
-namespace AvaloniaApp.Business;
+namespace DotNet.Business;
 
 public static class Startup
 {

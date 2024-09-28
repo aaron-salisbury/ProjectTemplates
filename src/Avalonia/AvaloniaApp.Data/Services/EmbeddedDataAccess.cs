@@ -1,16 +1,16 @@
-﻿using AvaloniaApp.Data.Entities.Sample;
+﻿using DotNet.Data.Entities.Sample;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace AvaloniaApp.Data;
+namespace DotNet.Data;
 
 /// <summary>
 /// Read Embedded data data.
 /// </summary>
 public static class EmbeddedDataAccess
 {
-    private const string EMBEDDED_COLORS_ABSOLUTE_FILEPATH = "AvaloniaApp.Data.Base.Resources.FlatColors.xml";
+    private const string EMBEDDED_COLORS_ABSOLUTE_FILEPATH = "DotNet.Data.Base.Resources.FlatColors.xml";
 
     public static IEnumerable<FlatColor> ReadFlatColors(ILogger logger)
     {

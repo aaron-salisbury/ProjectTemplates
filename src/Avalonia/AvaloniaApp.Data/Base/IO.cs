@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace AvaloniaApp.Data.Base;
+namespace DotNet.Data.Base;
 
 public static class IO
 {

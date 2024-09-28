@@ -1,5 +1,5 @@
-﻿using AvaloniaApp.Business.Modules.Sample.ApplicationServices;
-using AvaloniaApp.Business.Modules.Sample.MessageContracts;
+﻿using DotNet.Business.Modules.Sample.ApplicationServices;
+using DotNet.Business.Modules.Sample.MessageContracts;
 using AvaloniaApp.Presentation.Desktop.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

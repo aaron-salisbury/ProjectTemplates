@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Business.Modules.UserAccess.DTOs;
-using AvaloniaApp.Data;
-using AvaloniaApp.Data.Entities;
+﻿using DotNet.Business.Modules.UserAccess.DTOs;
+using DotNet.Data;
+using DotNet.Data.Entities;
 
-namespace AvaloniaApp.Business.Modules.UserAccess.DomainServices;
+namespace DotNet.Business.Modules.UserAccess.DomainServices;
 
 // Works in conjunction with ISessionValueProvider so that session data doesn't need to hold on to everything in the heap.
 public class SessionValueResolver

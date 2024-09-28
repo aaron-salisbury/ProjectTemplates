@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using AvaloniaApp.Business.Modules.Sample.DTOs;
+using DotNet.Business.Modules.Sample.DTOs;
 using AvaloniaApp.Presentation.Desktop.Base.Extensions;
 using AvaloniaApp.Presentation.Desktop.ViewModels;
 using System;

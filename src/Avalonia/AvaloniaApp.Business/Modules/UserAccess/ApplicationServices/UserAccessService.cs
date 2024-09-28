@@ -1,12 +1,12 @@
-﻿using AvaloniaApp.Business.Modules.UserAccess.DomainServices;
-using AvaloniaApp.Business.Modules.UserAccess.DTOs;
-using AvaloniaApp.Data;
-using AvaloniaApp.Data.Entities;
+﻿using DotNet.Business.Modules.UserAccess.DomainServices;
+using DotNet.Business.Modules.UserAccess.DTOs;
+using DotNet.Data;
+using DotNet.Data.Entities;
 using FluentValidation;
 using FluentValidation.Results;
 using System.Net;
 
-namespace AvaloniaApp.Business.Modules.UserAccess.ApplicationServices;
+namespace DotNet.Business.Modules.UserAccess.ApplicationServices;
 
 public class UserAccessService : IUserAccessService
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvaloniaApp.Business.Modules.UserAccess.DTOs;
+namespace DotNet.Business.Modules.UserAccess.DTOs;
 
 public record EndUserDto
 {

@@ -1,7 +1,7 @@
-﻿using AvaloniaApp.Business.Modules.UserAccess.DTOs;
+﻿using DotNet.Business.Modules.UserAccess.DTOs;
 using FluentValidation;
 
-namespace AvaloniaApp.Business.Modules.Trading.Validators;
+namespace DotNet.Business.Modules.Trading.Validators;
 
 public class EndUserValidator : AbstractValidator<EndUserDto>
 {

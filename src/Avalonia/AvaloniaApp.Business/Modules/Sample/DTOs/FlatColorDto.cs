@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvaloniaApp.Business.Modules.Sample.DTOs
+namespace DotNet.Business.Modules.Sample.DTOs
 {
     public class FlatColorDto
     {

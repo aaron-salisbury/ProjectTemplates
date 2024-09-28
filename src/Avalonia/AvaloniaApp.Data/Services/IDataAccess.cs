@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace AvaloniaApp.Data;
+namespace DotNet.Data;
 
 public interface IDataAccess
 {

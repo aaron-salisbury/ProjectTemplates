@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Data.Database;
+﻿using DotNet.Data.Database;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 
-namespace AvaloniaApp.Data;
+namespace DotNet.Data;
 
 public static class Startup
 {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AvaloniaApp.Data.Entities;
+namespace DotNet.Data.Entities;
 
 [Index(nameof(EndUserId))]
 public class UserConfig

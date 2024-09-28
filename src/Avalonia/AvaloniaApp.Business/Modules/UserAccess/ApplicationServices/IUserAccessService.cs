@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Business.Modules.UserAccess.DTOs;
+﻿using DotNet.Business.Modules.UserAccess.DTOs;
 using FluentValidation.Results;
 using System.Net;
 
-namespace AvaloniaApp.Business.Modules.UserAccess.ApplicationServices;
+namespace DotNet.Business.Modules.UserAccess.ApplicationServices;
 
 public interface IUserAccessService
 {

@@ -1,10 +1,10 @@
-﻿using AvaloniaApp.Business.Modules.Sample.MessageContracts;
+﻿using DotNet.Business.Modules.Sample.MessageContracts;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace AvaloniaApp.Business.Modules.Sample.DomainServices
+namespace DotNet.Business.Modules.Sample.DomainServices
 {
     public class LineSorter
     {

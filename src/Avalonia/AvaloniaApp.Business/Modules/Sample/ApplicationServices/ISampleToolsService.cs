@@ -1,7 +1,7 @@
-﻿using AvaloniaApp.Business.Modules.Sample.DTOs;
-using static AvaloniaApp.Business.Modules.Sample.DomainServices.LineSorter;
+﻿using DotNet.Business.Modules.Sample.DTOs;
+using static DotNet.Business.Modules.Sample.DomainServices.LineSorter;
 
-namespace AvaloniaApp.Business.Modules.Sample.ApplicationServices
+namespace DotNet.Business.Modules.Sample.ApplicationServices
 {
     public interface ISampleToolsService
     {

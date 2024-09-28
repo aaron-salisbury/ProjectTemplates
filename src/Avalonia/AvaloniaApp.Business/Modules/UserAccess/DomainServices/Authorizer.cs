@@ -1,9 +1,9 @@
-﻿using AvaloniaApp.Business.Base.Extensions;
-using AvaloniaApp.Business.Modules.UserAccess.DTOs;
+﻿using DotNet.Business.Base.Extensions;
+using DotNet.Business.Modules.UserAccess.DTOs;
 using System.Security;
 using System.Security.Cryptography;
 
-namespace AvaloniaApp.Business.Modules.UserAccess.DomainServices;
+namespace DotNet.Business.Modules.UserAccess.DomainServices;
 
 // ref: https://www.mking.net/blog/password-security-best-practices-with-examples-in-csharp
 

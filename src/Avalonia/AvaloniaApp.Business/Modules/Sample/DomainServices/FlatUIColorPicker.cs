@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Business.Modules.Sample.DTOs;
-using AvaloniaApp.Data;
+﻿using DotNet.Business.Modules.Sample.DTOs;
+using DotNet.Data;
 using Microsoft.Extensions.Logging;
 
-namespace AvaloniaApp.Business.Modules.Sample.DomainServices
+namespace DotNet.Business.Modules.Sample.DomainServices
 {
     public class FlatUIColorPicker
     {

@@ -1,12 +1,12 @@
-﻿using AvaloniaApp.Data.Base.Extensions;
-using AvaloniaApp.Data.Database;
+﻿using DotNet.Data.Base.Extensions;
+using DotNet.Data.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace AvaloniaApp.Data;
+namespace DotNet.Data;
 
 /// <summary>
 /// CRUD wrapper for DbContext.

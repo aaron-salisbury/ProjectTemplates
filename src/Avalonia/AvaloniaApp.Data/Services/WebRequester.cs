@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Data.Base.Extensions;
+﻿using DotNet.Data.Base.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Headers;
 
-namespace AvaloniaApp.Data;
+namespace DotNet.Data;
 
 public class WebRequester
 {

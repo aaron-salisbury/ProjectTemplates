@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Business.Modules.UserAccess.DTOs;
-using AvaloniaApp.Data.Entities;
+﻿using DotNet.Business.Modules.UserAccess.DTOs;
+using DotNet.Data.Entities;
 using Riok.Mapperly.Abstractions;
 
-namespace AvaloniaApp.Business.Modules.UserAccess;
+namespace DotNet.Business.Modules.UserAccess;
 
 [Mapper]
 internal partial class UserAccessMapper
