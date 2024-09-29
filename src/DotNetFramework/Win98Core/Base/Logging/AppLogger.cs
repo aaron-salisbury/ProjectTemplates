@@ -1,6 +1,5 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.Practices.EnterpriseLibrary.Logging.Filters;
-using Microsoft.Practices.EnterpriseLibrary.Logging.Formatters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,12 +31,7 @@ namespace Win98Core.Base.Logging
 
         private static InvocableInMemoryTraceListener ConfigureInMemoryTraceListener()
         {
-            // The formatter is responsible for the look of the message.
-            string textFormatterTemplate = "{timestamp(yyyy-MM-dd HH:mm:ss.ff)} UTC [{category}] {message}";
-            TextFormatter formatter = new TextFormatter(textFormatterTemplate);
-
-            // Log messages to an in memory collection.
-            return new InvocableInMemoryTraceListener(formatter);
+            return new InvocableInMemoryTraceListener();
         }
 
         private static LogWriter ConfigureLogWriter(InvocableInMemoryTraceListener inMemoryTraceListener)

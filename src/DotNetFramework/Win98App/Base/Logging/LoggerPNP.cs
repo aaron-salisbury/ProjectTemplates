@@ -1,11 +1,15 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Logging;
+using DotNetFramework.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace DotNetFramework.Core.Logging
+namespace Win98App.Base.Logging
 {
-    public class Logger : ILogger, IDisposable
+    /// <summary>
+    /// Patterns & Practices implementation of ILogger.
+    /// </summary>
+    public class LoggerPNP : ILogger, IDisposable
     {
         public LogLevel MinimumLevel { get; private set; }
 
@@ -13,7 +17,7 @@ namespace DotNetFramework.Core.Logging
 
         private readonly LogWriter _writer;
 
-        public Logger(LogLevel minimumLevel = LogLevel.Information, params TraceListener[] sinks)
+        public LoggerPNP(LogLevel minimumLevel = LogLevel.Information, params TraceListener[] sinks)
         {
             MinimumLevel = minimumLevel;
 

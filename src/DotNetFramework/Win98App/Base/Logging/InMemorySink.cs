@@ -3,39 +3,29 @@ using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Logging.Formatters;
 using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Win98Core.Base.Logging
+namespace Win98App.Base.Logging
 {
     [ConfigurationElementType(typeof(CustomTraceListenerData))]
-    public class InvocableInMemoryTraceListener : CustomTraceListener
+    public class InMemorySink : CustomTraceListener
     {
+        public event EventHandler<LogEmitEventArgs> LogEmitted;
+
         private readonly IList<string> _logs;
         public IList<string> Logs
         {
             get { return _logs; }
         }
 
-        private int _maxLogsCount;
-        public int MaxLogsCount
-        {
-            get { return _maxLogsCount; }
-            set { _maxLogsCount = value; }
-        }
+        public int MaxLogsCount { get; set; }
 
-        public delegate void MethodCall(IList<string> logs);
-
-        private MethodCall _methodToCall;
-        public MethodCall MethodToCall
-        {
-            get { return _methodToCall; }
-            set { _methodToCall = value; }
-        }
-
-        public InvocableInMemoryTraceListener(int maxLogsCount = 1000, ILogFormatter formatter = null)
+        public InMemorySink(int maxLogsCount = 1000, ILogFormatter formatter = null)
         {
             _logs = [];
+
             MaxLogsCount = maxLogsCount;
             Formatter = formatter ?? DefaultFormatter();
         }
@@ -49,9 +39,9 @@ namespace Win98Core.Base.Logging
 
             Logs.Add(message);
 
-            if (MethodToCall != null)
+            if (LogEmitted != null)
             {
-                MethodToCall.Invoke(Logs);
+                LogEmitted.Invoke(this, new LogEmitEventArgs() { LogMessage = message });
             }
         }
 
@@ -62,9 +52,9 @@ namespace Win98Core.Base.Logging
 
         public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
         {
-            if (data is LogEntry logEntry && Formatter != null)
+            if (data is LogEntry && Formatter != null)
             {
-                WriteLine(Formatter.Format(logEntry));
+                WriteLine(Formatter.Format(data as LogEntry));
             }
             else
             {
@@ -78,5 +68,10 @@ namespace Win98Core.Base.Logging
 
             return new TextFormatter(textFormatterTemplate);
         }
+    }
+
+    public class LogEmitEventArgs : EventArgs
+    {
+        public string LogMessage { get; set; }
     }
 }

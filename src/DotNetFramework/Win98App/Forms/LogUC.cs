@@ -14,7 +14,7 @@ namespace Win98App.Forms
 
         public void UpdateLogs(IList<string> logs)
         {
-            LogsTextBox.Text = string.Join(Environment.NewLine, ((List<string>)logs).ToArray());
+            LogsTextBox.Text = string.Join(Environment.NewLine, [.. ((List<string>)logs)]);
         }
 
         private void DownloadButton_Click(object sender, EventArgs e)

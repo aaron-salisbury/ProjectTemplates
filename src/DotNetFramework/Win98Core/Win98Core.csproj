@@ -64,5 +64,11 @@
   <ItemGroup>
     <EmbeddedResource Include="SampleDataAccess\FlatColors.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetFramework.Core\DotNetFramework.Core.csproj">
+      <Project>{0ff808b4-b3a9-4057-bc1a-ae3c489c6486}</Project>
+      <Name>DotNetFramework.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DotNetFramework.Core.Logging;
+using System;
 using System.Windows.Forms;
+using Win98App.Base.Logging;
 using Win98App.Forms;
 using Win98Core.Base.Logging;
 
@@ -7,7 +9,9 @@ namespace Win98App
 {
     public partial class ShellForm : Form
     {
-        private readonly Padding _defaultContentAreaPadding = new Padding(15);
+        public static ILogger Logger;
+
+        private readonly Padding _defaultContentAreaPadding = new(15);
         private readonly LogUC _logUC;
 
         public ShellForm()
@@ -16,9 +20,15 @@ namespace Win98App
 
             Text = Properties.Settings.Default.ApplicationFriendlyName;
 
-            _logUC = new LogUC();
-            _logUC.Padding = _defaultContentAreaPadding;
-            _logUC.Dock = DockStyle.Fill;
+            //TODO: InMemorySink has the LogEmitted event that the future logs presenter will need to subscribe to.
+            Logger = new LoggerPNP(LogLevel.Debug, new InMemorySink());
+
+            //TODO: After refactoring with presenters, etc, LogUC can be instantiated where it is used and AppLogger stuff can all go away.
+            _logUC = new LogUC
+            {
+                Padding = _defaultContentAreaPadding,
+                Dock = DockStyle.Fill
+            };
             AppLogger.SetTargetInvoking(_logUC.UpdateLogs);
             _logUC.UpdateLogs(AppLogger.GetLogs()); // Load logs that may have been written before delegate could be set.
 
