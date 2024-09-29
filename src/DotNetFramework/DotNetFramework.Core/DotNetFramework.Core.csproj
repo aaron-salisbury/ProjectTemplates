@@ -54,10 +54,12 @@
   <ItemGroup>
     <Compile Include="ComponentModel\ObservableObject.cs" />
     <Compile Include="Data\SqlServerCompactDb.cs" />
+    <Compile Include="DependencyInjection\Implementation\ServiceCollectionPNP.cs" />
+    <Compile Include="DependencyInjection\IServiceCollection.cs" />
     <Compile Include="Logging\Implementation\LoggerPNP.cs" />
     <Compile Include="Logging\Implementation\LoggerPNPScope.cs" />
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />
-    <Compile Include="DependencyInjection\ServiceProviderExtensions.cs" />
+    <Compile Include="DependencyInjection\ServiceCollectionExtensions.cs" />
     <Compile Include="DependencyInjection\Implementation\ServiceProviderPNP.cs" />
     <Compile Include="DependencyInjection\IServiceProvider.cs" />
     <Compile Include="IO.cs" />

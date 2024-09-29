@@ -6,44 +6,28 @@ namespace DotNetFramework.Core.DependencyInjection
     /// <summary>
     /// Patterns & Practices Unity implementation of IServiceProvider.
     /// </summary>
-    public class ServiceProviderPNP : IServiceProvider
+    public class ServiceProviderPNP : IServiceProvider, IDisposable
     {
-        private readonly IUnityContainer _container;
+        private readonly IUnityContainer _unityProvider;
 
-        public ServiceProviderPNP()
+        public ServiceProviderPNP(IUnityContainer services)
         {
-            _container = new UnityContainer();
-
-            this.AddSingleton<IServiceProvider>(this);
-        }
-
-        public IServiceProvider RegisterType(Type serviceType, Type implementationType, ServiceLifetime lifetime)
-        {
-            _container.RegisterType(serviceType, implementationType, LifetimeManagerForServiceLifetime(lifetime));
-
-            return this;
-        }
-
-        public IServiceProvider RegisterInstance(Type serviceType, object implementationInstance, ServiceLifetime lifetime)
-        {
-            _container.RegisterInstance(serviceType, implementationInstance, LifetimeManagerForServiceLifetime(lifetime));
-
-            return this;
+            _unityProvider = services;
         }
 
         public object GetService(Type serviceType)
         {
-            return _container.Resolve(serviceType);
+            return _unityProvider.Resolve(serviceType);
         }
 
         public T GetService<T>()
         {
-            return _container.Resolve<T>();
+            return _unityProvider.Resolve<T>();
         }
 
         public T GetRequiredService<T>() where T : notnull
         {
-            T service = _container.Resolve<T>();
+            T service = _unityProvider.Resolve<T>();
 
             if (service == null)
             {
@@ -53,7 +37,12 @@ namespace DotNetFramework.Core.DependencyInjection
             return service;
         }
 
-        private static LifetimeManager LifetimeManagerForServiceLifetime(ServiceLifetime lifetime)
+        public void Dispose()
+        {
+            _unityProvider.Dispose();
+        }
+
+        internal static LifetimeManager LifetimeManagerForServiceLifetime(ServiceLifetime lifetime)
         {
             return lifetime switch
             {
