@@ -92,7 +92,8 @@ namespace DotNetFramework.Core.Logging
                 Message = message,
                 Categories = [logLevel.ToString()],
                 Severity = ConvertLogLevelToTraceEventType(logLevel),
-                MachineName = Environment.MachineName
+                MachineName = Environment.MachineName,
+                AppDomainName = AppDomain.CurrentDomain.FriendlyName
             };
 
             if (eventId != null)
