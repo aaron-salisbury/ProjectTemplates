@@ -5,22 +5,24 @@ using System.Diagnostics;
 
 namespace DotNetFramework.Core.Logging
 {
-    public class Logger : ILogger
+    public class Logger : ILogger, IDisposable
     {
-        public LoggerScope CurrentScope { get; set; } // Not using yet.
+        public LogLevel MinimumLevel { get; private set; }
 
-        public readonly LogLevel _minimumLevel;
+        internal LoggerScope CurrentScope { get; set; } // Not using yet.
+
         private readonly LogWriter _writer;
 
         public Logger(LogLevel minimumLevel = LogLevel.Information, params TraceListener[] sinks)
         {
+            MinimumLevel = minimumLevel;
+
             if (sinks == null || sinks.Length == 0)
             {
-                sinks = [new DefaultTraceListener()];
+                sinks = [new ConsoleTraceListener()];
             }
 
             _writer = ConfigureLogWriter(sinks);
-            _minimumLevel = minimumLevel;
         }
 
         public IDisposable BeginScope<TState>(TState state) where TState : notnull
@@ -30,7 +32,7 @@ namespace DotNetFramework.Core.Logging
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            return Convert.ToInt32(logLevel) >= Convert.ToInt32(_minimumLevel);
+            return Convert.ToInt32(logLevel) >= Convert.ToInt32(MinimumLevel);
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
@@ -53,12 +55,20 @@ namespace DotNetFramework.Core.Logging
             _writer.Write(BuildLogEntry(logLevel, eventId, formattedMessage));
         }
 
+        public void Dispose()
+        {
+            _writer.Dispose();
+        }
+
         private static LogWriter ConfigureLogWriter(IEnumerable<TraceListener> sinks)
         {
+            // ref: http://web.archive.org/web/20210330115056/http://codebetter.com/davidhayden/2006/02/19/enterprise-library-2-0-logging-application-block/
+
             LogSource mainLogSource = new("MainLogSource", SourceLevels.All);
+            mainLogSource.Listeners.Clear();
             mainLogSource.Listeners.AddRange(sinks);
 
-            // Assigning a non-existent LogSource for Logging Application Block Special Sources I don’t care about.
+            // Assigning a non-existent LogSource for Logging Application Block Special Sources we don’t care about.
             LogSource nonExistentLogSource = new("Empty");
 
             // All messages, of any category, get distributed to all TraceListeners in mainLogSource.
@@ -81,7 +91,8 @@ namespace DotNetFramework.Core.Logging
                 TimeStamp = DateTime.UtcNow,
                 Message = message,
                 Categories = [logLevel.ToString()],
-                Severity = ConvertLogLevelToTraceEventType(logLevel)
+                Severity = ConvertLogLevelToTraceEventType(logLevel),
+                MachineName = Environment.MachineName
             };
 
             if (eventId != null)
