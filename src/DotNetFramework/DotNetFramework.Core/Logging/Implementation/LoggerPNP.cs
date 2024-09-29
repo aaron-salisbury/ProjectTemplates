@@ -1,10 +1,9 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Logging;
-using DotNetFramework.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Win98App.Base.Logging
+namespace DotNetFramework.Core.Logging
 {
     /// <summary>
     /// Patterns & Practices implementation of ILogger.
@@ -13,7 +12,7 @@ namespace Win98App.Base.Logging
     {
         public LogLevel MinimumLevel { get; private set; }
 
-        internal LoggerScope CurrentScope { get; set; } // Not using yet.
+        internal LoggerPNPScope CurrentScope { get; set; } // Not using yet.
 
         private readonly LogWriter _writer;
 
@@ -31,7 +30,7 @@ namespace Win98App.Base.Logging
 
         public IDisposable BeginScope<TState>(TState state) where TState : notnull
         {
-            return new LoggerScope(this, state);
+            return new LoggerPNPScope(this, state);
         }
 
         public bool IsEnabled(LogLevel logLevel)

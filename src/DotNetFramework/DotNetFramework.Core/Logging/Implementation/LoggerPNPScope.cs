@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace Win98App.Base.Logging
+namespace DotNetFramework.Core.Logging
 {
-    public class LoggerScope : IDisposable
+    public class LoggerPNPScope : IDisposable
     {
-        public LoggerScope Parent { get; set; }
+        public LoggerPNPScope Parent { get; set; }
 
         private readonly LoggerPNP _provider;
         private readonly object _state;
 
         private bool _disposed;
 
-        public LoggerScope(LoggerPNP provider, object state)
+        public LoggerPNPScope(LoggerPNP provider, object state)
         {
             _state = state;
 

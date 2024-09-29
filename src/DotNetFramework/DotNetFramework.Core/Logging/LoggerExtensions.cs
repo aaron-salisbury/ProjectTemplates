@@ -473,7 +473,7 @@ namespace DotNetFramework.Core.Logging
         {
             if (logger == null)
             {
-                throw new ArgumentNullException(nameof(ILogger));
+                throw new ArgumentNullException(nameof(logger));
             }
 
             FormattedLogValues state = new(message, args);
@@ -495,11 +495,11 @@ namespace DotNetFramework.Core.Logging
         /// using(logger.BeginScope("Processing request from {Address}", address)) { }
         /// </code>
         /// </example>
-        public static IDisposable BeginScope(this ILogger logger, string messageFormat, params object?[] args)
+        public static IDisposable BeginScope(this ILogger logger, string messageFormat, params object[] args)
         {
             if (logger == null)
             {
-                throw new ArgumentNullException(nameof(ILogger));
+                throw new ArgumentNullException(nameof(logger));
             }
 
             return logger.BeginScope(new FormattedLogValues(messageFormat, args));

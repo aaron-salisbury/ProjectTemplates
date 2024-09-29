@@ -61,8 +61,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Base\Logging\InMemorySink.cs" />
-    <Compile Include="Base\Logging\LoggerPNP.cs" />
-    <Compile Include="Base\Logging\LoggerScope.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
