@@ -1,6 +1,7 @@
 ﻿using DotNetFramework.Core.Logging;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace DotNetFramework.Core
 {
@@ -34,6 +35,26 @@ namespace DotNetFramework.Core
             {
                 logger.LogError(ex, "Failed to delete file.");
             }
+        }
+
+        public static string GetEmbeddedResourceText(Assembly assemblyEmbeddedIn, string filename, ILogger logger)
+        {
+            string result = string.Empty;
+
+            try
+            {
+                using (Stream stream = assemblyEmbeddedIn.GetManifestResourceStream(filename))
+                using (StreamReader streamReader = new(stream))
+                {
+                    result = streamReader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to retrieve embedded text.");
+            }
+
+            return result;
         }
     }
 }
