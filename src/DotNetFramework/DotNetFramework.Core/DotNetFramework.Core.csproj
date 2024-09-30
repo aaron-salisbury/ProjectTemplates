@@ -56,6 +56,7 @@
     <Compile Include="Data\SqlServerCompactDb.cs" />
     <Compile Include="DependencyInjection\Implementation\ServiceCollectionPNP.cs" />
     <Compile Include="DependencyInjection\IServiceCollection.cs" />
+    <Compile Include="DependencyInjection\ServiceDescriptor.cs" />
     <Compile Include="Logging\Implementation\LoggerPNP.cs" />
     <Compile Include="Logging\Implementation\LoggerPNPScope.cs" />
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />

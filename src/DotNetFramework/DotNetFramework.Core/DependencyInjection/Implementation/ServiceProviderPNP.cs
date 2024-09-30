@@ -41,16 +41,5 @@ namespace DotNetFramework.Core.DependencyInjection
         {
             _unityProvider.Dispose();
         }
-
-        internal static LifetimeManager LifetimeManagerForServiceLifetime(ServiceLifetime lifetime)
-        {
-            return lifetime switch
-            {
-                ServiceLifetime.Transient => new TransientLifetimeManager(),
-                ServiceLifetime.Scoped => new PerThreadLifetimeManager(),
-                ServiceLifetime.Singleton => new ContainerControlledLifetimeManager(),
-                _ => new TransientLifetimeManager(),
-            };
-        }
     }
 }

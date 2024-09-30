@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DotNetFramework.Core.DependencyInjection
 {
-    public interface IServiceCollection
+    /// <summary>
+    /// Specifies the contract for a collection of service descriptors.
+    /// </summary>
+    public interface IServiceCollection : IList<ServiceDescriptor>
     {
         /// <summary>
         /// For the given lifetime, adds a service of the type specified in <paramref name="serviceType"/> with an
