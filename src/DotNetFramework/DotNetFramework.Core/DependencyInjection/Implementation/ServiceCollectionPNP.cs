@@ -122,7 +122,10 @@ namespace DotNetFramework.Core.DependencyInjection
 
         public void Insert(int index, ServiceDescriptor item)
         {
-            // Subsequent attempts to add the same type to replace the previous addition.
+            // Subsequent attempts to add the same type replaces the previous addition.
+            // Could possibly enhance by letting more than one of a type in the collection, 
+            // but would need to keep track of names. Would then need to update the
+            // equality overrides of ServiceDescriptor as well.
             int existingIndex = IndexOf(item);
             if (existingIndex >= 0)
             {
