@@ -37,13 +37,13 @@ namespace DotNetFramework.Core
             }
         }
 
-        public static string GetEmbeddedResourceText(Assembly assemblyEmbeddedIn, string filename, ILogger logger)
+        public static string GetEmbeddedResourceText(Assembly assemblyEmbeddedIn, string filePath, ILogger logger)
         {
             string result = string.Empty;
 
             try
             {
-                using (Stream stream = assemblyEmbeddedIn.GetManifestResourceStream(filename))
+                using (Stream stream = assemblyEmbeddedIn.GetManifestResourceStream(filePath))
                 using (StreamReader streamReader = new(stream))
                 {
                     result = streamReader.ReadToEnd();

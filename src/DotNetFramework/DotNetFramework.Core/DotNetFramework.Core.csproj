@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComponentModel\ObservableValidator.cs" />
     <Compile Include="ComponentModel\ObservableObject.cs" />
     <Compile Include="Data\SqlServerCompactDb.cs" />
     <Compile Include="DependencyInjection\Implementation\ServiceCollectionPNP.cs" />

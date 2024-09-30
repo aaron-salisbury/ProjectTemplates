@@ -1,8 +1,9 @@
-﻿using DotNet.Business.Modules.Sample.DomainServices;
-using DotNet.Business.Modules.Sample.DTOs;
-using static DotNet.Business.Modules.Sample.DomainServices.LineSorter;
+﻿using System.Collections.Generic;
+using Win98.Business.Modules.Sample.DomainServices;
+using Win98.Business.Modules.Sample.DTOs;
+using static Win98.Business.Modules.Sample.DomainServices.LineSorter;
 
-namespace DotNet.Business.Modules.Sample.ApplicationServices
+namespace Win98.Business.Modules.Sample.ApplicationServices
 {
     public class SampleToolsService : ISampleToolsService
     {
@@ -22,14 +23,14 @@ namespace DotNet.Business.Modules.Sample.ApplicationServices
             return _flatColorProvider.GetFlatColors();
         }
 
-        public async Task InitializeLineSortingAsync(SortTypes _selectedSortType, string? textToSort)
+        public string InitializeLineSorting(SortTypes _selectedSortType, string? textToSort)
         {
-            await _lineSorter.InitiateAsync(textToSort, _selectedSortType);
+            return _lineSorter.Initiate(textToSort, _selectedSortType);
         }
 
-        public async Task InitializeGUIDGenerationAsync(bool shouldCapitalize = true)
+        public string InitializeGUIDGeneration(bool shouldCapitalize = true)
         {
-            await _guidGenerator.InitiateAsync(shouldCapitalize);
+            return _guidGenerator.Initiate(shouldCapitalize);
         }
     }
 }

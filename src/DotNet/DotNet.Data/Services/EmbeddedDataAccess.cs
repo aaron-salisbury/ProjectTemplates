@@ -6,7 +6,7 @@ using System.Xml.Linq;
 namespace DotNet.Data;
 
 /// <summary>
-/// Read Embedded data data.
+/// Read Embedded data.
 /// </summary>
 public static class EmbeddedDataAccess
 {

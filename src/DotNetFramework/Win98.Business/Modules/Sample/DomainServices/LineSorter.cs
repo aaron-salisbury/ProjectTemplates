@@ -1,10 +1,9 @@
-﻿using DotNet.Business.Modules.Sample.MessageContracts;
-using MassTransit;
-using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations;
+﻿using DotNetFramework.Core.Logging;
+using System;
+using System.Collections.Generic;
 using System.Text;
 
-namespace DotNet.Business.Modules.Sample.DomainServices
+namespace Win98.Business.Modules.Sample.DomainServices
 {
     public class LineSorter
     {
@@ -13,22 +12,19 @@ namespace DotNet.Business.Modules.Sample.DomainServices
         public enum SortTypes
         {
             Alphabetical,
-            [Display(Name = "Reverse Alphabetical")]
             ReverseAlphabetical
         }
 
-        private readonly IBus _bus;
         private readonly ILogger _logger;
 
-        public LineSorter(IBus bus, ILogger logger)
+        public LineSorter(ILogger logger)
         {
-            _bus = bus;
             _logger = logger;
         }
 
-        public async Task InitiateAsync(string? textToSort, SortTypes selectedSortType = SortTypes.Alphabetical)
+        public string Initiate(string textToSort, SortTypes selectedSortType = SortTypes.Alphabetical)
         {
-            string? sortedText;
+            string sortedText;
 
             try
             {
@@ -57,7 +53,7 @@ namespace DotNet.Business.Modules.Sample.DomainServices
                 sortedText = null;
             }
 
-            await _bus.Publish<TextSorted>(new { SortedText = sortedText });
+            return sortedText;
         }
     }
 }
