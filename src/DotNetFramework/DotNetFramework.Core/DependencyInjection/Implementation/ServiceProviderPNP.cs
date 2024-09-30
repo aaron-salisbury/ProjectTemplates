@@ -12,6 +12,8 @@ namespace DotNetFramework.Core.DependencyInjection
 
         public ServiceProviderPNP(IUnityContainer services)
         {
+            services.RegisterInstance<IServiceProvider>(this, new ContainerControlledLifetimeManager());
+
             _unityProvider = services;
         }
 
