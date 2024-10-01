@@ -13,10 +13,10 @@ namespace DotNetFramework.Core.Security
 
         private readonly int _workFactor;
 
-        public SessionAuthorizerPNP(HashAlgorithm hashAlgorithm = null, int workFactor = 1000)
+        public SessionAuthorizerPNP(HashAlgorithm hashAlgorithm = null, int registrationWorkFactor = 1000)
             : base(hashAlgorithm != null ? hashAlgorithm.GetType() : typeof(SHA256), saltEnabled: true)
         {
-            _workFactor = workFactor;
+            _workFactor = registrationWorkFactor;
         }
 
         public bool Login(SessionCredential credential, string password)
