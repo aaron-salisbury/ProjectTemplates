@@ -7,7 +7,7 @@ public static class IO
     public static string GetAppDirectoryPath()
     {
         string localAppDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        string thisAppName = AppDomain.CurrentDomain.FriendlyName;
+        string thisAppName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName);
         string appDirectory = Path.Combine(localAppDirectory, thisAppName);
 
         Directory.CreateDirectory(appDirectory);
