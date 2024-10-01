@@ -48,6 +48,7 @@ namespace Win98App
 
         private void AboutMenuItem_Click(object sender, EventArgs e)
         {
+            //TODO: About form still doesn't use mode/view/presenter.
             using (AboutForm aboutForm = new())
             {
                 aboutForm.ShowDialog(this);
