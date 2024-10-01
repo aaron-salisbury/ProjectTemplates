@@ -10,9 +10,14 @@ namespace DotNetFramework.Core.Security
     public class SessionAuthorizerPNP : HashAlgorithmProvider, ISessionAuthorizer
     {
         private const int SALT_LENGTH = HashAlgorithmProvider.SaltLength;
-        private const int WORK_FACTOR_V1 = 1000;
 
-        public SessionAuthorizerPNP() : base(typeof(SHA256), saltEnabled: true) { }
+        private readonly int _workFactor;
+
+        public SessionAuthorizerPNP(HashAlgorithm hashAlgorithm = null, int workFactor = 1000)
+            : base(hashAlgorithm != null ? hashAlgorithm.GetType() : typeof(SHA256), saltEnabled: true)
+        {
+            _workFactor = workFactor;
+        }
 
         public bool Login(SessionCredential credential, string password)
         {
@@ -26,8 +31,8 @@ namespace DotNetFramework.Core.Security
             return new SessionCredential()
             {
                 Salt = salt,
-                Hash = CreateHash(password.ToBytes(), salt, WORK_FACTOR_V1),
-                WorkFactor = WORK_FACTOR_V1
+                Hash = CreateHash(password.ToBytes(), salt, _workFactor),
+                WorkFactor = _workFactor
             };
         }
 
