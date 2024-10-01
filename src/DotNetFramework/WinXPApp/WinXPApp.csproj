@@ -65,6 +65,9 @@
     <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NLog.5.3.4\lib\net35\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -87,6 +90,7 @@
     <Compile Include="Base\Helpers\StandardErrorProvider.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Base\Logging\LoggerNLog.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +198,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DotNetFramework.Core\DotNetFramework.Core.csproj">
+      <Project>{0ff808b4-b3a9-4057-bc1a-ae3c489c6486}</Project>
+      <Name>DotNetFramework.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinXPCore\WinXPCore.csproj">
       <Project>{80bd64e7-c069-4b51-ac8a-6072e102bf37}</Project>
       <Name>WinXPCore</Name>

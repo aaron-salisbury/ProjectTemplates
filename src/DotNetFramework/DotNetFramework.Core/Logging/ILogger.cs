@@ -2,9 +2,9 @@
 
 namespace DotNetFramework.Core.Logging
 {
-    // ref: https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Logging.Abstractions/src/ILogger.cs
+    public delegate TResult Func<T1, T2, TResult>(T1 arg1, T2 arg2);
 
-    public interface ILogger
+    public interface ILogger // ref: https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Logging.Abstractions/src/ILogger.cs
     {
         /// <summary>
         /// Writes a log entry.
