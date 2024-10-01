@@ -15,30 +15,40 @@ namespace WinXPApp.Base.Logging
     {
         public LogLevel MinimumLevel { get; private set; }
 
+        private readonly Logger _logger;
+
         public LoggerNLog(LogLevel minimumLevel = LogLevel.Information, params Target[] sinks)
         {
             MinimumLevel = minimumLevel;
 
-            if (sinks == null || sinks.Length == 0)
-            {
-                sinks = [new ConsoleTarget()];
-            }
-
-            LoggingConfiguration nLogConfig = new();
-            foreach (Target sink in sinks)
-            {
-                nLogConfig.AddRuleForAllLevels(sink);
-            }
-
-            LogManager.Configuration = nLogConfig;
+            _logger = ConfigureLogger(sinks);
         }
 
         public IDisposable BeginScope<TState>(TState state) where TState : notnull
         {
-            throw new NotImplementedException();
+            string propertyName;
+            object propertyValue;
 
-            //TODO: https://blog.elmah.io/nlog-tutorial-the-essential-guide-for-logging-from-csharp/
-            // Article mentions ScopeContext.
+            if (state is LoggerState loggerState)
+            {
+                if (loggerState.IsSingleProperty)
+                {
+                    propertyName = loggerState.SinglePropertyName;
+                    propertyValue = loggerState.SinglePropertyValue;
+                }
+                else
+                {
+                    propertyName = nameof(LoggerState.PropertyValuesByNames);
+                    propertyValue = loggerState.PropertyValuesByNames;
+                }
+            }
+            else
+            {
+                propertyName = "State";
+                propertyValue = state;
+            }
+
+            return _logger.PushScopeProperty(propertyName, propertyValue);
         }
 
         public bool IsEnabled(LogLevel logLevel)
@@ -65,7 +75,7 @@ namespace WinXPApp.Base.Logging
 
             NLog.LogLevel nlevel = ConvertLogLevelToNLogLogLevel(logLevel);
 
-            LogManager.GetCurrentClassLogger().Log(new LogEventInfo(nlevel, null, formattedMessage)
+            _logger.Log(new LogEventInfo(nlevel, _logger.Name, formattedMessage)
             {
                 TimeStamp = DateTime.UtcNow,
                 Exception = exception,
@@ -75,6 +85,26 @@ namespace WinXPApp.Base.Logging
         public void Dispose()
         {
             LogManager.Shutdown();
+        }
+
+        private static Logger ConfigureLogger(params Target[] sinks)
+        {
+            // ref: https://blog.elmah.io/nlog-tutorial-the-essential-guide-for-logging-from-csharp/
+
+            if (sinks == null || sinks.Length == 0)
+            {
+                sinks = [new ConsoleTarget()];
+            }
+
+            LoggingConfiguration nLogConfig = new();
+            foreach (Target sink in sinks)
+            {
+                nLogConfig.AddRuleForAllLevels(sink);
+            }
+
+            LogManager.Configuration = nLogConfig;
+
+            return LogManager.GetCurrentClassLogger();
         }
 
         private static NLog.LogLevel ConvertLogLevelToNLogLogLevel(LogLevel logLevel)

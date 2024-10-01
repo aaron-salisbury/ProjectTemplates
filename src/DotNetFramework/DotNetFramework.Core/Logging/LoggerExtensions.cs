@@ -2,8 +2,6 @@
 
 namespace DotNetFramework.Core.Logging
 {
-    // ref: https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Logging.Abstractions/src/LoggerExtensions.cs
-
     /// <summary>
     /// ILogger extension methods for common scenarios.
     /// </summary>

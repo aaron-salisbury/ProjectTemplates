@@ -90,6 +90,7 @@
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\FormattedLogValues.cs" />
     <Compile Include="Logging\LoggerExtensions.cs" />
+    <Compile Include="Logging\LoggerState.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Implementation\SessionAuthorizerPNP.cs" />

@@ -20,11 +20,6 @@ namespace DotNetFramework.Core.Logging
         {
             MinimumLevel = minimumLevel;
 
-            if (sinks == null || sinks.Length == 0)
-            {
-                sinks = [new ConsoleTraceListener()];
-            }
-
             _writer = ConfigureLogWriter(sinks);
         }
 
@@ -63,9 +58,14 @@ namespace DotNetFramework.Core.Logging
             _writer.Dispose();
         }
 
-        private static LogWriter ConfigureLogWriter(IEnumerable<TraceListener> sinks)
+        private static LogWriter ConfigureLogWriter(params TraceListener[] sinks)
         {
             // ref: http://web.archive.org/web/20210330115056/http://codebetter.com/davidhayden/2006/02/19/enterprise-library-2-0-logging-application-block/
+
+            if (sinks == null || sinks.Length == 0)
+            {
+                sinks = [new ConsoleTraceListener()];
+            }
 
             LogSource mainLogSource = new("MainLogSource", SourceLevels.All);
             mainLogSource.Listeners.Clear();
