@@ -36,12 +36,10 @@ namespace WinXPApp.Forms.SampleTools
 
             foreach (LineSorter.SortTypes sortType in Enum.GetValues(typeof(LineSorter.SortTypes)).Cast<LineSorter.SortTypes>())
             {
-                DisplayAttribute enumDisplayAttribute = sortType.GetAttribute<DisplayAttribute>();
-
                 ComboBoxEnumItem enumItem = new ComboBoxEnumItem
                 {
                     Value = (int)sortType,
-                    Text = enumDisplayAttribute != null ? enumDisplayAttribute.Name : sortType.ToString()
+                    Text = sortType.GetDisplayName()
                 };
 
                 SortTypes.Add(enumItem);

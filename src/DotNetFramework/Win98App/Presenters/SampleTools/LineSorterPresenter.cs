@@ -1,13 +1,12 @@
-﻿using System;
+﻿using DotNetFramework.Core.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Win98.Business.Modules.Sample.ApplicationServices;
 using Win98.Business.Modules.Sample.DomainServices;
-using Win98App.Base.Extensions;
 using Win98App.Base.Helpers;
 using Win98App.Base.MVP;
-using Win98App.Models;
 using Win98App.Views.SampleTools;
 using static System.Windows.Forms.Control;
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Win7App.Base;
+using Win7Core.Base.Extensions;
 using Win7Core.SampleTools;
 
 namespace Win7App.ViewModels.SampleTools
@@ -48,7 +49,7 @@ namespace Win7App.ViewModels.SampleTools
 
             SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()
-                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = LineSorter.GetSortTypeDisplayName(st) })
+                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = st.GetDisplayName() })
                 .ToList();
 
             SelectedSortType = SortTypes

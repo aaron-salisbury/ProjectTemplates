@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\Extensions\StringExtensions.cs" />
     <Compile Include="Base\Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="Base\Helpers\StandardErrorProvider.cs">
       <SubType>Component</SubType>
@@ -164,5 +163,6 @@
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\sort-alphabet.png" />
     <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

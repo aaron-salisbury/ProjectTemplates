@@ -32,17 +32,6 @@ namespace Win7Core.SampleTools
             }
         }
 
-        public static string GetSortTypeDisplayName(SortTypes sortType)
-        {
-            DisplayAttribute displayAttribute = sortType.GetAttribute<DisplayAttribute>();
-            if (displayAttribute != null)
-            {
-                return displayAttribute.Name;
-            }
-
-            return sortType.ToString();
-        }
-
         private string _textToSort;
         public string TextToSort
         {

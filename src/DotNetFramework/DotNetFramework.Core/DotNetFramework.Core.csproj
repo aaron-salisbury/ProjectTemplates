@@ -75,6 +75,7 @@
     <Compile Include="DependencyInjection\IServiceCollection.cs" />
     <Compile Include="DependencyInjection\ServiceDescriptor.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Logging\Implementation\LoggerPNP.cs" />
     <Compile Include="Logging\Implementation\LoggerPNPScope.cs" />
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />
