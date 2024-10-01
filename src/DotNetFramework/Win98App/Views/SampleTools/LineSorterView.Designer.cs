@@ -1,7 +1,6 @@
-﻿
-namespace Win98App.Forms.SampleTools
+﻿namespace Win98App.Views.SampleTools
 {
-    partial class LineSorterUC
+    partial class LineSorterView
     {
         /// <summary> 
         /// Required designer variable.
@@ -63,7 +62,6 @@ namespace Win98App.Forms.SampleTools
             this.SortTypeComboBox.Name = "SortTypeComboBox";
             this.SortTypeComboBox.Size = new System.Drawing.Size(136, 21);
             this.SortTypeComboBox.TabIndex = 2;
-            this.SortTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.SortTypeComboBox_SelectedIndexChanged);
             // 
             // SelectAllButton
             // 
@@ -89,8 +87,8 @@ namespace Win98App.Forms.SampleTools
             // 
             // SortTextTextBox
             // 
-            this.SortTextTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.SortTextTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SortTextTextBox.Location = new System.Drawing.Point(10, 106);
             this.SortTextTextBox.Margin = new System.Windows.Forms.Padding(0);
@@ -109,7 +107,7 @@ namespace Win98App.Forms.SampleTools
             this.Controls.Add(this.SortTypeComboBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "LineSorterUC";
+            this.Name = "LineSorterView";
             this.Size = new System.Drawing.Size(574, 577);
             this.ResumeLayout(false);
             this.PerformLayout();

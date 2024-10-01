@@ -49,15 +49,13 @@ namespace DotNetFramework.Core.DependencyInjection
 
             foreach (ServiceDescriptor descriptor in _descriptors)
             {
-                LifetimeManager lifetimeManager = LifetimeManagerForServiceLifetime(descriptor.Lifetime);
-
                 if (descriptor.ImplementationInstance != null)
                 {
-                    container.RegisterInstance(descriptor.ServiceType, descriptor.ImplementationInstance, lifetimeManager);
+                    container.RegisterInstance(descriptor.ServiceType, descriptor.ImplementationInstance);
                 }
                 else
                 {
-                    container.RegisterType(descriptor.ServiceType, descriptor.ImplementationType, lifetimeManager);
+                    container.RegisterType(descriptor.ServiceType, descriptor.ImplementationType, LifetimeManagerForServiceLifetime(descriptor.Lifetime));
                 }
             }
 

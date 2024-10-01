@@ -1,7 +1,6 @@
-﻿
-namespace Win98App.Forms
+﻿namespace Win98App.Views
 {
-    partial class IntroductionUC
+    partial class HomeView
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,13 +29,13 @@ namespace Win98App.Forms
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.IntroLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.LoggingLabel = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -53,14 +52,14 @@ namespace Win98App.Forms
             this.label1.TabIndex = 0;
             this.label1.Text = "INTRODUCTION";
             // 
-            // label2
+            // IntroLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(-3, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(468, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "This is a sample application generated from Aaron Salisbury\'s Windows 98 App Solu" +
+            this.IntroLabel.AutoSize = true;
+            this.IntroLabel.Location = new System.Drawing.Point(-3, 15);
+            this.IntroLabel.Name = "IntroLabel";
+            this.IntroLabel.Size = new System.Drawing.Size(468, 13);
+            this.IntroLabel.TabIndex = 1;
+            this.IntroLabel.Text = "This is a sample application generated from Aaron Salisbury\'s Windows 98 App Solu" +
     "tion Template.";
             // 
             // label3
@@ -113,14 +112,14 @@ namespace Win98App.Forms
             this.label7.Text = "The benefits of using a 3-layer architecture include improved horizontal scalabil" +
     "ity, performance and availability.";
             // 
-            // label11
+            // LoggingLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(-3, 188);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(632, 13);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "The application shares an implementation of the pluggable and reusable Logging ap" +
+            this.LoggingLabel.AutoSize = true;
+            this.LoggingLabel.Location = new System.Drawing.Point(-3, 188);
+            this.LoggingLabel.Name = "LoggingLabel";
+            this.LoggingLabel.Size = new System.Drawing.Size(632, 13);
+            this.LoggingLabel.TabIndex = 8;
+            this.LoggingLabel.Text = "The application shares an implementation of the pluggable and reusable Logging ap" +
     "plication block of the Microsoft Enterprise Library.";
             // 
             // label12
@@ -165,7 +164,7 @@ namespace Win98App.Forms
             this.LicenseLink.Text = "The MIT License.";
             this.LicenseLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LicenseLink_LinkClicked);
             // 
-            // IntroductionUC
+            // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -173,16 +172,16 @@ namespace Win98App.Forms
             this.Controls.Add(this.label8);
             this.Controls.Add(this.LicenseLink);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.label11);
+            this.Controls.Add(this.LoggingLabel);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.IntroLabel);
             this.Controls.Add(this.label1);
-            this.Name = "IntroductionUC";
+            this.Name = "HomeView";
             this.Size = new System.Drawing.Size(785, 400);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -192,13 +191,13 @@ namespace Win98App.Forms
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label IntroLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label LoggingLabel;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;

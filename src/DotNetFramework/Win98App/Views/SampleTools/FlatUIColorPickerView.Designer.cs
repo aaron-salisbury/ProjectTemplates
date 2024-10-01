@@ -1,7 +1,6 @@
-﻿
-namespace Win98App.Forms.SampleTools
+﻿namespace Win98App.Views.SampleTools
 {
-    partial class FlatUIColorPickerUC
+    partial class FlatUIColorPickerView
     {
         /// <summary> 
         /// Required designer variable.
@@ -90,12 +89,12 @@ namespace Win98App.Forms.SampleTools
             this.CopyButton.TabIndex = 5;
             this.CopyButton.Text = "Copy";
             this.CopyButton.UseVisualStyleBackColor = true;
-            this.CopyButton.Click += new System.EventHandler(this.CopyButton_OnClick);
+            this.CopyButton.Click += new System.EventHandler(this.CopyButton_Click);
             // 
             // ColorsTLP
             // 
-            this.ColorsTLP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.ColorsTLP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ColorsTLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ColorsTLP.BackColor = System.Drawing.Color.Transparent;
@@ -125,7 +124,7 @@ namespace Win98App.Forms.SampleTools
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "FlatUIColorPickerUC";
+            this.Name = "FlatUIColorPickerView";
             this.Size = new System.Drawing.Size(633, 611);
             this.ResumeLayout(false);
             this.PerformLayout();

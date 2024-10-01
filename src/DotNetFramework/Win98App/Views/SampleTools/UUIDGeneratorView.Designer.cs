@@ -1,7 +1,6 @@
-﻿
-namespace Win98App.Forms.SampleTools
+﻿namespace Win98App.Views.SampleTools
 {
-    partial class UUIDGeneratorUC
+    partial class UUIDGeneratorView
     {
         /// <summary> 
         /// Required designer variable.
@@ -117,7 +116,7 @@ namespace Win98App.Forms.SampleTools
             this.Controls.Add(this.CapitalizeCheckBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "UUIDGeneratorUC";
+            this.Name = "UUIDGeneratorView";
             this.Size = new System.Drawing.Size(565, 564);
             this.Load += new System.EventHandler(this.UUIDGeneratorUC_Load);
             this.ResumeLayout(false);

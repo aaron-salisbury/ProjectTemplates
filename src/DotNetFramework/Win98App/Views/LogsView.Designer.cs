@@ -1,7 +1,6 @@
-﻿
-namespace Win98App.Forms
+﻿namespace Win98App.Views
 {
-    partial class LogUC
+    partial class LogsView
     {
         /// <summary> 
         /// Required designer variable.
@@ -46,8 +45,8 @@ namespace Win98App.Forms
             // 
             // LogsTextBox
             // 
-            this.LogsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.LogsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LogsTextBox.Location = new System.Drawing.Point(3, 30);
             this.LogsTextBox.Multiline = true;
@@ -64,7 +63,7 @@ namespace Win98App.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.LogsTextBox);
             this.Controls.Add(this.DownloadButton);
-            this.Name = "LogUC";
+            this.Name = "LogsView";
             this.Size = new System.Drawing.Size(565, 564);
             this.ResumeLayout(false);
             this.PerformLayout();

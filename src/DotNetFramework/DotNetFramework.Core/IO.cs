@@ -1,5 +1,7 @@
 ﻿using DotNetFramework.Core.Logging;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -10,7 +12,7 @@ namespace DotNetFramework.Core
         public static string GetAppDirectoryPath()
         {
             string localAppDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string thisAppName = AppDomain.CurrentDomain.FriendlyName;
+            string thisAppName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName);
             string appDirectory = Path.Combine(localAppDirectory, thisAppName);
 
             Directory.CreateDirectory(appDirectory);
@@ -18,13 +20,45 @@ namespace DotNetFramework.Core
             return appDirectory;
         }
 
-        public static void DeleteFile(string fullFilePath, ILogger logger)
+        public static bool WriteFile(ILogger logger, IEnumerable<string> contentLines, string fileName, string directoryPath = null)
         {
             try
             {
-                if (File.Exists(fullFilePath))
+                if (!string.IsNullOrEmpty(directoryPath))
                 {
-                    File.Delete(fullFilePath);
+                    Directory.CreateDirectory(directoryPath);
+                }
+                else
+                {
+                    directoryPath = GetAppDirectoryPath();
+                }
+
+                string fullPath = Path.Combine(directoryPath, fileName);
+
+                using (StreamWriter outputFile = new(fullPath))
+                {
+                    foreach (string line in contentLines)
+                    {
+                        outputFile.WriteLine(line);
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to write file.");
+                return false;
+            }
+        }
+
+        public static void DeleteFile(string filePath, ILogger logger)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
                 }
                 else
                 {
@@ -34,6 +68,21 @@ namespace DotNetFramework.Core
             catch (Exception ex)
             {
                 logger.LogError(ex, "Failed to delete file.");
+            }
+        }
+
+        public static void OpenFile(string filePath, ILogger logger)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(filePath)
+                {
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to open file.");
             }
         }
 

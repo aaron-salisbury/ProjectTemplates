@@ -41,8 +41,24 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\Unity\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\Unity\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\Unity\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\Unity\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\Unity\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.StaticFactory">
+      <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\Unity\Microsoft.Practices.Unity.StaticFactory.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Data.SqlServerCe_unofficial.4.0.8482.1\lib\net20\System.Data.SqlServerCe.dll</HintPath>
@@ -58,6 +74,7 @@
     <Compile Include="DependencyInjection\Implementation\ServiceCollectionPNP.cs" />
     <Compile Include="DependencyInjection\IServiceCollection.cs" />
     <Compile Include="DependencyInjection\ServiceDescriptor.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Logging\Implementation\LoggerPNP.cs" />
     <Compile Include="Logging\Implementation\LoggerPNPScope.cs" />
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />

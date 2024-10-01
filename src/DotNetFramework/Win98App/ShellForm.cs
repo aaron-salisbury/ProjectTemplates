@@ -1,9 +1,10 @@
 ﻿using DotNetFramework.Core.Logging;
 using System;
 using System.Windows.Forms;
-using Win98App.Base.Logging;
+using Win98App.Base.MVP;
 using Win98App.Forms;
-using Win98Core.Base.Logging;
+using Win98App.Presenters;
+using Win98App.Presenters.SampleTools;
 
 namespace Win98App
 {
@@ -12,42 +13,45 @@ namespace Win98App
         public static ILogger Logger;
 
         private readonly Padding _defaultContentAreaPadding = new(15);
-        private readonly LogUC _logUC;
+        private readonly Navigator _navigator;
 
-        public ShellForm()
+        public ShellForm(Navigator navigator)
         {
             InitializeComponent();
 
             Text = Properties.Settings.Default.ApplicationFriendlyName;
 
-            //TODO: InMemorySink has the LogEmitted event that the future logs presenter will need to subscribe to.
-            Logger = new LoggerPNP(LogLevel.Debug, new InMemorySink());
-
-            //TODO: After refactoring with presenters, etc, LogUC can be instantiated where it is used and AppLogger stuff can all go away.
-            _logUC = new LogUC
-            {
-                Padding = _defaultContentAreaPadding,
-                Dock = DockStyle.Fill
-            };
-            AppLogger.SetTargetInvoking(_logUC.UpdateLogs);
-            _logUC.UpdateLogs(AppLogger.GetLogs()); // Load logs that may have been written before delegate could be set.
-
-            MainContentPanel.Controls.Add(GetHomeContent());
+            MainContentPanel.ControlAdded += MainContentPanel_ControlAdded;
+            _navigator = navigator;
+            _navigator.Window = MainContentPanel.Controls;
+            _navigator.NavigateTo(typeof(HomePresenter));
         }
 
-        private Control GetHomeContent()
+        private void MainContentPanel_ControlAdded(object sender, ControlEventArgs e)
         {
-            Control homeContent = new IntroductionUC();
-            homeContent.Padding = _defaultContentAreaPadding;
-            homeContent.Dock = DockStyle.Fill;
-
-            return homeContent;
+            if (e != null && e.Control != null)
+            {
+                e.Control.Padding = _defaultContentAreaPadding;
+                e.Control.Dock = DockStyle.Fill;
+            }
         }
 
         private void HomeMenuItem_Click(object sender, EventArgs e)
         {
-            MainContentPanel.Controls.Clear();
-            MainContentPanel.Controls.Add(GetHomeContent());
+            _navigator.NavigateTo(typeof(HomePresenter));
+        }
+
+        private void LogMenuItem_Click(object sender, EventArgs e)
+        {
+            _navigator.NavigateTo(typeof(LogsPresenter));
+        }
+
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AboutForm aboutForm = new())
+            {
+                aboutForm.ShowDialog(this);
+            }
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
@@ -57,45 +61,17 @@ namespace Win98App
 
         private void UUIDGeneratorMenuItem_Click(object sender, EventArgs e)
         {
-            MainContentPanel.Controls.Clear();
-
-            Control generator = new Forms.SampleTools.UUIDGeneratorUC();
-            generator.Padding = _defaultContentAreaPadding;
-            MainContentPanel.Controls.Add(generator);
+            _navigator.NavigateTo(typeof(UUIDGeneratorPresenter));
         }
 
         private void FlatUIColorPickerMenuItem_Click(object sender, EventArgs e)
         {
-            MainContentPanel.Controls.Clear();
-
-            Control colorPicker = new Forms.SampleTools.FlatUIColorPickerUC();
-            colorPicker.Padding = _defaultContentAreaPadding;
-            colorPicker.Dock = DockStyle.Fill;
-            MainContentPanel.Controls.Add(colorPicker);
+            _navigator.NavigateTo(typeof(FlatUIColorPickerPresenter));
         }
 
         private void LineSorterMenuItem_Click(object sender, EventArgs e)
         {
-            MainContentPanel.Controls.Clear();
-
-            Control lineSorter = new Forms.SampleTools.LineSorterUC();
-            lineSorter.Padding = _defaultContentAreaPadding;
-            lineSorter.Dock = DockStyle.Fill;
-            MainContentPanel.Controls.Add(lineSorter);
-        }
-
-        private void LogMenuItem_Click(object sender, EventArgs e)
-        {
-            MainContentPanel.Controls.Clear();
-            MainContentPanel.Controls.Add(_logUC);
-        }
-
-        private void AboutMenuItem_Click(object sender, EventArgs e)
-        {
-            using (AboutForm aboutForm = new AboutForm())
-            {
-                aboutForm.ShowDialog(this);
-            }
+            _navigator.NavigateTo(typeof(LineSorterPresenter));
         }
     }
 }

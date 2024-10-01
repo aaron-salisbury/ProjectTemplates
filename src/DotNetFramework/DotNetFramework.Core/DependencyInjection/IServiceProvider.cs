@@ -2,15 +2,8 @@
 
 namespace DotNetFramework.Core.DependencyInjection
 {
-    public interface IServiceProvider
+    public interface IServiceProvider : System.IServiceProvider
     {
-        /// <summary>
-        /// Gets the service object of the specified type.
-        /// </summary>
-        /// <param name="serviceType">An object that specifies the type of service object to get.</param>
-        /// <returns>A service object of type serviceType. -or- null if there is no service object of type serviceType.</returns>
-        object GetService(Type serviceType);
-
         /// <summary>
         /// Get service of type <typeparamref name="T"/>.
         /// </summary>
