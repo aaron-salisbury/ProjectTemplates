@@ -41,6 +41,9 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography">
+      <HintPath>..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\EnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\Unity\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
@@ -89,6 +92,9 @@
     <Compile Include="Logging\LoggerExtensions.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Implementation\SessionAuthorizerPNP.cs" />
+    <Compile Include="Security\ISessionAuthorizer.cs" />
+    <Compile Include="Security\SessionCredential.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

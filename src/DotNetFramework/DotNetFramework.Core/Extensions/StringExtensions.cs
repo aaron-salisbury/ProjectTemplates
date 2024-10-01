@@ -1,9 +1,18 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DotNetFramework.Core.Extensions
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// Convert to byte array.
+        /// </summary>
+        public static byte[] ToBytes(this string str)
+        {
+            return Encoding.ASCII.GetBytes(str);
+        }
+
         /// <summary>
         /// Split a PascalCase string into separate words.
         /// </summary>
