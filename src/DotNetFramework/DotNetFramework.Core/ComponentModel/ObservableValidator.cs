@@ -8,7 +8,9 @@ namespace DotNetFramework.Core.ComponentModel
 {
     public abstract class ObservableValidator : ObservableObject, IDataErrorInfo, INotifyDataErrorInfo
     {
-        private readonly Dictionary<string, List<string>> _errorsByPropertyNames = [];
+        protected readonly List<string> EntityLevelErrors = []; // Non-property specific validation errors.
+
+        protected readonly Dictionary<string, List<string>> ErrorsByPropertyNames = [];
 
         public void RaisePropertyChangedWithValidation(string propertyName)
         {
@@ -18,19 +20,19 @@ namespace DotNetFramework.Core.ComponentModel
 
         protected void SetErrorsForProperty(string propertyName, List<string> errors)
         {
-            List<string> startingErrorsForProperty = _errorsByPropertyNames.ContainsKey(propertyName)
-                ? _errorsByPropertyNames[propertyName]
+            List<string> startingErrorsForProperty = ErrorsByPropertyNames.ContainsKey(propertyName)
+                ? ErrorsByPropertyNames[propertyName]
                 : [];
 
             if (errors.Count > 0)
             {
-                _errorsByPropertyNames[propertyName] = errors;
+                ErrorsByPropertyNames[propertyName] = errors;
             }
             else
             {
-                if (_errorsByPropertyNames.ContainsKey(propertyName))
+                if (ErrorsByPropertyNames.ContainsKey(propertyName))
                 {
-                    _errorsByPropertyNames.Remove(propertyName);
+                    ErrorsByPropertyNames.Remove(propertyName);
                 }
             }
 
@@ -42,8 +44,8 @@ namespace DotNetFramework.Core.ComponentModel
 
         public List<string> GetErrorsForProperty(string propertyName)
         {
-            return _errorsByPropertyNames.ContainsKey(propertyName)
-                ? _errorsByPropertyNames[propertyName]
+            return ErrorsByPropertyNames.ContainsKey(propertyName)
+                ? ErrorsByPropertyNames[propertyName]
                 : [];
         }
 
@@ -57,7 +59,16 @@ namespace DotNetFramework.Core.ComponentModel
         {
             get
             {
-                return string.Empty;
+                if (EntityLevelErrors.Count == 0)
+                {
+                    return string.Empty;
+                }
+                else if (EntityLevelErrors.Count == 1)
+                {
+                    return EntityLevelErrors.First();
+                }
+
+                return string.Join(Environment.NewLine, [.. EntityLevelErrors]);
             }
         }
 
@@ -81,7 +92,7 @@ namespace DotNetFramework.Core.ComponentModel
 
         public bool HasErrors
         {
-            get { return _errorsByPropertyNames.Any(kv => kv.Value != null && kv.Value.Count > 0); }
+            get { return ErrorsByPropertyNames.Any(kv => kv.Value != null && kv.Value.Count > 0); }
         }
         #endregion
 
