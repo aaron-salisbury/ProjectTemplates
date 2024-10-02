@@ -6,10 +6,8 @@ using System.Linq;
 
 namespace DotNetFramework.Core.ComponentModel
 {
-    public abstract class ObservableValidator : ObservableObject, INotifyDataErrorInfo, IDataErrorInfo
+    public abstract class ObservableValidator : ObservableObject, IDataErrorInfo, INotifyDataErrorInfo
     {
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
         private readonly Dictionary<string, List<string>> _errorsByPropertyNames = [];
 
         public void RaisePropertyChangedWithValidation(string propertyName)
@@ -42,11 +40,6 @@ namespace DotNetFramework.Core.ComponentModel
             }
         }
 
-        public bool HasErrors
-        {
-            get { return _errorsByPropertyNames.Any(kv => kv.Value != null && kv.Value.Count > 0); }
-        }
-
         public List<string> GetErrorsForProperty(string propertyName)
         {
             return _errorsByPropertyNames.ContainsKey(propertyName)
@@ -54,17 +47,17 @@ namespace DotNetFramework.Core.ComponentModel
                 : [];
         }
 
-        public IEnumerable GetErrors(string propertyName)
+        #region IDataErrorInfo Members
+        /// <summary>
+        /// This property is intended to represent non-property specific validation errors associated with the class.
+        /// For example, you might want to enforce a validation rule that depends on the values of multiple properties.
+        /// In that case, you would return a validation error from the Error property.
+        /// </summary>
+        public string Error
         {
-            return GetErrorsForProperty(propertyName);
-        }
-
-        public string Error 
-        { 
-            get 
-            { 
-                IsValid();
-                return string.Join(Environment.NewLine, _errorsByPropertyNames.Values.SelectMany(e => e).ToArray());
+            get
+            {
+                return string.Empty;
             }
         }
 
@@ -76,6 +69,21 @@ namespace DotNetFramework.Core.ComponentModel
                 return string.Join(Environment.NewLine, [.. GetErrorsForProperty(columnName)]);
             }
         }
+        #endregion
+
+        #region INotifyDataErrorInfo Members
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return GetErrorsForProperty(propertyName);
+        }
+
+        public bool HasErrors
+        {
+            get { return _errorsByPropertyNames.Any(kv => kv.Value != null && kv.Value.Count > 0); }
+        }
+        #endregion
 
         public virtual bool IsValid()
         {
