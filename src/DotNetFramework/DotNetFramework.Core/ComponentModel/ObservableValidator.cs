@@ -1,30 +1,109 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace DotNetFramework.Core.ComponentModel
 {
-    public abstract class ObservableValidator : ObservableObject, IDataErrorInfo
+    public abstract class ObservableValidator : ObservableObject, INotifyDataErrorInfo, IDataErrorInfo
     {
-        private string _error;
-        public string Error
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        private readonly Dictionary<string, List<string>> _errorsByPropertyNames = [];
+
+        public void RaisePropertyChangedWithValidation(string propertyName)
         {
-            get { return _error; }
-            protected set { _error = value; }
+            PropertyIsValid(propertyName);
+            base.RaisePropertyChanged(propertyName);
+        }
+
+        protected void SetErrorsForProperty(string propertyName, List<string> errors)
+        {
+            List<string> startingErrorsForProperty = _errorsByPropertyNames.ContainsKey(propertyName)
+                ? _errorsByPropertyNames[propertyName]
+                : [];
+
+            if (errors.Count > 0)
+            {
+                _errorsByPropertyNames[propertyName] = errors;
+            }
+            else
+            {
+                if (_errorsByPropertyNames.ContainsKey(propertyName))
+                {
+                    _errorsByPropertyNames.Remove(propertyName);
+                }
+            }
+
+            if (ErrorsChanged != null && startingErrorsForProperty.SequenceEqual(errors))
+            {
+                ErrorsChanged.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            }
+        }
+
+        public bool HasErrors
+        {
+            get { return _errorsByPropertyNames.Any(kv => kv.Value != null && kv.Value.Count > 0); }
+        }
+
+        public List<string> GetErrorsForProperty(string propertyName)
+        {
+            return _errorsByPropertyNames.ContainsKey(propertyName)
+                ? _errorsByPropertyNames[propertyName]
+                : [];
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return GetErrorsForProperty(propertyName);
+        }
+
+        public string Error 
+        { 
+            get 
+            { 
+                IsValid();
+                return string.Join(Environment.NewLine, _errorsByPropertyNames.Values.SelectMany(e => e).ToArray());
+            }
         }
 
         public string this[string columnName]
         {
             get
             {
-                if (Errors != null && Errors.ContainsKey(columnName))
-                {
-                    return Errors[columnName];
-                }
-
-                return string.Empty;
+                PropertyIsValid(columnName);
+                return string.Join(Environment.NewLine, [.. GetErrorsForProperty(columnName)]);
             }
         }
 
-        protected Dictionary<string, string> Errors { get; set; } = [];
+        public virtual bool IsValid()
+        {
+            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(this))
+            {
+                PropertyIsValid(property.Name);
+            }
+
+            return !HasErrors;
+        }
+
+        public virtual bool PropertyIsValid(string propertyName)
+        {
+            //TODO:
+            // *** PSEUDO CODE ***
+            //List<string> newErrorsForProperty = [];
+
+            //// Foreach validation...
+            //if (false) // Property failed a validation.
+            //{
+            //    newErrorsForProperty.Add("Some validation message.");
+            //}
+
+            //SetErrorsForProperty(propertyName, newErrorsForProperty);
+
+            //return newErrorsForProperty.Count == 0;
+
+            throw new NotImplementedException();
+        }
     }
 }

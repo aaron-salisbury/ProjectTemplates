@@ -73,6 +73,8 @@
   <ItemGroup>
     <Compile Include="ComponentModel\ObservableValidator.cs" />
     <Compile Include="ComponentModel\ObservableObject.cs" />
+    <Compile Include="ComponentModel\Validation\DataErrorsChangedEventArgs.cs" />
+    <Compile Include="ComponentModel\Validation\INotifyDataErrorInfo.cs" />
     <Compile Include="Data\SqlServerCompactDb.cs" />
     <Compile Include="DependencyInjection\Implementation\ServiceCollectionPNP.cs" />
     <Compile Include="DependencyInjection\IServiceCollection.cs" />

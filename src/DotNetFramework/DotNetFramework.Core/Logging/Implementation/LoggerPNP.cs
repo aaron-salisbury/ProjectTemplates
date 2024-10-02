@@ -87,7 +87,7 @@ namespace DotNetFramework.Core.Logging
             return new LogWriter([], traceSources, nonExistentLogSource, nonExistentLogSource, mainLogSource, defaultCategory, false, true);
         }
 
-        private static LogEntryException BuildLogEntry(LogLevel logLevel, EventId eventId, string message, Exception exception = null)
+        private static LogEntry BuildLogEntry(LogLevel logLevel, EventId eventId, string message, Exception exception = null)
         {
             LogEntryException logEntry = new()
             {

@@ -31,7 +31,8 @@ namespace Win7Core.Base
             if (ErrorsChanged != null)
             {
                 ErrorsChanged.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            }        }
+            }
+        }
 
         public IEnumerable GetErrors(string propertyName)
         {
