@@ -73,9 +73,9 @@ namespace WinXPApp.Base.Logging
                 formattedMessage = formatter.Invoke(state, null);
             }
 
-            NLog.LogLevel nlevel = MapLogLevelToNLogLevel(logLevel);
+            NLog.LogLevel nLevel = MapLogLevelToNLogLevel(logLevel);
 
-            _logger.Log(new LogEventInfo(nlevel, _logger.Name, formattedMessage)
+            _logger.Log(new LogEventInfo(nLevel, _logger.Name, formattedMessage)
             {
                 TimeStamp = DateTime.UtcNow,
                 Exception = exception,
