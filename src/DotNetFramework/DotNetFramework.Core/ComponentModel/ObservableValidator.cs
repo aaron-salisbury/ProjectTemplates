@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace DotNetFramework.Core.ComponentModel
 {
+    // WinForms needs an ErrorProvider to be created and passed the control and its message via .UpdateError().
+    // WPF uses IDataErrorInfo when ValidatesOnDataErrors is set to true and the REAL INotifyDataErrorInfo when ValidatesOnNotifyDataErrors is set to true.
+    // ASP.NET MVC uses a model binder (the DefaultModelBinder) to detect whether or not a class implements the IDataErrorInfo interface.
     public abstract class ObservableValidator : ObservableObject, IDataErrorInfo, INotifyDataErrorInfo
     {
         protected readonly List<string> EntityLevelErrors = []; // Non-property specific validation errors.
