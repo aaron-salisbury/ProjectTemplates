@@ -73,7 +73,7 @@ namespace WinXPApp.Base.Logging
                 formattedMessage = formatter.Invoke(state, null);
             }
 
-            NLog.LogLevel nlevel = ConvertLogLevelToNLogLogLevel(logLevel);
+            NLog.LogLevel nlevel = MapLogLevelToNLogLevel(logLevel);
 
             _logger.Log(new LogEventInfo(nlevel, _logger.Name, formattedMessage)
             {
@@ -107,7 +107,7 @@ namespace WinXPApp.Base.Logging
             return LogManager.GetCurrentClassLogger();
         }
 
-        private static NLog.LogLevel ConvertLogLevelToNLogLogLevel(LogLevel logLevel)
+        private static NLog.LogLevel MapLogLevelToNLogLevel(LogLevel logLevel)
         {
             return logLevel switch
             {
@@ -118,7 +118,7 @@ namespace WinXPApp.Base.Logging
                 LogLevel.Error => NLog.LogLevel.Error,
                 LogLevel.Critical => NLog.LogLevel.Fatal,
                 LogLevel.None => NLog.LogLevel.Off,
-                _ => NLog.LogLevel.Trace,
+                _ => NLog.LogLevel.Off,
             };
         }
     }

@@ -1,8 +1,10 @@
-﻿using NLog;
+﻿using DotNetFramework.Core.Logging;
+using NLog;
 using NLog.Layouts;
 using NLog.Targets;
 using System;
 using System.Collections.Generic;
+using LogLevel = DotNetFramework.Core.Logging.LogLevel;
 
 namespace WinXPApp.Base.Logging
 {
@@ -34,18 +36,26 @@ namespace WinXPApp.Base.Logging
             };
         }
 
-        protected override void Write(LogEventInfo logEvent)
+        protected override void Write(LogEventInfo logEventInfo)
         {
-            string renderedLogMessage = RenderLogEvent(Layout, logEvent);
+            DateTime timeStamp = logEventInfo.TimeStamp;
+            string message = RenderLogEvent(Layout, logEventInfo);
+            LogLevel level = MapNLogLevelToLogLevel(logEventInfo.Level);
+            Exception exception = logEventInfo.Exception;
 
-            MemoryTargetWrite(renderedLogMessage);
+            MemoryTargetWrite(message);
 
             if (LogEmitted != null)
             {
                 LogEmitted.Invoke(this, new LogEmitEventArgs()
                 {
-                    LogEvent = logEvent,
-                    LogMessage = renderedLogMessage
+                    LogEvent = new()
+                    {
+                        TimeStamp = timeStamp,
+                        Message = message,
+                        Level = level,
+                        Exception = exception
+                    }
                 });
             }
         }
@@ -59,11 +69,25 @@ namespace WinXPApp.Base.Logging
 
             _memoryTarget.Logs.Add(renderedLogMessage);
         }
+
+        private static LogLevel MapNLogLevelToLogLevel(NLog.LogLevel nLogLevel)
+        {
+            return nLogLevel.Ordinal switch
+            {
+                0 => LogLevel.Trace,
+                1 => LogLevel.Debug,
+                2 => LogLevel.Information,
+                3 => LogLevel.Warning,
+                4 => LogLevel.Error,
+                5 => LogLevel.Critical,
+                6 => LogLevel.None,
+                _ => LogLevel.None,
+            };
+        }
     }
 
     public class LogEmitEventArgs : EventArgs
     {
-        public LogEventInfo LogEvent { get; set; }
-        public string LogMessage { get; set; }
+        public LogEvent LogEvent { get; set; }
     }
 }

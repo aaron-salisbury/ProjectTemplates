@@ -79,6 +79,8 @@
     <Compile Include="DependencyInjection\ServiceDescriptor.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Logging\Implementation\InMemorySinkPNP.cs" />
+    <Compile Include="Logging\Implementation\LogEntryException.cs" />
     <Compile Include="Logging\Implementation\LoggerPNP.cs" />
     <Compile Include="Logging\Implementation\LoggerPNPScope.cs" />
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Logging\EventId.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\FormattedLogValues.cs" />
+    <Compile Include="Logging\LogEvent.cs" />
     <Compile Include="Logging\LoggerExtensions.cs" />
     <Compile Include="Logging\LoggerState.cs" />
     <Compile Include="Logging\LogLevel.cs" />

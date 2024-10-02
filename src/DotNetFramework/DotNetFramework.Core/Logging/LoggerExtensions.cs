@@ -509,11 +509,6 @@ namespace DotNetFramework.Core.Logging
         {
             string formattedMessage = state.ToString();
 
-            if (error != null)
-            {
-                formattedMessage += $" | {error.Message}";
-            }
-
             return formattedMessage;
         }
     }

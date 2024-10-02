@@ -12,7 +12,7 @@ namespace DotNetFramework.Core.Logging
     {
         public LogLevel MinimumLevel { get; private set; }
 
-        internal LoggerPNPScope CurrentScope { get; set; } // Not using yet.
+        internal LoggerPNPScope CurrentScope { get; set; } // TODO: Not implemented yet.
 
         private readonly LogWriter _writer;
 
@@ -50,7 +50,7 @@ namespace DotNetFramework.Core.Logging
                 formattedMessage = formatter.Invoke(state, exception);
             }
 
-            _writer.Write(BuildLogEntry(logLevel, eventId, formattedMessage));
+            _writer.Write(BuildLogEntry(logLevel, eventId, formattedMessage, exception));
         }
 
         public void Dispose()
@@ -87,16 +87,18 @@ namespace DotNetFramework.Core.Logging
             return new LogWriter([], traceSources, nonExistentLogSource, nonExistentLogSource, mainLogSource, defaultCategory, false, true);
         }
 
-        private static LogEntry BuildLogEntry(LogLevel logLevel, EventId eventId, string message)
+        private static LogEntryException BuildLogEntry(LogLevel logLevel, EventId eventId, string message, Exception exception = null)
         {
-            LogEntry logEntry = new()
+            LogEntryException logEntry = new()
             {
                 TimeStamp = DateTime.UtcNow,
                 Message = message,
                 Categories = [logLevel.ToString()],
-                Severity = ConvertLogLevelToTraceEventType(logLevel),
+                Severity = MapLogLevelToTraceEventType(logLevel),
                 MachineName = Environment.MachineName,
-                AppDomainName = AppDomain.CurrentDomain.FriendlyName
+                AppDomainName = AppDomain.CurrentDomain.FriendlyName,
+                LogLevel = logLevel,
+                Exception = exception
             };
 
             if (eventId != null)
@@ -107,7 +109,7 @@ namespace DotNetFramework.Core.Logging
             return logEntry;
         }
 
-        private static TraceEventType ConvertLogLevelToTraceEventType(LogLevel logLevel)
+        private static TraceEventType MapLogLevelToTraceEventType(LogLevel logLevel)
         {
             return logLevel switch
             {

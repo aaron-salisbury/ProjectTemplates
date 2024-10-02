@@ -4,7 +4,6 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 using Win98.Business;
-using Win98App.Base.Logging;
 using Win98App.Base.MVP;
 using IServiceProvider = DotNetFramework.Core.DependencyInjection.IServiceProvider;
 
@@ -32,7 +31,8 @@ namespace Win98App
             IServiceCollection services = new ServiceCollectionPNP();
 
             // Application level infrastructure.
-            InMemorySink inMemorySink = new();
+            InMemorySinkPNP inMemorySink = new();
+            //InMemorySinkPNP inMemorySink = new(formatter: new TextFormatter("{message}")); //TODO: Try this after changing logs view to use a control with columns.
             services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, inMemorySink))
                 .AddSingleton(inMemorySink) // So the logs presenter can subscribe to emit event.
                 .AddSingleton<Navigator, Navigator>()

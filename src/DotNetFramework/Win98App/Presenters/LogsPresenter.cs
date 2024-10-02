@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using Win98App.Base.Logging;
 using Win98App.Base.MVP;
 using Win98App.Views;
 using static System.Windows.Forms.Control;
@@ -14,12 +13,12 @@ namespace Win98App.Presenters
 {
     internal class LogsPresenter : Presenter
     {
-        private readonly InMemorySink _logSource;
+        private readonly InMemorySinkPNP _logSource;
         private readonly ILogger _logger;
         private List<string> _errorLogs;
         private LogsView _view;
 
-        public LogsPresenter(Navigator navigator, InMemorySink logSource, ILogger logger) : base(navigator)
+        public LogsPresenter(Navigator navigator, InMemorySinkPNP logSource, ILogger logger) : base(navigator)
         {
             _logSource = logSource;
             _logger = logger;
@@ -63,6 +62,8 @@ namespace Win98App.Presenters
 
         private void LogSource_LogEmitted(object sender, LogEmitEventArgs e)
         {
+            //TODO: Right now the logs view simply joins all the messages into one long sting,
+            //  but could use the data off of LogEmitEventArgs to build a list box or data grid.
             RefreshErrors();
         }
 
