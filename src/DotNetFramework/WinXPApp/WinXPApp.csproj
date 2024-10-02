@@ -90,6 +90,7 @@
     <Compile Include="Base\Helpers\StandardErrorProvider.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Base\Logging\InMemorySink.cs" />
     <Compile Include="Base\Logging\LoggerNLog.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>

@@ -42,7 +42,7 @@
       <HintPath>..\..\..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography">
-      <HintPath>..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\EnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Samples\DotNet2\Microsoft.Practices\EnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
