@@ -85,31 +85,54 @@ namespace DotNetFramework.Core.ComponentModel
         }
         #endregion
 
-        public virtual bool IsValid()
+        public bool IsValid()
         {
             foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(this))
             {
-                PropertyIsValid(property.Name);
+                ValidateProperty(property);
             }
 
             return !HasErrors;
         }
 
-        public virtual bool PropertyIsValid(string propertyName)
+        public bool PropertyIsValid(string propertyName)
         {
-            //TODO:
+            PropertyDescriptor propertyDescriptor = null;
+
+            if (!string.IsNullOrEmpty(propertyName))
+            {
+                foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(this))
+                {
+                    if (string.Equals(propertyName, property.Name))
+                    {
+                        propertyDescriptor = property;
+                    }
+                }
+            }
+
+            if (propertyDescriptor == null)
+            {
+                throw new ArgumentException("Property doesn't exist to validate for the name given.");
+            }
+
+            List<string> errors = ValidateProperty(propertyDescriptor);
+            SetErrorsForProperty(propertyName, errors); // This must be called to keep the errors collection correct and to trigger the ErrorsChanged event as needed.
+
+            return errors.Count == 0;
+        }
+
+        public virtual List<string> ValidateProperty(PropertyDescriptor property)
+        {
             // *** PSEUDO CODE ***
-            //List<string> newErrorsForProperty = [];
+            //List<string> errorsForProperty = [];
 
             //// Foreach validation...
             //if (false) // Property failed a validation.
             //{
-            //    newErrorsForProperty.Add("Some validation message.");
+            //    errorsForProperty.Add("Some validation message.");
             //}
 
-            //SetErrorsForProperty(propertyName, newErrorsForProperty);
-
-            //return newErrorsForProperty.Count == 0;
+            //return errorsForProperty;
 
             throw new NotImplementedException();
         }
