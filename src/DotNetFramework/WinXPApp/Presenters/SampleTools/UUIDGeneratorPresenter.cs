@@ -1,10 +1,9 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using System.Windows.Forms;
-using Win98App.Base.MVP;
-using Win98App.Views.SampleTools;
-using static System.Windows.Forms.Control;
+using WinXPApp.Base.MVP;
+using WinXPApp.Views.SampleTools;
 
-namespace Win98App.Presenters.SampleTools
+namespace WinXPApp.Presenters.SampleTools
 {
     internal class UUIDGeneratorPresenter : Presenter
     {
@@ -12,19 +11,16 @@ namespace Win98App.Presenters.SampleTools
 
         private UUIDGeneratorView _view;
 
-        public UUIDGeneratorPresenter(Navigator navigator, ISampleToolsService sampleToolsService) : base(navigator)
+        public UUIDGeneratorPresenter(ISampleToolsService sampleToolsService)
         {
             _sampleToolsService = sampleToolsService;
         }
 
-        internal override void Display(Control view, ControlCollection window)
+        internal override void Setup(UserControl view)
         {
             _view = (UUIDGeneratorView)view;
 
             _view.GenerateCommand += View_GenerateCommand;
-
-            window.Clear();
-            window.Add(_view);
         }
 
         internal override void Dismiss()

@@ -8,10 +8,14 @@ namespace DotNetFramework.Core.ComponentModel
     public abstract class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public static event PropertyChangedEventHandler StaticPropertyChanged;
 
         protected virtual void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         protected bool SetField<T>(ref T field, T newValue, string propertyName)
@@ -25,6 +29,14 @@ namespace DotNetFramework.Core.ComponentModel
             RaisePropertyChanged(propertyName);
 
             return true;
+        }
+
+        protected static void StaticRaisePropertyChanged(string propertyName)
+        {
+            if (StaticPropertyChanged != null)
+            {
+                StaticPropertyChanged.Invoke(null, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

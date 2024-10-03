@@ -1,11 +1,10 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using System.Linq;
 using System.Windows.Forms;
-using Win98App.Base.MVP;
-using Win98App.Views.SampleTools;
-using static System.Windows.Forms.Control;
+using WinXPApp.Base.MVP;
+using WinXPApp.Views.SampleTools;
 
-namespace Win98App.Presenters.SampleTools
+namespace WinXPApp.Presenters.SampleTools
 {
     internal class FlatUIColorPickerPresenter : Presenter
     {
@@ -13,19 +12,16 @@ namespace Win98App.Presenters.SampleTools
 
         private FlatUIColorPickerView _view;
 
-        public FlatUIColorPickerPresenter(Navigator navigator, ISampleToolsService sampleToolsService) : base(navigator)
+        public FlatUIColorPickerPresenter(ISampleToolsService sampleToolsService)
         {
             _sampleToolsService = sampleToolsService;
         }
 
-        internal override void Display(Control view, ControlCollection window)
+        internal override void Setup(UserControl view)
         {
             _view = (FlatUIColorPickerView)view;
 
             _view.Initialize(_sampleToolsService.GetFlatColors().ToList());
-
-            window.Clear();
-            window.Add(_view);
         }
     }
 }

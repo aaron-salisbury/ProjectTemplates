@@ -5,12 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Win98App.Base.Helpers;
-using Win98App.Base.MVP;
-using Win98App.Views.SampleTools;
-using static System.Windows.Forms.Control;
+using WinXPApp.Base.Helpers;
+using WinXPApp.Base.MVP;
+using WinXPApp.Views.SampleTools;
 
-namespace Win98App.Presenters.SampleTools
+namespace WinXPApp.Presenters.SampleTools
 {
     internal class LineSorterPresenter : Presenter
     {
@@ -20,7 +19,7 @@ namespace Win98App.Presenters.SampleTools
 
         private LineSorterView _view;
 
-        public LineSorterPresenter(Navigator navigator, ISampleToolsService sampleToolsService) : base(navigator)
+        public LineSorterPresenter(ISampleToolsService sampleToolsService)
         {
             _sampleToolsService = sampleToolsService;
             _sortTypes = Enum.GetValues(typeof(LineSorter.SortTypes)).Cast<LineSorter.SortTypes>().ToList();
@@ -36,16 +35,13 @@ namespace Win98App.Presenters.SampleTools
             }
         }
 
-        internal override void Display(Control view, ControlCollection window)
+        internal override void Setup(UserControl view)
         {
             _view = (LineSorterView)view;
 
             _view.Initialize(_sortTypeItems);
 
             _view.SortCommand += View_SortCommand;
-
-            window.Clear();
-            window.Add(_view);
         }
 
         internal override void Dismiss()

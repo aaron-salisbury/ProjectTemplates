@@ -1,9 +1,9 @@
-﻿using DotNetFramework.Core.DependencyInjection;
+﻿using DotNetFramework.Business;
+using DotNetFramework.Core.DependencyInjection;
 using DotNetFramework.Core.Logging;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using Win98.Business;
 using Win98App.Base.MVP;
 using IServiceProvider = DotNetFramework.Core.DependencyInjection.IServiceProvider;
 

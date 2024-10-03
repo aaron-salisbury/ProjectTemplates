@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Win98App.Views.SampleTools
+namespace WinXPApp.Views.SampleTools
 {
-    public partial class FlatUIColorPickerView : UserControl
+    public partial class FlatUIColorPickerView : Base.MVP.View
     {
         private List<FlatColorDto> _flatColors;
 

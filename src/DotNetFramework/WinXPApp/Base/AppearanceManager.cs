@@ -1,10 +1,10 @@
-﻿using MetroFramework;
+﻿using DotNetFramework.Core.ComponentModel;
+using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Drawing;
 using System;
 using System.Drawing;
 using WinXPApp.Forms;
-using WinXPCore.Base;
 
 namespace WinXPApp.Base
 {

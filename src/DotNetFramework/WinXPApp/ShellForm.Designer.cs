@@ -32,11 +32,11 @@ namespace WinXPApp
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
             this.mainTabControl = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
-            this.introductionUC1 = new WinXPApp.Forms.IntroductionUC();
+            this.homeView = new WinXPApp.Views.HomeView();
             this.ToolsTabPage = new MetroFramework.Controls.MetroTabPage();
-            this.toolsNavigatorUC1 = new WinXPApp.Forms.SampleTools.ToolsNavigatorUC();
+            this.toolsNavigatorView = new WinXPApp.Views.SampleTools.ToolsNavigatorView();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
-            this.logUC1 = new WinXPApp.Forms.LogUC();
+            this.logsView = new WinXPApp.Views.LogsView();
             this.settingsLink = new MetroFramework.Controls.MetroLink();
             this.helpLink = new MetroFramework.Controls.MetroLink();
             this.panelSettingsHelp = new System.Windows.Forms.Panel();
@@ -67,7 +67,7 @@ namespace WinXPApp
             // 
             // metroTabPage1
             // 
-            this.metroTabPage1.Controls.Add(this.introductionUC1);
+            this.metroTabPage1.Controls.Add(this.homeView);
             this.metroTabPage1.HorizontalScrollbarBarColor = true;
             this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage1.HorizontalScrollbarSize = 10;
@@ -83,15 +83,15 @@ namespace WinXPApp
             // 
             // introductionUC1
             // 
-            this.introductionUC1.BackColor = System.Drawing.Color.Transparent;
-            this.introductionUC1.Location = new System.Drawing.Point(7, 25);
-            this.introductionUC1.Name = "introductionUC1";
-            this.introductionUC1.Size = new System.Drawing.Size(876, 457);
-            this.introductionUC1.TabIndex = 2;
+            this.homeView.BackColor = System.Drawing.Color.Transparent;
+            this.homeView.Location = new System.Drawing.Point(7, 25);
+            this.homeView.Name = "introductionUC1";
+            this.homeView.Size = new System.Drawing.Size(876, 457);
+            this.homeView.TabIndex = 2;
             // 
             // ToolsTabPage
             // 
-            this.ToolsTabPage.Controls.Add(this.toolsNavigatorUC1);
+            this.ToolsTabPage.Controls.Add(this.toolsNavigatorView);
             this.ToolsTabPage.HorizontalScrollbarBarColor = true;
             this.ToolsTabPage.HorizontalScrollbarHighlightOnWheel = false;
             this.ToolsTabPage.HorizontalScrollbarSize = 10;
@@ -107,16 +107,16 @@ namespace WinXPApp
             // 
             // toolsNavigatorUC1
             // 
-            this.toolsNavigatorUC1.BackColor = System.Drawing.Color.Transparent;
-            this.toolsNavigatorUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolsNavigatorUC1.Location = new System.Drawing.Point(3, 3);
-            this.toolsNavigatorUC1.Name = "toolsNavigatorUC1";
-            this.toolsNavigatorUC1.Size = new System.Drawing.Size(883, 482);
-            this.toolsNavigatorUC1.TabIndex = 2;
+            this.toolsNavigatorView.BackColor = System.Drawing.Color.Transparent;
+            this.toolsNavigatorView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolsNavigatorView.Location = new System.Drawing.Point(3, 3);
+            this.toolsNavigatorView.Name = "toolsNavigatorUC1";
+            this.toolsNavigatorView.Size = new System.Drawing.Size(883, 482);
+            this.toolsNavigatorView.TabIndex = 2;
             // 
             // metroTabPage3
             // 
-            this.metroTabPage3.Controls.Add(this.logUC1);
+            this.metroTabPage3.Controls.Add(this.logsView);
             this.metroTabPage3.HorizontalScrollbarBarColor = true;
             this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage3.HorizontalScrollbarSize = 10;
@@ -132,18 +132,18 @@ namespace WinXPApp
             // 
             // logUC1
             // 
-            this.logUC1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.logsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.logUC1.BackColor = System.Drawing.Color.Transparent;
-            this.logUC1.Location = new System.Drawing.Point(22, 10);
-            this.logUC1.Name = "logUC1";
-            this.logUC1.Size = new System.Drawing.Size(848, 479);
-            this.logUC1.TabIndex = 2;
+            this.logsView.BackColor = System.Drawing.Color.Transparent;
+            this.logsView.Location = new System.Drawing.Point(22, 10);
+            this.logsView.Name = "logUC1";
+            this.logsView.Size = new System.Drawing.Size(848, 479);
+            this.logsView.TabIndex = 2;
             // 
             // settingsLink
             // 
-            this.settingsLink.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.settingsLink.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.settingsLink.Location = new System.Drawing.Point(11, 0);
             this.settingsLink.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
@@ -217,9 +217,9 @@ namespace WinXPApp
         private MetroFramework.Controls.MetroLink settingsLink;
         private System.Windows.Forms.Panel panelSettingsHelp;
         private System.Windows.Forms.Panel panel1;
-        private Forms.IntroductionUC introductionUC1;
-        private Forms.LogUC logUC1;
-        private Forms.SampleTools.ToolsNavigatorUC toolsNavigatorUC1;
+        private Views.HomeView homeView;
+        private Views.LogsView logsView;
+        private Views.SampleTools.ToolsNavigatorView toolsNavigatorView;
     }
 }
 

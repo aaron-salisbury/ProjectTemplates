@@ -142,13 +142,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DotNetFramework.Business\DotNetFramework.Business.csproj">
+      <Project>{6a320f96-9bd5-4736-9170-4298add3a469}</Project>
+      <Name>DotNetFramework.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetFramework.Core\DotNetFramework.Core.csproj">
       <Project>{0ff808b4-b3a9-4057-bc1a-ae3c489c6486}</Project>
       <Name>DotNetFramework.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Win98.Business\Win98.Business.csproj">
-      <Project>{720c5a42-c306-4451-912d-824f0312e774}</Project>
-      <Name>Win98.Business</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

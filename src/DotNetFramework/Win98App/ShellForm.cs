@@ -10,8 +10,6 @@ namespace Win98App
 {
     public partial class ShellForm : Form
     {
-        public static ILogger Logger;
-
         private readonly Padding _defaultContentAreaPadding = new(15);
         private readonly Navigator _navigator;
 
