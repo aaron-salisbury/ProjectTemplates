@@ -1,60 +1,70 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
+using DotNetFramework.Business.Modules.Sample.DomainServices;
+using DotNetFramework.Core.ExtensionHelpers;
+using FirstFloor.ModernUI.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Win7App.Base;
-using Win7Core.Base.Extensions;
-using Win7Core.SampleTools;
+using Win7App.Base.Services;
 
 namespace Win7App.ViewModels.SampleTools
 {
     public class LineSorterViewModel : BaseViewModel
     {
-        public LineSorter LineSorter { get; set; }
+        public RelayCommand ExecuteTaskCommand { get; }
 
-        private readonly RelayCommand _executeTaskCommand;
-        public RelayCommand ExecuteTaskCommand
+        private List<ComboBoxEnumItem> _sortTypeItems;
+        public List<ComboBoxEnumItem> SortTypeItems
         {
-            get { return _executeTaskCommand; }
-        }
-
-        private List<ComboBoxEnumItem> _sortTypes;
-        public List<ComboBoxEnumItem> SortTypes
-        {
-            get { return _sortTypes; }
+            get { return _sortTypeItems; }
             set
             {
-                _sortTypes = value;
-                RaisePropertyChanged("SortTypes");
+                _sortTypeItems = value;
+                RaisePropertyChanged(nameof(SortTypeItems));
             }
         }
 
-        private ComboBoxEnumItem _selectedSortType;
-        public ComboBoxEnumItem SelectedSortType
+        private int _selectedSortTypeIndex;
+        public int SelectedSortTypeIndex
         {
-            get { return _selectedSortType; }
-            set
-            {
-                _selectedSortType = value;
-                RaisePropertyChanged("SelectedSortType");
-                LineSorter.SelectedSortType = (LineSorter.SortTypes)value.Value;
-            }
+            get => _selectedSortTypeIndex;
+            set => SetField(ref _selectedSortTypeIndex, value, nameof(SelectedSortTypeIndex));
         }
 
-        public LineSorterViewModel()
+        string _text;
+        public string Text
         {
-            LineSorter = new LineSorter(AppLogger);
+            get => _text;
+            set => SetField(ref _text, value, nameof(Text));
+        }
 
-            _executeTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(LineSorter.Initiate, ExecuteTaskCommand), () => !IsBusy);
+        private readonly ISampleToolsService _sampleToolsService;
+        private readonly List<LineSorter.SortTypes> _sortTypes;
 
-            SortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
+        public LineSorterViewModel(ISampleToolsService sampleToolsService, IAgnosticDispatcher dispatcher)
+        {
+            _sampleToolsService = sampleToolsService;
+            ExecuteTaskCommand = new RelayCommand(async (object o) => await InitiateLongRunningProcessAsync(Sort, dispatcher), (object o) => !IsBusy);
+            
+            _sortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()
-                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = st.GetDisplayName() })
                 .ToList();
 
-            SelectedSortType = SortTypes
-                .Where(cbi => cbi.Value == (int)LineSorter.SelectedSortType)
-                .First();
+            _sortTypeItems = _sortTypes
+                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = StringExtensions.SplitPascalCase(st.ToString()) })
+                .ToList();
+
+            _selectedSortTypeIndex = 0;
+        }
+
+        private bool Sort()
+        {
+            string sortedText = _sampleToolsService.InitializeLineSorting(_sortTypes[SelectedSortTypeIndex], Text);
+
+            Text = sortedText;
+
+            return sortedText != null;
         }
     }
 }

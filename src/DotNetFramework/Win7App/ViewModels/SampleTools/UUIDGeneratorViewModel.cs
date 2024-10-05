@@ -1,30 +1,46 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
+using FirstFloor.ModernUI.Presentation;
 using System.Windows;
-using Win7Core.SampleTools;
+using Win7App.Base;
 
 namespace Win7App.ViewModels.SampleTools
 {
     public class UUIDGeneratorViewModel : BaseViewModel
     {
-        public UUIDGenerator UUIDGenerator { get; set; }
+        public RelayCommand ExecuteTaskCommand { get; }
+        public RelayCommand CopyUUIDCommand { get; }
 
-        private readonly RelayCommand _executeTaskCommand;
-        public RelayCommand ExecuteTaskCommand
+        bool _shouldCapitalize;
+        public bool ShouldCapitalize
         {
-            get { return _executeTaskCommand; }
+            get => _shouldCapitalize;
+            set => SetField(ref _shouldCapitalize, value, nameof(ShouldCapitalize));
         }
 
-        private readonly RelayCommand _copyUUIDCommand;
-        public RelayCommand CopyUUIDCommand
+        string _uUID;
+        public string UUID
         {
-            get { return _copyUUIDCommand; }
+            get => _uUID;
+            set => SetField(ref _uUID, value, nameof(UUID));
         }
 
-        public UUIDGeneratorViewModel()
+        private readonly ISampleToolsService _sampleToolsService;
+
+        public UUIDGeneratorViewModel(ISampleToolsService sampleToolsService)
         {
-            UUIDGenerator = new UUIDGenerator(AppLogger);
-            _copyUUIDCommand = new RelayCommand(() => Clipboard.SetText(UUIDGenerator.UUID ?? string.Empty));
-            _executeTaskCommand = new RelayCommand(async () => await InitiateProcessAsync(UUIDGenerator.Initiate, ExecuteTaskCommand), () => !IsBusy);
+            _sampleToolsService = sampleToolsService;
+
+            CopyUUIDCommand = new RelayCommand((object o) => Clipboard.SetText(UUID ?? string.Empty));
+            ExecuteTaskCommand = new RelayCommand((object o) => Generate());
+        }
+
+        private bool Generate()
+        {
+            string generatedUUID = _sampleToolsService.InitializeGUIDGeneration(ShouldCapitalize);
+
+            UUID = generatedUUID;
+
+            return generatedUUID != null;
         }
     }
 }

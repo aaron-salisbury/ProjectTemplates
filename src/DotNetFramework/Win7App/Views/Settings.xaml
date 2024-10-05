@@ -10,9 +10,9 @@
 			 d:DesignWidth="550">
 
     <Grid Style="{StaticResource ContentRoot}">
-        <mui:ModernTab SelectedSource="/Views/SettingsAppearance.xaml" Layout="List">
+        <mui:ModernTab SelectedSource="/Views/SettingsAppearanceView.xaml" Layout="List">
             <mui:ModernTab.Links>
-                <mui:Link DisplayName="Appearance" Source="/Views/SettingsAppearance.xaml" />
+                <mui:Link DisplayName="Appearance" Source="/Views/SettingsAppearanceView.xaml" />
             </mui:ModernTab.Links>
         </mui:ModernTab>
     </Grid>

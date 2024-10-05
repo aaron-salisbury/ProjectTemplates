@@ -53,6 +53,12 @@
       <HintPath>..\packages\MvvmLightLibsStd10.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -72,44 +78,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Base\BaseViewModel.cs" />
     <Compile Include="Base\ComboBoxEnumItem.cs" />
     <Compile Include="Base\Extensions\AppearanceManagerExtensions.cs" />
-    <Compile Include="Base\LoadedEvent\DelegateLoadedAction.cs" />
-    <Compile Include="Base\LoadedEvent\ILoadedAction.cs" />
-    <Compile Include="Base\LoadedEvent\LoadedBindings.cs" />
+    <Compile Include="Base\Extensions\UserControlExtensions.cs" />
     <Compile Include="Base\NavigationMessage.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\IntroductionViewModel.cs" />
-    <Compile Include="ViewModels\LogViewModel.cs" />
+    <Compile Include="Base\Services\UILayer\Dispatcher\WPFDispatcher.cs" />
+    <Compile Include="Base\Services\UILayer\Dispatcher\IAgnosticDispatcher.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\LogsViewModel.cs" />
     <Compile Include="ViewModels\SampleTools\FlatUIColorPickerViewModel.cs" />
     <Compile Include="ViewModels\SampleTools\LineSorterViewModel.cs" />
     <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
     <Compile Include="ViewModels\ShellWindowViewModel.cs" />
     <Compile Include="ViewModels\SampleTools\UUIDGeneratorViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\Introduction.xaml.cs">
-      <DependentUpon>Introduction.xaml</DependentUpon>
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Log.xaml.cs">
-      <DependentUpon>Log.xaml</DependentUpon>
+    <Compile Include="Views\LogsView.xaml.cs">
+      <DependentUpon>LogsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PopUpWindow.xaml.cs">
       <DependentUpon>PopUpWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SampleTools\LineSorter.xaml.cs">
-      <DependentUpon>LineSorter.xaml</DependentUpon>
+    <Compile Include="Views\SampleTools\LineSorterView.xaml.cs">
+      <DependentUpon>LineSorterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SampleTools\FlatUIColorPicker.xaml.cs">
-      <DependentUpon>FlatUIColorPicker.xaml</DependentUpon>
+    <Compile Include="Views\SampleTools\FlatUIColorPickerView.xaml.cs">
+      <DependentUpon>FlatUIColorPickerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SampleTools\UUIDGenerator.xaml.cs">
-      <DependentUpon>UUIDGenerator.xaml</DependentUpon>
+    <Compile Include="Views\SampleTools\UUIDGeneratorView.xaml.cs">
+      <DependentUpon>UUIDGeneratorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsAppearance.xaml.cs">
-      <DependentUpon>SettingsAppearance.xaml</DependentUpon>
+    <Compile Include="Views\SettingsAppearanceView.xaml.cs">
+      <DependentUpon>SettingsAppearanceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SuccessModal.xaml.cs">
       <DependentUpon>SuccessModal.xaml</DependentUpon>
@@ -130,11 +135,11 @@
       <DependentUpon>ShellWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Introduction.xaml">
+    <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Log.xaml">
+    <Page Include="Views\LogsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,15 +147,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SampleTools\LineSorter.xaml">
+    <Page Include="Views\SampleTools\LineSorterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SampleTools\FlatUIColorPicker.xaml">
+    <Page Include="Views\SampleTools\FlatUIColorPickerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SampleTools\UUIDGenerator.xaml">
+    <Page Include="Views\SampleTools\UUIDGeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,7 +163,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsAppearance.xaml">
+    <Page Include="Views\SettingsAppearanceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,9 +198,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Win7Core\Win7Core.csproj">
-      <Project>{bebcbf6c-fa12-429d-add3-d0bdfc63654b}</Project>
-      <Name>Win7Core</Name>
+    <ProjectReference Include="..\DotNetFramework.Business\DotNetFramework.Business.csproj">
+      <Project>{6a320f96-9bd5-4736-9170-4298add3a469}</Project>
+      <Name>DotNetFramework.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetFramework.Core\DotNetFramework.Core.csproj">
+      <Project>{0ff808b4-b3a9-4057-bc1a-ae3c489c6486}</Project>
+      <Name>DotNetFramework.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

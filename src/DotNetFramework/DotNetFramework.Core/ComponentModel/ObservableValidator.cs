@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace DotNetFramework.Core.ComponentModel
 {
@@ -19,6 +18,13 @@ namespace DotNetFramework.Core.ComponentModel
         {
             PropertyIsValid(propertyName);
             base.RaisePropertyChanged(propertyName);
+        }
+
+        public List<string> GetErrorsForProperty(string propertyName)
+        {
+            return ErrorsByPropertyNames.ContainsKey(propertyName)
+                ? ErrorsByPropertyNames[propertyName]
+                : [];
         }
 
         protected void SetErrorsForProperty(string propertyName, List<string> errors)
@@ -39,17 +45,44 @@ namespace DotNetFramework.Core.ComponentModel
                 }
             }
 
-            if (ErrorsChanged != null && startingErrorsForProperty.SequenceEqual(errors))
+            if (!ErrorsHaventChanged(startingErrorsForProperty, errors, null))
             {
-                ErrorsChanged.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+                OnErrorsChanged(this, propertyName);
             }
         }
 
-        public List<string> GetErrorsForProperty(string propertyName)
+        private static bool ErrorsHaventChanged(IEnumerable<string> first, IEnumerable<string> second, IEqualityComparer<string> comparer)
         {
-            return ErrorsByPropertyNames.ContainsKey(propertyName)
-                ? ErrorsByPropertyNames[propertyName]
-                : [];
+            comparer ??= EqualityComparer<string>.Default;
+
+            using (IEnumerator<string> enumerator = first.GetEnumerator())
+            {
+                using IEnumerator<string> enumerator2 = second.GetEnumerator();
+                do
+                {
+                    if (!enumerator.MoveNext())
+                    {
+                        return !enumerator2.MoveNext();
+                    }
+
+                    if (!enumerator2.MoveNext())
+                    {
+                        return false;
+                    }
+                }
+                while (comparer.Equals(enumerator.Current, enumerator2.Current));
+            }
+
+            return false;
+        }
+
+        // So classes that derive from this and want to implement System.ComponentModel.INotifyDataErrorInfo can wire the ErrorsChanged events together.
+        protected virtual void OnErrorsChanged(object sender, string propertyName)
+        {
+            if (ErrorsChangedCore != null)
+            {
+                ErrorsChangedCore.Invoke(sender, new DataErrorsChangedEventArgs(propertyName));
+            }
         }
 
         #region IDataErrorInfo Members
@@ -68,7 +101,7 @@ namespace DotNetFramework.Core.ComponentModel
                 }
                 else if (EntityLevelErrors.Count == 1)
                 {
-                    return EntityLevelErrors.First();
+                    return EntityLevelErrors[0];
                 }
 
                 return string.Join(Environment.NewLine, [.. EntityLevelErrors]);
@@ -86,7 +119,7 @@ namespace DotNetFramework.Core.ComponentModel
         #endregion
 
         #region INotifyDataErrorInfo Members
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChangedCore;
 
         public IEnumerable GetErrors(string propertyName)
         {
@@ -95,7 +128,7 @@ namespace DotNetFramework.Core.ComponentModel
 
         public bool HasErrors
         {
-            get { return ErrorsByPropertyNames.Any(kv => kv.Value != null && kv.Value.Count > 0); }
+            get { return ErrorsByPropertyNames.Values.Count > 0; }
         }
         #endregion
 

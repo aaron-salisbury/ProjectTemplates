@@ -10,7 +10,7 @@
     <RootNamespace>Win98.Data</RootNamespace>
     <AssemblyName>Win98.Data</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-	<LangVersion>latest</LangVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>

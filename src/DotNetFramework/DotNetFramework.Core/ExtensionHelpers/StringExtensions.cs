@@ -1,14 +1,14 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DotNetFramework.Core.Extensions
+namespace DotNetFramework.Core.ExtensionHelpers
 {
     public static class StringExtensions
     {
         /// <summary>
         /// Convert to byte array.
         /// </summary>
-        public static byte[] ToBytes(this string str)
+        public static byte[] ToBytes(string str)
         {
             return Encoding.ASCII.GetBytes(str);
         }
@@ -16,7 +16,7 @@ namespace DotNetFramework.Core.Extensions
         /// <summary>
         /// Split a PascalCase string into separate words.
         /// </summary>
-        public static string SplitPascalCase(this string str)
+        public static string SplitPascalCase(string str)
         {
             // ref: https://stackoverflow.com/a/3216204
 
@@ -26,7 +26,7 @@ namespace DotNetFramework.Core.Extensions
         /// <summary>
         /// Return first word within a string.
         /// </summary>
-        public static string GetFirstWord(this string str)
+        public static string GetFirstWord(string str)
         {
             // ref: https://stackoverflow.com/a/3607316
 
@@ -35,7 +35,7 @@ namespace DotNetFramework.Core.Extensions
                 return str;
             }
 
-            str = str.SplitPascalCase();
+            str = SplitPascalCase(str);
 
             return str.IndexOf(" ") > -1 ? str.Substring(0, str.IndexOf(" ")) : str;
         }

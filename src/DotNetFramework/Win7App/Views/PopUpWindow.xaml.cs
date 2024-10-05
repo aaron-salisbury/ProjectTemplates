@@ -7,9 +7,6 @@ using Win7App.Base;
 
 namespace Win7App.Views
 {
-    /// <summary>
-    /// Interaction logic for PopUpWindow.xaml
-    /// </summary>
     public partial class PopUpWindow : ModernWindow
     {
         public PopUpWindow()
@@ -21,7 +18,7 @@ namespace Win7App.Views
         // ModernWindows have their own built in navigation, but this should let pop ups bypass that since we wouldn't want main menus, etc.
         private void RegisterNavigation()
         {
-            // www.c-sharpcorner.com/UploadFile/3789b7/modern-ui-for-wpf-application-by-example-navigationmessages/
+            // ref: www.c-sharpcorner.com/UploadFile/3789b7/modern-ui-for-wpf-application-by-example-navigationmessages/
 
             Messenger.Default.Register<NavigationMessage>(this, p =>
             {

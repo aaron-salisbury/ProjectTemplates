@@ -7,7 +7,7 @@ namespace DotNetFramework.Core.ComponentModel
     {
         bool HasErrors { get; }
 
-        event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        event EventHandler<DataErrorsChangedEventArgs> ErrorsChangedCore;
 
         IEnumerable GetErrors(string propertyName);
     }

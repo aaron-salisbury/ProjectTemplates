@@ -4,12 +4,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:vm="clr-namespace:Win7App.ViewModels"
-             StartupUri="ShellWindow.xaml">
+             StartupUri="ShellWindow.xaml"
+             Startup="Application_Startup"
+             Exit="Application_Exit">
     
     <Application.Resources>
         <ResourceDictionary>
-            <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/FirstFloor.ModernUI;component/Assets/ModernUI.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/FirstFloor.ModernUI;component/Assets/ModernUI.Light.xaml"/>

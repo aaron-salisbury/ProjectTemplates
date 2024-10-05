@@ -1,5 +1,5 @@
 ﻿using DotNetFramework.Core;
-using DotNetFramework.Core.Extensions;
+using DotNetFramework.Core.ExtensionHelpers;
 using DotNetFramework.Core.Logging;
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,7 @@ namespace WinXPApp.Presenters
         {
             string appDirectoryPath = IO.GetAppDirectoryPath();
             string logsPath = Path.Combine(appDirectoryPath, "Logs");
-            string fileName = $"Logs_{DateTime.Now.ToTimeStamp()}.txt";
+            string fileName = $"Logs_{DateTimeExtensions.ToTimeStamp(DateTime.Now)}.txt";
 
             if (IO.WriteFile(_logger, _errorLogs, fileName, logsPath))
             {

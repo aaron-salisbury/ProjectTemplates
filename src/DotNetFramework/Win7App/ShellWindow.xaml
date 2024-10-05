@@ -9,27 +9,26 @@
         Height="607" MinWidth="937"
         WindowStartupLocation="CenterScreen"
         Icon="/Base/Resources/SampleAppIcon.ico"
-        ContentSource="/Views/Introduction.xaml"
-        DataContext="{Binding ShellWindowViewModel, Source={StaticResource Locator}}"
+        ContentSource="/Views/HomeView.xaml"
         Title="{Binding Title}" IsTitleVisible="True"
         TitleLinks="{Binding TitleLinks}">
 
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Welcome">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Introduction" Source="/Views/Introduction.xaml" />
+                <mui:Link DisplayName="Introduction" Source="/Views/HomeView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Tools">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="UUID Generator" Source="/Views/SampleTools/UUIDGenerator.xaml" />
-                <mui:Link DisplayName="Flat UI Color Picker" Source="/Views/SampleTools/FlatUIColorPicker.xaml" />
-                <mui:Link DisplayName="Line Sorter" Source="/Views/SampleTools/LineSorter.xaml" />
+                <mui:Link DisplayName="UUID Generator" Source="/Views/SampleTools/UUIDGeneratorView.xaml" />
+                <mui:Link DisplayName="Flat UI Color Picker" Source="/Views/SampleTools/FlatUIColorPickerView.xaml" />
+                <mui:Link DisplayName="Line Sorter" Source="/Views/SampleTools/LineSorterView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Log">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Messages" Source="/Views/Log.xaml" />
+                <mui:Link DisplayName="Messages" Source="/Views/LogsView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Settings" GroupKey="settings">

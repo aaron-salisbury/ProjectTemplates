@@ -1,16 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Win7App.Base.Extensions;
 
 namespace Win7App.Views.SampleTools
 {
-    /// <summary>
-    /// Interaction logic for LineSorter.xaml
-    /// </summary>
-    public partial class LineSorter : UserControl
+    public partial class LineSorterView : UserControl
     {
-        public LineSorter()
+        public LineSorterView()
         {
             InitializeComponent();
+            this.SetDataContext((System.Windows.Application.Current as App)?.Services);
         }
 
         private async void SelectAll_Click(object sender, RoutedEventArgs e)

@@ -1,17 +1,14 @@
-﻿using FirstFloor.ModernUI.Presentation;
-using GalaSoft.MvvmLight;
-using Win7Core.Base;
-using Win7App.Properties;
+﻿using DotNetFramework.Core.ComponentModel;
+using FirstFloor.ModernUI.Presentation;
 using System;
 using System.ComponentModel;
+using Win7App.Properties;
 
 namespace Win7App.ViewModels
 {
-    public class ShellWindowViewModel : ViewModelBase
+    public class ShellWindowViewModel : ObservableObject
     {
         private static readonly Link _settingsUri = new Link { DisplayName = "Settings", Source = new Uri("/Views/Settings.xaml", UriKind.Relative) };
-
-        public AppLogger AppLogger { get; set; }
 
         private string _helpURL;
         public string HelpURL
@@ -19,7 +16,7 @@ namespace Win7App.ViewModels
             get { return _helpURL; }
             set
             {
-                Set(ref _helpURL, value);
+                SetField(ref _helpURL, value, nameof(HelpURL));
                 HelpUri = new Link { DisplayName = "Help", Source = new Uri(HelpURL, UriKind.Absolute) };
             }
         }
@@ -30,7 +27,7 @@ namespace Win7App.ViewModels
             get { return _helpUri; }
             set
             {
-                Set(ref _helpUri, value);
+                SetField(ref _helpUri, value, nameof(HelpUri));
                 TitleLinks = new LinkCollection { _settingsUri, HelpUri };
             }
         }
@@ -39,7 +36,7 @@ namespace Win7App.ViewModels
         public LinkCollection TitleLinks
         {
             get { return _titleLinks; }
-            set { Set(ref _titleLinks, value); }
+            set { SetField(ref _titleLinks, value, nameof(TitleLinks)); }
         }
 
         public string Title
@@ -49,8 +46,6 @@ namespace Win7App.ViewModels
 
         public ShellWindowViewModel()
         {
-            AppLogger = new AppLogger();
-
             HelpURL = Properties.Settings.Default.DefaultHelpURL;
 
             System.Windows.Application.Current.MainWindow.Closing += new CancelEventHandler(ShellWindow_Closing);

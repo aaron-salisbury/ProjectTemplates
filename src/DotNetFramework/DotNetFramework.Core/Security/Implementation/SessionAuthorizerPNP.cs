@@ -1,4 +1,4 @@
-﻿using DotNetFramework.Core.Extensions;
+﻿using DotNetFramework.Core.ExtensionHelpers;
 using Microsoft.Practices.EnterpriseLibrary.Security.Cryptography;
 using System.Security.Cryptography;
 
@@ -21,7 +21,7 @@ namespace DotNetFramework.Core.Security
 
         public bool Login(SessionCredential credential, string password)
         {
-            return CompareHash(password.ToBytes(), credential.Hash, credential.Salt, credential.WorkFactor);
+            return CompareHash(StringExtensions.ToBytes(password), credential.Hash, credential.Salt, credential.WorkFactor);
         }
 
         public SessionCredential Register(string password)
@@ -31,7 +31,7 @@ namespace DotNetFramework.Core.Security
             return new SessionCredential()
             {
                 Salt = salt,
-                Hash = CreateHash(password.ToBytes(), salt, _workFactor),
+                Hash = CreateHash(StringExtensions.ToBytes(password), salt, _workFactor),
                 WorkFactor = _workFactor
             };
         }

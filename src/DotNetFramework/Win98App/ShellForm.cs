@@ -1,5 +1,4 @@
-﻿using DotNetFramework.Core.Logging;
-using System;
+﻿using System;
 using System.Windows.Forms;
 using Win98App.Base.MVP;
 using Win98App.Forms;

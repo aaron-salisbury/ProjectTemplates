@@ -1,8 +1,8 @@
 ﻿using DotNetFramework.Business.Modules.Sample.DTOs;
 using DotNetFramework.Core.Logging;
 using DotNetFramework.Data;
+using DotNetFramework.Data.Entities;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DotNetFramework.Business.Modules.Sample.DomainServices
 {
@@ -17,8 +17,14 @@ namespace DotNetFramework.Business.Modules.Sample.DomainServices
 
         public IEnumerable<FlatColorDto> GetFlatColors()
         {
-            return EmbeddedDataAccess.ReadFlatColors(_logger)
-                .Select(entity => FlatColorDto.MapToDto(entity));
+            List<FlatColorDto> flatColors = [];
+
+            foreach (FlatColor colorEntity in EmbeddedDataAccess.ReadFlatColors(_logger))
+            {
+                flatColors.Add(FlatColorDto.MapToDto(colorEntity));
+            }
+
+            return flatColors;
         }
     }
 }
