@@ -74,7 +74,6 @@
     <Compile Include="Base\Extensions\AppearanceManagerExtensions.cs" />
     <Compile Include="Base\Extensions\UserControlExtensions.cs" />
     <Compile Include="Base\MvvmInput\RelayCommand.cs" />
-    <Compile Include="Base\NavigationMessage.cs" />
     <Compile Include="Base\MvvmInput\RelayCommand%28T%29.cs" />
     <Compile Include="Base\Services\UILayer\Dispatcher\WPFDispatcher.cs" />
     <Compile Include="Base\Services\UILayer\Dispatcher\IAgnosticDispatcher.cs" />
