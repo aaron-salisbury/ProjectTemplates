@@ -1,11 +1,11 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using DotNetFramework.Business.Modules.Sample.DomainServices;
 using DotNetFramework.Core.ExtensionHelpers;
-using FirstFloor.ModernUI.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Win7App.Base;
+using Win7App.Base.MvvmInput;
 using Win7App.Base.Services;
 
 namespace Win7App.ViewModels.SampleTools
@@ -45,7 +45,7 @@ namespace Win7App.ViewModels.SampleTools
         public LineSorterViewModel(ISampleToolsService sampleToolsService, IAgnosticDispatcher dispatcher)
         {
             _sampleToolsService = sampleToolsService;
-            ExecuteTaskCommand = new RelayCommand(async (object o) => await InitiateLongRunningProcessAsync(Sort, dispatcher), (object o) => !IsBusy);
+            ExecuteTaskCommand = new RelayCommand(async () => await InitiateLongRunningProcessAsync(Sort, dispatcher), () => !IsBusy);
             
             _sortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
                 .Cast<LineSorter.SortTypes>()

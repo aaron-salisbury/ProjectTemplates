@@ -1,7 +1,6 @@
 ﻿using DotNetFramework.Core.ComponentModel;
 using FirstFloor.ModernUI.Presentation;
 using System;
-using System.ComponentModel;
 using Win7App.Properties;
 
 namespace Win7App.ViewModels
@@ -28,11 +27,11 @@ namespace Win7App.ViewModels
             set
             {
                 SetField(ref _helpUri, value, nameof(HelpUri));
-                TitleLinks = new LinkCollection { _settingsUri, HelpUri };
+                TitleLinks = [_settingsUri, HelpUri];
             }
         }
 
-        private LinkCollection _titleLinks = new LinkCollection();
+        private LinkCollection _titleLinks = [];
         public LinkCollection TitleLinks
         {
             get { return _titleLinks; }
@@ -47,13 +46,6 @@ namespace Win7App.ViewModels
         public ShellWindowViewModel()
         {
             HelpURL = Properties.Settings.Default.DefaultHelpURL;
-
-            System.Windows.Application.Current.MainWindow.Closing += new CancelEventHandler(ShellWindow_Closing);
-        }
-
-        void ShellWindow_Closing(object sender, CancelEventArgs e)
-        {
-            GalaSoft.MvvmLight.Threading.DispatcherHelper.Reset();
         }
     }
 }

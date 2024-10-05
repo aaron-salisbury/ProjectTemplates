@@ -1,10 +1,10 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using DotNetFramework.Business.Modules.Sample.DTOs;
-using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Win7App.Base;
+using Win7App.Base.MvvmInput;
 
 namespace Win7App.ViewModels.SampleTools
 {

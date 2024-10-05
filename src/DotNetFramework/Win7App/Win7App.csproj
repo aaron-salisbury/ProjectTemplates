@@ -46,12 +46,6 @@
     <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
       <HintPath>..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=0ffbc31322e9d308, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibsStd10.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibsStd10.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -61,9 +55,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibsStd10.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -82,7 +73,9 @@
     <Compile Include="Base\ComboBoxEnumItem.cs" />
     <Compile Include="Base\Extensions\AppearanceManagerExtensions.cs" />
     <Compile Include="Base\Extensions\UserControlExtensions.cs" />
+    <Compile Include="Base\MvvmInput\RelayCommand.cs" />
     <Compile Include="Base\NavigationMessage.cs" />
+    <Compile Include="Base\MvvmInput\RelayCommand%28T%29.cs" />
     <Compile Include="Base\Services\UILayer\Dispatcher\WPFDispatcher.cs" />
     <Compile Include="Base\Services\UILayer\Dispatcher\IAgnosticDispatcher.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
@@ -97,9 +90,6 @@
     </Compile>
     <Compile Include="Views\LogsView.xaml.cs">
       <DependentUpon>LogsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PopUpWindow.xaml.cs">
-      <DependentUpon>PopUpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SampleTools\LineSorterView.xaml.cs">
       <DependentUpon>LineSorterView.xaml</DependentUpon>
@@ -140,10 +130,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LogsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PopUpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

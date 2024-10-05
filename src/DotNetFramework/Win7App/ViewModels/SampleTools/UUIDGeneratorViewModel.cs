@@ -1,7 +1,7 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
-using FirstFloor.ModernUI.Presentation;
 using System.Windows;
 using Win7App.Base;
+using Win7App.Base.MvvmInput;
 
 namespace Win7App.ViewModels.SampleTools
 {
@@ -30,8 +30,8 @@ namespace Win7App.ViewModels.SampleTools
         {
             _sampleToolsService = sampleToolsService;
 
-            CopyUUIDCommand = new RelayCommand((object o) => Clipboard.SetText(UUID ?? string.Empty));
-            ExecuteTaskCommand = new RelayCommand((object o) => Generate());
+            CopyUUIDCommand = new RelayCommand(() => Clipboard.SetText(UUID ?? string.Empty));
+            ExecuteTaskCommand = new RelayCommand(() => Generate());
         }
 
         private bool Generate()

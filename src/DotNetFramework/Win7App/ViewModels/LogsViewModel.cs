@@ -1,13 +1,12 @@
 ﻿using DotNetFramework.Core;
 using DotNetFramework.Core.ExtensionHelpers;
 using DotNetFramework.Core.Logging;
-using FirstFloor.ModernUI.Presentation;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Win7App.Base;
+using Win7App.Base.MvvmInput;
 using Win7App.Base.Services;
 
 namespace Win7App.ViewModels
@@ -45,7 +44,7 @@ namespace Win7App.ViewModels
             _dispatcher = dispatcher;
             _errorLogs = new List<string>(_logSource.Logs);
 
-            DownloadCommand = new RelayCommand(async (object o) => await DownloadLogAsync(), (object o) => !IsBusy);
+            DownloadCommand = new RelayCommand(async () => await DownloadLogAsync(), () => !IsBusy);
         }
 
         public void WireErrors()
