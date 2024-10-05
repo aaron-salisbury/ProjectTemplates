@@ -14,7 +14,7 @@ namespace DotNetFramework.Core.Security
         private readonly int _workFactor;
 
         public SessionAuthorizerPNP(HashAlgorithm hashAlgorithm = null, int registrationWorkFactor = 1000)
-            : base(hashAlgorithm != null ? hashAlgorithm.GetType() : typeof(SHA256), saltEnabled: true)
+            : base(hashAlgorithm != null ? hashAlgorithm.GetType() : typeof(SHA256Managed), saltEnabled: true)
         {
             _workFactor = registrationWorkFactor;
         }
