@@ -62,41 +62,7 @@ namespace DotNetFramework.Core.DependencyInjection
             return new ServiceProviderPNP(container);
         }
 
-        public IEnumerator<ServiceDescriptor> GetEnumerator()
-        {
-            return _descriptors.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void Add(ServiceDescriptor item)
-        {
-            Insert(_descriptors.Count, item);
-        }
-
-        public void Clear()
-        {
-            _descriptors.Clear();
-        }
-
-        public bool Contains(ServiceDescriptor item)
-        {
-            return _descriptors.Contains(item);
-        }
-
-        public void CopyTo(ServiceDescriptor[] array, int arrayIndex)
-        {
-            _descriptors.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(ServiceDescriptor item)
-        {
-            return _descriptors.Remove(item);
-        }
-
+        #region IList Members
         public int Count => _descriptors.Count;
 
         public bool IsReadOnly => false;
@@ -149,6 +115,42 @@ namespace DotNetFramework.Core.DependencyInjection
         {
             _descriptors.RemoveAt(index);
         }
+
+        public void Add(ServiceDescriptor item)
+        {
+            Insert(_descriptors.Count, item);
+        }
+
+        public void Clear()
+        {
+            _descriptors.Clear();
+        }
+
+        public bool Contains(ServiceDescriptor item)
+        {
+            return _descriptors.Contains(item);
+        }
+
+        public void CopyTo(ServiceDescriptor[] array, int arrayIndex)
+        {
+            _descriptors.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(ServiceDescriptor item)
+        {
+            return _descriptors.Remove(item);
+        }
+
+        public IEnumerator<ServiceDescriptor> GetEnumerator()
+        {
+            return _descriptors.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        #endregion
 
         private static LifetimeManager LifetimeManagerForServiceLifetime(ServiceLifetime lifetime)
         {
