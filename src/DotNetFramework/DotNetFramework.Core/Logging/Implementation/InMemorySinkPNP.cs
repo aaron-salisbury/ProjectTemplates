@@ -71,9 +71,7 @@ namespace DotNetFramework.Core.Logging
 
             WriteLine(message);
 
-            if (LogEmitted != null)
-            {
-                LogEmitted.Invoke(this, new LogEmitEventArgs()
+            LogEmitted?.Invoke(this, new LogEmitEventArgs()
                 {
                     LogEvent = new()
                     {
@@ -83,7 +81,6 @@ namespace DotNetFramework.Core.Logging
                         Exception = exception
                     }
                 });
-            }
         }
 
         private static ILogFormatter DefaultFormatter()
