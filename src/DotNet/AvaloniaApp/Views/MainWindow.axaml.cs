@@ -1,5 +1,5 @@
 using Avalonia.Controls;
-using AvaloniaApp.Presentation.Desktop.Base;
+using AvaloniaApp.Base;
 using System.Runtime.InteropServices;
 
 namespace AvaloniaApp.Presentation.Desktop.Views;

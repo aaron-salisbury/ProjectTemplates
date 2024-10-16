@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AvaloniaApp.Presentation.Desktop.Base {
+namespace AvaloniaApp.Base {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AvaloniaApp.Presentation.Desktop.Base {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AvaloniaApp.Presentation.Desktop.Base.AppInfo", typeof(AppInfo).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AvaloniaApp.Base.AppInfo", typeof(AppInfo).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

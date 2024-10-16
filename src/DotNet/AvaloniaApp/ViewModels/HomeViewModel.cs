@@ -1,4 +1,5 @@
-﻿using AvaloniaApp.Presentation.Desktop.Base;
+﻿using AvaloniaApp.Base;
+using AvaloniaApp.Presentation.Desktop.Base;
 
 namespace AvaloniaApp.Presentation.Desktop.ViewModels;
 

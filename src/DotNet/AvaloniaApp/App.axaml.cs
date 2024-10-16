@@ -19,7 +19,7 @@ namespace AvaloniaApp.Presentation.Desktop
 {
     public partial class App : Application
     {
-        public IServiceProvider Services { get; set; } = ConfigureServices();
+        public IServiceProvider Services { get; set; } = null!; // Set in OnFrameworkInitializationCompleted() to avoid conflicts prior to that point.
 
         public override void Initialize()
         {
@@ -28,6 +28,8 @@ namespace AvaloniaApp.Presentation.Desktop
 
         public override void OnFrameworkInitializationCompleted()
         {
+            Services = ConfigureServices();
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 // Line below is needed to remove Avalonia data validation.
@@ -44,7 +46,7 @@ namespace AvaloniaApp.Presentation.Desktop
             base.OnFrameworkInitializationCompleted();
         }
 
-        private static IServiceProvider ConfigureServices()
+        private static ServiceProvider ConfigureServices()
         {
             Serilog.Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
