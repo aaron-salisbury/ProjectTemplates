@@ -26,6 +26,6 @@ public partial class HomeViewModel : BaseViewModel
             "Comes configured with structured logging using Serilog, distributed messaging using MassTransit, and an embedded SQLite database using Entity Framework.";
 
         AppearanceBlurb = "Avalonia uses a Fluent Design System that emphasizes modern, clean aesthetics, smooth animations, and intuitive interactions. " +
-            "It provides a consistent and polished look-and-feel across different platforms, while giving developers flexibility with our styling system.";
+            "It provides a consistent and polished look-and-feel across different platforms, while giving developers flexibility with its styling system.";
     }
 }
