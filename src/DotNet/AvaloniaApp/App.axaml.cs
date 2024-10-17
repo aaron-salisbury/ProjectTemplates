@@ -19,7 +19,7 @@ namespace AvaloniaApp.Presentation.Desktop
 {
     public partial class App : Application
     {
-        public IServiceProvider Services { get; set; } = null!; // Set in OnFrameworkInitializationCompleted() to avoid conflicts prior to that point.
+        public IServiceProvider Services { get; set; } = null!; // Set during the Startup event to avoid conflicts prior to Initialization completing.
 
         public override void Initialize()
         {
@@ -36,14 +36,30 @@ namespace AvaloniaApp.Presentation.Desktop
                 // Without this line you will get duplicate validations from both Avalonia and CT
                 BindingPlugins.DataValidators.RemoveAt(0);
 
-                DesktopStartup(desktop);
-
-                //TODO: Login? Configure single user?
-
-                desktop.MainWindow = new MainWindow();
+                desktop.Startup += Desktop_Startup;
+                desktop.Exit += Desktop_Exit;
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        private void Desktop_Startup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
+        {
+            // Services need to be gathered after app initialization but before
+            // the MainWindow is created as that starts the chain of dependency injections.
+            Services.GetRequiredService<DomainInitializer>().StartAsync().Wait();
+
+            if (sender is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = new MainWindow();
+            }
+        }
+
+        private void Desktop_Exit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
+        {
+            Services.GetRequiredService<DomainInitializer>().Shutdown();
+
+            Serilog.Log.CloseAndFlush();
         }
 
         private static ServiceProvider ConfigureServices()
@@ -82,20 +98,6 @@ namespace AvaloniaApp.Presentation.Desktop
             services.AddBusinessServices();
 
             return services.BuildServiceProvider();
-        }
-
-        private void DesktopStartup(IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            desktop.Exit += Desktop_Exit;
-
-            Services.GetRequiredService<DomainInitializer>().StartAsync().Wait();
-        }
-
-        private void Desktop_Exit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
-        {
-            Services.GetRequiredService<DomainInitializer>().Shutdown();
-
-            Serilog.Log.CloseAndFlush();
         }
     }
 }
