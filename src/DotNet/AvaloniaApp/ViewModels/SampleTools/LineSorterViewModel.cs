@@ -15,7 +15,6 @@ namespace AvaloniaApp.Presentation.Desktop.ViewModels;
 
 public partial class LineSorterViewModel : BaseViewModel, IConsumer<TextSorted>
 {
-    public RelayCommand ExecuteTaskCommand { get; }
     public IAsyncRelayCommand SortCommand { get; }
 
     [ObservableProperty]
