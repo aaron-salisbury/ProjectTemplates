@@ -17,9 +17,9 @@
 		<DataGrid ItemsSource="{Binding ErrorLogs}"
                   IsReadOnly="True"
                   GridLinesVisibility="All"
-                  BorderThickness="1"
-                  BorderBrush="Gray"
-                  CanUserSortColumns="True">
+                  CanUserSortColumns="True"
+				  BorderThickness="{DynamicResource ComboBoxBorderThemeThickness}" 
+				  BorderBrush="{DynamicResource SystemControlForegroundBaseMediumBrush}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Timestamp" Binding="{Binding LogEvent.Timestamp, Converter={StaticResource dateFormatConverter}}"/>
 				<DataGridTemplateColumn Header="Level" Width="100">
