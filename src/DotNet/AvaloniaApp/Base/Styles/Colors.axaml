@@ -8,8 +8,7 @@
 
 	<Styles.Resources>
 		<ResourceDictionary>
-            <SolidColorBrush x:Key="SkywardBlue" Color="#4265ad" />
-			<!-- Monokai Palette: https://raw.githubusercontent.com/andreall0/vscode-monokai-universe-theme/master/assets/palette.png -->
+            <!-- Monokai Palette: https://raw.githubusercontent.com/andreall0/vscode-monokai-universe-theme/master/assets/palette.png -->
 			<SolidColorBrush x:Key="YellowAccent" Color="#DDBC5A" />
 			<SolidColorBrush x:Key="RedAccent" Color="#DA3E52" />
 			<SolidColorBrush x:Key="GreenAccent" Color="#9BCF6E" />
