@@ -12,7 +12,8 @@ namespace AvaloniaApp.Base.Controls.RibbonControls;
 
 /// <summary>
 /// By ribbon content (belonging to a ViewHeaderControl) deriving from this class, 
-/// its parent ViewHeaderControl will be able to display a success or failure icon when a long running process completes.
+/// its parent ViewHeaderControl will be able to display a progress ring during long running processes
+/// and then a success or failure icon when the process completes.
 /// </summary>
 public partial class BaseRibbonControl : UserControl
 {
@@ -47,17 +48,17 @@ public partial class BaseRibbonControl : UserControl
                     }
                     break;
                 case nameof(BaseViewModel.LongRunningProcessSuccessful):
-                    HandleWorkflowComplete();
+                    HandleWorkflowComplete(baseViewModel.LongRunningProcessSuccessful);
                     break;
             }
         }
     }
 
-    private void HandleWorkflowComplete()
+    private void HandleWorkflowComplete(bool? wasWorkflowSuccessful)
     {
-        if (DataContext is BaseViewModel viewModel && viewModel.LongRunningProcessSuccessful != null && _parentViewHeaderControl != null)
+        if (wasWorkflowSuccessful != null && _parentViewHeaderControl != null)
         {
-            if (viewModel.LongRunningProcessSuccessful.Value)
+            if (wasWorkflowSuccessful.Value)
             {
                 _workflowAnimation.RunAsync(_parentViewHeaderControl.WorkflowSucessIcon);
             }
