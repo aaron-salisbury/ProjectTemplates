@@ -25,9 +25,10 @@
 
 					<TextBlock TextWrapping="Wrap" Margin="0,0,0,4" Text="{Binding AppDescription}" />
 
+					<!-- Links -->
 					<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-						<Button Classes="hyperlink" Content="Privacy Statement" Click="PrivacyBtn_Click" Margin="0,0,15,0" />
-						<Button Classes="hyperlink" Content="Issues" Click="IssuesBtn_Click" />
+						<HyperlinkButton Content="Privacy Statement" NavigateUri="{Binding PrivacyURL}" />
+						<HyperlinkButton Content="Issues" NavigateUri="{Binding IssuesURL}" Margin="5,0,0,0" />
 					</StackPanel>
 				</StackPanel>
 			</StackPanel>

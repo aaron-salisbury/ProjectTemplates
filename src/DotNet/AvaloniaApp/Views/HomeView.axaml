@@ -49,8 +49,8 @@
 
 				<TextBlock Text="USE" Classes="header" />
 				<StackPanel Orientation="Horizontal">
-					<TextBlock Text="Aaron Salisbury's Avalonia App Solution Template is released under " />
-					<Button Classes="hyperlink" Content="The MIT License" Click="LicenseBtn_Click" />
+					<TextBlock Text="Aaron Salisbury's Avalonia App Solution Template is released under the " />
+					<HyperlinkButton Classes="inlineHyperlink" Content="MIT License" NavigateUri="{Binding LicenseURL}" />
 					<TextBlock Text="." />
 				</StackPanel>
 
