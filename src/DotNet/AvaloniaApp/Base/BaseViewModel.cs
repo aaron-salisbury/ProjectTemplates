@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace AvaloniaApp.Presentation.Desktop.Base;
 
@@ -32,7 +31,7 @@ public partial class BaseViewModel : ObservableValidator
         {
             IsBusy = true;
 
-            return await dispatcher.InvokeOnBackgroundAsync(() =>
+            T taskResult = await dispatcher.InvokeOnBackgroundAsync(() =>
             {
                 TaskCompletionSource<T> tcs = new();
 
@@ -42,10 +41,12 @@ public partial class BaseViewModel : ObservableValidator
                     tcs.SetResult(result);
                 }).ConfigureAwait(false);
 
-                LongRunningProcessSuccessful = (tcs.Task.Result is bool boolResult) ? boolResult : tcs.Task.Result != null;
-
                 return tcs.Task;
             });
+
+            LongRunningProcessSuccessful = (taskResult is bool boolResult) ? boolResult : taskResult != null;
+
+            return taskResult;
         }
         finally
         {

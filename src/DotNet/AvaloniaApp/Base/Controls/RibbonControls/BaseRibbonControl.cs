@@ -36,10 +36,16 @@ public partial class BaseRibbonControl : UserControl
 
     private void DataContext_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (sender is BaseViewModel)
+        if (sender is BaseViewModel baseViewModel)
         {
             switch (e.PropertyName)
             {
+                case nameof(BaseViewModel.IsBusy):
+                    if (_parentViewHeaderControl != null)
+                    {
+                        _parentViewHeaderControl.IsBusy = baseViewModel.IsBusy;
+                    }
+                    break;
                 case nameof(BaseViewModel.LongRunningProcessSuccessful):
                     HandleWorkflowComplete();
                     break;

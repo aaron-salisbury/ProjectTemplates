@@ -29,7 +29,6 @@
 
 			<Grid Grid.Column="3" Name="WorkflowStates">
 				<progRing:ProgressRing x:Name="WorkflowProgressRing"
-									   IsActive="False"
 									   Foreground="{DynamicResource SystemControlHighlightAccentBrush}"
 									   Height="40"
 									   Width="40"

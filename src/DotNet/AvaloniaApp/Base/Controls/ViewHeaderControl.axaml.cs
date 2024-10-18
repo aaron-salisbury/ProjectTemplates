@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using System.Reactive.Subjects;
 
 namespace AvaloniaApp.Presentation.Desktop.Base.Controls;
 
@@ -25,8 +26,24 @@ public partial class ViewHeaderControl : UserControl
         set { SetAndRaise(RibbonContentProperty, ref _ribbonContent, value); }
     }
 
+    private bool _isBusy;
+    public bool IsBusy
+    {
+        get { return _isBusy; }
+        set
+        {
+            _isBusy = value;
+            _progressRingIsActiveSource.OnNext(_isBusy);
+        }
+    }
+
+    private readonly Subject<bool> _progressRingIsActiveSource = new();
+
     public ViewHeaderControl()
     {
         InitializeComponent();
+
+        WorkflowProgressRing.Bind(AvaloniaProgressRing.ProgressRing.IsActiveProperty, _progressRingIsActiveSource);
+        IsBusy = false;
     }
 }
