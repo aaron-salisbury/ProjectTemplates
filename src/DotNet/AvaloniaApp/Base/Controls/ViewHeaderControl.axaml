@@ -4,10 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaApp.Presentation.Desktop.Base.Controls.ViewHeaderControl"
+			 xmlns:material="using:Material.Icons.Avalonia"
+			 xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+			 Background="Transparent"
              x:Name="VHC">
 
+	<UserControl.Styles>
+		<Style Selector="material|MaterialIcon.workflowIcon">
+			<Setter Property="Width" Value="40" />
+			<Setter Property="Height" Value="40" />
+			<Setter Property="Opacity" Value="0" />
+		</Style>
+	</UserControl.Styles>
+	
     <Border Background="{DynamicResource SystemChromeMediumColor}" Height="60">
-        <Grid ColumnDefinitions="30,Auto,10,*,30" VerticalAlignment="Center">
+        <Grid ColumnDefinitions="30,Auto,10,Auto,10,*,30" VerticalAlignment="Center">
 
             <TextBlock Grid.Column="1"
 					   Text="{Binding FriendlyPageName, ElementName=VHC}"
@@ -16,7 +27,19 @@
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Center" />
 
-            <ContentControl Grid.Column="3" Content="{Binding RibbonContent, ElementName=VHC}" />
+			<Grid Grid.Column="3" Name="WorkflowStates">
+				<progRing:ProgressRing x:Name="WorkflowProgressRing"
+									   IsActive="False"
+									   Foreground="{DynamicResource SystemControlHighlightAccentBrush}"
+									   Height="40"
+									   Width="40"
+									   VerticalAlignment="Center" />
+
+				<material:MaterialIcon Classes="workflowIcon" x:Name="WorkflowSucessIcon" Kind="CheckCircleOutline" Foreground="{StaticResource GreenAccent}" />
+				<material:MaterialIcon Classes="workflowIcon" x:Name="WorkflowFailureIcon" Kind="AlphaXCircleOutline" Foreground="{StaticResource RedAccent}" />
+			</Grid>
+			
+            <ContentControl Grid.Column="5" Content="{Binding RibbonContent, ElementName=VHC}" />
 
         </Grid>
     </Border>

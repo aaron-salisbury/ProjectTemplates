@@ -1,10 +1,10 @@
 using Avalonia;
-using Avalonia.Controls;
+using AvaloniaApp.Base.Controls.RibbonControls;
 using AvaloniaApp.Presentation.Desktop.ViewModels;
 
 namespace AvaloniaApp.Presentation.Desktop.Base.Controls;
 
-public partial class LogsRibbonControl : UserControl
+public partial class LogsRibbonControl : BaseRibbonControl
 {
     public LogsRibbonControl()
     {
