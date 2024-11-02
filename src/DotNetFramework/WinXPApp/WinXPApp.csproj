@@ -179,6 +179,9 @@
     <EmbeddedResource Include="ShellForm.resx">
       <DependentUpon>ShellForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\HomeView.resx">
+      <DependentUpon>HomeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SampleTools\ToolsNavigatorView.resx">
       <DependentUpon>ToolsNavigatorView.cs</DependentUpon>
     </EmbeddedResource>

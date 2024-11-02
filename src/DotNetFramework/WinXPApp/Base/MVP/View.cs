@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace WinXPApp.Base.MVP
 {
-    public abstract class View : UserControl
+    public partial class View : UserControl
     {
         private readonly Presenter _presenter;
 

@@ -1,11 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace WinXPApp.Base.MVP
 {
-    internal abstract class Presenter
+    internal class Presenter
     {
-        internal virtual void Setup(UserControl view) { throw new NotImplementedException(); }
+        // This class is not abstract and has a constructor so that the Forms Designer can instantiate it.
+        public Presenter() { }
+
+        internal virtual void Setup(UserControl view) { }
 
         internal virtual void Dismiss() { }
     }
