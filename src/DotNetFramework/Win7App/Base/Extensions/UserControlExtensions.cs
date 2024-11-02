@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Controls;
-using IServiceProvider = DotNetFramework.Core.DependencyInjection.IServiceProvider;
 
 namespace Win7App.Base.Extensions
 {

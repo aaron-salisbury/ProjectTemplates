@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using static System.Windows.Forms.Control;
-using IServiceProvider = DotNetFramework.Core.DependencyInjection.IServiceProvider;
 
 namespace Win98App.Base.MVP
 {

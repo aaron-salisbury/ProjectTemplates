@@ -1,0 +1,8 @@
+- Add a sample that validates against a business domain object and decorates the view with the messages.
+
+- Win7App, replace ModernUI.WPF with something that doesn't take over the entire window. Adonis UI looks promising.
+
+- The log views in the .NET Framework apps only use strings. Update to be structured.
+
+- Replace ExtensionAttribute in the core project with another technique. It's fine for .NET Framework 2.0, but the other project targets already have it.
+

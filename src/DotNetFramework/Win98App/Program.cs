@@ -5,7 +5,6 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 using Win98App.Base.MVP;
-using IServiceProvider = DotNetFramework.Core.DependencyInjection.IServiceProvider;
 
 namespace Win98App
 {

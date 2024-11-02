@@ -4,7 +4,6 @@ using DotNetFramework.Core.Logging;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using IServiceProvider = DotNetFramework.Core.DependencyInjection.IServiceProvider;
 
 namespace WinXPApp
 {

@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Windows;
 using Win7App.Base.Services;
 using Win7App.ViewModels;
-using IServiceProvider = DotNetFramework.Core.DependencyInjection.IServiceProvider;
 
 namespace Win7App
 {
@@ -46,7 +45,7 @@ namespace Win7App
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            LogsViewModel logsVM = (Current as App).Services.GetRequiredService<LogsViewModel>();
+            LogsViewModel logsVM = Services.GetRequiredService<LogsViewModel>();
             logsVM.WireErrors();
         }
 

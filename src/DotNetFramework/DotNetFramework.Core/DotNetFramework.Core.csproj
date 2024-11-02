@@ -77,6 +77,7 @@
     <Compile Include="Data\SqlServerCompactDb.cs" />
     <Compile Include="DependencyInjection\Implementation\ServiceCollectionPNP.cs" />
     <Compile Include="DependencyInjection\IServiceCollection.cs" />
+    <Compile Include="DependencyInjection\ServiceProviderExtensions.cs" />
     <Compile Include="DependencyInjection\ServiceDescriptor.cs" />
     <Compile Include="ExtensionAttribute.cs" />
     <Compile Include="ExtensionHelpers\DateTimeExtensions.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />
     <Compile Include="DependencyInjection\ServiceCollectionExtensions.cs" />
     <Compile Include="DependencyInjection\Implementation\ServiceProviderPNP.cs" />
-    <Compile Include="DependencyInjection\IServiceProvider.cs" />
     <Compile Include="IO.cs" />
     <Compile Include="Logging\EventId.cs" />
     <Compile Include="Logging\ILogger.cs" />
