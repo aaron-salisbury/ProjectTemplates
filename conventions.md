@@ -6,14 +6,14 @@ Architecture
 	- Windows 98 => .NET Framework 2.0
 	- Windows XP => .NET Framework 3.5
 	- Windows 7  => .NET Framework 4.5.1
-3. Follow a [Three-Tier Architecture](https://www.ibm.com/topics/three-tier-architecture) (Data, Business, Presentation). Logical boundaries can be further seperated as needed.
+3. Follow a [Three-Tier Architecture](https://www.ibm.com/topics/three-tier-architecture) (Data, Business, Presentation). Logical boundaries can be further separated as needed.
 	- These projects target desktop and are intended to represent small utilities, so closer to layers as they deploy together. However;
 		- Despite one layer directly referencing the one below, only protocols, services, and DTOs intentionally made to be exposed to other layers should be consumed.
 		- Enforce separation of concerns. 
 			- Business doesn't define entities. 
 			- Data access doesn't implement business validations.
 			- UI doesn't perform business logic.
-		- Maintain modularity and [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/) within the application/business layer.
+		- Maintain modularity and [Locality of Behavior](https://htmx.org/essays/locality-of-behaviour/) within the application/business layer.
 4. Name projects with the postfix of their tier (e.g., MyCoolApp.Data).
 5. There can be more than one presentation for the set of given business functionality (i.e., a mobile app and a desktop application). Name each presentation project with the target platform postfix (e.g., MyCoolApp.Presentation.Web).
 6. GUI app projects that target desktop or mobile and support binding should follow the [MVVM Design Pattern](https://dev.to/mochafreddo/mastering-mvvm-a-comprehensive-guide-to-the-model-view-viewmodel-architecture-221g).
