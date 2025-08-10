@@ -15,10 +15,8 @@ namespace DotNet.Business.Modules.Sample.DomainServices
 
         public IEnumerable<FlatColorDto> GetFlatColors()
         {
-            SampleMapper mapper = new();
-
             return EmbeddedDataAccess.ReadFlatColors(_logger)
-                .Select(entity => mapper.MapToDto<FlatColorDto>(entity));
+                .Select(entity => new FlatColorDto() { Hex = entity.Hex, Name = entity.Name });
         }
     }
 }

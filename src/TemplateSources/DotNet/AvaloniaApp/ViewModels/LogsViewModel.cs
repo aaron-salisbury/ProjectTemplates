@@ -1,8 +1,8 @@
-﻿using AvaloniaApp.Presentation.Desktop.Base;
-using AvaloniaApp.Presentation.Desktop.Base.Services;
+﻿using AvaloniaApp.Presentation.Desktop.Base.Services;
 using AvaloniaApp.Presentation.Desktop.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 using Serilog.Events;
 using Serilog.Sinks.MemorySink;
 using System.Collections.Generic;

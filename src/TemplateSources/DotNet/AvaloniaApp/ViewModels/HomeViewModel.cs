@@ -1,5 +1,5 @@
 ﻿using AvaloniaApp.Base;
-using AvaloniaApp.Presentation.Desktop.Base;
+using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 
 namespace AvaloniaApp.Presentation.Desktop.ViewModels;
 

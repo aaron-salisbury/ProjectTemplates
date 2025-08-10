@@ -1,5 +1,6 @@
-﻿using DotNet.Data.Entities.Sample;
+﻿using DotNet.Data.Entities;
 using Microsoft.Extensions.Logging;
+using RunnethOverStudio.AppToolkit.Core.Extensions;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -10,7 +11,7 @@ namespace DotNet.Data;
 /// </summary>
 public static class EmbeddedDataAccess
 {
-    private const string EMBEDDED_COLORS_ABSOLUTE_FILEPATH = "DotNet.Data.Base.Resources.FlatColors.xml";
+    private const string EMBEDDED_COLORS_FILEPATH = "DotNet.Data.Resources.FlatColors.xml";
 
     public static IEnumerable<FlatColor> ReadFlatColors(ILogger logger)
     {
@@ -18,7 +19,7 @@ public static class EmbeddedDataAccess
 
         try
         {
-            string? xml = GetEmbeddedResourceText(EMBEDDED_COLORS_ABSOLUTE_FILEPATH);
+            string? xml = Assembly.GetExecutingAssembly().ReadResource(EMBEDDED_COLORS_FILEPATH);
 
             if (!string.IsNullOrEmpty(xml))
             {
@@ -46,21 +47,5 @@ public static class EmbeddedDataAccess
         }
 
         return flatColors;
-    }
-
-    private static string? GetEmbeddedResourceText(string absoluteFilepath)
-    {
-        string? result = null;
-
-        using (Stream? manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(absoluteFilepath))
-        {
-            if (manifestResourceStream != null)
-            {
-                using StreamReader streamReader = new(manifestResourceStream);
-                result = streamReader.ReadToEnd();
-            }
-        }
-
-        return result;
     }
 }

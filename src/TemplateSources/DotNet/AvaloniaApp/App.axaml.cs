@@ -2,13 +2,12 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using DotNet.Business;
-using AvaloniaApp.Presentation.Desktop.Base;
 using AvaloniaApp.Presentation.Desktop.Base.Services;
 using AvaloniaApp.Presentation.Desktop.Views;
-using MassTransit;
+using DotNet.Business;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MemorySink;
@@ -28,8 +27,6 @@ namespace AvaloniaApp.Presentation.Desktop
 
         public override void OnFrameworkInitializationCompleted()
         {
-            Services = ConfigureServices();
-
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 // Line below is needed to remove Avalonia data validation.
@@ -47,7 +44,7 @@ namespace AvaloniaApp.Presentation.Desktop
         {
             // Services need to be gathered after app initialization but before
             // the MainWindow is created as that starts the chain of dependency injections.
-            Services.GetRequiredService<DomainInitializer>().StartAsync().Wait();
+            Services = ConfigureServices();
 
             if (sender is IClassicDesktopStyleApplicationLifetime desktop)
             {
@@ -57,8 +54,6 @@ namespace AvaloniaApp.Presentation.Desktop
 
         private void Desktop_Exit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
         {
-            Services.GetRequiredService<DomainInitializer>().Shutdown();
-
             Serilog.Log.CloseAndFlush();
         }
 
@@ -73,22 +68,16 @@ namespace AvaloniaApp.Presentation.Desktop
 
             // Application level infrastructure.
             services.AddLogging(configure => configure.AddSerilog(Serilog.Log.Logger))
-                .AddSingleton((sp) => { return sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(App)); })
-                .AddSingleton<ISessionValueProvider>(new Session());
+                .AddSingleton((sp) => { return sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(App)); });
 
             // Presentation services.
             services.AddScoped(typeof(IAgnosticDispatcher), typeof(AvaloniaDispatcher))
                 .AddSingleton(logSource);
 
-            // View models and MassTransit consumers.
+            // View models.
             foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (typeof(IConsumer).IsAssignableFrom(assemblyType))
-                {
-                    // Consumers have to be singletons if their Consume method uses instance values.
-                    services.AddSingleton(assemblyType);
-                }
-                else if (assemblyType.Name.EndsWith("ViewModel") && !assemblyType.Name.Equals("BaseViewModel"))
+                if (typeof(BaseViewModel).IsAssignableFrom(assemblyType))
                 {
                     services.AddScoped(assemblyType);
                 }
