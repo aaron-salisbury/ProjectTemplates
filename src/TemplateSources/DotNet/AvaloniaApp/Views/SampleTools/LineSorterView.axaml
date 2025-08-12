@@ -6,10 +6,10 @@
              x:Class="AvaloniaApp.Presentation.Desktop.Views.LineSorterView"
 			 xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
              x:DataType="vm:LineSorterViewModel"
-			 xmlns:con="clr-namespace:AvaloniaApp.Presentation.Desktop.Base.Converters;assembly=AvaloniaApp">
+			 xmlns:conROS="using:RunnethOverStudio.AppToolkit.Presentation.Converters">
 
 	<UserControl.Resources>
-		<con:EnumToDisplayNameConverter x:Key="enumToDisplayNameConverter"/>
+		<conROS:EnumToDisplayNameConverter x:Key="enumToDisplayNameConverter"/>
 	</UserControl.Resources>
 
 	<Border>

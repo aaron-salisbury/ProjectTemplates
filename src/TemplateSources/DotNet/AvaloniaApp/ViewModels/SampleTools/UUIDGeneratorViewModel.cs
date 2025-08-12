@@ -1,14 +1,14 @@
-﻿using DotNet.Business.Modules.Sample.ApplicationServices;
-using DotNet.Business.Modules.Sample.MessageContracts;
-using AvaloniaApp.Presentation.Desktop.Base;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MassTransit;
+using DotNet.Business.Modules.Sample.ApplicationServices;
+using DotNet.Business.Modules.Sample.Events;
+using RunnethOverStudio.AppToolkit.Modules.Messaging;
+using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 using System.Threading.Tasks;
 
 namespace AvaloniaApp.Presentation.Desktop.ViewModels;
 
-public partial class UUIDGeneratorViewModel : BaseViewModel, IConsumer<GuidGenerated>
+public partial class UUIDGeneratorViewModel : BaseViewModel
 {
     public IAsyncRelayCommand GenerateCommand { get; }
 
@@ -20,11 +20,13 @@ public partial class UUIDGeneratorViewModel : BaseViewModel, IConsumer<GuidGener
 
     private readonly ISampleToolsService _sampleToolsService;
 
-    public UUIDGeneratorViewModel(ISampleToolsService sampleToolsService)
+    public UUIDGeneratorViewModel(ISampleToolsService sampleToolsService, IEventSystem eventSystem)
     {
         _sampleToolsService = sampleToolsService;
 
         GenerateCommand = new AsyncRelayCommand(GenerateUUIDAsync);
+
+        eventSystem.Subscribe<GuidGenerated>(OnGuidGenerated);
     }
 
     private async Task GenerateUUIDAsync()
@@ -32,10 +34,8 @@ public partial class UUIDGeneratorViewModel : BaseViewModel, IConsumer<GuidGener
         await _sampleToolsService.InitializeGUIDGenerationAsync(Capitalize);
     }
 
-    public Task Consume(ConsumeContext<GuidGenerated> context)
+    private void OnGuidGenerated(object? sender, GuidGenerated e)
     {
-        UUID = context.Message.UUID;
-
-        return Task.CompletedTask;
+        UUID = e.UUID;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotNet.Data.Entities.Sample
+namespace DotNet.Data.Entities
 {
     public record FlatColor
     {

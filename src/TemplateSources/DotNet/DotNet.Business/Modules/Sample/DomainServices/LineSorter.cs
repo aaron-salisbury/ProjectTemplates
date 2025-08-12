@@ -1,6 +1,6 @@
-﻿using DotNet.Business.Modules.Sample.MessageContracts;
-using MassTransit;
+﻿using DotNet.Business.Modules.Sample.Events;
 using Microsoft.Extensions.Logging;
+using RunnethOverStudio.AppToolkit.Modules.Messaging;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
@@ -17,47 +17,50 @@ namespace DotNet.Business.Modules.Sample.DomainServices
             ReverseAlphabetical
         }
 
-        private readonly IBus _bus;
+        private readonly IEventSystem _events;
         private readonly ILogger _logger;
 
-        public LineSorter(IBus bus, ILogger logger)
+        public LineSorter(IEventSystem eventSystem, ILogger logger)
         {
-            _bus = bus;
+            _events = eventSystem;
             _logger = logger;
         }
 
         public async Task InitiateAsync(string? textToSort, SortTypes selectedSortType = SortTypes.Alphabetical)
         {
-            string? sortedText;
-
-            try
+            await Task.Run(() =>
             {
-                if (!string.IsNullOrEmpty(textToSort))
+                string? sortedText;
+
+                try
                 {
-                    List<string> lines = [.. textToSort.Split(SEPARATOR, StringSplitOptions.None)];
-
-                    lines.Sort();
-
-                    if (selectedSortType == SortTypes.ReverseAlphabetical)
+                    if (!string.IsNullOrEmpty(textToSort))
                     {
-                        lines.Reverse();
+                        List<string> lines = [.. textToSort.Split(SEPARATOR, StringSplitOptions.None)];
+
+                        lines.Sort();
+
+                        if (selectedSortType == SortTypes.ReverseAlphabetical)
+                        {
+                            lines.Reverse();
+                        }
+
+                        sortedText = new StringBuilder(string.Join("\r\n", [.. lines])).ToString();
                     }
-
-                    sortedText = new StringBuilder(string.Join("\r\n", [.. lines])).ToString();
+                    else
+                    {
+                        _logger.LogWarning("Attempted to sort empty text.");
+                        sortedText = string.Empty;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    _logger.LogWarning("Attempted to sort empty text.");
-                    sortedText = string.Empty;
+                    _logger.LogError(ex, "Failed to sort text.");
+                    sortedText = null;
                 }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to sort text.");
-                sortedText = null;
-            }
 
-            await _bus.Publish<TextSorted>(new { SortedText = sortedText });
+                _events.Publish(this, new TextSorted() { SortedText = sortedText });
+            });
         }
     }
 }

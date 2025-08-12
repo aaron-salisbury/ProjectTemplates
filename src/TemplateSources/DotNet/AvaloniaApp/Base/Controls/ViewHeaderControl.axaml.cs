@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using System.Reactive.Subjects;
 
 namespace AvaloniaApp.Presentation.Desktop.Base.Controls;
 
@@ -11,6 +10,10 @@ public partial class ViewHeaderControl : UserControl
 
     public static readonly DirectProperty<ViewHeaderControl, object?> RibbonContentProperty =
         AvaloniaProperty.RegisterDirect<ViewHeaderControl, object?>(nameof(RibbonContent), o => o.RibbonContent, (o, v) => o.RibbonContent = v);
+
+    //TODO: Need to test that this works. Used to use System.Reactive.Subjects and Subject<bool> for the binding, but lost that reference.
+    public static readonly DirectProperty<ViewHeaderControl, bool> IsBusyProperty =
+        AvaloniaProperty.RegisterDirect<ViewHeaderControl, bool>(nameof(IsBusy), o => o.IsBusy, (o, v) => o.IsBusy = v);
 
     private string? _friendlyPageName;
     public string? FriendlyPageName
@@ -29,21 +32,14 @@ public partial class ViewHeaderControl : UserControl
     private bool _isBusy;
     public bool IsBusy
     {
-        get { return _isBusy; }
-        set
-        {
-            _isBusy = value;
-            _progressRingIsActiveSource.OnNext(_isBusy);
-        }
+        get => _isBusy;
+        set => SetAndRaise(IsBusyProperty, ref _isBusy, value);
     }
-
-    private readonly Subject<bool> _progressRingIsActiveSource = new();
 
     public ViewHeaderControl()
     {
         InitializeComponent();
 
-        WorkflowProgressRing.Bind(AvaloniaProgressRing.ProgressRing.IsActiveProperty, _progressRingIsActiveSource);
         IsBusy = false;
     }
 }

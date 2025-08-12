@@ -7,16 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Base\Resources\FlatColors.xml" />
+    <None Remove="Resources\FlatColors.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Base\Resources\FlatColors.xml" />
+    <EmbeddedResource Include="Resources\FlatColors.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+    <PackageReference Include="RunnethOverStudio.AppToolkit" Version="0.5.1" />
   </ItemGroup>
 
 </Project>

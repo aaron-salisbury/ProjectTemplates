@@ -1,8 +1,7 @@
 ﻿using DotNet.Business.Modules.Sample.ApplicationServices;
 using DotNet.Business.Modules.Sample.DTOs;
-using AvaloniaApp.Presentation.Desktop.Base;
+using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AvaloniaApp.Presentation.Desktop.ViewModels;
 
@@ -12,6 +11,6 @@ public partial class FlatUIColorPickerViewModel : BaseViewModel
 
     public FlatUIColorPickerViewModel(ISampleToolsService sampleToolsService)
     {
-        FlatColors = sampleToolsService.GetFlatColors().ToList();
+        FlatColors = [.. sampleToolsService.GetFlatColors()];
     }
 }
