@@ -2,13 +2,16 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+	<ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<Optimize>true</Optimize>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-	<AssemblyName>AvaloniaApp</AssemblyName>
 	<PublishSingleFile>true</PublishSingleFile>
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	<Product>Avalonia App</Product>
+	<AssemblyName>AvaloniaApp</AssemblyName>
 	<Version>1.0.0</Version>
   </PropertyGroup>
 
@@ -40,7 +43,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.3" />
     <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.10" />
     <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
-    <PackageReference Include="RunnethOverStudio.AppToolkit.Desktop" Version="0.5.1" />
+    <PackageReference Include="RunnethOverStudio.AppToolkit.Desktop" Version="0.5.2" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Xaml.Behaviors.Avalonia" Version="11.3.2" />
   </ItemGroup>

@@ -18,9 +18,8 @@ public static class Startup
     /// <returns>A reference to this instance after the operation has completed.</returns>
     public static IServiceCollection AddBusinessServices(this IServiceCollection services)
     {
-        // Necessary infrastructure.
+        // Infrastructure.
         services.AddSingleton<IEventSystem, EventSystem>()
-            .AddWebRequesting()
             .AddDataAccess();
 
         // Internal business domain.

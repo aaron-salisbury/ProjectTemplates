@@ -1,6 +1,8 @@
 ﻿using DotNet.Business.Modules.Sample.DTOs;
 using DotNet.Data;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotNet.Business.Modules.Sample.DomainServices
 {

@@ -1,4 +1,6 @@
 ﻿using FluentValidation.Results;
+using System;
+using System.Linq;
 
 namespace DotNet.Business.Base.Extensions
 {

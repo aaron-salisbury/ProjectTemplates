@@ -1,6 +1,8 @@
 ﻿using DotNet.Business.Modules.Sample.Events;
 using Microsoft.Extensions.Logging;
 using RunnethOverStudio.AppToolkit.Modules.Messaging;
+using System;
+using System.Threading.Tasks;
 
 namespace DotNet.Business.Modules.Sample.DomainServices
 {
