@@ -1,5 +1,4 @@
 ﻿using DotNetFramework.Business.Modules.Sample.DTOs;
-using DotNetFramework.Core.Logging;
 using DotNetFramework.Data;
 using DotNetFramework.Data.Entities;
 using System.Collections.Generic;
@@ -8,18 +7,18 @@ namespace DotNetFramework.Business.Modules.Sample.DomainServices
 {
     public class FlatUIColorProvider
     {
-        private readonly ILogger _logger;
+        private readonly IEmbeddedDataAccess _embeddedDataAccess;
 
-        public FlatUIColorProvider(ILogger logger)
+        public FlatUIColorProvider(IEmbeddedDataAccess embeddedDataAccess)
         {
-            _logger = logger;
+            _embeddedDataAccess = embeddedDataAccess;
         }
 
         public IEnumerable<FlatColorDto> GetFlatColors()
         {
             List<FlatColorDto> flatColors = [];
 
-            foreach (FlatColor colorEntity in EmbeddedDataAccess.ReadFlatColors(_logger))
+            foreach (FlatColor colorEntity in _embeddedDataAccess.ReadFlatColors())
             {
                 flatColors.Add(FlatColorDto.MapToDto(colorEntity));
             }
