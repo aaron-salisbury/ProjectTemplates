@@ -1,6 +1,6 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using DotNetFramework.Business.Modules.Sample.DomainServices;
-using DotNetFramework.Core.ExtensionHelpers;
+using DotNetFrameworkToolkit.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,63 +8,62 @@ using Win7App.Base;
 using Win7App.Base.MvvmInput;
 using Win7App.Base.Services;
 
-namespace Win7App.ViewModels.SampleTools
+namespace Win7App.ViewModels.SampleTools;
+
+public class LineSorterViewModel : BaseViewModel
 {
-    public class LineSorterViewModel : BaseViewModel
+    public RelayCommand ExecuteTaskCommand { get; }
+
+    private List<ComboBoxEnumItem> _sortTypeItems;
+    public List<ComboBoxEnumItem> SortTypeItems
     {
-        public RelayCommand ExecuteTaskCommand { get; }
-
-        private List<ComboBoxEnumItem> _sortTypeItems;
-        public List<ComboBoxEnumItem> SortTypeItems
+        get { return _sortTypeItems; }
+        set
         {
-            get { return _sortTypeItems; }
-            set
-            {
-                _sortTypeItems = value;
-                RaisePropertyChanged(nameof(SortTypeItems));
-            }
+            _sortTypeItems = value;
+            RaisePropertyChanged(nameof(SortTypeItems));
         }
+    }
 
-        private int _selectedSortTypeIndex;
-        public int SelectedSortTypeIndex
-        {
-            get => _selectedSortTypeIndex;
-            set => SetField(ref _selectedSortTypeIndex, value, nameof(SelectedSortTypeIndex));
-        }
+    private int _selectedSortTypeIndex;
+    public int SelectedSortTypeIndex
+    {
+        get => _selectedSortTypeIndex;
+        set => SetField(ref _selectedSortTypeIndex, value, nameof(SelectedSortTypeIndex));
+    }
 
-        string _text;
-        public string Text
-        {
-            get => _text;
-            set => SetField(ref _text, value, nameof(Text));
-        }
+    string _text;
+    public string Text
+    {
+        get => _text;
+        set => SetField(ref _text, value, nameof(Text));
+    }
 
-        private readonly ISampleToolsService _sampleToolsService;
-        private readonly List<LineSorter.SortTypes> _sortTypes;
+    private readonly ISampleToolsService _sampleToolsService;
+    private readonly List<LineSorter.SortTypes> _sortTypes;
 
-        public LineSorterViewModel(ISampleToolsService sampleToolsService, IAgnosticDispatcher dispatcher)
-        {
-            _sampleToolsService = sampleToolsService;
-            ExecuteTaskCommand = new RelayCommand(async () => await InitiateLongRunningProcessAsync(Sort, dispatcher), () => !IsBusy);
-            
-            _sortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
-                .Cast<LineSorter.SortTypes>()
-                .ToList();
+    public LineSorterViewModel(ISampleToolsService sampleToolsService, IAgnosticDispatcher dispatcher)
+    {
+        _sampleToolsService = sampleToolsService;
+        ExecuteTaskCommand = new RelayCommand(async () => await InitiateLongRunningProcessAsync(Sort, dispatcher), () => !IsBusy);
+        
+        _sortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
+            .Cast<LineSorter.SortTypes>()
+            .ToList();
 
-            _sortTypeItems = _sortTypes
-                .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = StringExtensions.SplitPascalCase(st.ToString()) })
-                .ToList();
+        _sortTypeItems = _sortTypes
+            .Select(st => new ComboBoxEnumItem() { Value = (int)st, Text = StringExtensions.SplitPascalCase(st.ToString()) })
+            .ToList();
 
-            _selectedSortTypeIndex = 0;
-        }
+        _selectedSortTypeIndex = 0;
+    }
 
-        private bool Sort()
-        {
-            string sortedText = _sampleToolsService.InitializeLineSorting(_sortTypes[SelectedSortTypeIndex], Text);
+    private bool Sort()
+    {
+        string sortedText = _sampleToolsService.InitializeLineSorting(_sortTypes[SelectedSortTypeIndex], Text);
 
-            Text = sortedText;
+        Text = sortedText;
 
-            return sortedText != null;
-        }
+        return sortedText != null;
     }
 }

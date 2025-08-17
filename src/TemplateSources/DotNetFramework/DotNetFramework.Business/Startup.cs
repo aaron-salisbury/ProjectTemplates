@@ -1,7 +1,8 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using DotNetFramework.Business.Modules.Sample.DomainServices;
-using DotNetFramework.Core.DependencyInjection;
-using DotNetFramework.Core.Logging;
+using DotNetFramework.Data;
+using DotNetFrameworkToolkit.Modules.DataAccess.FileSystem;
+using DotNetFrameworkToolkit.Modules.DependencyInjection;
 
 namespace DotNetFramework.Business
 {
@@ -15,6 +16,8 @@ namespace DotNetFramework.Business
         public static IServiceCollection AddBusinessServices(this IServiceCollection services)
         {
             // Necessary infrastructure.
+            services.AddScoped<IFileSystemAccess, FileSystemAccess>()
+                .AddScoped<IEmbeddedDataAccess, EmbeddedDataAccess>();
 
             // Internal business domain logic.
             services.AddScoped<FlatUIColorProvider, FlatUIColorProvider>()

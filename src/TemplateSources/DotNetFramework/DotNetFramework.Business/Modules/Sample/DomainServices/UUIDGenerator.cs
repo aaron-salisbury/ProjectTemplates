@@ -1,4 +1,4 @@
-﻿using DotNetFramework.Core.Logging;
+﻿using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 
 namespace DotNetFramework.Business.Modules.Sample.DomainServices

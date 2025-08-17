@@ -1,4 +1,4 @@
-﻿using DotNetFramework.Core.Logging;
+﻿using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;

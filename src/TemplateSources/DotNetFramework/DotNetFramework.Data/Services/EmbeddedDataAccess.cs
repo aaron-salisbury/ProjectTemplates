@@ -14,7 +14,7 @@ namespace DotNetFramework.Data
     /// </summary>
     public sealed class EmbeddedDataAccess : IEmbeddedDataAccess
     {
-        private const string EMBEDDED_COLORS_ABSOLUTE_FILEPATH = "Win98.Data.Base.Resources.FlatColors.xml";
+        private const string EMBEDDED_COLORS_ABSOLUTE_FILEPATH = "DotNetFramework.Data.Base.Resources.FlatColors.xml";
 
         private readonly IFileSystemAccess _fileSystemAccess;
         private readonly ILogger _logger;

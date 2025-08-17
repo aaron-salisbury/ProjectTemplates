@@ -1,6 +1,6 @@
 ﻿using DotNetFramework.Business;
-using DotNetFramework.Core.DependencyInjection;
-using DotNetFramework.Core.Logging;
+using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 using System.Reflection;
 using System.Windows.Forms;

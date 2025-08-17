@@ -1,8 +1,10 @@
-﻿using DotNetFramework.Core;
-using DotNetFramework.Core.ExtensionHelpers;
-using DotNetFramework.Core.Logging;
+﻿using DotNetFrameworkToolkit.Core;
+using DotNetFrameworkToolkit.Core.Extensions;
+using DotNetFrameworkToolkit.Modules.DataAccess.FileSystem;
+using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using WinXPApp.Base.MVP;
@@ -14,13 +16,15 @@ namespace WinXPApp.Presenters
     {
         private readonly InMemorySinkPNP _logSource;
         private readonly ILogger _logger;
+        private readonly IFileSystemAccess _fileSystemAccess;
         private List<string> _errorLogs;
         private LogsView _view;
 
-        public LogsPresenter(InMemorySinkPNP logSource, ILogger logger)
+        public LogsPresenter(InMemorySinkPNP logSource, ILogger logger, IFileSystemAccess fileSystemAccess)
         {
             _logSource = logSource;
             _logger = logger;
+            _fileSystemAccess = fileSystemAccess;
         }
 
         internal override void Setup(UserControl view)
@@ -65,15 +69,33 @@ namespace WinXPApp.Presenters
 
         private void View_DownloadCommand(object sender, EventArgs e)
         {
-            string appDirectoryPath = IO.GetAppDirectoryPath();
+            ProcessResult<string> appDirectoryResult = _fileSystemAccess.GetAppDirectoryPath();
+            if (!appDirectoryResult.IsSuccessful)
+            {
+                _logger.LogError("Could not get application directory path to write logs.");
+                return;
+            }
+
+            string appDirectoryPath = appDirectoryResult.Value;
             string logsPath = Path.Combine(appDirectoryPath, "Logs");
             string fileName = $"Logs_{DateTimeExtensions.ToTimeStamp(DateTime.Now)}.txt";
 
-            if (IO.WriteFile(_logger, _errorLogs, fileName, logsPath))
+            ProcessResult<bool> writeResult = _fileSystemAccess.WriteFile(_errorLogs, fileName, logsPath);
+            if (writeResult.IsSuccessful)
             {
                 _logger.LogInformation("Wrote log file '{0}' to '{1}'", fileName, logsPath);
 
-                IO.OpenFile(Path.Combine(logsPath, fileName), _logger);
+                try
+                {
+                    Process.Start(new ProcessStartInfo(Path.Combine(logsPath, fileName))
+                    {
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to open file.");
+                }
             }
         }
     }

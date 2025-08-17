@@ -7,8 +7,8 @@
     <ProjectGuid>{1C04E92D-BEA9-4DC4-B877-429A81D9B9A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Win98.Data</RootNamespace>
-    <AssemblyName>Win98.Data</AssemblyName>
+    <RootNamespace>DotNetFramework.Data</RootNamespace>
+    <AssemblyName>DotNetFramework.Data</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
@@ -33,43 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetFrameworkToolkit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\DotNetFrameworkToolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.2.2\lib\net20\obj\Release\DotNetFrameworkToolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.Configuration.Design, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.Configuration.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.Unity.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.Unity.Interception.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.StaticFactory, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\Microsoft.Practices.Unity.StaticFactory.dll</HintPath>
+      <HintPath>..\..\..\packages\PatternsAndPractices.Cryptography.2.0.1\lib\net20\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.1.0\lib\net20\System.Data.SqlServerCe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

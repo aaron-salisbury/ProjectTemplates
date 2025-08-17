@@ -1,4 +1,4 @@
-﻿using DotNetFramework.Core.ComponentModel;
+﻿using DotNetFrameworkToolkit.Modules.ComponentModel;
 using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Drawing;

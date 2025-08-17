@@ -1,6 +1,6 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using DotNetFramework.Business.Modules.Sample.DomainServices;
-using DotNetFramework.Core.ExtensionHelpers;
+using DotNetFrameworkToolkit.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

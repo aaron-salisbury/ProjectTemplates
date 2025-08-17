@@ -1,4 +1,4 @@
-﻿using DotNetFramework.Core.ComponentModel;
+﻿using DotNetFrameworkToolkit.Modules.ComponentModel;
 using System.ComponentModel;
 using System.Drawing;
 using WinXPApp.Base;

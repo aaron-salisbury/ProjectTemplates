@@ -1,83 +1,104 @@
-﻿using DotNetFramework.Core;
-using DotNetFramework.Core.ExtensionHelpers;
-using DotNetFramework.Core.Logging;
+﻿using DotNetFrameworkToolkit.Core;
+using DotNetFrameworkToolkit.Core.Extensions;
+using DotNetFrameworkToolkit.Modules.DataAccess.FileSystem;
+using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using Win98App.Base.MVP;
 using Win98App.Views;
 using static System.Windows.Forms.Control;
 
-namespace Win98App.Presenters
+namespace Win98App.Presenters;
+
+internal class LogsPresenter : Presenter
 {
-    internal class LogsPresenter : Presenter
+    private readonly InMemorySinkPNP _logSource;
+    private readonly ILogger _logger;
+    private readonly IFileSystemAccess _fileSystemAccess;
+    private List<string> _errorLogs;
+    private LogsView _view;
+
+    public LogsPresenter(Navigator navigator, InMemorySinkPNP logSource, ILogger logger, IFileSystemAccess fileSystemAccess) : base(navigator)
     {
-        private readonly InMemorySinkPNP _logSource;
-        private readonly ILogger _logger;
-        private List<string> _errorLogs;
-        private LogsView _view;
+        _logSource = logSource;
+        _logger = logger;
+        _fileSystemAccess = fileSystemAccess;
+    }
 
-        public LogsPresenter(Navigator navigator, InMemorySinkPNP logSource, ILogger logger) : base(navigator)
+    internal override void Display(Control view, ControlCollection window)
+    {
+        _view = (LogsView)view;
+
+        _view.DownloadCommand += View_DownloadCommand;
+
+        RefreshErrors();
+        _logSource.LogEmitted += LogSource_LogEmitted; // So the logs view refreshes with new errors while the logs view is in focus.
+
+        window.Clear();
+        window.Add(_view);
+    }
+
+    internal override void Dismiss()
+    {
+        if (_view != null)
         {
-            _logSource = logSource;
-            _logger = logger;
+            _view.DownloadCommand -= View_DownloadCommand;
         }
 
-        internal override void Display(Control view, ControlCollection window)
+        if (_logSource != null)
         {
-            _view = (LogsView)view;
+            _logSource.LogEmitted -= LogSource_LogEmitted;
+        }
+    }
 
-            _view.DownloadCommand += View_DownloadCommand;
+    private void RefreshErrors()
+    {
+        if (_view != null)
+        {
+            _errorLogs = new List<string>(_logSource.Logs);
 
-            RefreshErrors();
-            _logSource.LogEmitted += LogSource_LogEmitted; // So the logs view refreshes with new errors while the logs view is in focus.
+            _view.UpdateLogs(_errorLogs);
+        }
+    }
 
-            window.Clear();
-            window.Add(_view);
+    private void LogSource_LogEmitted(object sender, LogEmitEventArgs e)
+    {
+        //TODO: Right now the logs view simply joins all the messages into one long sting,
+        //  but could use the data off of LogEmitEventArgs to build a list box or data grid.
+        RefreshErrors();
+    }
+
+    private void View_DownloadCommand(object sender, EventArgs e)
+    {
+        ProcessResult<string> appDirectoryResult = _fileSystemAccess.GetAppDirectoryPath();
+        if (!appDirectoryResult.IsSuccessful)
+        {
+            _logger.LogError(appDirectoryResult.Error, "Could not get app directory path to write logs to.");
+            return;
         }
 
-        internal override void Dismiss()
+        string appDirectoryPath = appDirectoryResult.Value;
+        string logsPath = Path.Combine(appDirectoryPath, "Logs");
+        string fileName = $"Logs_{DateTimeExtensions.ToTimeStamp(DateTime.Now)}.txt";
+
+        ProcessResult<bool> writeResult = _fileSystemAccess.WriteFile(_errorLogs, fileName, logsPath);
+        if (writeResult.IsSuccessful)
         {
-            if (_view != null)
+            _logger.LogInformation("Wrote log file '{0}' to '{1}'", fileName, logsPath);
+
+            try
             {
-                _view.DownloadCommand -= View_DownloadCommand;
+                Process.Start(new ProcessStartInfo(Path.Combine(logsPath, fileName))
+                {
+                    UseShellExecute = true
+                });
             }
-
-            if (_logSource != null)
+            catch (Exception ex)
             {
-                _logSource.LogEmitted -= LogSource_LogEmitted;
-            }
-        }
-
-        private void RefreshErrors()
-        {
-            if (_view != null)
-            {
-                _errorLogs = new List<string>(_logSource.Logs);
-
-                _view.UpdateLogs(_errorLogs);
-            }
-        }
-
-        private void LogSource_LogEmitted(object sender, LogEmitEventArgs e)
-        {
-            //TODO: Right now the logs view simply joins all the messages into one long sting,
-            //  but could use the data off of LogEmitEventArgs to build a list box or data grid.
-            RefreshErrors();
-        }
-
-        private void View_DownloadCommand(object sender, EventArgs e)
-        {
-            string appDirectoryPath = IO.GetAppDirectoryPath();
-            string logsPath = Path.Combine(appDirectoryPath, "Logs");
-            string fileName = $"Logs_{DateTimeExtensions.ToTimeStamp(DateTime.Now)}.txt";
-
-            if (IO.WriteFile(_logger, _errorLogs, fileName, logsPath))
-            {
-                _logger.LogInformation("Wrote log file '{0}' to '{1}'", fileName, logsPath);
-
-                IO.OpenFile(Path.Combine(logsPath, fileName), _logger);
+                _logger.LogError(ex, "Failed to open file.");
             }
         }
     }
