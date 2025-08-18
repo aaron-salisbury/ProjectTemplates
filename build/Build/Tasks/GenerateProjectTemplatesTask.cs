@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using static Build.BuildContext;
 
 namespace Build.Tasks;
 
@@ -19,7 +19,8 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
 {
     public override bool ShouldRun(BuildContext context)
     {
-        return context.Config == BuildConfigurations.Release;
+        return true;
+        //return context.Config == BuildConfigurations.Release;
     }
 
     public override void Run(BuildContext context)
@@ -59,9 +60,9 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
             //    HashSet<string> referencedNames = GetReferencedProjectNamesRecursive(csprojPath, allProjectPathsByName, context);
             //}
 
-            if (!StageFilesForTemplate(csprojPath, templateStagingDir, isSdkStyle, vsixProductId, context))
+            if (!ExportDefaultTemplate(csprojPath, templateStagingDir, isSdkStyle, vsixProductId, context))
             {
-                context.Log.Error($"[FAIL] Failed to export template for project: {csprojPath}");
+                context.Log.Error($"[FAIL] Failed to export default template for project: {csprojPath}");
             }
         }
 
@@ -70,7 +71,7 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
         context.Log.Information($"Generation of project templates complete ({completionTime}s)");
     }
 
-    private static bool StageFilesForTemplate(string csprojPath, string templateStagingDir, bool isSdkStyle, string vsixProductId, BuildContext context)
+    private static bool ExportDefaultTemplate(string csprojPath, string templateStagingDir, bool isSdkStyle, string vsixProductId, BuildContext context)
     {
         try
         {
@@ -230,20 +231,91 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
         return "<No description available>";
     }
 
-    private static List<(string id, string version)> ReadProjectNuGetPackages(string csprojPath, BuildContext context)
+    private static List<(string id, string version)> ReadProjectNuGetPackages(string csprojPath, bool isSdkStyle, BuildContext context)
     {
         List<(string id, string version)> packages = [];
 
         try
         {
             XDocument doc = XDocument.Load(csprojPath);
-            foreach (XElement pkg in doc.Descendants("PackageReference"))
+            XNamespace csprojNamespace = doc.Root?.GetDefaultNamespace() ?? XNamespace.None;
+
+            if (isSdkStyle)
             {
-                string? id = pkg.Attribute("Include")?.Value;
-                string? version = pkg.Attribute("Version")?.Value ?? pkg.Element("Version")?.Value;
-                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(version))
+                // SDK-style: <PackageReference Include="..." Version="..." />
+                foreach (XElement pkg in doc.Descendants("PackageReference"))
                 {
-                    packages.Add((id, version));
+                    string? id = pkg.Attribute("Include")?.Value;
+                    string? version = pkg.Attribute("Version")?.Value ?? pkg.Element("Version")?.Value;
+                    if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(version))
+                    {
+                        packages.Add((id, version));
+                    }
+                }
+            }
+            else
+            {
+                // Legacy: <Reference Include="..."><HintPath>packages\PackageId.Version\lib\...</HintPath></Reference>
+                foreach (XElement reference in doc.Descendants(csprojNamespace + "Reference"))
+                {
+                    XElement? hintPath = reference.Element(csprojNamespace + "HintPath");
+                    if (hintPath != null)
+                    {
+                        string path = hintPath.Value.Replace('/', '\\');
+                        int packagesIdx = path.IndexOf("packages\\", StringComparison.OrdinalIgnoreCase);
+                        if (packagesIdx >= 0)
+                        {
+                            // Example: packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll
+                            string[] parts = path[(packagesIdx + 9)..].Split('\\');
+                            if (parts.Length > 0)
+                            {
+                                string idAndVersion = parts[0]; // e.g., Newtonsoft.Json.12.0.3
+                                // Extract ID and version.
+                                StringBuilder versionBuilder = new();
+                                int i = idAndVersion.Length - 1;
+                                bool foundDot = false;
+
+                                while (i >= 0)
+                                {
+                                    char c = idAndVersion[i];
+                                    if (char.IsDigit(c) || c == '.')
+                                    {
+                                        versionBuilder.Insert(0, c);
+                                        if (c == '.')
+                                        {
+                                            foundDot = true;
+                                        }
+                                        i--;
+                                    }
+                                    else
+                                    {
+                                        // Optionally allow prerelease labels (e.g., -beta).
+                                        if (c == '-' && foundDot && i < idAndVersion.Length - 1 && char.IsLetterOrDigit(idAndVersion[i + 1]))
+                                        {
+                                            versionBuilder.Insert(0, c);
+                                            i--;
+                                            // Continue collecting prerelease label.
+                                            while (i >= 0 && (char.IsLetterOrDigit(idAndVersion[i]) || idAndVersion[i] == '.' || idAndVersion[i] == '-'))
+                                            {
+                                                versionBuilder.Insert(0, idAndVersion[i]);
+                                                i--;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+
+                                // Remove trailing dot if present
+                                string version = versionBuilder.ToString().Trim('.');
+                                string id = idAndVersion[..(i + 1)];
+
+                                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(version))
+                                {
+                                    packages.Add((id, version));
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -260,29 +332,30 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
         string projectName = Path.GetFileNameWithoutExtension(csprojPath);
         string description = ReadProjectDescription(csprojPath, context);
         string csprojFileName = Path.GetFileName(csprojPath);
-        IEnumerable<(string id, string version)> nugetPackages = ReadProjectNuGetPackages(csprojPath, context);
+        IEnumerable<(string id, string version)> nugetPackages = ReadProjectNuGetPackages(csprojPath, isSdkStyle, context);
 
         // Build the folder/file structure recursively
         DTOs.Project BuildProject(string dir)
         {
-            var project = new DTOs.Project
+            DTOs.Project project = new()
             {
                 TargetFileName = csprojFileName,
                 File = csprojFileName,
                 ReplaceParameters = true,
-                Items = new List<object>()
+                Items = []
             };
 
-            foreach (var folder in Directory.GetDirectories(dir))
+            foreach (string folder in Directory.GetDirectories(dir))
             {
                 project.Items.Add(BuildFolder(folder));
             }
-            foreach (var file in Directory.GetFiles(dir))
+            foreach (string file in Directory.GetFiles(dir))
             {
-                var fileName = Path.GetFileName(file);
-                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase) ||
-                    fileName.Equals("__TemplateIcon.ico", StringComparison.OrdinalIgnoreCase))
+                string fileName = Path.GetFileName(file);
+                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
+                {
                     continue;
+                }
 
                 project.Items.Add(new DTOs.ProjectItem
                 {
@@ -296,24 +369,25 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
 
         DTOs.Folder BuildFolder(string dir)
         {
-            var folderName = Path.GetFileName(dir);
-            var folder = new DTOs.Folder
+            string folderName = Path.GetFileName(dir);
+            DTOs.Folder folder = new()
             {
                 Name = folderName,
                 TargetFolderName = folderName,
-                Items = new List<object>()
+                Items = []
             };
 
-            foreach (var subfolder in Directory.GetDirectories(dir))
+            foreach (string subfolder in Directory.GetDirectories(dir))
             {
                 folder.Items.Add(BuildFolder(subfolder));
             }
-            foreach (var file in Directory.GetFiles(dir))
+            foreach (string file in Directory.GetFiles(dir))
             {
-                var fileName = Path.GetFileName(file);
-                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase) ||
-                    fileName.Equals("__TemplateIcon.ico", StringComparison.OrdinalIgnoreCase))
+                string fileName = Path.GetFileName(file);
+                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
+                {
                     continue;
+                }
 
                 folder.Items.Add(new DTOs.ProjectItem
                 {
@@ -325,8 +399,8 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
             return folder;
         }
 
-        // Build the root VSTemplate DTO
-        VSTemplate vstemplate = new()
+        // Build the root VSTemplate DTO.
+        VSTemplate vsTemplate = new()
         {
             Version = "3.0.0",
             Type = "Project",
@@ -350,33 +424,34 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
             }
         };
 
-        // Only add wizard elements for non-SDK-style projects
+        // Only add wizard elements for non-SDK-style projects.
         if (!isSdkStyle)
         {
-            vstemplate.WizardExtension = new WizardExtension
+            vsTemplate.WizardExtension = new WizardExtension
             {
                 Assembly = "NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
                 FullClassName = "NuGet.VisualStudio.TemplateWizard"
             };
-            vstemplate.WizardData = new WizardData //TODO: This doesn't seem to be working correctly. I checked the one for the DotNetFramework.Data and it was null.
+            vsTemplate.WizardData = new WizardData
             {
                 Packages = nugetPackages.Any()
                     ? new DTOs.Packages
                     {
                         repository = "extension",
                         repositoryId = vsixProductId,
-                        PackageList = nugetPackages.Select(pkg => new DTOs.Package { id = pkg.id, version = pkg.version }).ToList()
+                        PackageList = [.. nugetPackages.Select(pkg => new DTOs.Package { id = pkg.id, version = pkg.version })]
                     }
                     : null
             };
         }
 
-        // Serialize to XML
-        XmlSerializerNamespaces ns = new();
-        ns.Add("", "http://schemas.microsoft.com/developer/vstemplate/2005");
+        // Serialize to XML.
+        XmlSerializerNamespaces xmlNamespace = new();
+        xmlNamespace.Add("", "http://schemas.microsoft.com/developer/vstemplate/2005");
         XmlSerializer serializer = new(typeof(DTOs.VSTemplate));
-        using StringWriter sw = new();
-        serializer.Serialize(sw, vstemplate, ns);
-        return sw.ToString();
+        using StringWriter xmlWriter = new();
+        serializer.Serialize(xmlWriter, vsTemplate, xmlNamespace);
+
+        return xmlWriter.ToString();
     }
 }

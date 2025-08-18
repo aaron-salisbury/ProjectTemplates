@@ -96,7 +96,7 @@ public class Packages
     [XmlAttribute]
     public required string repositoryId { get; set; }
     [XmlElement("package")]
-    public List<Package> PackageList { get; set; } = new();
+    public List<Package> PackageList { get; set; } = [];
 }
 
 public class Package
