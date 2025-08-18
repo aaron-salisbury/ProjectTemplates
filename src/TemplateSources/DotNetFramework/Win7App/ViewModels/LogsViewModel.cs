@@ -22,7 +22,7 @@ public class LogsViewModel : BaseViewModel
     {
         get { return _errorLogs; }
         set
-        { 
+        {
             SetField(ref _errorLogs, value, nameof(ErrorLogs));
             CombinedErrorMessage = string.Join(Environment.NewLine, [.. value]);
         }

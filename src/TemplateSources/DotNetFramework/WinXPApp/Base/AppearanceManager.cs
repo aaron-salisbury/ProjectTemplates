@@ -15,7 +15,7 @@ namespace WinXPApp.Base
         {
             get { return _currentTheme; }
             set { _currentTheme = value; StaticRaisePropertyChanged("CurrentTheme"); }
-                
+
         }
 
         private static MetroColorStyle _currentStyle;

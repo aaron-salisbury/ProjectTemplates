@@ -46,7 +46,7 @@ public class LineSorterViewModel : BaseViewModel
     {
         _sampleToolsService = sampleToolsService;
         ExecuteTaskCommand = new RelayCommand(async () => await InitiateLongRunningProcessAsync(Sort, dispatcher), () => !IsBusy);
-        
+
         _sortTypes = Enum.GetValues(typeof(LineSorter.SortTypes))
             .Cast<LineSorter.SortTypes>()
             .ToList();
