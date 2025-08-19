@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -94,8 +95,9 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
             // Copy all files except bin/obj/.vs/.git
             CopyProjectFiles(projectDir, templateStagingDir);
 
-            // Replace all usages of the project name in files with $safeprojectname$
+            // Apply parameters.
             ApplySafeProjectNameToFiles(csprojPath, templateStagingDir);
+            ReplaceProjectGuidWithTemplateParameter(Path.Combine(templateStagingDir, Path.GetFileName(csprojPath)), isSdkStyle);
 
             // Create the .vstemplate file.
             string vsTemplateXML = CreateVSTemplateContents(csprojPath, templateStagingDir, isSdkStyle, context);
@@ -177,11 +179,13 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
 
     private static void ApplySafeProjectNameToFiles(string csprojPath, string stagingDirectory)
     {
-        string fullProjectName = Path.GetFileNameWithoutExtension(csprojPath);
-
         // We want something like MyCoolApp.Presentation.Web to become $safeprojectname$.Presentation.Web
+        string fullProjectName = Path.GetFileNameWithoutExtension(csprojPath);
         int firstDot = fullProjectName.IndexOf('.');
         string projectNamePrefix = firstDot > 0 ? fullProjectName[..firstDot] : fullProjectName;
+
+        // Regex: match the prefix only if followed by a non-word char, dot, semicolon, or end of string.
+        string pattern = $@"\b{Regex.Escape(projectNamePrefix)}(?=[\s\.;:,<>\[\]\(\)""'/\\]|$)";
 
         foreach (string file in Directory.EnumerateFiles(stagingDirectory, "*", SearchOption.AllDirectories))
         {
@@ -191,7 +195,7 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
                 // Only do replacement if the file appears to be text.
                 if (!content.Contains('\0')) // Crude check for binary.
                 {
-                    string replaced = content.Replace(projectNamePrefix, "$safeprojectname$", StringComparison.OrdinalIgnoreCase);
+                    string replaced = Regex.Replace(content, pattern, "$safeprojectname$", RegexOptions.IgnoreCase);
                     if (!ReferenceEquals(content, replaced))
                     {
                         File.WriteAllText(file, replaced);
@@ -203,6 +207,26 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
                 // Ignore files that can't be read as text.
                 continue;
             }
+        }
+    }
+
+    private static void ReplaceProjectGuidWithTemplateParameter(string csprojPath, bool isSdkStyle)
+    {
+        if (isSdkStyle)
+        {
+            return; // SDK-style projects do not rely on a ProjectGuid element.
+        }
+
+        XDocument doc = XDocument.Load(csprojPath);
+
+        // Find the ProjectGuid element regardless of namespace
+        XElement? guidElement = doc.Descendants()
+            .FirstOrDefault(e => e.Name.LocalName == "ProjectGuid");
+
+        if (guidElement != null)
+        {
+            guidElement.Value = "{$guid1$}";
+            doc.Save(csprojPath);
         }
     }
 

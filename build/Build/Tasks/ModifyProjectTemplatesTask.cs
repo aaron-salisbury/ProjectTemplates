@@ -34,7 +34,12 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
 
         string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
         string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
-        HashSet<string> projectNameCache = GetAllProjectNames(sourceDir);
+
+        // Build a map of project name to csproj path for all projects. Used to recursively find referenced projects.
+        Dictionary<string, string> fullProjectPathsByName = allProjectFiles.ToDictionary(
+            path => Path.GetFileNameWithoutExtension(path),
+            path => Path.GetFullPath(path),
+            StringComparer.OrdinalIgnoreCase);
 
         foreach (string csprojPath in allProjectFiles)
         {
@@ -57,31 +62,7 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
             ZipFile.ExtractToDirectory(zipPath, stagingDir);
 
             // In .cs files, modify 'using' statements to referenced projects to use parameters.
-            //TODO: This is just pseudo-code, needs to be implemented properly.
-            foreach (string csFile in Directory.GetFiles(stagingDir, "*.cs", SearchOption.AllDirectories))
-            {
-                string text = File.ReadAllText(csFile);
-                bool changed = false;
-
-                foreach (string cachedProjectName in projectNameCache)
-                {
-                    // Replace using statements like: using ProjectName;
-                    string pattern = $@"using\s+{Regex.Escape(cachedProjectName)};";
-                    string replacement = "using $ext_safeprojectname$;";
-                    string newText = System.Text.RegularExpressions.Regex.Replace(text, pattern, replacement);
-
-                    if (!ReferenceEquals(newText, text))
-                    {
-                        text = newText;
-                        changed = true;
-                    }
-                }
-
-                if (changed)
-                {
-                    File.WriteAllText(csFile, text);
-                }
-            }
+            ApplySafeExternalUsingsToFiles(csprojPath, stagingDir, fullProjectPathsByName, context);
 
             // In the .csproj file:
             //  - Modify 'Include' attribute & child 'Name' element of ProjectReferences to referenced projects to use parameters.
@@ -93,57 +74,78 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
             string vsixProductId = ReadVSIXManifestId(sourceDir);
         }
 
-
-
-
-
-
-        //// Gather all .csproj files in the repo.
-        //string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
-
-        //string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
-
-        //// Exclude projects being released on their own.
-        //HashSet<string> excludedPaths = context.ReleaseProjects.Select(rp => rp.FilePathAbsolute).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        //List<string> projectsToTemplate = [.. allProjectFiles.Where(p => !excludedPaths.Contains(p))];
-
-        //// Build a map of project name to csproj path for all projects.
-        ////Dictionary<string, string> allProjectPathsByName = projectsToTemplate.ToDictionary(
-        ////    path => Path.GetFileNameWithoutExtension(path),
-        ////    path => Path.GetFullPath(path),
-        ////    StringComparer.OrdinalIgnoreCase);
-
-        //// Generate a default template and copy it to the output directory.
-        //foreach (string csprojPath in projectsToTemplate)
-        //{
-        //    bool isApplication = IsProjectAnApplication(csprojPath, context);
-        //    bool isSdkStyle = BuildContext.IsSdkStyleProject(csprojPath);
-        //    string outputDir = BuildContext.DetermineAbsoluteOutputPath(csprojPath, isSdkStyle, context.Config, context);
-        //    string projectName = Path.GetFileNameWithoutExtension(csprojPath);
-        //    string templateStagingDir = Path.Combine(outputDir, projectName);
-
-        //    //TODO: Applications should be tracked and then round up child template to group together.
-        //    //if (isApplication)
-        //    //{
-        //    //    HashSet<string> referencedNames = GetReferencedProjectNamesRecursive(csprojPath, allProjectPathsByName, context);
-        //    //}
-
-        //}
-
-
-
-
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
         context.Log.Information($"Modification of project templates complete ({completionTime}s)");
     }
 
-    private static HashSet<string> GetAllProjectNames(string sourceDir)
+    private static void ApplySafeExternalUsingsToFiles(string csprojPath, string stagingDirectory, Dictionary<string, string> fullProjectPathsByName, BuildContext context)
     {
-        string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
+        HashSet<string> referencedProjectPrefixes = [.. GetReferencedProjectNamesRecursive(csprojPath, fullProjectPathsByName, context)];
 
-        return new HashSet<string>(allProjectFiles
-            .Select(p => Path.GetFileNameWithoutExtension(p)), StringComparer.OrdinalIgnoreCase);
+        // In .cs files, modify 'using' statements to referenced projects to use parameters.
+        foreach (string csFile in Directory.GetFiles(stagingDirectory, "*.cs", SearchOption.AllDirectories))
+        {
+            string text = File.ReadAllText(csFile);
+            bool changed = false;
+
+            foreach (string referencedProjectPrefix in referencedProjectPrefixes)
+            {
+                // Pattern: using ReferencedPrefix(.AnythingElse);
+                string pattern = $@"using\s+{Regex.Escape(referencedProjectPrefix)}(\.[\w\.]*)?;";
+                string newText = Regex.Replace(
+                    text,
+                    pattern,
+                    m => $"using $ext_safeprojectname${m.Groups[1].Value};",
+                    RegexOptions.None
+                );
+
+                if (!ReferenceEquals(newText, text))
+                {
+                    text = newText;
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                File.WriteAllText(csFile, text);
+            }
+        }
+    }
+
+    private static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> fullProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)
+    {
+        discoveredNames ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        try
+        {
+            XDocument doc = XDocument.Load(csprojPath);
+            IEnumerable<string> projectReferences = doc.Descendants()
+                .Where(e => e.Name.LocalName == "ProjectReference")
+                .Select(pr => pr.Attribute("Include")?.Value)
+                .Where(path => !string.IsNullOrEmpty(path))
+                .Select(path => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(csprojPath)!, path!)));
+
+            foreach (var referencedCsproj in projectReferences)
+            {
+                string referencedName = Path.GetFileNameWithoutExtension(referencedCsproj);
+
+                if (discoveredNames.Add(referencedName))
+                {
+                    if (fullProjectPathsByName.TryGetValue(referencedName, out var referencedCsprojPath))
+                    {
+                        GetReferencedProjectNamesRecursive(referencedCsprojPath, fullProjectPathsByName, context, discoveredNames);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            context.Log.Error($"Could not parse references for {csprojPath}: {ex.Message}");
+        }
+
+        return discoveredNames;
     }
 
 
@@ -169,40 +171,6 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
             context.Log.Error($"Could not determine OutputType for {csprojPath}: {ex.Message}");
             return false;
         }
-    }
-
-    private static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> allProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)
-    {
-        discoveredNames ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-        try
-        {
-            XDocument doc = XDocument.Load(csprojPath);
-            IEnumerable<string> projectReferences = doc.Descendants("ProjectReference")
-                .Select(pr => pr.Attribute("Include")?.Value)
-                .Where(path => !string.IsNullOrEmpty(path))
-                .Select(path => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(csprojPath)!, path!)));
-
-            foreach (var referencedCsproj in projectReferences)
-            {
-                // Find the project name from the path.
-                string? referencedName = allProjectPathsByName
-                    .FirstOrDefault(kvp => string.Equals(kvp.Value, referencedCsproj, StringComparison.OrdinalIgnoreCase))
-                    .Key;
-
-                if (referencedName != null && discoveredNames.Add(referencedName))
-                {
-                    // Recurse into the referenced project.
-                    GetReferencedProjectNamesRecursive(referencedCsproj, allProjectPathsByName, context, discoveredNames);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not parse references for {csprojPath}: {ex.Message}");
-        }
-
-        return discoveredNames;
     }
 
     private static string ReadVSIXManifestId(string rootDirectory)
