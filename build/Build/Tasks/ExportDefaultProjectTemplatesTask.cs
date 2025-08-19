@@ -90,21 +90,12 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
             {
                 Directory.Delete(templateStagingDir, recursive: true);
             }
-                
-            // Copy all files except bin/obj/.vs/.git
-            foreach (string file in Directory.EnumerateFiles(projectDir, "*", SearchOption.AllDirectories))
-            {
-                string relativePath = Path.GetRelativePath(projectDir, file);
-                if (relativePath.StartsWith("bin") || relativePath.StartsWith("obj") ||
-                    relativePath.StartsWith(".vs") || relativePath.StartsWith(".git"))
-                {
-                    continue;
-                }
 
-                string destinationFile = Path.Combine(templateStagingDir, relativePath);
-                Directory.CreateDirectory(Path.GetDirectoryName(destinationFile)!);
-                File.Copy(file, destinationFile, overwrite: true);
-            }
+            // Copy all files except bin/obj/.vs/.git
+            CopyProjectFiles(projectDir, templateStagingDir);
+
+            // Replace all usages of the project name in files with $safeprojectname$
+            ApplySafeProjectNameToFiles(csprojPath, templateStagingDir);
 
             // Create the .vstemplate file.
             string vsTemplateXML = CreateVSTemplateContents(csprojPath, templateStagingDir, isSdkStyle, context);
@@ -164,6 +155,55 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
         }
 
         Directory.Move(tempDir, fullPathToNew);
+    }
+
+    private static void CopyProjectFiles(string projectDirectory,string stagingDirectory)
+    {
+        // Copy all files except bin/obj/.vs/.git
+        foreach (string file in Directory.EnumerateFiles(projectDirectory, "*", SearchOption.AllDirectories))
+        {
+            string relativePath = Path.GetRelativePath(projectDirectory, file);
+            if (relativePath.StartsWith("bin") || relativePath.StartsWith("obj") ||
+                relativePath.StartsWith(".vs") || relativePath.StartsWith(".git"))
+            {
+                continue;
+            }
+
+            string destinationFile = Path.Combine(stagingDirectory, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(destinationFile)!);
+            File.Copy(file, destinationFile, overwrite: true);
+        }
+    }
+
+    private static void ApplySafeProjectNameToFiles(string csprojPath, string stagingDirectory)
+    {
+        string fullProjectName = Path.GetFileNameWithoutExtension(csprojPath);
+
+        // We want something like MyCoolApp.Presentation.Web to become $safeprojectname$.Presentation.Web
+        int firstDot = fullProjectName.IndexOf('.');
+        string projectNamePrefix = firstDot > 0 ? fullProjectName[..firstDot] : fullProjectName;
+
+        foreach (string file in Directory.EnumerateFiles(stagingDirectory, "*", SearchOption.AllDirectories))
+        {
+            try
+            {
+                string content = File.ReadAllText(file);
+                // Only do replacement if the file appears to be text.
+                if (!content.Contains('\0')) // Crude check for binary.
+                {
+                    string replaced = content.Replace(projectNamePrefix, "$safeprojectname$", StringComparison.OrdinalIgnoreCase);
+                    if (!ReferenceEquals(content, replaced))
+                    {
+                        File.WriteAllText(file, replaced);
+                    }
+                }
+            }
+            catch
+            {
+                // Ignore files that can't be read as text.
+                continue;
+            }
+        }
     }
 
     private static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> allProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)

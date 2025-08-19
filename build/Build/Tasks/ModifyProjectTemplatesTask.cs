@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -33,6 +34,7 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
 
         string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
         string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
+        HashSet<string> projectNameCache = GetAllProjectNames(sourceDir);
 
         foreach (string csprojPath in allProjectFiles)
         {
@@ -55,6 +57,31 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
             ZipFile.ExtractToDirectory(zipPath, stagingDir);
 
             // In .cs files, modify 'using' statements to referenced projects to use parameters.
+            //TODO: This is just pseudo-code, needs to be implemented properly.
+            foreach (string csFile in Directory.GetFiles(stagingDir, "*.cs", SearchOption.AllDirectories))
+            {
+                string text = File.ReadAllText(csFile);
+                bool changed = false;
+
+                foreach (string cachedProjectName in projectNameCache)
+                {
+                    // Replace using statements like: using ProjectName;
+                    string pattern = $@"using\s+{Regex.Escape(cachedProjectName)};";
+                    string replacement = "using $ext_safeprojectname$;";
+                    string newText = System.Text.RegularExpressions.Regex.Replace(text, pattern, replacement);
+
+                    if (!ReferenceEquals(newText, text))
+                    {
+                        text = newText;
+                        changed = true;
+                    }
+                }
+
+                if (changed)
+                {
+                    File.WriteAllText(csFile, text);
+                }
+            }
 
             // In the .csproj file:
             //  - Modify 'Include' attribute & child 'Name' element of ProjectReferences to referenced projects to use parameters.
@@ -110,6 +137,16 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
         context.Log.Information($"Modification of project templates complete ({completionTime}s)");
     }
+
+    private static HashSet<string> GetAllProjectNames(string sourceDir)
+    {
+        string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
+
+        return new HashSet<string>(allProjectFiles
+            .Select(p => Path.GetFileNameWithoutExtension(p)), StringComparer.OrdinalIgnoreCase);
+    }
+
+
 
     private static bool IsProjectAnApplication(string csprojPath, BuildContext context)
     {
