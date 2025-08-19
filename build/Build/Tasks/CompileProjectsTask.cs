@@ -1,13 +1,9 @@
-﻿using Cake.Common.IO;
-using Cake.Common.Tools.DotNet;
+﻿using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.DotNet.Build;
 using Cake.Common.Tools.MSBuild;
 using Cake.Core.Diagnostics;
-using Cake.Core.IO;
 using Cake.Frosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace Build.Tasks;
 
@@ -19,20 +15,20 @@ public sealed class CompileProjectsTask : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
-        string srcDir = System.IO.Path.Combine(context.AbsolutePathToRepo, "src");
-        FilePathCollection csprojFiles = context.GetFiles(System.IO.Path.Combine(srcDir, "**/*.csproj"));
+        string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
+        string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
 
-        // Exclude any .csproj under the ProjectTemplates folder.
-        // The project itself will be cpompiled after templates & packages have been added to it,
-        // plus it will have many csproj files in it from the template and those should't be compiled.
-        List<FilePath> filteredCsprojFiles = [.. csprojFiles.Where(csproj =>
-        !csproj.FullPath.Replace('\\', '/').Contains("/ProjectTemplates/", StringComparison.OrdinalIgnoreCase))];
-
-        foreach (FilePath csproj in filteredCsprojFiles)
+        foreach (string csprojPath in allProjectFiles)
         {
-            if (BuildContext.IsSdkStyleProject(csproj.FullPath))
+            if (string.Equals(Path.GetFileNameWithoutExtension(csprojPath), "ProjectTemplates"))
             {
-                context.DotNetBuild(csproj.FullPath, new DotNetBuildSettings
+                // Exclude ProjectTemplates VS extension project as it will be compiled after templates & packages have been added to it.
+                continue;
+            }
+
+            if (BuildContext.IsSdkStyleProject(csprojPath))
+            {
+                context.DotNetBuild(csprojPath, new DotNetBuildSettings
                 {
                     Configuration = context.Config.ToString(),
                     NoRestore = true
@@ -40,7 +36,7 @@ public sealed class CompileProjectsTask : FrostingTask<BuildContext>
             }
             else
             {
-                context.MSBuild(csproj.FullPath, new MSBuildSettings
+                context.MSBuild(csprojPath, new MSBuildSettings
                 {
                     Target = "Build",
                     Configuration = context.Config.ToString(),

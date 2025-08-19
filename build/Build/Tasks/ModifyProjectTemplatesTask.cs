@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -12,10 +13,10 @@ using System.Xml.Serialization;
 
 namespace Build.Tasks;
 
-[TaskName("Generate Project Templates")]
-[IsDependentOn(typeof(CompileProjectsTask))]
-[TaskDescription("Generates project template from every project in the source directory, besides the VS extetnsion project.")]
-public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
+[TaskName("Modify Project Templates")]
+[IsDependentOn(typeof(ExportDefaultProjectTemplatesTask))]
+[TaskDescription("Modify the generated default project templates.")]
+public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
 {
     public override bool ShouldRun(BuildContext context)
     {
@@ -25,104 +26,89 @@ public sealed class GenerateProjectTemplatesTask : FrostingTask<BuildContext>
 
     public override void Run(BuildContext context)
     {
-        // ref: https://learn.microsoft.com/en-us/dotnet/core/tutorials/cli-templates-create-project-template
+        // The default generation process is designed for a single project only. We need to make edits in order to preserve NuGet packages and project references.
 
         Stopwatch stopwatch = Stopwatch.StartNew();
-        context.Log.Information($"Generating project templates...");
+        context.Log.Information($"Modifying project templates...");
 
-        // Gather all .csproj files in the repo.
-        string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
         string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
-        string vsixProductId = ReadVSIXManifestId(sourceDir);
         string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
 
-        // Exclude projects being released on their own.
-        HashSet<string> excludedPaths = context.ReleaseProjects.Select(rp => rp.FilePathAbsolute).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        List<string> projectsToTemplate = [.. allProjectFiles.Where(p => !excludedPaths.Contains(p))];
-
-        // Build a map of project name to csproj path for all projects.
-        //Dictionary<string, string> allProjectPathsByName = projectsToTemplate.ToDictionary(
-        //    path => Path.GetFileNameWithoutExtension(path),
-        //    path => Path.GetFullPath(path),
-        //    StringComparer.OrdinalIgnoreCase);
-
-        // Generate a default template and copy it to the output directory.
-        foreach (string csprojPath in projectsToTemplate)
+        foreach (string csprojPath in allProjectFiles)
         {
-            bool isApplication = IsProjectAnApplication(csprojPath, context);
             bool isSdkStyle = BuildContext.IsSdkStyleProject(csprojPath);
             string outputDir = BuildContext.DetermineAbsoluteOutputPath(csprojPath, isSdkStyle, context.Config, context);
-            string templateStagingDir = Path.Combine(outputDir, "ProjectTemplate");
+            string projectName = Path.GetFileNameWithoutExtension(csprojPath);
+            string zipPath = Path.Combine(outputDir, projectName + ".zip");
 
-            //TODO: Applications should be tracked and then round up child template to group together.
-            //if (isApplication)
-            //{
-            //    HashSet<string> referencedNames = GetReferencedProjectNamesRecursive(csprojPath, allProjectPathsByName, context);
-            //}
-
-            if (!ExportDefaultTemplate(csprojPath, templateStagingDir, isSdkStyle, vsixProductId, context))
+            if (!File.Exists(zipPath))
             {
-                context.Log.Error($"[FAIL] Failed to export default template for project: {csprojPath}");
+                continue;
             }
+
+            // Unzip template to a staging directory.
+            string stagingDir = Path.Combine(outputDir, projectName + "_staging");
+            if (Directory.Exists(stagingDir))
+            {
+                Directory.Delete(stagingDir, recursive: true);
+            }
+            ZipFile.ExtractToDirectory(zipPath, stagingDir);
+
+            // In .cs files, modify 'using' statements to referenced projects to use parameters.
+
+            // In the .csproj file:
+            //  - Modify 'Include' attribute & child 'Name' element of ProjectReferences to referenced projects to use parameters.
+            //  - If not an SDK-style project, update the path to any NuGet packages that later we will include in the VSIX project.
+
+            // In the .vstemplate file:
+            //  - Update ProjectItem elements for files w/ markup namespaces (such as XAML or manifest) with ReplaceParameters parameter values of 'false' to 'true'.
+            //  - If not an SDK-style project, add wizard elements.
+            string vsixProductId = ReadVSIXManifestId(sourceDir);
         }
+
+
+
+
+
+
+        //// Gather all .csproj files in the repo.
+        //string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
+
+        //string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
+
+        //// Exclude projects being released on their own.
+        //HashSet<string> excludedPaths = context.ReleaseProjects.Select(rp => rp.FilePathAbsolute).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        //List<string> projectsToTemplate = [.. allProjectFiles.Where(p => !excludedPaths.Contains(p))];
+
+        //// Build a map of project name to csproj path for all projects.
+        ////Dictionary<string, string> allProjectPathsByName = projectsToTemplate.ToDictionary(
+        ////    path => Path.GetFileNameWithoutExtension(path),
+        ////    path => Path.GetFullPath(path),
+        ////    StringComparer.OrdinalIgnoreCase);
+
+        //// Generate a default template and copy it to the output directory.
+        //foreach (string csprojPath in projectsToTemplate)
+        //{
+        //    bool isApplication = IsProjectAnApplication(csprojPath, context);
+        //    bool isSdkStyle = BuildContext.IsSdkStyleProject(csprojPath);
+        //    string outputDir = BuildContext.DetermineAbsoluteOutputPath(csprojPath, isSdkStyle, context.Config, context);
+        //    string projectName = Path.GetFileNameWithoutExtension(csprojPath);
+        //    string templateStagingDir = Path.Combine(outputDir, projectName);
+
+        //    //TODO: Applications should be tracked and then round up child template to group together.
+        //    //if (isApplication)
+        //    //{
+        //    //    HashSet<string> referencedNames = GetReferencedProjectNamesRecursive(csprojPath, allProjectPathsByName, context);
+        //    //}
+
+        //}
+
+
+
 
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
-        context.Log.Information($"Generation of project templates complete ({completionTime}s)");
-    }
-
-    private static bool ExportDefaultTemplate(string csprojPath, string templateStagingDir, bool isSdkStyle, string vsixProductId, BuildContext context)
-    {
-        try
-        {
-            string projectDir = Path.GetDirectoryName(csprojPath)!;
-
-            // Clean up any previous staging
-            if (Directory.Exists(templateStagingDir))
-            {
-                Directory.Delete(templateStagingDir, recursive: true);
-            }
-                
-            // Copy all files except bin/obj/.vs/.git
-            foreach (string file in Directory.EnumerateFiles(projectDir, "*", SearchOption.AllDirectories))
-            {
-                string relativePath = Path.GetRelativePath(projectDir, file);
-                if (relativePath.StartsWith("bin") || relativePath.StartsWith("obj") ||
-                    relativePath.StartsWith(".vs") || relativePath.StartsWith(".git"))
-                {
-                    continue;
-                }
-
-                string destFile = Path.Combine(templateStagingDir, relativePath);
-                Directory.CreateDirectory(Path.GetDirectoryName(destFile)!);
-                File.Copy(file, destFile, overwrite: true);
-            }
-
-            // Create the .vstemplate file.
-            string vsTemplateXML = CreateVSTemplateContents(csprojPath, templateStagingDir, isSdkStyle, vsixProductId, context);
-            string vstemplatePath = Path.Combine(templateStagingDir, "MyTemplate.vstemplate");
-            File.WriteAllText(vstemplatePath, vsTemplateXML);
-
-            // Copy default template icon to staging directory.
-            string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
-            string iconSourcePath = Path.Combine(contentDir, "__TemplateIcon.ico");
-            string iconDestPath = Path.Combine(templateStagingDir, "__TemplateIcon.ico");
-            if (File.Exists(iconSourcePath))
-            {
-                File.Copy(iconSourcePath, iconDestPath, overwrite: true);
-            }
-            else
-            {
-                context.Log.Error($"Default template icon file not found at {iconSourcePath}");
-            }
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"[FAIL] Exception while staging template for {csprojPath}: {ex.Message}");
-            return false;
-        }
+        context.Log.Information($"Modification of project templates complete ({completionTime}s)");
     }
 
     private static bool IsProjectAnApplication(string csprojPath, BuildContext context)
