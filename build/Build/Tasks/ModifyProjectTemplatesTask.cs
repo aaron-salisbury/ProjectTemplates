@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -62,56 +63,38 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
             ZipFile.ExtractToDirectory(zipPath, stagingDir);
 
             // In .cs files, modify 'using' statements to referenced projects to use parameters.
-            ApplySafeExternalUsingsToFiles(csprojPath, stagingDir, fullProjectPathsByName, context);
+            HashSet<string> referencedProjectNames = [.. GetReferencedProjectNamesRecursive(csprojPath, fullProjectPathsByName, context)];
+            ApplySafeExternalUsings(csprojPath, stagingDir, referencedProjectNames, context);
 
             // In the .csproj file:
             //  - Modify 'Include' attribute & child 'Name' element of ProjectReferences to referenced projects to use parameters.
             //  - If not an SDK-style project, update the path to any NuGet packages that later we will include in the VSIX project.
+            string stagedCsprojPath = Path.Combine(stagingDir, Path.GetFileName(csprojPath));
+            ApplySafeExternalProjectReferences(stagedCsprojPath, referencedProjectNames, context);
+            //StepUpNuGetPackageHintPaths(stagedCsprojPath, isSdkStyle); //TODO: Not sure if I actually need this; need to test.
 
             // In the .vstemplate file:
-            //  - Update ProjectItem elements for files w/ markup namespaces (such as XAML or manifest) with ReplaceParameters parameter values of 'false' to 'true'.
+            //  - Update ProjectItem elements for files w/ markup namespaces (such as XAML or manifest) with ReplaceParameters parameter values of 'false' to 'true'. *NOTE - Export task already does this.*
             //  - If not an SDK-style project, add wizard elements.
             string vsixProductId = ReadVSIXManifestId(sourceDir);
+            string vstemplatePath = Path.Combine(stagingDir, "MyTemplate.vstemplate");
+            AddWizardElementsToVSTemplate(csprojPath, vsixProductId, vstemplatePath, isSdkStyle, context);
+
+            // Re-zip the modified template.
+            if (File.Exists(zipPath))
+            {
+                File.Delete(zipPath);
+            }
+            ZipFile.CreateFromDirectory(stagingDir, zipPath);
+            if (Directory.Exists(stagingDir))
+            {
+                Directory.Delete(stagingDir, recursive: true);
+            }
         }
 
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
         context.Log.Information($"Modification of project templates complete ({completionTime}s)");
-    }
-
-    private static void ApplySafeExternalUsingsToFiles(string csprojPath, string stagingDirectory, Dictionary<string, string> fullProjectPathsByName, BuildContext context)
-    {
-        HashSet<string> referencedProjectPrefixes = [.. GetReferencedProjectNamesRecursive(csprojPath, fullProjectPathsByName, context)];
-
-        // In .cs files, modify 'using' statements to referenced projects to use parameters.
-        foreach (string csFile in Directory.GetFiles(stagingDirectory, "*.cs", SearchOption.AllDirectories))
-        {
-            string text = File.ReadAllText(csFile);
-            bool changed = false;
-
-            foreach (string referencedProjectPrefix in referencedProjectPrefixes)
-            {
-                // Pattern: using ReferencedPrefix(.AnythingElse);
-                string pattern = $@"using\s+{Regex.Escape(referencedProjectPrefix)}(\.[\w\.]*)?;";
-                string newText = Regex.Replace(
-                    text,
-                    pattern,
-                    m => $"using $ext_safeprojectname${m.Groups[1].Value};",
-                    RegexOptions.None
-                );
-
-                if (!ReferenceEquals(newText, text))
-                {
-                    text = newText;
-                    changed = true;
-                }
-            }
-
-            if (changed)
-            {
-                File.WriteAllText(csFile, text);
-            }
-        }
     }
 
     private static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> fullProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)
@@ -148,28 +131,132 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
         return discoveredNames;
     }
 
-
-
-    private static bool IsProjectAnApplication(string csprojPath, BuildContext context)
+    private static void ApplySafeExternalUsings(string csprojPath, string stagingDirectory, HashSet<string> referencedProjectNames, BuildContext context)
     {
-        try
+        // In .cs files, modify 'using' statements to referenced projects to use parameters.
+        foreach (string csFile in Directory.GetFiles(stagingDirectory, "*.cs", SearchOption.AllDirectories))
         {
-            XDocument doc = XDocument.Load(csprojPath);
-            XElement? outputTypeElement = doc.Descendants("OutputType").FirstOrDefault();
+            string text = File.ReadAllText(csFile);
+            bool changed = false;
 
-            if (outputTypeElement != null)
+            foreach (string referencedProjectPrefix in referencedProjectNames)
             {
-                string value = outputTypeElement.Value.Trim();
-                return value.Equals("Exe", StringComparison.OrdinalIgnoreCase) || value.Equals("WinExe", StringComparison.OrdinalIgnoreCase);
+                // Pattern: using ReferencedPrefix(.AnythingElse);
+                string pattern = $@"using\s+{Regex.Escape(referencedProjectPrefix)}(\.[\w\.]*)?;";
+                string newText = Regex.Replace(
+                    text,
+                    pattern,
+                    m => $"using $ext_safeprojectname${m.Groups[1].Value};",
+                    RegexOptions.None
+                );
+
+                if (!ReferenceEquals(newText, text))
+                {
+                    text = newText;
+                    changed = true;
+                }
             }
 
-            // If OutputType is missing, assume library (per SDK-style convention).
-            return false;
+            if (changed)
+            {
+                File.WriteAllText(csFile, text);
+            }
         }
-        catch (Exception ex)
+    }
+
+    private static void ApplySafeExternalProjectReferences(string csprojPath, HashSet<string> referencedProjectNames, BuildContext context)
+    {
+        XDocument doc = XDocument.Load(csprojPath);
+        bool changed = false;
+
+        foreach (var projectReference in doc.Descendants().Where(e => e.Name.LocalName == "ProjectReference"))
         {
-            context.Log.Error($"Could not determine OutputType for {csprojPath}: {ex.Message}");
-            return false;
+            // Update Include attribute
+            XAttribute? includeAttr = projectReference.Attribute("Include");
+            if (includeAttr != null)
+            {
+                string originalInclude = includeAttr.Value;
+                foreach (string referencedName in referencedProjectNames)
+                {
+                    int firstDot = referencedName.IndexOf('.');
+                    string prefix = firstDot > 0 ? referencedName[..firstDot] : referencedName;
+                    // Replace prefix after path separator or at start, before a dot
+                    string pattern = $@"(^|[\\/]){Regex.Escape(prefix)}(?=\.)";
+                    string replaced = Regex.Replace(
+                        originalInclude,
+                        pattern,
+                        m => m.Groups[1].Value + "$ext_safeprojectname$",
+                        RegexOptions.None
+                    );
+                    if (!ReferenceEquals(replaced, originalInclude))
+                    {
+                        includeAttr.Value = replaced;
+                        changed = true;
+                        break; // Only replace once per reference
+                    }
+                }
+            }
+
+            // Update <Name> child element
+            XElement? nameElement = projectReference.Elements().FirstOrDefault(e => e.Name.LocalName == "Name");
+            if (nameElement != null)
+            {
+                string originalName = nameElement.Value;
+                foreach (string referencedName in referencedProjectNames)
+                {
+                    int firstDot = referencedName.IndexOf('.');
+                    string prefix = firstDot > 0 ? referencedName[..firstDot] : referencedName;
+                    // Only replace at start of string, before a dot
+                    string pattern = $@"^{Regex.Escape(prefix)}(?=\.)";
+                    string replaced = Regex.Replace(
+                        originalName,
+                        pattern,
+                        "$ext_safeprojectname$",
+                        RegexOptions.None
+                    );
+                    if (!ReferenceEquals(replaced, originalName))
+                    {
+                        nameElement.Value = replaced;
+                        changed = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (changed)
+        {
+            doc.Save(csprojPath);
+        }
+    }
+
+    private static void StepUpNuGetPackageHintPaths(string csprojPath, bool isSdkStyle)
+    {
+        if (isSdkStyle)
+        {
+            return;
+        }
+
+        XDocument doc = XDocument.Load(csprojPath);
+        bool changed = false;
+
+        foreach (XElement reference in doc.Descendants().Where(e => e.Name.LocalName == "Reference"))
+        {
+            XElement? hintPath = reference.Elements().FirstOrDefault(e => e.Name.LocalName == "HintPath");
+            if (hintPath != null && hintPath.Value.Contains(@"packages\", StringComparison.OrdinalIgnoreCase))
+            {
+                string value = hintPath.Value;
+                if (value.Contains("packages\\", StringComparison.OrdinalIgnoreCase) || value.Contains("packages/", StringComparison.OrdinalIgnoreCase))
+                {
+                    hintPath.Value = @"..\" + value;
+                    changed = true;
+                }
+            }
+        }
+
+        if (changed)
+        {
+            doc.Save(csprojPath);
         }
     }
 
@@ -182,7 +269,7 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
         {
             XDocument manifestDoc = XDocument.Load(vsixManifestPath);
             XElement? identityElement = manifestDoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "Identity");
-            
+
             if (identityElement != null)
             {
                 XAttribute? idAttr = identityElement.Attribute("Id");
@@ -203,28 +290,74 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
         }
     }
 
-    private static string ReadProjectDescription(string csprojPath, BuildContext context)
+    private static void AddWizardElementsToVSTemplate(string csprojPath, string vsixProductId, string vstemplatePath, bool isSdkStyle, BuildContext context)
     {
-        try
+        if (isSdkStyle)
         {
-            XDocument doc = XDocument.Load(csprojPath);
-            XElement? descriptionElement = doc.Descendants("Description").FirstOrDefault();
-            if (!string.IsNullOrWhiteSpace(descriptionElement?.Value))
-            {
-                return descriptionElement.Value.Trim();
-            }
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not read Description for {csprojPath}: {ex.Message}");
+            return;
         }
 
-        return "<No description available>";
+        IEnumerable<(string id, string version)> nugetPackages = ReadProjectNuGetPackages(csprojPath, isSdkStyle, context);
+        if (!nugetPackages.Any())
+        {
+            return;
+        }
+
+        XDocument doc = XDocument.Load(vstemplatePath);
+
+        WizardExtension wizardExtension = new()
+        {
+            Assembly = "NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+            FullClassName = "NuGet.VisualStudio.TemplateWizard"
+        };
+
+        WizardData wizardData = new()
+        {
+            Packages = new DTOs.Packages
+            {
+                repository = "extension",
+                repositoryId = vsixProductId,
+                PackageList = [.. nugetPackages.Select(pkg => new DTOs.Package { id = pkg.id, version = pkg.version })]
+            }
+        };
+
+        // Serialize WizardExtension and WizardData to XElement.
+        XElement wizardExtensionElement;
+        XElement wizardDataElement;
+        var xmlNamespace = "http://schemas.microsoft.com/developer/vstemplate/2005";
+        var ns = new XmlSerializerNamespaces();
+        ns.Add("", xmlNamespace);
+
+        // Helper to serialize an object to XElement.
+        static XElement SerializeToXElement<T>(T elementDTO)
+        {
+            var serializer = new XmlSerializer(typeof(T));
+            using var ms = new MemoryStream();
+            using (var writer = XmlWriter.Create(ms, new XmlWriterSettings { OmitXmlDeclaration = true }))
+            {
+                serializer.Serialize(writer, elementDTO);
+            }
+            ms.Position = 0;
+            using var reader = new StreamReader(ms);
+            return XElement.Parse(reader.ReadToEnd());
+        }
+
+        wizardExtensionElement = SerializeToXElement(wizardExtension);
+        wizardDataElement = SerializeToXElement(wizardData);
+
+        // Add to the root VSTemplate element.
+        XElement? root = doc.Root;
+        if (root != null)
+        {
+            root.Add(wizardExtensionElement);
+            root.Add(wizardDataElement);
+            doc.Save(vstemplatePath);
+        }
     }
 
     private static List<(string id, string version)> ReadProjectNuGetPackages(string csprojPath, bool isSdkStyle, BuildContext context)
     {
-        List<(string id, string version)> packages = [];
+        var packages = new List<(string id, string version)>();
 
         try
         {
@@ -256,12 +389,11 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
                         int packagesIdx = path.IndexOf("packages\\", StringComparison.OrdinalIgnoreCase);
                         if (packagesIdx >= 0)
                         {
-                            // Example: packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll
                             string[] parts = path[(packagesIdx + 9)..].Split('\\');
                             if (parts.Length > 0)
                             {
                                 string idAndVersion = parts[0]; // e.g., Newtonsoft.Json.12.0.3
-                                // Extract ID and version.
+                                                                // Extract ID and version.
                                 StringBuilder versionBuilder = new();
                                 int i = idAndVersion.Length - 1;
                                 bool foundDot = false;
@@ -280,12 +412,10 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
                                     }
                                     else
                                     {
-                                        // Optionally allow prerelease labels (e.g., -beta).
                                         if (c == '-' && foundDot && i < idAndVersion.Length - 1 && char.IsLetterOrDigit(idAndVersion[i + 1]))
                                         {
                                             versionBuilder.Insert(0, c);
                                             i--;
-                                            // Continue collecting prerelease label.
                                             while (i >= 0 && (char.IsLetterOrDigit(idAndVersion[i]) || idAndVersion[i] == '.' || idAndVersion[i] == '-'))
                                             {
                                                 versionBuilder.Insert(0, idAndVersion[i]);
@@ -296,7 +426,6 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
                                     }
                                 }
 
-                                // Remove trailing dot if present
                                 string version = versionBuilder.ToString().Trim('.');
                                 string id = idAndVersion[..(i + 1)];
 
@@ -315,134 +444,33 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
             context.Log.Error($"Could not read NuGet packages for {csprojPath}: {ex.Message}");
         }
 
-        return packages;
+        // Remove duplicates by id+version
+        return packages.Distinct().ToList();
     }
 
-    private static string CreateVSTemplateContents(string csprojPath, string stagingDirectory, bool isSdkStyle, string vsixProductId, BuildContext context)
+
+
+
+    private static bool IsProjectAnApplication(string csprojPath, BuildContext context)
     {
-        string projectName = Path.GetFileNameWithoutExtension(csprojPath);
-        string description = ReadProjectDescription(csprojPath, context);
-        string csprojFileName = Path.GetFileName(csprojPath);
-        IEnumerable<(string id, string version)> nugetPackages = ReadProjectNuGetPackages(csprojPath, isSdkStyle, context);
-
-        // Build the folder/file structure recursively
-        DTOs.Project BuildProject(string dir)
+        try
         {
-            DTOs.Project project = new()
-            {
-                TargetFileName = csprojFileName,
-                File = csprojFileName,
-                ReplaceParameters = true,
-                Items = []
-            };
+            XDocument doc = XDocument.Load(csprojPath);
+            XElement? outputTypeElement = doc.Descendants("OutputType").FirstOrDefault();
 
-            foreach (string folder in Directory.GetDirectories(dir))
+            if (outputTypeElement != null)
             {
-                project.Items.Add(BuildFolder(folder));
+                string value = outputTypeElement.Value.Trim();
+                return value.Equals("Exe", StringComparison.OrdinalIgnoreCase) || value.Equals("WinExe", StringComparison.OrdinalIgnoreCase);
             }
-            foreach (string file in Directory.GetFiles(dir))
-            {
-                string fileName = Path.GetFileName(file);
-                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
 
-                project.Items.Add(new DTOs.ProjectItem
-                {
-                    ReplaceParameters = true,
-                    TargetFileName = fileName,
-                    Value = fileName
-                });
-            }
-            return project;
+            // If OutputType is missing, assume library (per SDK-style convention).
+            return false;
         }
-
-        DTOs.Folder BuildFolder(string dir)
+        catch (Exception ex)
         {
-            string folderName = Path.GetFileName(dir);
-            DTOs.Folder folder = new()
-            {
-                Name = folderName,
-                TargetFolderName = folderName,
-                Items = []
-            };
-
-            foreach (string subfolder in Directory.GetDirectories(dir))
-            {
-                folder.Items.Add(BuildFolder(subfolder));
-            }
-            foreach (string file in Directory.GetFiles(dir))
-            {
-                string fileName = Path.GetFileName(file);
-                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                folder.Items.Add(new DTOs.ProjectItem
-                {
-                    ReplaceParameters = true,
-                    TargetFileName = fileName,
-                    Value = fileName
-                });
-            }
-            return folder;
+            context.Log.Error($"Could not determine OutputType for {csprojPath}: {ex.Message}");
+            return false;
         }
-
-        // Build the root VSTemplate DTO.
-        VSTemplate vsTemplate = new()
-        {
-            Version = "3.0.0",
-            Type = "Project",
-            TemplateData = new TemplateData
-            {
-                Name = projectName,
-                Description = description,
-                ProjectType = "CSharp",
-                ProjectSubType = "",
-                SortOrder = 1000,
-                CreateNewFolder = true,
-                DefaultName = projectName,
-                ProvideDefaultName = true,
-                LocationField = "Enabled",
-                EnableLocationBrowseButton = true,
-                Icon = "__TemplateIcon.ico"
-            },
-            TemplateContent = new TemplateContent
-            {
-                Project = BuildProject(stagingDirectory)
-            }
-        };
-
-        // Only add wizard elements for non-SDK-style projects.
-        if (!isSdkStyle)
-        {
-            vsTemplate.WizardExtension = new WizardExtension
-            {
-                Assembly = "NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
-                FullClassName = "NuGet.VisualStudio.TemplateWizard"
-            };
-            vsTemplate.WizardData = new WizardData
-            {
-                Packages = nugetPackages.Any()
-                    ? new DTOs.Packages
-                    {
-                        repository = "extension",
-                        repositoryId = vsixProductId,
-                        PackageList = [.. nugetPackages.Select(pkg => new DTOs.Package { id = pkg.id, version = pkg.version })]
-                    }
-                    : null
-            };
-        }
-
-        // Serialize to XML.
-        XmlSerializerNamespaces xmlNamespace = new();
-        xmlNamespace.Add("", "http://schemas.microsoft.com/developer/vstemplate/2005");
-        XmlSerializer serializer = new(typeof(DTOs.VSTemplate));
-        using StringWriter xmlWriter = new();
-        serializer.Serialize(xmlWriter, vsTemplate, xmlNamespace);
-
-        return xmlWriter.ToString();
     }
 }
