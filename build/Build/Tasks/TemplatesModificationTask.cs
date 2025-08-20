@@ -16,9 +16,9 @@ using System.Xml.Serialization;
 namespace Build.Tasks;
 
 [TaskName("Modify Project Templates")]
-[IsDependentOn(typeof(ExportDefaultProjectTemplatesTask))]
+[IsDependentOn(typeof(TemplatesDefaultExportTask))]
 [TaskDescription("Modify the generated default project templates.")]
-public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
+public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
 {
     public override bool ShouldRun(BuildContext context)
     {
@@ -446,31 +446,5 @@ public sealed class ModifyProjectTemplatesTask : FrostingTask<BuildContext>
 
         // Remove duplicates by id+version
         return packages.Distinct().ToList();
-    }
-
-
-
-
-    private static bool IsProjectAnApplication(string csprojPath, BuildContext context)
-    {
-        try
-        {
-            XDocument doc = XDocument.Load(csprojPath);
-            XElement? outputTypeElement = doc.Descendants("OutputType").FirstOrDefault();
-
-            if (outputTypeElement != null)
-            {
-                string value = outputTypeElement.Value.Trim();
-                return value.Equals("Exe", StringComparison.OrdinalIgnoreCase) || value.Equals("WinExe", StringComparison.OrdinalIgnoreCase);
-            }
-
-            // If OutputType is missing, assume library (per SDK-style convention).
-            return false;
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not determine OutputType for {csprojPath}: {ex.Message}");
-            return false;
-        }
     }
 }

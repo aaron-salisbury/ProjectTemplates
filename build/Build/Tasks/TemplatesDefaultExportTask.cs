@@ -19,7 +19,7 @@ namespace Build.Tasks;
 [TaskName("Export Default Project Templates")]
 [IsDependentOn(typeof(CompileProjectsTask))]
 [TaskDescription("Attempts to mirror Visual Studio's 'Export Template Wizard' in generating a project template from every project in the source directory, besides the VS extension project.")]
-public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContext>
+public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
 {
     public override bool ShouldRun(BuildContext context)
     {
@@ -63,21 +63,6 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
         context.Log.Information($"Generation of default project templates complete ({completionTime}s)");
-    }
-
-    internal static void CompressDirectory(string directoryPathToCompress)
-    {
-        if (!Directory.Exists(directoryPathToCompress))
-        {
-            throw new DirectoryNotFoundException($"Directory '{directoryPathToCompress}' does not exist.");
-        }
-
-        string zipPath = Path.Combine(Path.GetDirectoryName(directoryPathToCompress)!, Path.GetFileName(directoryPathToCompress) + ".zip");
-        string tempZipPath = zipPath + ".tmp";
-        ZipFile.CreateFromDirectory(directoryPathToCompress, tempZipPath);
-        File.Move(tempZipPath, zipPath, overwrite: true);
-
-        Directory.Delete(directoryPathToCompress, recursive: true);
     }
 
     private static bool ExportDefaultTemplate(string csprojPath, string templateStagingDir, bool isSdkStyle, BuildContext context)
@@ -126,40 +111,7 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
         }
     }
 
-    private static void CapitalizeFirstLevelFolders(string directoryPath)
-    {
-        foreach (string folder in Directory.GetDirectories(directoryPath))
-        {
-            string originalFolderName = Path.GetFileName(folder);
-
-            RenameFolder(directoryPath, originalFolderName, originalFolderName.ToUpperInvariant());
-        }
-    }
-
-    private static void RenameFolder(string directoryPath, string oldName, string newName)
-    {
-        string fullPathToOld = Path.Combine(directoryPath, oldName);
-        if (string.Equals(oldName, newName, StringComparison.Ordinal) || !Directory.Exists(fullPathToOld))
-        {
-            return;
-        }
-
-        string fullPathToNew = Path.Combine(directoryPath, newName);
-
-        // Always use a temp name to force the rename, even if only case is changing.
-        string tempDir = Path.Combine(directoryPath, Guid.NewGuid().ToString("N"));
-        Directory.Move(fullPathToOld, tempDir);
-
-        // If a folder with the target name exists, delete it first.
-        if (Directory.Exists(fullPathToNew))
-        {
-            Directory.Delete(fullPathToNew, recursive: true);
-        }
-
-        Directory.Move(tempDir, fullPathToNew);
-    }
-
-    private static void CopyProjectFiles(string projectDirectory,string stagingDirectory)
+    private static void CopyProjectFiles(string projectDirectory, string stagingDirectory)
     {
         // Copy all files except bin/obj/.vs/.git
         foreach (string file in Directory.EnumerateFiles(projectDirectory, "*", SearchOption.AllDirectories))
@@ -210,58 +162,104 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
         }
     }
 
-    private static void ReplaceProjectGuidWithTemplateParameter(string csprojPath, bool isSdkStyle)
+    private static string CreateVSTemplateContents(string csprojPath, string stagingDirectory, bool isSdkStyle, BuildContext context)
     {
-        if (isSdkStyle)
+        string projectName = Path.GetFileNameWithoutExtension(csprojPath);
+        string description = ReadProjectDescription(csprojPath, context);
+        string csprojFileName = Path.GetFileName(csprojPath);
+        IEnumerable<(string id, string version)> nugetPackages = ReadProjectNuGetPackages(csprojPath, isSdkStyle, context);
+
+        // Build the folder/file structure recursively
+        DTOs.Project BuildProject(string dir)
         {
-            return; // SDK-style projects do not rely on a ProjectGuid element.
-        }
-
-        XDocument doc = XDocument.Load(csprojPath);
-
-        // Find the ProjectGuid element regardless of namespace
-        XElement? guidElement = doc.Descendants()
-            .FirstOrDefault(e => e.Name.LocalName == "ProjectGuid");
-
-        if (guidElement != null)
-        {
-            guidElement.Value = "{$guid1$}";
-            doc.Save(csprojPath);
-        }
-    }
-
-    private static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> allProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)
-    {
-        discoveredNames ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-        try
-        {
-            XDocument doc = XDocument.Load(csprojPath);
-            IEnumerable<string> projectReferences = doc.Descendants("ProjectReference")
-                .Select(pr => pr.Attribute("Include")?.Value)
-                .Where(path => !string.IsNullOrEmpty(path))
-                .Select(path => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(csprojPath)!, path!)));
-
-            foreach (var referencedCsproj in projectReferences)
+            DTOs.Project project = new()
             {
-                // Find the project name from the path.
-                string? referencedName = allProjectPathsByName
-                    .FirstOrDefault(kvp => string.Equals(kvp.Value, referencedCsproj, StringComparison.OrdinalIgnoreCase))
-                    .Key;
+                TargetFileName = csprojFileName,
+                File = csprojFileName,
+                ReplaceParameters = true,
+                Items = []
+            };
 
-                if (referencedName != null && discoveredNames.Add(referencedName))
-                {
-                    // Recurse into the referenced project.
-                    GetReferencedProjectNamesRecursive(referencedCsproj, allProjectPathsByName, context, discoveredNames);
-                }
+            foreach (string folder in Directory.GetDirectories(dir))
+            {
+                project.Items.Add(BuildFolder(folder));
             }
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not parse references for {csprojPath}: {ex.Message}");
+            foreach (string file in Directory.GetFiles(dir))
+            {
+                string fileName = Path.GetFileName(file);
+                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                project.Items.Add(new DTOs.ProjectItem
+                {
+                    ReplaceParameters = true,
+                    TargetFileName = fileName,
+                    Value = fileName
+                });
+            }
+            return project;
         }
 
-        return discoveredNames;
+        DTOs.Folder BuildFolder(string dir)
+        {
+            string folderName = Path.GetFileName(dir);
+            DTOs.Folder folder = new()
+            {
+                Name = folderName,
+                TargetFolderName = folderName,
+                Items = []
+            };
+
+            foreach (string subfolder in Directory.GetDirectories(dir))
+            {
+                folder.Items.Add(BuildFolder(subfolder));
+            }
+            foreach (string file in Directory.GetFiles(dir))
+            {
+                string fileName = Path.GetFileName(file);
+                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                folder.Items.Add(new DTOs.ProjectItem
+                {
+                    ReplaceParameters = true,
+                    TargetFileName = fileName,
+                    Value = fileName
+                });
+            }
+            return folder;
+        }
+
+        // Build the root VSTemplate DTO.
+        VSTemplate vsTemplate = new()
+        {
+            Version = "3.0.0",
+            Type = "Project",
+            TemplateData = new TemplateData
+            {
+                Name = projectName,
+                Description = description,
+                ProjectType = "CSharp",
+                ProjectSubType = "",
+                SortOrder = 1000,
+                CreateNewFolder = true,
+                DefaultName = projectName,
+                ProvideDefaultName = true,
+                LocationField = "Enabled",
+                EnableLocationBrowseButton = true,
+                Icon = "__TemplateIcon.ico"
+            },
+            TemplateContent = new TemplateContent
+            {
+                Project = BuildProject(stagingDirectory)
+            }
+        };
+
+        return SerializeToXML(vsTemplate, false);
     }
 
     private static string ReadProjectDescription(string csprojPath, BuildContext context)
@@ -379,106 +377,6 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
         return packages;
     }
 
-    private static string CreateVSTemplateContents(string csprojPath, string stagingDirectory, bool isSdkStyle, BuildContext context)
-    {
-        string projectName = Path.GetFileNameWithoutExtension(csprojPath);
-        string description = ReadProjectDescription(csprojPath, context);
-        string csprojFileName = Path.GetFileName(csprojPath);
-        IEnumerable<(string id, string version)> nugetPackages = ReadProjectNuGetPackages(csprojPath, isSdkStyle, context);
-
-        // Build the folder/file structure recursively
-        DTOs.Project BuildProject(string dir)
-        {
-            DTOs.Project project = new()
-            {
-                TargetFileName = csprojFileName,
-                File = csprojFileName,
-                ReplaceParameters = true,
-                Items = []
-            };
-
-            foreach (string folder in Directory.GetDirectories(dir))
-            {
-                project.Items.Add(BuildFolder(folder));
-            }
-            foreach (string file in Directory.GetFiles(dir))
-            {
-                string fileName = Path.GetFileName(file);
-                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                project.Items.Add(new DTOs.ProjectItem
-                {
-                    ReplaceParameters = true,
-                    TargetFileName = fileName,
-                    Value = fileName
-                });
-            }
-            return project;
-        }
-
-        DTOs.Folder BuildFolder(string dir)
-        {
-            string folderName = Path.GetFileName(dir);
-            DTOs.Folder folder = new()
-            {
-                Name = folderName,
-                TargetFolderName = folderName,
-                Items = []
-            };
-
-            foreach (string subfolder in Directory.GetDirectories(dir))
-            {
-                folder.Items.Add(BuildFolder(subfolder));
-            }
-            foreach (string file in Directory.GetFiles(dir))
-            {
-                string fileName = Path.GetFileName(file);
-                if (fileName.Equals(csprojFileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                folder.Items.Add(new DTOs.ProjectItem
-                {
-                    ReplaceParameters = true,
-                    TargetFileName = fileName,
-                    Value = fileName
-                });
-            }
-            return folder;
-        }
-
-        // Build the root VSTemplate DTO.
-        VSTemplate vsTemplate = new()
-        {
-            Version = "3.0.0",
-            Type = "Project",
-            TemplateData = new TemplateData
-            {
-                Name = projectName,
-                Description = description,
-                ProjectType = "CSharp",
-                ProjectSubType = "",
-                SortOrder = 1000,
-                CreateNewFolder = true,
-                DefaultName = projectName,
-                ProvideDefaultName = true,
-                LocationField = "Enabled",
-                EnableLocationBrowseButton = true,
-                Icon = "__TemplateIcon.ico"
-            },
-            TemplateContent = new TemplateContent
-            {
-                Project = BuildProject(stagingDirectory)
-            }
-        };
-
-        return SerializeToXML(vsTemplate, false);
-    }
-
     private static string SerializeToXML<T>(T record, bool includeXMLDeclaration = true)
     {
         string xml = string.Empty;
@@ -508,5 +406,73 @@ public sealed class ExportDefaultProjectTemplatesTask : FrostingTask<BuildContex
         }
 
         return xml;
+    }
+
+    private static void ReplaceProjectGuidWithTemplateParameter(string csprojPath, bool isSdkStyle)
+    {
+        if (isSdkStyle)
+        {
+            return; // SDK-style projects do not rely on a ProjectGuid element.
+        }
+
+        XDocument doc = XDocument.Load(csprojPath);
+
+        // Find the ProjectGuid element regardless of namespace
+        XElement? guidElement = doc.Descendants()
+            .FirstOrDefault(e => e.Name.LocalName == "ProjectGuid");
+
+        if (guidElement != null)
+        {
+            guidElement.Value = "{$guid1$}";
+            doc.Save(csprojPath);
+        }
+    }
+
+    private static void CapitalizeFirstLevelFolders(string directoryPath)
+    {
+        foreach (string folder in Directory.GetDirectories(directoryPath))
+        {
+            string originalFolderName = Path.GetFileName(folder);
+
+            RenameFolder(directoryPath, originalFolderName, originalFolderName.ToUpperInvariant());
+        }
+    }
+
+    private static void RenameFolder(string directoryPath, string oldName, string newName)
+    {
+        string fullPathToOld = Path.Combine(directoryPath, oldName);
+        if (string.Equals(oldName, newName, StringComparison.Ordinal) || !Directory.Exists(fullPathToOld))
+        {
+            return;
+        }
+
+        string fullPathToNew = Path.Combine(directoryPath, newName);
+
+        // Always use a temp name to force the rename, even if only case is changing.
+        string tempDir = Path.Combine(directoryPath, Guid.NewGuid().ToString("N"));
+        Directory.Move(fullPathToOld, tempDir);
+
+        // If a folder with the target name exists, delete it first.
+        if (Directory.Exists(fullPathToNew))
+        {
+            Directory.Delete(fullPathToNew, recursive: true);
+        }
+
+        Directory.Move(tempDir, fullPathToNew);
+    }
+
+    private static void CompressDirectory(string directoryPathToCompress)
+    {
+        if (!Directory.Exists(directoryPathToCompress))
+        {
+            throw new DirectoryNotFoundException($"Directory '{directoryPathToCompress}' does not exist.");
+        }
+
+        string zipPath = Path.Combine(Path.GetDirectoryName(directoryPathToCompress)!, Path.GetFileName(directoryPathToCompress) + ".zip");
+        string tempZipPath = zipPath + ".tmp";
+        ZipFile.CreateFromDirectory(directoryPathToCompress, tempZipPath);
+        File.Move(tempZipPath, zipPath, overwrite: true);
+
+        Directory.Delete(directoryPathToCompress, recursive: true);
     }
 }
