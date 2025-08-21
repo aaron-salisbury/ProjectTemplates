@@ -8,6 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Win98App</RootNamespace>
     <AssemblyName>Win98App</AssemblyName>
+	<Description>Windows Forms, three-tier, application that targets Windows 98.</Description>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>

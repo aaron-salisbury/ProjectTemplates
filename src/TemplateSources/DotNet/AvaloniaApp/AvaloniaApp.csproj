@@ -12,6 +12,7 @@
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 	<Product>Avalonia App</Product>
 	<AssemblyName>AvaloniaApp</AssemblyName>
+	<Description>Cross-platform, three-tier, Avalonia application that targets desktop.</Description>
 	<Version>1.0.0</Version>
   </PropertyGroup>
 

@@ -37,10 +37,7 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
 
         // Build a map of project name to csproj path for all projects. Used to recursively find referenced projects.
-        Dictionary<string, string> fullProjectPathsByName = allProjectFiles.ToDictionary(
-            path => Path.GetFileNameWithoutExtension(path),
-            path => Path.GetFullPath(path),
-            StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, string> fullProjectPathsByName = GetFullProjectPathsByName(allProjectFiles);
 
         foreach (string csprojPath in allProjectFiles)
         {
@@ -97,7 +94,15 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         context.Log.Information($"Modification of project templates complete ({completionTime}s)");
     }
 
-    private static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> fullProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)
+    internal static Dictionary<string, string> GetFullProjectPathsByName(string[] allProjectFiles)
+    {
+        return allProjectFiles.ToDictionary(
+            path => Path.GetFileNameWithoutExtension(path),
+            path => Path.GetFullPath(path),
+            StringComparer.OrdinalIgnoreCase);
+    }
+
+    internal static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> fullProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)
     {
         discoveredNames ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
