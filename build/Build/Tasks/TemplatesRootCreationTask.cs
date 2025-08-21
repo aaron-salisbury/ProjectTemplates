@@ -247,19 +247,22 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         if (isSdkStyle)
         {
             XElement? productElement = doc.Descendants("Product").FirstOrDefault();
-            if (productElement != null && !string.IsNullOrWhiteSpace(productElement.Value))
+            if (string.IsNullOrWhiteSpace(productElement?.Value))
             {
-                name = productElement.Value.Trim();
+                throw new InvalidOperationException($"Product element not found in SDK-style project '{projectName}' at '{csprojPath}'.");
             }
-            else
-            {
-                // Fall-back to projectName with spaces if Product is missing.
-                name = InsertSpacesInPascalCase(projectName);
-            }
+
+            name = productElement.Value.Trim();
         }
         else
         {
-            name = InsertSpacesInPascalCase(projectName);
+            XElement? assemblyNameElement = doc.Descendants("AssemblyName").FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(assemblyNameElement?.Value))
+            {
+                throw new InvalidOperationException($"AssemblyName element not found in .Net Framework project '{projectName}' at '{csprojPath}'.");
+            }
+
+            name = InsertSpacesInPascalCase(assemblyNameElement.Value.Trim());
         }
 
         return (name, description);
