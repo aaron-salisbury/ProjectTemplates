@@ -165,7 +165,6 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
     private static string CreateVSTemplateContents(string csprojPath, string stagingDirectory, bool isSdkStyle, BuildContext context)
     {
         string projectName = Path.GetFileNameWithoutExtension(csprojPath);
-        string description = ReadProjectDescription(csprojPath, context);
         string csprojFileName = Path.GetFileName(csprojPath);
         IEnumerable<(string id, string version)> nugetPackages = ReadProjectNuGetPackages(csprojPath, isSdkStyle, context);
 
@@ -242,7 +241,7 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
             TemplateData = new TemplateData
             {
                 Name = projectName,
-                Description = description,
+                Description = "&lt;No description available&gt;",
                 ProjectType = "CSharp",
                 ProjectSubType = "",
                 SortOrder = 1000,
@@ -260,25 +259,6 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         };
 
         return SerializeToXML(vsTemplate, false);
-    }
-
-    private static string ReadProjectDescription(string csprojPath, BuildContext context)
-    {
-        try
-        {
-            XDocument doc = XDocument.Load(csprojPath);
-            XElement? descriptionElement = doc.Descendants("Description").FirstOrDefault();
-            if (!string.IsNullOrWhiteSpace(descriptionElement?.Value))
-            {
-                return descriptionElement.Value.Trim();
-            }
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not read Description for {csprojPath}: {ex.Message}");
-        }
-
-        return "<No description available>";
     }
 
     private static List<(string id, string version)> ReadProjectNuGetPackages(string csprojPath, bool isSdkStyle, BuildContext context)
