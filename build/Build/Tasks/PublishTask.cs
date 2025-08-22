@@ -8,7 +8,7 @@ using static Build.BuildContext;
 namespace Build.Tasks;
 
 [TaskName("Publish")]
-[IsDependentOn(typeof(TemplatesDefaultExportTask))]
+[IsDependentOn(typeof(TemplatesRootCreationTask))]
 [TaskDescription("Publishes projects using the Release configuration, applying publish settings defined in their .csproj files.")]
 public sealed class PublishTask : FrostingTask<BuildContext>
 {

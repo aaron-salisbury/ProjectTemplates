@@ -70,7 +70,8 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         try
         {
             XDocument doc = XDocument.Load(csprojPath);
-            XElement? outputTypeElement = doc.Descendants("OutputType").FirstOrDefault();
+            XNamespace ns = doc.Root?.Name.Namespace ?? XNamespace.None;
+            XElement? outputTypeElement = doc.Descendants(ns + "OutputType").FirstOrDefault();
 
             if (outputTypeElement != null)
             {
@@ -171,9 +172,6 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         if (isProjectAnApplication && !fullProjectName.Contains('.'))
         {
             replacementName = GetAppProjectReplacementParameter();
-            //TODO: Template is still doing this: <RootNamespace>$safeprojectname$</RootNamespace> nor is Presentation being used in namespaces, except sometimes double?.
-            // ALSO, the root template seems to not get created at all for legacy apps.
-            // ALSO, I noticed double Presentation in the avalonia app view model => namespace $safeprojectname$.Presentation.Presentation.Desktop.ViewModels;
         }
 
         // We want something like MyCoolApp.Presentation.Web to become $safeprojectname$.Presentation.Web

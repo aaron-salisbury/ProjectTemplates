@@ -164,7 +164,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             Type = "ProjectGroup",
             TemplateData = new DTOs.TemplateData
             {
-                Name = name + " Solution Template",
+                Name = name.Replace("Win", "Windows ") + " Solution Template",
                 Description = description,
                 DefaultName = projectName + "_Solution",
                 Icon = "vs-extension-icon.png",
@@ -207,7 +207,8 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         }
 
         XDocument doc = XDocument.Load(csprojPath);
-        XElement? descriptionElement = doc.Descendants("Description").FirstOrDefault();
+        XNamespace ns = doc.Root?.Name.Namespace ?? XNamespace.None;
+        XElement? descriptionElement = doc.Descendants(ns + "Description").FirstOrDefault();
 
         // Get description.
         string? description;
@@ -224,7 +225,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         string? name;
         if (isSdkStyle)
         {
-            XElement? productElement = doc.Descendants("Product").FirstOrDefault();
+            XElement? productElement = doc.Descendants(ns + "Product").FirstOrDefault();
             if (string.IsNullOrWhiteSpace(productElement?.Value))
             {
                 throw new InvalidOperationException($"Product element not found in SDK-style project '{projectName}' at '{csprojPath}'.");
@@ -234,7 +235,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         }
         else
         {
-            XElement? assemblyNameElement = doc.Descendants("AssemblyName").FirstOrDefault();
+            XElement? assemblyNameElement = doc.Descendants(ns + "AssemblyName").FirstOrDefault();
             if (string.IsNullOrWhiteSpace(assemblyNameElement?.Value))
             {
                 throw new InvalidOperationException($"AssemblyName element not found in .Net Framework project '{projectName}' at '{csprojPath}'.");

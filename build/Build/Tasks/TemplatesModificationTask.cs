@@ -64,6 +64,7 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             // This should be fine though since they are at the top of the reference chain and won't be referenced by other projects.
             HashSet<string> referencedProjectNames = [.. GetReferencedProjectNamesRecursive(csprojPath, fullProjectPathsByName, context)];
             ApplySafeExternalUsings(csprojPath, stagingDir, referencedProjectNames, context);
+            //TODO: It would be nice to group usings that start with $safeprojectname$ and $ext_safeprojectname$ together at the bottom of the usings block.
 
             // In the .csproj file:
             //  - Modify 'Include' attribute & child 'Name' element of ProjectReferences to referenced projects to use parameters.
