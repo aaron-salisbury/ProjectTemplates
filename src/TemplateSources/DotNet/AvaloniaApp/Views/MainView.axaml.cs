@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using AvaloniaApp.Base.Extensions;
-using AvaloniaApp.Views;
 
 namespace AvaloniaApp.Views;
 

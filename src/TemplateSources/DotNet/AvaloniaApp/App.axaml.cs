@@ -14,79 +14,78 @@ using Serilog.Sinks.MemorySink;
 using System;
 using System.Reflection;
 
-namespace AvaloniaApp
+namespace AvaloniaApp;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public IServiceProvider Services { get; set; } = null!; // Set during the Startup event to avoid conflicts prior to Initialization completing.
+
+    public override void Initialize()
     {
-        public IServiceProvider Services { get; set; } = null!; // Set during the Startup event to avoid conflicts prior to Initialization completing.
+        AvaloniaXamlLoader.Load(this);
+    }
 
-        public override void Initialize()
+    public override void OnFrameworkInitializationCompleted()
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            AvaloniaXamlLoader.Load(this);
+            // Line below is needed to remove Avalonia data validation.
+            // Without this line you will get duplicate validations from both Avalonia and CT
+            BindingPlugins.DataValidators.RemoveAt(0);
+
+            desktop.Startup += Desktop_Startup;
+            desktop.Exit += Desktop_Exit;
         }
 
-        public override void OnFrameworkInitializationCompleted()
+        base.OnFrameworkInitializationCompleted();
+    }
+
+    private void Desktop_Startup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
+    {
+        // Services need to be gathered after app initialization but before
+        // the MainWindow is created as that starts the chain of dependency injections.
+        Services = ConfigureServices();
+
+        if (sender is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            desktop.MainWindow = new MainWindow();
+        }
+    }
+
+    private void Desktop_Exit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
+    {
+        Serilog.Log.CloseAndFlush();
+    }
+
+    private static ServiceProvider ConfigureServices()
+    {
+        Serilog.Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .WriteTo.MemorySink(out ILogSource<LogEvent> logSource)
+            .CreateLogger();
+
+        ServiceCollection services = new();
+
+        // Application level infrastructure.
+        services.AddLogging(configure => configure.AddSerilog(Serilog.Log.Logger))
+            .AddSingleton((sp) => { return sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(App)); });
+
+        // Presentation services.
+        services.AddScoped(typeof(IAgnosticDispatcher), typeof(AvaloniaDispatcher))
+            .AddSingleton(logSource);
+
+        // View models.
+        foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())
+        {
+            if (typeof(BaseViewModel).IsAssignableFrom(assemblyType))
             {
-                // Line below is needed to remove Avalonia data validation.
-                // Without this line you will get duplicate validations from both Avalonia and CT
-                BindingPlugins.DataValidators.RemoveAt(0);
-
-                desktop.Startup += Desktop_Startup;
-                desktop.Exit += Desktop_Exit;
-            }
-
-            base.OnFrameworkInitializationCompleted();
-        }
-
-        private void Desktop_Startup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
-        {
-            // Services need to be gathered after app initialization but before
-            // the MainWindow is created as that starts the chain of dependency injections.
-            Services = ConfigureServices();
-
-            if (sender is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                desktop.MainWindow = new MainWindow();
+                services.AddScoped(assemblyType);
             }
         }
 
-        private void Desktop_Exit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
-        {
-            Serilog.Log.CloseAndFlush();
-        }
+        // Business domain services.
+        services.AddBusinessServices();
 
-        private static ServiceProvider ConfigureServices()
-        {
-            Serilog.Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.MemorySink(out ILogSource<LogEvent> logSource)
-                .CreateLogger();
-
-            ServiceCollection services = new();
-
-            // Application level infrastructure.
-            services.AddLogging(configure => configure.AddSerilog(Serilog.Log.Logger))
-                .AddSingleton((sp) => { return sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(App)); });
-
-            // Presentation services.
-            services.AddScoped(typeof(IAgnosticDispatcher), typeof(AvaloniaDispatcher))
-                .AddSingleton(logSource);
-
-            // View models.
-            foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                if (typeof(BaseViewModel).IsAssignableFrom(assemblyType))
-                {
-                    services.AddScoped(assemblyType);
-                }
-            }
-
-            // Business domain services.
-            services.AddBusinessServices();
-
-            return services.BuildServiceProvider();
-        }
+        return services.BuildServiceProvider();
     }
 }
