@@ -6,7 +6,7 @@ using RunnethOverStudio.AppToolkit.Modules.Messaging;
 using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 using System.Threading.Tasks;
 
-namespace AvaloniaApp.Presentation.Desktop.ViewModels;
+namespace AvaloniaApp.ViewModels;
 
 public partial class UUIDGeneratorViewModel : BaseViewModel
 {

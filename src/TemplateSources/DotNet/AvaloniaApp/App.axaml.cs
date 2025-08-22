@@ -2,8 +2,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using AvaloniaApp.Presentation.Desktop.Base.Services;
-using AvaloniaApp.Presentation.Desktop.Views;
+using AvaloniaApp.Base.Services;
+using AvaloniaApp.Views;
 using DotNet.Business;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,7 +14,7 @@ using Serilog.Sinks.MemorySink;
 using System;
 using System.Reflection;
 
-namespace AvaloniaApp.Presentation.Desktop
+namespace AvaloniaApp
 {
     public partial class App : Application
     {

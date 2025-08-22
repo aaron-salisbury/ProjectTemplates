@@ -5,7 +5,7 @@ using Serilog.Events;
 using System;
 using System.Globalization;
 
-namespace AvaloniaApp.Presentation.Desktop.Base.Converters;
+namespace AvaloniaApp.Base.Converters;
 
 public class LogEventLevelToBrushConverter : IValueConverter
 {

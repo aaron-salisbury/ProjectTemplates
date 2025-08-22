@@ -1,7 +1,7 @@
 ﻿using AvaloniaApp.Base;
 using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 
-namespace AvaloniaApp.Presentation.Desktop.ViewModels;
+namespace AvaloniaApp.ViewModels;
 
 public partial class HomeViewModel : BaseViewModel
 {

@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 
-namespace AvaloniaApp.Presentation.Desktop.Base.Controls;
+namespace AvaloniaApp.Base.Controls;
 
 public partial class ViewHeaderControl : UserControl
 {

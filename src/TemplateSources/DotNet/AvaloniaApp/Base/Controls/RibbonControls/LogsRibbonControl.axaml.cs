@@ -1,8 +1,8 @@
 using Avalonia;
 using AvaloniaApp.Base.Controls.RibbonControls;
-using AvaloniaApp.Presentation.Desktop.ViewModels;
+using AvaloniaApp.ViewModels;
 
-namespace AvaloniaApp.Presentation.Desktop.Base.Controls;
+namespace AvaloniaApp.Base.Controls;
 
 public partial class LogsRibbonControl : BaseRibbonControl
 {

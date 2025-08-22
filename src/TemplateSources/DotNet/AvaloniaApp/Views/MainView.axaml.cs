@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using AvaloniaApp.Presentation.Desktop.Base.Extensions;
-using AvaloniaApp.Presentation.Desktop.Views;
+using AvaloniaApp.Base.Extensions;
+using AvaloniaApp.Views;
 
-namespace AvaloniaApp.Presentation.Desktop.Views;
+namespace AvaloniaApp.Views;
 
 public partial class MainView : UserControl
 {

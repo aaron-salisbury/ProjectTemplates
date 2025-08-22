@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Serilog.Events;
 
-namespace AvaloniaApp.Presentation.Desktop.Models;
+namespace AvaloniaApp.Models;
 
 public partial class ErrorLog : ObservableObject
 {

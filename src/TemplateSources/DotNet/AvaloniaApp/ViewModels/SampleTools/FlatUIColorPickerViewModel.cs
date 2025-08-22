@@ -3,7 +3,7 @@ using DotNet.Business.Modules.Sample.DTOs;
 using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 using System.Collections.Generic;
 
-namespace AvaloniaApp.Presentation.Desktop.ViewModels;
+namespace AvaloniaApp.ViewModels;
 
 public partial class FlatUIColorPickerViewModel : BaseViewModel
 {

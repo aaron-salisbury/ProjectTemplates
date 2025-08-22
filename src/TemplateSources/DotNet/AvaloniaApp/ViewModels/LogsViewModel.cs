@@ -1,5 +1,5 @@
-﻿using AvaloniaApp.Presentation.Desktop.Base.Services;
-using AvaloniaApp.Presentation.Desktop.Models;
+﻿using AvaloniaApp.Base.Services;
+using AvaloniaApp.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RunnethOverStudio.AppToolkit.Presentation.MVVM;
@@ -11,7 +11,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AvaloniaApp.Presentation.Desktop.ViewModels;
+namespace AvaloniaApp.ViewModels;
 
 public partial class LogsViewModel : BaseViewModel
 {

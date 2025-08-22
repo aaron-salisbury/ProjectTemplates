@@ -3,12 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaApp.Presentation.Desktop.Views.MainView"
-			 xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
+             x:Class="AvaloniaApp.Views.MainView"
+			 xmlns:vm="clr-namespace:AvaloniaApp.ViewModels"
              x:DataType="vm:MainViewModel"
-			 xmlns:v="clr-namespace:AvaloniaApp.Presentation.Desktop.Views"
+			 xmlns:v="clr-namespace:AvaloniaApp.Views"
 			 xmlns:material="using:Material.Icons.Avalonia"
-			 xmlns:c="clr-namespace:AvaloniaApp.Presentation.Desktop.Base.Controls">
+			 xmlns:c="clr-namespace:AvaloniaApp.Base.Controls">
 
 	<UserControl.Styles>
 		<Style Selector="material|MaterialIcon.navBtnIcon">

@@ -35,7 +35,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
 
         foreach (string csprojPath in allProjectFiles)
         {
-            if (!IsProjectAnApplication(csprojPath, context))
+            if (!TemplatesDefaultExportTask.IsProjectAnApplication(csprojPath, context))
             {
                 continue;
             }
@@ -81,7 +81,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             File.Copy(iconPath, destIconPath, overwrite: true);
 
             // Create Root.vstemplate file.
-            WriteRootVSTemplate(templateRootDir, projectName, isSdkStyle);
+            WriteRootVSTemplate(csprojPath, templateRootDir, projectName, isSdkStyle);
 
             // Compress the root template directory into a zip file.
             string rootTemplateZipPath = templateRootDir + ".zip";
@@ -96,29 +96,6 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
         context.Log.Information($"Creation of root templates complete ({completionTime}s)");
-    }
-
-    private static bool IsProjectAnApplication(string csprojPath, BuildContext context)
-    {
-        try
-        {
-            XDocument doc = XDocument.Load(csprojPath);
-            XElement? outputTypeElement = doc.Descendants("OutputType").FirstOrDefault();
-
-            if (outputTypeElement != null)
-            {
-                string value = outputTypeElement.Value.Trim();
-                return value.Equals("Exe", StringComparison.OrdinalIgnoreCase) || value.Equals("WinExe", StringComparison.OrdinalIgnoreCase);
-            }
-
-            // If OutputType is missing, assume library (per SDK-style convention).
-            return false;
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not determine OutputType for {csprojPath}: {ex.Message}");
-            return false;
-        }
     }
 
     private static void CopyReferencedProjectTemplatesToRoot(IEnumerable<string> referencedProjectNames, string sourceDir, string templateRootDir, BuildContext context)
@@ -147,7 +124,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         }
     }
 
-    private static void WriteRootVSTemplate(string templateRootDir, string projectName, bool isSdkStyle)
+    private static void WriteRootVSTemplate(string csprojPath, string templateRootDir, string projectName, bool isSdkStyle)
     {
         // Find all template folders.
         List<string> allTemplateDirs = [.. Directory.GetDirectories(templateRootDir)
@@ -167,16 +144,18 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
                 ? $"$safeprojectname${folderName[firstDot..]}"
                 : $"$safeprojectname$.{folderName}";
 
+            bool isAppTemplate = string.Equals(folderName, appTemplateFolderName, StringComparison.OrdinalIgnoreCase);
+
             projectLinks.Add(new DTOs.ProjectTemplateLink
             {
-                ProjectName = projectNameAttr,
-                CopyParameters = string.Equals(folderName, appTemplateFolderName, StringComparison.OrdinalIgnoreCase), //TODO: App project name should really end in ".Presentation" but I'll have to refactor a lot.
+                ProjectName = isAppTemplate ? TemplatesDefaultExportTask.GetAppProjectReplacementParameter() : projectNameAttr,
+                CopyParameters = isAppTemplate,
                 Value = folderName + @"\" + "MyTemplate.vstemplate"
             });
         }
 
         // Determine name and description.
-        (string name, string description) = GetProjectNameAndDescription(appTemplateDir, projectName, isSdkStyle);
+        (string name, string description) = GetProjectNameAndDescription(csprojPath, projectName, isSdkStyle);
 
         // Build the VSTemplate DTO
         var vsTemplate = new DTOs.VSTemplate
@@ -185,7 +164,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             Type = "ProjectGroup",
             TemplateData = new DTOs.TemplateData
             {
-                Name = name,
+                Name = name + " Solution Template",
                 Description = description,
                 DefaultName = projectName + "_Solution",
                 Icon = "vs-extension-icon.png",
@@ -220,9 +199,8 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         serializer.Serialize(writer, vsTemplate, ns);
     }
 
-    private static (string name, string description) GetProjectNameAndDescription(string projectDirectory, string projectName, bool isSdkStyle)
+    private static (string name, string description) GetProjectNameAndDescription(string csprojPath, string projectName, bool isSdkStyle)
     {
-        string csprojPath = Path.Combine(projectDirectory, projectName + ".csproj");
         if (!File.Exists(csprojPath))
         {
             throw new FileNotFoundException("Could not find .csproj file to extract description.", csprojPath);

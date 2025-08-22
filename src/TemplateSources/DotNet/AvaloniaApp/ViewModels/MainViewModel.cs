@@ -1,6 +1,6 @@
 ﻿using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 
-namespace AvaloniaApp.Presentation.Desktop.ViewModels;
+namespace AvaloniaApp.ViewModels;
 
 internal class MainViewModel : BaseViewModel
 {

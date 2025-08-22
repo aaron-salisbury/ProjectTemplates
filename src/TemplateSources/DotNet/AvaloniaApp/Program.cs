@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace AvaloniaApp.Presentation.Desktop
+namespace AvaloniaApp
 {
     internal sealed class Program
     {

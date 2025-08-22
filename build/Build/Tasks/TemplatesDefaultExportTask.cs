@@ -65,10 +65,43 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         context.Log.Information($"Generation of default project templates complete ({completionTime}s)");
     }
 
+    internal static bool IsProjectAnApplication(string csprojPath, BuildContext context)
+    {
+        try
+        {
+            XDocument doc = XDocument.Load(csprojPath);
+            XElement? outputTypeElement = doc.Descendants("OutputType").FirstOrDefault();
+
+            if (outputTypeElement != null)
+            {
+                string value = outputTypeElement.Value.Trim();
+                return value.Equals("Exe", StringComparison.OrdinalIgnoreCase) || value.Equals("WinExe", StringComparison.OrdinalIgnoreCase);
+            }
+
+            // If OutputType is missing, assume library (per SDK-style convention).
+            return false;
+        }
+        catch (Exception ex)
+        {
+            context.Log.Error($"Could not determine OutputType for {csprojPath}: {ex.Message}");
+            return false;
+        }
+    }
+
+    internal static string GetAppProjectReplacementParameter()
+    {
+        // The ProjectTemplates solution projects are designed to be three-tier. The business and data tiers are named accordingly, 
+        // but for simplicity & clarity the presentation tier (apps w/ platform-UI specific frameworks) are all named after the platform they target (e.g., WinXPApp).
+        // However, when users of the extension export templates, all tiers being suffixed is the expectation.
+
+        return "$safeprojectname$.Presentation";
+    }
+
     private static bool ExportDefaultTemplate(string csprojPath, string templateStagingDir, bool isSdkStyle, BuildContext context)
     {
         try
         {
+            bool isProjectAnApplication = IsProjectAnApplication(csprojPath, context);
             string projectDir = Path.GetDirectoryName(csprojPath)!;
 
             // Clean up any previous staging
@@ -81,7 +114,8 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
             CopyProjectFiles(projectDir, templateStagingDir);
 
             // Apply parameters.
-            ApplySafeProjectNameToFiles(csprojPath, templateStagingDir);
+            ApplySafeProjectNameToFiles(csprojPath, templateStagingDir, isProjectAnApplication);
+            SetAssemblyNameToSafeProjectName(csprojPath, templateStagingDir, isProjectAnApplication);
             ReplaceProjectGuidWithTemplateParameter(Path.Combine(templateStagingDir, Path.GetFileName(csprojPath)), isSdkStyle);
 
             // Create the .vstemplate file.
@@ -129,10 +163,20 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         }
     }
 
-    private static void ApplySafeProjectNameToFiles(string csprojPath, string stagingDirectory)
+    private static void ApplySafeProjectNameToFiles(string csprojPath, string stagingDirectory, bool isProjectAnApplication)
     {
-        // We want something like MyCoolApp.Presentation.Web to become $safeprojectname$.Presentation.Web
         string fullProjectName = Path.GetFileNameWithoutExtension(csprojPath);
+
+        string replacementName = "$safeprojectname$";
+        if (isProjectAnApplication && !fullProjectName.Contains('.'))
+        {
+            replacementName = GetAppProjectReplacementParameter();
+            //TODO: Template is still doing this: <RootNamespace>$safeprojectname$</RootNamespace> nor is Presentation being used in namespaces, except sometimes double?.
+            // ALSO, the root template seems to not get created at all for legacy apps.
+            // ALSO, I noticed double Presentation in the avalonia app view model => namespace $safeprojectname$.Presentation.Presentation.Desktop.ViewModels;
+        }
+
+        // We want something like MyCoolApp.Presentation.Web to become $safeprojectname$.Presentation.Web
         int firstDot = fullProjectName.IndexOf('.');
         string projectNamePrefix = firstDot > 0 ? fullProjectName[..firstDot] : fullProjectName;
 
@@ -147,7 +191,7 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
                 // Only do replacement if the file appears to be text.
                 if (!content.Contains('\0')) // Crude check for binary.
                 {
-                    string replaced = Regex.Replace(content, pattern, "$safeprojectname$", RegexOptions.IgnoreCase);
+                    string replaced = Regex.Replace(content, pattern, replacementName, RegexOptions.IgnoreCase);
                     if (!ReferenceEquals(content, replaced))
                     {
                         File.WriteAllText(file, replaced);
@@ -159,6 +203,32 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
                 // Ignore files that can't be read as text.
                 continue;
             }
+        }
+    }
+
+    private static void SetAssemblyNameToSafeProjectName(string csprojPath, string stagingDirectory, bool isProjectAnApplication)
+    {
+        // The intention of the design of these solutions is the projects are suffixed with their tier (e.g., .Presentation, .Business, .Data),
+        // however, the assembly of the application project should be named after the solution itself as it is the solution's deliverable.
+
+        if (!isProjectAnApplication)
+        {
+            return;
+        }
+
+        string projectFileName = Path.GetFileName(csprojPath);
+        string stagedCsprojPath = Path.Combine(stagingDirectory, projectFileName);
+        if (!File.Exists(stagedCsprojPath))
+        {
+            return;
+        }
+
+        var doc = XDocument.Load(stagedCsprojPath);
+        var assemblyNameElement = doc.Descendants("AssemblyName").FirstOrDefault();
+        if (assemblyNameElement != null)
+        {
+            assemblyNameElement.Value = "$safeprojectname$";
+            doc.Save(stagedCsprojPath);
         }
     }
 

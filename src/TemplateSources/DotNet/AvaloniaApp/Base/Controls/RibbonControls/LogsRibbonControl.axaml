@@ -3,8 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="60"
-             x:Class="AvaloniaApp.Presentation.Desktop.Base.Controls.LogsRibbonControl"
-             xmlns:vm="clr-namespace:AvaloniaApp.Presentation.Desktop.ViewModels"
+             x:Class="AvaloniaApp.Base.Controls.LogsRibbonControl"
+             xmlns:vm="clr-namespace:AvaloniaApp.ViewModels"
              x:DataType="vm:LogsViewModel"
 			 xmlns:material="using:Material.Icons.Avalonia"
 			 Background="Transparent">

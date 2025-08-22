@@ -60,6 +60,8 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             ZipFile.ExtractToDirectory(zipPath, stagingDir);
 
             // In .cs files, modify 'using' statements to referenced projects to use parameters.
+            // Something to note is that application project names won't match their template's namespaces because for the final template, they've been suffixed with ".Presentation".
+            // This should be fine though since they are at the top of the reference chain and won't be referenced by other projects.
             HashSet<string> referencedProjectNames = [.. GetReferencedProjectNamesRecursive(csprojPath, fullProjectPathsByName, context)];
             ApplySafeExternalUsings(csprojPath, stagingDir, referencedProjectNames, context);
 

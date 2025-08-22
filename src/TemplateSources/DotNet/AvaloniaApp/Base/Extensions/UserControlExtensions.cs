@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace AvaloniaApp.Presentation.Desktop.Base.Extensions;
+namespace AvaloniaApp.Base.Extensions;
 
 internal static class UserControlExtensions
 {

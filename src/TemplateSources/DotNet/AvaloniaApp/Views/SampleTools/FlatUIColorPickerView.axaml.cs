@@ -3,12 +3,12 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using DotNet.Business.Modules.Sample.DTOs;
-using AvaloniaApp.Presentation.Desktop.Base.Extensions;
-using AvaloniaApp.Presentation.Desktop.ViewModels;
+using AvaloniaApp.Base.Extensions;
+using AvaloniaApp.ViewModels;
 using System;
 using System.Linq;
 
-namespace AvaloniaApp.Presentation.Desktop.Views;
+namespace AvaloniaApp.Views;
 
 public partial class FlatUIColorPickerView : UserControl
 {

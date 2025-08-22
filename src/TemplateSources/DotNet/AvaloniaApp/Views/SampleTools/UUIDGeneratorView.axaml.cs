@@ -3,10 +3,10 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
-using AvaloniaApp.Presentation.Desktop.Base.Extensions;
-using AvaloniaApp.Presentation.Desktop.ViewModels;
+using AvaloniaApp.Base.Extensions;
+using AvaloniaApp.ViewModels;
 
-namespace AvaloniaApp.Presentation.Desktop.Views;
+namespace AvaloniaApp.Views;
 
 public partial class UUIDGeneratorView : UserControl
 {

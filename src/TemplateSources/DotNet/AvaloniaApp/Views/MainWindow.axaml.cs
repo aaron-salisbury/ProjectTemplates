@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using AvaloniaApp.Base;
 using System.Runtime.InteropServices;
 
-namespace AvaloniaApp.Presentation.Desktop.Views;
+namespace AvaloniaApp.Views;
 
 public partial class MainWindow : Window
 {

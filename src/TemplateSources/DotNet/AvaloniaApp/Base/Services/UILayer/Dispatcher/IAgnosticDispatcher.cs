@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AvaloniaApp.Presentation.Desktop.Base.Services;
+namespace AvaloniaApp.Base.Services;
 
 public interface IAgnosticDispatcher
 {
