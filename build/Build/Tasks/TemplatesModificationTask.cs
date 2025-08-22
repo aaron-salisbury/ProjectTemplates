@@ -72,6 +72,7 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             string stagedCsprojPath = Path.Combine(stagingDir, Path.GetFileName(csprojPath));
             ApplySafeExternalProjectReferences(stagedCsprojPath, referencedProjectNames, context);
             //StepUpNuGetPackageHintPaths(stagedCsprojPath, isSdkStyle); //TODO: Not sure if I actually need this; need to test.
+            //TODO: Not sure what to do with the value of the Product element of SDK-style executable projects. It should be a friendly version of $safeprojectname$
 
             // In the .vstemplate file:
             //  - Update ProjectItem elements for files w/ markup namespaces (such as XAML or manifest) with ReplaceParameters parameter values of 'false' to 'true'. *NOTE - Export task already does this.*

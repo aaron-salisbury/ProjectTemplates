@@ -1,25 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.1.32210.238
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTemplates", "ProjectTemplates\ProjectTemplates.csproj", "{39551605-AD73-441C-9CDA-E3F40399716D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFramework.Data", "DotNetFramework\DotNetFramework.Data\DotNetFramework.Data.csproj", "{1C04E92D-BEA9-4DC4-B877-429A81D9B9A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFramework.Data", "TemplateSources\DotNetFramework\DotNetFramework.Data\DotNetFramework.Data.csproj", "{1C04E92D-BEA9-4DC4-B877-429A81D9B9A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFramework.Business", "DotNetFramework\DotNetFramework.Business\DotNetFramework.Business.csproj", "{6A320F96-9BD5-4736-9170-4298ADD3A469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFramework.Business", "TemplateSources\DotNetFramework\DotNetFramework.Business\DotNetFramework.Business.csproj", "{6A320F96-9BD5-4736-9170-4298ADD3A469}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98App", "DotNetFramework\Win98App\Win98App.csproj", "{FF4CE982-B293-4A7D-BBF2-651772FFDA76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win98App", "TemplateSources\DotNetFramework\Win98App\Win98App.csproj", "{FF4CE982-B293-4A7D-BBF2-651772FFDA76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPApp", "DotNetFramework\WinXPApp\WinXPApp.csproj", "{94F7C0A5-038D-459A-8535-FD0152A290DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinXPApp", "TemplateSources\DotNetFramework\WinXPApp\WinXPApp.csproj", "{94F7C0A5-038D-459A-8535-FD0152A290DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7App", "DotNetFramework\Win7App\Win7App.csproj", "{5CEC4C93-D266-476C-8084-BDE6EB390610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win7App", "TemplateSources\DotNetFramework\Win7App\Win7App.csproj", "{5CEC4C93-D266-476C-8084-BDE6EB390610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Data", "DotNet\DotNet.Data\DotNet.Data.csproj", "{9EB7F757-4671-4EE3-AF62-31C68C116B1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Data", "TemplateSources\DotNet\DotNet.Data\DotNet.Data.csproj", "{9EB7F757-4671-4EE3-AF62-31C68C116B1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Business", "DotNet\DotNet.Business\DotNet.Business.csproj", "{E339A5AA-6160-42A6-8D06-A746AF91C280}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet.Business", "TemplateSources\DotNet\DotNet.Business\DotNet.Business.csproj", "{E339A5AA-6160-42A6-8D06-A746AF91C280}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaApp", "TemplateSources\DotNet\AvaloniaApp\AvaloniaApp.csproj", "{5384FFC5-45DF-4424-8228-EA122189927B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaApp", "DotNet\AvaloniaApp\AvaloniaApp.csproj", "{5384FFC5-45DF-4424-8228-EA122189927B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,26 +33,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|ARM.Build.0 = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|x64.Build.0 = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Debug|x86.Build.0 = Debug|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|ARM.ActiveCfg = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|ARM.Build.0 = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|ARM64.Build.0 = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|x64.ActiveCfg = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|x64.Build.0 = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|x86.ActiveCfg = Release|Any CPU
-		{39551605-AD73-441C-9CDA-E3F40399716D}.Release|x86.Build.0 = Release|Any CPU
 		{1C04E92D-BEA9-4DC4-B877-429A81D9B9A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1C04E92D-BEA9-4DC4-B877-429A81D9B9A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C04E92D-BEA9-4DC4-B877-429A81D9B9A6}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -220,6 +198,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {696861FF-B6B6-445E-A8F9-541DAA144250}
+		SolutionGuid = {E6A09972-15FC-45E6-899B-EFA7D84CF5BD}
 	EndGlobalSection
 EndGlobal
