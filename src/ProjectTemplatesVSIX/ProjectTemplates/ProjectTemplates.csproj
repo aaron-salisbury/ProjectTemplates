@@ -49,22 +49,51 @@
     <Compile Include="ProjectTemplatesPackage.cs" />
   </ItemGroup>
   <ItemGroup Label="VSTemplates">
-    <Content Include="VSTemplates\Windows_7_App_Template.zip">
+    <Content Include="VSTemplates\AvaloniaApp_Template.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="VSTemplates\Windows_98_App_Template.zip">
+    <Content Include="VSTemplates\Win7App_Template.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="VSTemplates\Windows_XP_App_Template.zip">
+    <Content Include="VSTemplates\Win98App_Template.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="VSTemplates\Avalonia_App_Template.zip">
+    <Content Include="VSTemplates\WinXPApp_Template.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+  </ItemGroup>
+  <ItemGroup Label="TemplatePackages">
+    <None Include="TemplatePackages\AaronSalisbury.DotNetFrameworkToolkit.0.2.2.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\Krypton.Components.Suite.4.5.9.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\LinqBridge.1.3.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\MetroModernUI.1.4.0.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\ModernUI.WPF.1.0.9.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\PatternsAndPractices.Cryptography.2.0.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\PatternsAndPractices.Logging.2.0.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\PatternsAndPractices.Unity.1.2.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatePackages\System.Data.SqlServerCe_unofficial.4.0.8482.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="License.txt">
@@ -87,9 +116,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Packages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PostProcessingWizard\PostProcessingWizard.csproj">

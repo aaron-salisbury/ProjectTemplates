@@ -19,6 +19,7 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
     private const string VSIX_SOLUTION_NAME = "ProjectTemplatesVSIX";
     private const string VSIX_PROJECT_NAME = "ProjectTemplates";
     private const string VS_TEMPLATE_FOLDER_NAME = "VSTemplates";
+    private const string TEMPLATE_PACKAGES_FOLDER_NAME = "TemplatePackages";
 
     public override bool ShouldRun(BuildContext context)
     {
@@ -35,8 +36,8 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         string solutionDir = Path.Combine(sourceDir, VSIX_SOLUTION_NAME);
         string projectDir = Path.Combine(solutionDir, VSIX_PROJECT_NAME);
         string vsTemplateDir = Path.Combine(projectDir, VS_TEMPLATE_FOLDER_NAME);
-        string packagesDir = Path.Combine(projectDir, "Packages");
-        string csprojPath = Path.Combine(projectDir, VSIX_PROJECT_NAME + ".csproj");
+        string packagesDir = Path.Combine(projectDir, TEMPLATE_PACKAGES_FOLDER_NAME);
+        string csprojPath = Path.Combine(projectDir, $"{VSIX_PROJECT_NAME}.csproj");
 
         CleanImportLocations(vsTemplateDir, packagesDir);
 
@@ -44,7 +45,7 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
 
         List<string> nupkgFileNames = ImportTemplateNuGetPackages(sourceDir, packagesDir);
 
-        UpdateVSIXProjectFile(projectDir, templateFileNames, nupkgFileNames);
+        UpdateVSIXProjectFile(csprojPath, templateFileNames, nupkgFileNames);
 
         UpdateVSIXManifestFile(projectDir, templateFileNames, nupkgFileNames);
 
@@ -69,7 +70,7 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         }
 
         Directory.CreateDirectory(packagesDir);
-        foreach (string file in Directory.GetFiles(packagesDir, "*", SearchOption.AllDirectories))
+        foreach (string file in Directory.GetFiles(packagesDir, "*.nupkg", SearchOption.TopDirectoryOnly))
         {
             File.Delete(file);
         }
@@ -104,12 +105,12 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
 
     private static List<string> ImportTemplateNuGetPackages(string sourceDir, string packagesDir)
     {
-        // Distinctly copy each nupkg file that were in the WizardData into the VSIX Packages folder.
+        // Distinctly copy each nupkg file used by template projects into the VSIX Packages folder.
 
         HashSet<string> nupkgFileNames = [];
 
         string templatesSourceDir = Path.Combine(sourceDir, "TemplateSources");
-        string templatePackagesDir = Path.Combine(templatesSourceDir, "TemplateSources");
+        string templatePackagesDir = Path.Combine(templatesSourceDir, "packages");
         if (!Directory.Exists(templatePackagesDir))
         {
             throw new DirectoryNotFoundException($"The template packages directory '{templatePackagesDir}' does not exist.");
@@ -141,17 +142,17 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         // --- VS TEMPLATES ---
         // Find or create the ItemGroup with Label="VSTemplates".
         XElement? templatesItemGroup = doc.Descendants(ns + "ItemGroup")
-            .FirstOrDefault(g => (string?)g.Attribute("Label") == "VSTemplates");
+            .FirstOrDefault(g => (string?)g.Attribute("Label") == VS_TEMPLATE_FOLDER_NAME);
         bool templatesItemGroupIsNew = false;
         if (templatesItemGroup == null)
         {
-            templatesItemGroup = new XElement(ns + "ItemGroup", new XAttribute("Label", "VSTemplates"));
+            templatesItemGroup = new XElement(ns + "ItemGroup", new XAttribute("Label", VS_TEMPLATE_FOLDER_NAME));
             templatesItemGroupIsNew = true;
         }
 
         // Remove all <Content> elements for VS templates.
         templatesItemGroup.Elements(ns + "Content")
-            .Where(e => ((string?)e.Attribute("Include"))?.StartsWith(VS_TEMPLATE_FOLDER_NAME + "\\") == true)
+            .Where(e => ((string?)e.Attribute("Include"))?.StartsWith($"{VS_TEMPLATE_FOLDER_NAME}\\") == true)
             .ToList()
             .ForEach(e => e.Remove());
 
@@ -174,17 +175,17 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         // --- TEMPLATE PACKAGES ---
         // Find or create the ItemGroup with Label="TemplatePackages".
         XElement? packagesItemGroup = doc.Descendants(ns + "ItemGroup")
-            .FirstOrDefault(g => (string?)g.Attribute("Label") == "TemplatePackages");
+            .FirstOrDefault(g => (string?)g.Attribute("Label") == TEMPLATE_PACKAGES_FOLDER_NAME);
         bool packagesItemGroupIsNew = false;
         if (packagesItemGroup == null)
         {
-            packagesItemGroup = new XElement(ns + "ItemGroup", new XAttribute("Label", "TemplatePackages"));
+            packagesItemGroup = new XElement(ns + "ItemGroup", new XAttribute("Label", TEMPLATE_PACKAGES_FOLDER_NAME));
             packagesItemGroupIsNew = true;
         }
 
         // Remove all <None> elements for template packages.
         packagesItemGroup.Elements(ns + "None")
-            .Where(e => ((string?)e.Attribute("Include"))?.StartsWith("Packages\\") == true)
+            .Where(e => ((string?)e.Attribute("Include"))?.StartsWith($"{TEMPLATE_PACKAGES_FOLDER_NAME}\\") == true)
             .ToList()
             .ForEach(e => e.Remove());
 
@@ -192,7 +193,7 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         foreach (string nupkgFile in nupkgFileNames)
         {
             XElement noneElement = new(ns + "None",
-                new XAttribute("Include", $"Packages\\{nupkgFile}"),
+                new XAttribute("Include", $"{TEMPLATE_PACKAGES_FOLDER_NAME}\\{nupkgFile}"),
                 new XElement(ns + "CopyToOutputDirectory", "Always")
             );
             packagesItemGroup.Add(noneElement);
@@ -226,8 +227,12 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         // Remove old template and package asset entries.
         assetsNode.Elements(ns + "Asset")
             .Where(e =>
-                (string?)e.Attribute(d + "VsixSubPath") == "ProjectTemplate" ||
-                (string?)e.Attribute(d + "VsixSubPath") == "Packages")
+            {
+                string? typeAttr = (string?)e.Attribute("Type");
+                return typeAttr != null &&
+                       (typeAttr.EndsWith(".ProjectTemplate", StringComparison.OrdinalIgnoreCase) ||
+                        typeAttr.EndsWith(".nupkg", StringComparison.OrdinalIgnoreCase));
+            })
             .ToList()
             .ForEach(e => e.Remove());
 
@@ -236,8 +241,8 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         {
             XElement asset = new(ns + "Asset",
                 new XAttribute(d + "Source", "File"),
-                new XAttribute(d + "VsixSubPath", "Packages"),
-                new XAttribute("Path", $"Packages\\{nupkgFileName}"),
+                new XAttribute(d + "VsixSubPath", TEMPLATE_PACKAGES_FOLDER_NAME),
+                new XAttribute("Path", $"{TEMPLATE_PACKAGES_FOLDER_NAME}\\{nupkgFileName}"),
                 new XAttribute("Type", nupkgFileName)
             );
             assetsNode.Add(asset);
@@ -249,8 +254,8 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
             XElement asset = new(ns + "Asset",
                 new XAttribute("Type", "Microsoft.VisualStudio.ProjectTemplate"),
                 new XAttribute(d + "Source", "File"),
-                new XAttribute("Path", "VSTemplates"),
-                new XAttribute(d + "TargetPath", $"VSTemplates\\{templateFileName}")
+                new XAttribute("Path", VS_TEMPLATE_FOLDER_NAME),
+                new XAttribute(d + "TargetPath", $"{VS_TEMPLATE_FOLDER_NAME}\\{templateFileName}")
             );
             assetsNode.Add(asset);
         }
