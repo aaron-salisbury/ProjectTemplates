@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using static Build.BuildContext;
 
 namespace Build.Tasks;
 
@@ -22,8 +23,7 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
 {
     public override bool ShouldRun(BuildContext context)
     {
-        return true;
-        //return context.Config == BuildConfigurations.Release;
+        return context.Config == BuildConfigurations.Release;
     }
 
     public override void Run(BuildContext context)
