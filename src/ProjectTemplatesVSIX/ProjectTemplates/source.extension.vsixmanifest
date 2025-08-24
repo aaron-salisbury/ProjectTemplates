@@ -37,11 +37,10 @@
         <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\Serilog.2.12.0.nupkg" Type="Serilog.2.12.0.nupkg" />
         <Asset d:Source="File" d:VsixSubPath="Packages" Path="Packages\System.ComponentModel.Annotations.5.0.0.nupkg" Type="System.ComponentModel.Annotations.5.0.0.nupkg" />
 
-        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_98_App_Template.zip" />
-        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_XP_App_Template.zip" />
-        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_7_App_Template.zip" />
-        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows_10_App_Template.zip" />
-        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Avalonia_App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Windows_98_App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Windows_XP_App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Windows_7_App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Avalonia_App_Template.zip" />
         <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="PostProcessingWizard" Path="|PostProcessingWizard|" AssemblyName="|PostProcessingWizard;AssemblyName|" />
     </Assets>
 </PackageManifest>
