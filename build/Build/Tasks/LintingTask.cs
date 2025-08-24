@@ -19,13 +19,18 @@ public sealed class LintingTask : FrostingTask<BuildContext>
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
 
-        context.Log.Information($"Formatting solution...");
+        context.Log.Information($"Formatting code...");
 
-        string solutionPath = System.IO.Path.Combine(context.AbsolutePathToRepo, "src", $"{BuildContext.REPO_AND_SOLUTION_NAME}.sln");
+        string srcPath = System.IO.Path.Combine(context.AbsolutePathToRepo, "src");
+        string[] solutionPaths = System.IO.Directory.GetFiles(srcPath, "*.sln", System.IO.SearchOption.AllDirectories);
 
-        // Non-SDK-style projects will be skipped with a warning, but the process will continue for the rest.
-        // If we ever want to ensure Non-SDK-style projects are formatted, consider using legacy tools.
-        context.StartProcess("dotnet", $"format \"{solutionPath}\" --no-restore");
+        foreach (string solutionPath in solutionPaths)
+        {
+            // Non-SDK-style projects will be skipped with a warning, but the process will continue for the rest.
+            // If we ever want to ensure Non-SDK-style projects are formatted, consider using legacy tools.
+            context.Log.Information($"Formatting solution: {System.IO.Path.GetFileName(solutionPath)}");
+            context.StartProcess("dotnet", $"format \"{solutionPath}\" --no-restore");
+        }
 
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);

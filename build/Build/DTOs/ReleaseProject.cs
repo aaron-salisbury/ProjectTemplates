@@ -8,7 +8,7 @@ public record ReleaseProject
 
     public required string DirectoryPathAbsolute { get; init; }
 
-    public required string FilePathAbsolute { get; init; }
+    public required string CsprojFilePathAbsolute { get; init; }
 
     public required string OutputDirectoryPathAbsolute { get; init; }
 

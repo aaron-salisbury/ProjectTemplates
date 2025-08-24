@@ -1,4 +1,5 @@
-﻿using Cake.Core.Diagnostics;
+﻿using Build.DTOs;
+using Cake.Core.Diagnostics;
 using Cake.Frosting;
 using System;
 using System.Collections.Generic;
@@ -30,37 +31,29 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         Stopwatch stopwatch = Stopwatch.StartNew();
         context.Log.Information($"Building root templates...");
 
-        string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
-        string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
-
-        foreach (string csprojPath in allProjectFiles)
+        foreach (TemplateProject templateProject in context.TemplateProjects)
         {
-            if (!TemplatesDefaultExportTask.IsProjectAnApplication(csprojPath, context))
+            if (!templateProject.IsApplication)
             {
                 continue;
             }
 
-            bool isSdkStyle = BuildContext.IsSdkStyleProject(csprojPath);
-            string outputDir = BuildContext.DetermineAbsoluteOutputPath(csprojPath, isSdkStyle, context.Config, context);
-            string projectName = Path.GetFileNameWithoutExtension(csprojPath);
-
             // Create staging folder for root template for the application.
-            string templateRootDir = Path.Combine(outputDir, projectName + "_Template");
+            string templateRootDir = Path.Combine(templateProject.OutputDirectoryPathAbsolute, templateProject.Name + "_Template");
             Directory.CreateDirectory(templateRootDir);
 
             // Move the application's template zip to the root template directory.
-            string appTemplateZipPath = Path.Combine(outputDir, projectName + ".zip");
+            string appTemplateZipPath = Path.Combine(templateProject.OutputDirectoryPathAbsolute, templateProject.Name + ".zip");
             if (!File.Exists(appTemplateZipPath))
             {
-                throw new FileNotFoundException($"Template zip file not found for project '{projectName}' at '{appTemplateZipPath}'.");
+                throw new FileNotFoundException($"Template zip file not found for project '{templateProject.Name}' at '{appTemplateZipPath}'.");
             }
-            string destinationAppTemplateZipPath = Path.Combine(templateRootDir, projectName + ".zip");
+            string destinationAppTemplateZipPath = Path.Combine(templateRootDir, templateProject.Name + ".zip");
             File.Move(appTemplateZipPath, destinationAppTemplateZipPath, overwrite: true);
 
             // Copy template for the app's referenced projects.
-            Dictionary<string, string> fullProjectPathsByName = TemplatesModificationTask.GetFullProjectPathsByName(allProjectFiles);
-            HashSet<string> referencedProjectNames = [.. TemplatesModificationTask.GetReferencedProjectNamesRecursive(csprojPath, fullProjectPathsByName, context)];
-            CopyReferencedProjectTemplatesToRoot(referencedProjectNames, sourceDir, templateRootDir, context);
+            string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
+            CopyReferencedProjectTemplatesToRoot(templateProject, sourceDir, templateRootDir, context);
 
             // Unzip each template in the root template directory.
             foreach (string zipFile in Directory.GetFiles(templateRootDir, "*.zip"))
@@ -81,7 +74,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             File.Copy(iconPath, destIconPath, overwrite: true);
 
             // Create Root.vstemplate file.
-            WriteRootVSTemplate(csprojPath, templateRootDir, projectName, isSdkStyle);
+            WriteRootVSTemplate(templateProject, templateRootDir);
 
             // Compress the root template directory into a zip file.
             string rootTemplateZipPath = templateRootDir + ".zip";
@@ -98,9 +91,9 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         context.Log.Information($"Creation of root templates complete ({completionTime}s)");
     }
 
-    private static void CopyReferencedProjectTemplatesToRoot(IEnumerable<string> referencedProjectNames, string sourceDir, string templateRootDir, BuildContext context)
+    private static void CopyReferencedProjectTemplatesToRoot(TemplateProject templateProject, string sourceDir, string templateRootDir, BuildContext context)
     {
-        foreach (string referencedProjectName in referencedProjectNames)
+        foreach (string referencedProjectName in templateProject.ProjectNamesReferenced)
         {
             // Find the .csproj file for the referenced project.
             string[] csprojFiles = Directory.GetFiles(sourceDir, referencedProjectName + ".csproj", SearchOption.AllDirectories);
@@ -110,10 +103,12 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             }
 
             string referencedCsprojPath = csprojFiles[0];
-            bool isSdkStyle = BuildContext.IsSdkStyleProject(referencedCsprojPath);
-            string referencedProjectOutputDir = BuildContext.DetermineAbsoluteOutputPath(referencedCsprojPath, isSdkStyle, context.Config, context);
+            TemplateProject? referencedTemplateProject = context.TemplateProjects
+                .Where(tp => string.Equals(tp.CsprojFilePathAbsolute, referencedCsprojPath))
+                .FirstOrDefault() ?? throw new InvalidOperationException($"Referenced project '{referencedProjectName}' at '{referencedCsprojPath}' is not listed as a template project.");
+
             string referencedProjectZipFileName = referencedProjectName + ".zip";
-            string referencedZipPath = Path.Combine(referencedProjectOutputDir, referencedProjectZipFileName);
+            string referencedZipPath = Path.Combine(referencedTemplateProject.OutputDirectoryPathAbsolute, referencedProjectZipFileName);
             if (!File.Exists(referencedZipPath))
             {
                 throw new FileNotFoundException($"Template zip file not found for referenced project '{referencedProjectName}' at '{referencedZipPath}'.");
@@ -124,13 +119,13 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         }
     }
 
-    private static void WriteRootVSTemplate(string csprojPath, string templateRootDir, string projectName, bool isSdkStyle)
+    private static void WriteRootVSTemplate(TemplateProject templateProject, string templateRootDir)
     {
         // Find all template folders.
         List<string> allTemplateDirs = [.. Directory.GetDirectories(templateRootDir)
             .Where(d => File.Exists(Path.Combine(d, "MyTemplate.vstemplate")))];
 
-        string appTemplateDir = Path.Combine(templateRootDir, projectName);
+        string appTemplateDir = Path.Combine(templateRootDir, templateProject.Name);
         string appTemplateFolderName = Path.GetFileName(appTemplateDir);
 
         // Build ProjectTemplateLink DTOs
@@ -154,9 +149,6 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             });
         }
 
-        // Determine name and description.
-        (string name, string description) = GetProjectNameAndDescription(csprojPath, projectName, isSdkStyle);
-
         // Build the VSTemplate DTO
         var vsTemplate = new DTOs.VSTemplate
         {
@@ -164,9 +156,9 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             Type = "ProjectGroup",
             TemplateData = new DTOs.TemplateData
             {
-                Name = name.Replace("Win", "Windows ") + " Solution Template",
-                Description = description,
-                DefaultName = projectName + "_Solution",
+                Name = templateProject.FriendlyName.Replace("Win", "Windows ") + " Solution Template",
+                Description = templateProject.Description,
+                DefaultName = templateProject.Name + "_Solution",
                 Icon = "vs-extension-icon.png",
                 LanguageTag = "C#",
                 PlatformTag = "Windows",
@@ -197,72 +189,5 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         using var fs = new FileStream(vstemplatePath, FileMode.Create, FileAccess.Write);
         using var writer = XmlWriter.Create(fs, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = false });
         serializer.Serialize(writer, vsTemplate, ns);
-    }
-
-    private static (string name, string description) GetProjectNameAndDescription(string csprojPath, string projectName, bool isSdkStyle)
-    {
-        if (!File.Exists(csprojPath))
-        {
-            throw new FileNotFoundException("Could not find .csproj file to extract description.", csprojPath);
-        }
-
-        XDocument doc = XDocument.Load(csprojPath);
-        XNamespace ns = doc.Root?.Name.Namespace ?? XNamespace.None;
-        XElement? descriptionElement = doc.Descendants(ns + "Description").FirstOrDefault();
-
-        // Get description.
-        string? description;
-        if (descriptionElement != null && !string.IsNullOrWhiteSpace(descriptionElement.Value))
-        {
-            description = descriptionElement.Value.Trim();
-        }
-        else
-        {
-            throw new InvalidOperationException($"No description found in .csproj file for project '{projectName}' at '{csprojPath}'.");
-        }
-
-        // Get name.
-        string? name;
-        if (isSdkStyle)
-        {
-            XElement? productElement = doc.Descendants(ns + "Product").FirstOrDefault();
-            if (string.IsNullOrWhiteSpace(productElement?.Value))
-            {
-                throw new InvalidOperationException($"Product element not found in SDK-style project '{projectName}' at '{csprojPath}'.");
-            }
-
-            name = productElement.Value.Trim();
-        }
-        else
-        {
-            XElement? assemblyNameElement = doc.Descendants(ns + "AssemblyName").FirstOrDefault();
-            if (string.IsNullOrWhiteSpace(assemblyNameElement?.Value))
-            {
-                throw new InvalidOperationException($"AssemblyName element not found in .Net Framework project '{projectName}' at '{csprojPath}'.");
-            }
-
-            name = InsertSpacesInPascalCase(assemblyNameElement.Value.Trim());
-        }
-
-        return (name, description);
-
-        // Helper: Insert spaces before capital letters (except the first).
-        static string InsertSpacesInPascalCase(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-                return input;
-
-            var sb = new System.Text.StringBuilder();
-            sb.Append(input[0]);
-            for (int i = 1; i < input.Length; i++)
-            {
-                if (char.IsUpper(input[i]) && !char.IsWhiteSpace(input[i - 1]))
-                {
-                    sb.Append(' ');
-                }
-                sb.Append(input[i]);
-            }
-            return sb.ToString();
-        }
     }
 }

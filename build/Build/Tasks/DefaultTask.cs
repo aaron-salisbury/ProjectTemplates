@@ -5,7 +5,7 @@ using Cake.Frosting;
 namespace Build.Tasks;
 
 [TaskName("Default")]
-[IsDependentOn(typeof(PublishTask))]
+[IsDependentOn(typeof(UpdateAndBuildVSIX))]
 [TaskDescription("Entry point for the build process when a command-line target isn't specified.")]
 public sealed class DefaultTask : FrostingTask
 {

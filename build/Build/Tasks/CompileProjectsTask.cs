@@ -1,34 +1,25 @@
-﻿using Cake.Common.Tools.DotNet;
+﻿using Build.DTOs;
+using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.DotNet.Build;
 using Cake.Common.Tools.MSBuild;
 using Cake.Core.Diagnostics;
 using Cake.Frosting;
-using System.IO;
 
 namespace Build.Tasks;
 
-[TaskName("Compile Projects")]
+[TaskName("Compile Source Template Projects")]
 [IsDependentOn(typeof(LintingTask))]
 [IsDependentOn(typeof(ProcessImagesTask))]
-[TaskDescription("Compiles all projects in the src directory.")]
+[TaskDescription("Compiles all template projects.")]
 public sealed class CompileProjectsTask : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
-        string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
-        string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
-
-        foreach (string csprojPath in allProjectFiles)
+        foreach (TemplateProject templateProject in context.TemplateProjects)
         {
-            if (string.Equals(Path.GetFileNameWithoutExtension(csprojPath), "ProjectTemplates"))
+            if (templateProject.IsSdkStyleProject)
             {
-                // Exclude ProjectTemplates VS extension project as it will be compiled after templates & packages have been added to it.
-                continue;
-            }
-
-            if (BuildContext.IsSdkStyleProject(csprojPath))
-            {
-                context.DotNetBuild(csprojPath, new DotNetBuildSettings
+                context.DotNetBuild(templateProject.CsprojFilePathAbsolute, new DotNetBuildSettings
                 {
                     Configuration = context.Config.ToString(),
                     NoRestore = true
@@ -36,7 +27,7 @@ public sealed class CompileProjectsTask : FrostingTask<BuildContext>
             }
             else
             {
-                context.MSBuild(csprojPath, new MSBuildSettings
+                context.MSBuild(templateProject.CsprojFilePathAbsolute, new MSBuildSettings
                 {
                     Target = "Build",
                     Configuration = context.Config.ToString(),

@@ -1,7 +1,6 @@
 ﻿using Build.DTOs;
 using Cake.Core.Diagnostics;
 using Cake.Frosting;
-using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,63 +29,26 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
     public override void Run(BuildContext context)
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
-        context.Log.Information($"Generating project templates...");
+        context.Log.Information($"Exporting default project templates...");
 
-        // Gather all .csproj files in the repo.
-        string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
-        string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
-        string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
-
-        // Exclude projects being released on their own.
-        HashSet<string> excludedPaths = context.ReleaseProjects.Select(rp => rp.FilePathAbsolute).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        List<string> projectsToTemplate = [.. allProjectFiles.Where(p => !excludedPaths.Contains(p))];
-
-        // Generate a default template and compress it.
-        foreach (string csprojPath in projectsToTemplate)
+        foreach (TemplateProject templateProject in context.TemplateProjects)
         {
-            bool isSdkStyle = BuildContext.IsSdkStyleProject(csprojPath);
-            string outputDir = BuildContext.DetermineAbsoluteOutputPath(csprojPath, isSdkStyle, context.Config, context);
-            string projectName = Path.GetFileNameWithoutExtension(csprojPath);
-            string templateStagingDir = Path.Combine(outputDir, projectName);
+            string templateStagingDir = Path.Combine(templateProject.OutputDirectoryPathAbsolute, templateProject.Name);
 
-            if (ExportDefaultTemplate(csprojPath, templateStagingDir, isSdkStyle, context))
+            if (ExportDefaultTemplate(templateProject, templateStagingDir, context))
             {
                 CapitalizeFirstLevelFolders(templateStagingDir);
                 CompressDirectory(templateStagingDir);
             }
             else
             {
-                context.Log.Error($"[FAIL] Failed to export default template for project: {csprojPath}");
+                context.Log.Error($"[FAIL] Failed to export default template for project: {templateProject.CsprojFilePathAbsolute}");
             }
         }
 
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
-        context.Log.Information($"Generation of default project templates complete ({completionTime}s)");
-    }
-
-    internal static bool IsProjectAnApplication(string csprojPath, BuildContext context)
-    {
-        try
-        {
-            XDocument doc = XDocument.Load(csprojPath);
-            XNamespace ns = doc.Root?.Name.Namespace ?? XNamespace.None;
-            XElement? outputTypeElement = doc.Descendants(ns + "OutputType").FirstOrDefault();
-
-            if (outputTypeElement != null)
-            {
-                string value = outputTypeElement.Value.Trim();
-                return value.Equals("Exe", StringComparison.OrdinalIgnoreCase) || value.Equals("WinExe", StringComparison.OrdinalIgnoreCase);
-            }
-
-            // If OutputType is missing, assume library (per SDK-style convention).
-            return false;
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not determine OutputType for {csprojPath}: {ex.Message}");
-            return false;
-        }
+        context.Log.Information($"Export of default project templates complete ({completionTime}s)");
     }
 
     internal static string GetAppProjectReplacementParameter()
@@ -98,13 +60,10 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         return "$safeprojectname$.Presentation";
     }
 
-    private static bool ExportDefaultTemplate(string csprojPath, string templateStagingDir, bool isSdkStyle, BuildContext context)
+    private static bool ExportDefaultTemplate(TemplateProject templateProject, string templateStagingDir, BuildContext context)
     {
         try
         {
-            bool isProjectAnApplication = IsProjectAnApplication(csprojPath, context);
-            string projectDir = Path.GetDirectoryName(csprojPath)!;
-
             // Clean up any previous staging
             if (Directory.Exists(templateStagingDir))
             {
@@ -112,15 +71,15 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
             }
 
             // Copy all files except bin/obj/.vs/.git
-            CopyProjectFiles(projectDir, templateStagingDir);
+            CopyProjectFiles(templateProject.DirectoryPathAbsolute, templateStagingDir);
 
             // Apply parameters.
-            ApplySafeProjectNameToFiles(csprojPath, templateStagingDir, isProjectAnApplication);
-            SetAssemblyNameToSafeProjectName(csprojPath, templateStagingDir, isProjectAnApplication);
-            ReplaceProjectGuidWithTemplateParameter(Path.Combine(templateStagingDir, Path.GetFileName(csprojPath)), isSdkStyle);
+            ApplySafeProjectNameToFiles(templateProject.CsprojFilePathAbsolute, templateStagingDir, templateProject.IsApplication);
+            SetAssemblyNameToSafeProjectName(templateProject.CsprojFilePathAbsolute, templateStagingDir, templateProject.IsApplication);
+            ReplaceProjectGuidWithTemplateParameter(Path.Combine(templateStagingDir, Path.GetFileName(templateProject.CsprojFilePathAbsolute)), templateProject.IsSdkStyleProject);
 
             // Create the .vstemplate file.
-            string vsTemplateXML = CreateVSTemplateContents(csprojPath, templateStagingDir, isSdkStyle, context);
+            string vsTemplateXML = CreateVSTemplateContents(templateProject.CsprojFilePathAbsolute, templateStagingDir, templateProject.IsSdkStyleProject, context);
             string vstemplatePath = Path.Combine(templateStagingDir, "MyTemplate.vstemplate");
             File.WriteAllText(vstemplatePath, vsTemplateXML);
 
@@ -141,7 +100,7 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         }
         catch (Exception ex)
         {
-            context.Log.Error($"[FAIL] Exception while staging template for {csprojPath}: {ex.Message}");
+            context.Log.Error($"[FAIL] Exception while staging template for {templateProject.CsprojFilePathAbsolute}: {ex.Message}");
             return false;
         }
     }

@@ -33,18 +33,9 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         Stopwatch stopwatch = Stopwatch.StartNew();
         context.Log.Information($"Modifying project templates...");
 
-        string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
-        string[] allProjectFiles = Directory.GetFiles(sourceDir, "*.csproj", SearchOption.AllDirectories);
-
-        // Build a map of project name to csproj path for all projects. Used to recursively find referenced projects.
-        Dictionary<string, string> fullProjectPathsByName = GetFullProjectPathsByName(allProjectFiles);
-
-        foreach (string csprojPath in allProjectFiles)
+        foreach (TemplateProject templateProject in context.TemplateProjects)
         {
-            bool isSdkStyle = BuildContext.IsSdkStyleProject(csprojPath);
-            string outputDir = BuildContext.DetermineAbsoluteOutputPath(csprojPath, isSdkStyle, context.Config, context);
-            string projectName = Path.GetFileNameWithoutExtension(csprojPath);
-            string zipPath = Path.Combine(outputDir, projectName + ".zip");
+            string zipPath = Path.Combine(templateProject.OutputDirectoryPathAbsolute, templateProject.Name + ".zip");
 
             if (!File.Exists(zipPath))
             {
@@ -52,7 +43,7 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             }
 
             // Unzip template to a staging directory.
-            string stagingDir = Path.Combine(outputDir, projectName + "_staging");
+            string stagingDir = Path.Combine(templateProject.OutputDirectoryPathAbsolute, templateProject.Name + "_staging");
             if (Directory.Exists(stagingDir))
             {
                 Directory.Delete(stagingDir, recursive: true);
@@ -62,24 +53,23 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             // In .cs files, modify 'using' statements to referenced projects to use parameters.
             // Something to note is that application project names won't match their template's namespaces because for the final template, they've been suffixed with ".Presentation".
             // This should be fine though since they are at the top of the reference chain and won't be referenced by other projects.
-            HashSet<string> referencedProjectNames = [.. GetReferencedProjectNamesRecursive(csprojPath, fullProjectPathsByName, context)];
-            ApplySafeExternalUsings(csprojPath, stagingDir, referencedProjectNames, context);
+            ApplySafeExternalUsings(stagingDir, templateProject.ProjectNamesReferenced, context);
             //TODO: It would be nice to group usings that start with $safeprojectname$ and $ext_safeprojectname$ together at the bottom of the usings block.
 
             // In the .csproj file:
             //  - Modify 'Include' attribute & child 'Name' element of ProjectReferences to referenced projects to use parameters.
             //  - If not an SDK-style project, update the path to any NuGet packages that later we will include in the VSIX project.
-            string stagedCsprojPath = Path.Combine(stagingDir, Path.GetFileName(csprojPath));
-            ApplySafeExternalProjectReferences(stagedCsprojPath, referencedProjectNames, context);
+            string stagedCsprojPath = Path.Combine(stagingDir, Path.GetFileName(templateProject.CsprojFilePathAbsolute));
+            ApplySafeExternalProjectReferences(stagedCsprojPath, templateProject.ProjectNamesReferenced, context);
             //StepUpNuGetPackageHintPaths(stagedCsprojPath, isSdkStyle); //TODO: Not sure if I actually need this; need to test.
             //TODO: Not sure what to do with the value of the Product element of SDK-style executable projects. It should be a friendly version of $safeprojectname$
 
             // In the .vstemplate file:
             //  - Update ProjectItem elements for files w/ markup namespaces (such as XAML or manifest) with ReplaceParameters parameter values of 'false' to 'true'. *NOTE - Export task already does this.*
             //  - If not an SDK-style project, add wizard elements.
-            string vsixProductId = ReadVSIXManifestId(sourceDir);
+            string vsixProductId = ReadVSIXManifestId(Path.Combine(context.AbsolutePathToRepo, "src"));
             string vstemplatePath = Path.Combine(stagingDir, "MyTemplate.vstemplate");
-            AddWizardElementsToVSTemplate(csprojPath, vsixProductId, vstemplatePath, isSdkStyle, context);
+            AddWizardElementsToVSTemplate(templateProject.CsprojFilePathAbsolute, vsixProductId, vstemplatePath, templateProject.IsSdkStyleProject, context);
 
             // Re-zip the modified template.
             if (File.Exists(zipPath))
@@ -98,49 +88,7 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         context.Log.Information($"Modification of project templates complete ({completionTime}s)");
     }
 
-    internal static Dictionary<string, string> GetFullProjectPathsByName(string[] allProjectFiles)
-    {
-        return allProjectFiles.ToDictionary(
-            path => Path.GetFileNameWithoutExtension(path),
-            path => Path.GetFullPath(path),
-            StringComparer.OrdinalIgnoreCase);
-    }
-
-    internal static HashSet<string> GetReferencedProjectNamesRecursive(string csprojPath, Dictionary<string, string> fullProjectPathsByName, BuildContext context, HashSet<string>? discoveredNames = null)
-    {
-        discoveredNames ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-        try
-        {
-            XDocument doc = XDocument.Load(csprojPath);
-            IEnumerable<string> projectReferences = doc.Descendants()
-                .Where(e => e.Name.LocalName == "ProjectReference")
-                .Select(pr => pr.Attribute("Include")?.Value)
-                .Where(path => !string.IsNullOrEmpty(path))
-                .Select(path => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(csprojPath)!, path!)));
-
-            foreach (var referencedCsproj in projectReferences)
-            {
-                string referencedName = Path.GetFileNameWithoutExtension(referencedCsproj);
-
-                if (discoveredNames.Add(referencedName))
-                {
-                    if (fullProjectPathsByName.TryGetValue(referencedName, out var referencedCsprojPath))
-                    {
-                        GetReferencedProjectNamesRecursive(referencedCsprojPath, fullProjectPathsByName, context, discoveredNames);
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            context.Log.Error($"Could not parse references for {csprojPath}: {ex.Message}");
-        }
-
-        return discoveredNames;
-    }
-
-    private static void ApplySafeExternalUsings(string csprojPath, string stagingDirectory, HashSet<string> referencedProjectNames, BuildContext context)
+    private static void ApplySafeExternalUsings(string stagingDirectory, HashSet<string> referencedProjectNames, BuildContext context)
     {
         // In .cs files, modify 'using' statements to referenced projects to use parameters.
         foreach (string csFile in Directory.GetFiles(stagingDirectory, "*.cs", SearchOption.AllDirectories))

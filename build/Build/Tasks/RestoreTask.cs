@@ -1,38 +1,34 @@
-﻿using Cake.Common;
-using Cake.Common.IO;
+﻿using Build.DTOs;
+using Cake.Common;
 using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.MSBuild;
 using Cake.Core.Diagnostics;
-using Cake.Core.IO;
 using Cake.Frosting;
 using System;
 
 namespace Build.Tasks;
 
-[TaskName("Restore")]
+[TaskName("Restore Source Template Projects")]
 [IsDependentOn(typeof(CleanTask))]
-[TaskDescription("Restores the NuGet packages for the solution and checks for known vulnerabilities in dependencies.")]
+[TaskDescription("Restores the NuGet packages for the template projects and checks for known vulnerabilities in dependencies.")]
 public sealed class RestoreTask : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
-        context.Log.Information("Restoring NuGet packages for the solution...");
+        context.Log.Information("Restoring NuGet packages for the template projects...");
 
-        string srcDir = System.IO.Path.Combine(context.AbsolutePathToRepo, "src");
-        FilePathCollection csprojFiles = context.GetFiles(System.IO.Path.Combine(srcDir, "**/*.csproj"));
-
-        foreach (FilePath csproj in csprojFiles)
+        foreach (TemplateProject templateProject in context.TemplateProjects)
         {
-            if (BuildContext.IsSdkStyleProject(csproj.FullPath))
+            if (templateProject.IsSdkStyleProject)
             {
-                context.DotNetRestore(csproj.FullPath);
-                context.Log.Information($"{Environment.NewLine}Checking {csproj.GetFilenameWithoutExtension()} for vulnerabilities...");
-                context.StartProcess("dotnet", $"list \"{csproj.FullPath}\" package --vulnerable");
+                context.DotNetRestore(templateProject.CsprojFilePathAbsolute);
+                context.Log.Information($"{Environment.NewLine}Checking {templateProject.Name} for vulnerabilities...");
+                context.StartProcess("dotnet", $"list \"{templateProject.CsprojFilePathAbsolute}\" package --vulnerable");
             }
             else
             {
                 // For legacy projects, use MS Build restore.
-                context.MSBuild(csproj.FullPath, new MSBuildSettings
+                context.MSBuild(templateProject.CsprojFilePathAbsolute, new MSBuildSettings
                 {
                     Target = "Restore"
                 });
