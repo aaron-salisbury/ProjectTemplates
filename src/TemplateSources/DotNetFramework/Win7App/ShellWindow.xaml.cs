@@ -3,15 +3,14 @@ using FirstFloor.ModernUI.Windows.Controls;
 using Win7App.Base.Extensions;
 using Win7App.ViewModels;
 
-namespace Win7App
+namespace Win7App;
+
+public partial class ShellWindow : ModernWindow
 {
-    public partial class ShellWindow : ModernWindow
+    public ShellWindow()
     {
-        public ShellWindow()
-        {
-            InitializeComponent();
-            this.DataContext = new ShellWindowViewModel();
-            AppearanceManager.Current.LoadAppearancesFromSettings(Properties.Settings.Default);
-        }
+        InitializeComponent();
+        this.DataContext = new ShellWindowViewModel();
+        AppearanceManager.Current.LoadAppearancesFromSettings(Properties.Settings.Default);
     }
 }

@@ -11,7 +11,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WinXPApp</RootNamespace>
     <AssemblyName>WinXPApp</AssemblyName>
-	<Description>Windows Forms, three-tier, application that targets Windows XP.</Description>
+	<Description>Windows Forms, three-tier, application that targets Windows XP (.Net Framework 3.5).</Description>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

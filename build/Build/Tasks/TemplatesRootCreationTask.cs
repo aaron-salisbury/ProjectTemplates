@@ -41,7 +41,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             string templateRootDir = Path.Combine(templateProject.OutputDirectoryPathAbsolute, templateProject.Name + "_Template");
             Directory.CreateDirectory(templateRootDir);
 
-            // Move the application's template zip to the root template directory.
+            // Move the application's template zip to a the root template directory.
             string appTemplateZipPath = Path.Combine(templateProject.OutputDirectoryPathAbsolute, templateProject.Name + ".zip");
             if (!File.Exists(appTemplateZipPath))
             {
@@ -50,11 +50,11 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
             string destinationAppTemplateZipPath = Path.Combine(templateRootDir, templateProject.Name + ".zip");
             File.Move(appTemplateZipPath, destinationAppTemplateZipPath, overwrite: true);
 
-            // Copy template for the app's referenced projects.
+            // Copy each template for the app's referenced projects into the root template directory.
             string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
             CopyReferencedProjectTemplatesToRoot(templateProject, sourceDir, templateRootDir, context);
 
-            // Unzip each template in the root template directory.
+            // Unzip each template in the root template source directory.
             foreach (string zipFile in Directory.GetFiles(templateRootDir, "*.zip"))
             {
                 string extractDir = Path.Combine(templateRootDir, Path.GetFileNameWithoutExtension(zipFile));
@@ -124,55 +124,51 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         List<string> allTemplateDirs = [.. Directory.GetDirectories(templateRootDir)
             .Where(d => File.Exists(Path.Combine(d, "MyTemplate.vstemplate")))];
 
-        string appTemplateDir = Path.Combine(templateRootDir, templateProject.Name);
-        string appTemplateFolderName = Path.GetFileName(appTemplateDir);
-
         // Build ProjectTemplateLink DTOs
-        List<DTOs.ProjectTemplateLink> projectLinks = [];
+        List<ProjectTemplateLink> projectLinks = [];
         foreach (string dir in allTemplateDirs)
         {
-            // ProjectName: "$safeprojectname$." + everything after the first dot in the folder name.
             string folderName = Path.GetFileName(dir);
             int firstDot = folderName.IndexOf('.');
-            string projectNameAttr = firstDot > 0
-                ? $"$safeprojectname${folderName[firstDot..]}"
-                : $"$safeprojectname$.{folderName}";
+            string projectNameDottedSuffix = firstDot >= 0 ? folderName[firstDot..] : string.Empty;
+            bool isAppTemplate = string.Equals(folderName, templateProject.Name, StringComparison.OrdinalIgnoreCase);
+            string projectNameAttr = isAppTemplate 
+                ? $"{PARAM_SAFE_PROJECT_NAME}.Presentation" 
+                : $"{PARAM_SAFE_PROJECT_NAME}{projectNameDottedSuffix}";
 
-            bool isAppTemplate = string.Equals(folderName, appTemplateFolderName, StringComparison.OrdinalIgnoreCase);
-
-            projectLinks.Add(new DTOs.ProjectTemplateLink
+            projectLinks.Add(new ProjectTemplateLink
             {
-                ProjectName = isAppTemplate ? TemplatesDefaultExportTask.GetAppProjectReplacementParameter() : projectNameAttr,
-                CopyParameters = isAppTemplate,
-                Value = folderName + @"\" + "MyTemplate.vstemplate"
+                ProjectName = projectNameAttr,
+                CopyParameters = true,
+                Value = folderName + @"\MyTemplate.vstemplate"
             });
         }
 
         // Build the VSTemplate DTO
-        var vsTemplate = new DTOs.VSTemplate
+        var vsTemplate = new VSTemplate
         {
             Version = "3.0.0",
             Type = "ProjectGroup",
-            TemplateData = new DTOs.TemplateData
+            TemplateData = new TemplateData
             {
-                Name = templateProject.FriendlyName.Replace("Win", "Windows ") + " Solution Template",
+                Name = templateProject.FriendlyName + " Solution Template",
                 Description = templateProject.Description,
                 DefaultName = templateProject.Name + "_Solution",
                 Icon = "vs-extension-icon.png",
                 LanguageTag = "C#",
-                PlatformTag = "Windows",
+                PlatformTags = templateProject.IsSdkStyleProject ? ["Windows" , "Linux"] : ["Windows"],
                 ProjectTypeTag = "Desktop",
                 ProjectType = "CSharp",
-                ProjectSubType = "",
+                ProjectSubType = string.Empty,
                 SortOrder = 1000,
                 CreateNewFolder = true,
                 ProvideDefaultName = true,
                 LocationField = "Enabled",
                 EnableLocationBrowseButton = true
             },
-            TemplateContent = new DTOs.TemplateContent
+            TemplateContent = new TemplateContent
             {
-                ProjectCollection = new DTOs.ProjectCollection
+                ProjectCollection = new ProjectCollection
                 {
                     ProjectTemplateLinks = projectLinks
                 }
@@ -183,7 +179,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         string xmlNamespace = "http://schemas.microsoft.com/developer/vstemplate/2005";
         XmlSerializerNamespaces ns = new();
         ns.Add("", xmlNamespace);
-        XmlSerializer serializer = new(typeof(DTOs.VSTemplate));
+        XmlSerializer serializer = new(typeof(VSTemplate));
         string vstemplatePath = Path.Combine(templateRootDir, "Root.vstemplate");
         using var fs = new FileStream(vstemplatePath, FileMode.Create, FileAccess.Write);
         using var writer = XmlWriter.Create(fs, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = false });

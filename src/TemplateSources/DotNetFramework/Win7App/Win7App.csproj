@@ -11,7 +11,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Win7App</RootNamespace>
     <AssemblyName>Win7App</AssemblyName>
-	<Description>WPF, three-tier, application that targets Windows 7.</Description>
+	<Description>WPF, three-tier, application that targets Windows 7 (.Net Framework 4.5.1).</Description>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

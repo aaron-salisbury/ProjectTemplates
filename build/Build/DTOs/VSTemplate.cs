@@ -27,7 +27,7 @@ public record TemplateData
     public required string Name { get; set; }
     public required string Description { get; set; }
     public string? ProjectType { get; set; }
-    public required string ProjectSubType { get; set; }
+    public string? ProjectSubType { get; set; }
     public int SortOrder { get; set; } = 1000;
     public bool CreateNewFolder { get; set; } = true;
     public required string DefaultName { get; set; }
@@ -36,8 +36,10 @@ public record TemplateData
     public bool EnableLocationBrowseButton { get; set; } = true;
     public string? Icon { get; set; }
     public string? LanguageTag { get; set; }
-    public string? PlatformTag { get; set; }
     public string? ProjectTypeTag { get; set; }
+
+    [XmlElement("PlatformTag")]
+    public List<string>? PlatformTags { get; set; }
 }
 
 [XmlType("TemplateContent")]

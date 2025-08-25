@@ -4,21 +4,20 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DotNet.Business.Modules.Sample.DomainServices
+namespace DotNet.Business.Modules.Sample.DomainServices;
+
+public class FlatUIColorPicker
 {
-    public class FlatUIColorPicker
+    private readonly ILogger _logger;
+
+    public FlatUIColorPicker(ILogger logger)
     {
-        private readonly ILogger _logger;
+        _logger = logger;
+    }
 
-        public FlatUIColorPicker(ILogger logger)
-        {
-            _logger = logger;
-        }
-
-        public IEnumerable<FlatColorDto> GetFlatColors()
-        {
-            return EmbeddedDataAccess.ReadFlatColors(_logger)
-                .Select(entity => new FlatColorDto() { Hex = entity.Hex, Name = entity.Name });
-        }
+    public IEnumerable<FlatColorDto> GetFlatColors()
+    {
+        return EmbeddedDataAccess.ReadFlatColors(_logger)
+            .Select(entity => new FlatColorDto() { Hex = entity.Hex, Name = entity.Name });
     }
 }

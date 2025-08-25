@@ -2,15 +2,14 @@
 using WinXPApp.Base.MVP;
 using WinXPApp.Views.SampleTools;
 
-namespace WinXPApp.Presenters.SampleTools
-{
-    internal class ToolsNavigatorPresenter : Presenter
-    {
-        private ToolsNavigatorView _view;
+namespace WinXPApp.Presenters.SampleTools;
 
-        internal override void Setup(UserControl view)
-        {
-            _view = (ToolsNavigatorView)view;
-        }
+internal class ToolsNavigatorPresenter : Presenter
+{
+    private ToolsNavigatorView _view;
+
+    internal override void Setup(UserControl view)
+    {
+        _view = (ToolsNavigatorView)view;
     }
 }

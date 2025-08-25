@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace Win7App.Views
+namespace Win7App.Views;
+
+public partial class Settings : UserControl
 {
-    public partial class Settings : UserControl
+    public Settings()
     {
-        public Settings()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

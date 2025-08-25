@@ -3,11 +3,8 @@
   <Metadata>
     <Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.2.0" Language="en-US" Publisher="Aaron Salisbury" />
     <DisplayName>Windows Project Templates</DisplayName>
-    <Description xml:space="preserve">
-			Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario. 
-
-            The templates help when you want to quickly get started with a utility application that feels idiomatic.
-        </Description>
+    <Description xml:space="preserve">Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario. 
+	The templates help when you want to quickly get started with a utility application that feels idiomatic.</Description>
     <MoreInfo>https://github.com/aaron-salisbury/ProjectTemplates</MoreInfo>
     <License>License.txt</License>
     <Icon>vs-extension-icon.png</Icon>

@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WinXPApp.Base.MVP
+namespace WinXPApp.Base.MVP;
+
+public partial class View : UserControl
 {
-    public partial class View : UserControl
+    private readonly Presenter _presenter;
+
+    public View()
     {
-        private readonly Presenter _presenter;
+        string presenterName = this.GetType().FullName!.Replace("View", "Presenter");
+        Type presenterType = Type.GetType(presenterName);
+        _presenter = Program.Services.GetService(presenterType) as Presenter;
 
-        public View()
-        {
-            string presenterName = this.GetType().FullName!.Replace("View", "Presenter");
-            Type presenterType = Type.GetType(presenterName);
-            _presenter = Program.Services.GetService(presenterType) as Presenter;
+        this.Load += View_Load;
+    }
 
-            this.Load += View_Load;
-        }
-
-        private void View_Load(object sender, EventArgs e)
-        {
-            _presenter.Setup(this);
-        }
+    private void View_Load(object sender, EventArgs e)
+    {
+        _presenter.Setup(this);
     }
 }

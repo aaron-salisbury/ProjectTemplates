@@ -41,6 +41,8 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
 
         CleanImportLocations(vsTemplateDir, packagesDir);
 
+        ImportExtensionIcon(projectDir, context);
+
         List<string> templateFileNames = ImportVSTemplates(vsTemplateDir, context);
 
         List<string> nupkgFileNames = ImportTemplateNuGetPackages(sourceDir, packagesDir);
@@ -73,6 +75,23 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         foreach (string file in Directory.GetFiles(packagesDir, "*.nupkg", SearchOption.TopDirectoryOnly))
         {
             File.Delete(file);
+        }
+    }
+
+    private static void ImportExtensionIcon(string projectDir, BuildContext context)
+    {
+        // Copy default template icon to staging directory.
+        string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
+        string iconSourcePath = Path.Combine(contentDir, "vs-extension-icon.ico");
+
+        if (File.Exists(iconSourcePath))
+        {
+            string iconDestinationPath = Path.Combine(projectDir, Path.GetFileName(iconSourcePath));
+            File.Copy(iconSourcePath, iconDestinationPath, overwrite: true);
+        }
+        else
+        {
+            context.Log.Error($"VS extension icon file not found at {iconSourcePath}");
         }
     }
 
@@ -216,8 +235,6 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         {
             throw new FileNotFoundException($"VSIX manifest file not found: {manifestPath}");
         }
-
-        //TODO: Read the manifest doc, get the <Assets> node, remove old template and package entries, add new ones, and save.
 
         XDocument doc = XDocument.Load(manifestPath);
         XNamespace ns = "http://schemas.microsoft.com/developer/vsx-schema/2011";

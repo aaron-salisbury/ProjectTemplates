@@ -186,3 +186,4 @@ References
 - https://www.automatetheplanet.com/visual-studio-templates-installer/
 - https://docs.microsoft.com/en-us/visualstudio/ide/template-parameters?view=vs-2019
 - https://docs.microsoft.com/en-us/visualstudio/ide/how-to-create-multi-project-templates?view=vs-2019
+- https://www.linkedin.com/pulse/how-create-custom-multi-project-net-template-visual-studio-gayle

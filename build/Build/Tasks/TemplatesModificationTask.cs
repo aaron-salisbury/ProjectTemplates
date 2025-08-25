@@ -50,23 +50,14 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             }
             ZipFile.ExtractToDirectory(zipPath, stagingDir);
 
-            // In .cs files, modify 'using' statements to referenced projects to use parameters.
-            // Something to note is that application project names won't match their template's namespaces because for the final template, they've been suffixed with ".Presentation".
-            // This should be fine though since they are at the top of the reference chain and won't be referenced by other projects.
-            ApplySafeExternalUsings(stagingDir, templateProject.ProjectNamesReferenced, context);
-            //TODO: It would be nice to group usings that start with $safeprojectname$ and $ext_safeprojectname$ together at the bottom of the usings block.
+            ApplySafeExternalUsings(templateProject, stagingDir, context);
+            //TODO: It would be nice to group usings that start with $ext_safeprojectname$ together at the bottom of the usings block.
 
-            // In the .csproj file:
-            //  - Modify 'Include' attribute & child 'Name' element of ProjectReferences to referenced projects to use parameters.
-            //  - If not an SDK-style project, update the path to any NuGet packages that later we will include in the VSIX project.
             string stagedCsprojPath = Path.Combine(stagingDir, Path.GetFileName(templateProject.CsprojFilePathAbsolute));
             ApplySafeExternalProjectReferences(stagedCsprojPath, templateProject.ProjectNamesReferenced, context);
-            //StepUpNuGetPackageHintPaths(stagedCsprojPath, isSdkStyle); //TODO: Not sure if I actually need this; need to test.
-            //TODO: Not sure what to do with the value of the Product element of SDK-style executable projects. It should be a friendly version of $safeprojectname$
+            StepDownNuGetPackageHintPaths(stagedCsprojPath, templateProject.IsSdkStyleProject);
+            //TODO: The Product element of SDK-style executable projects should be a friendly version of $ext_safeprojectname$
 
-            // In the .vstemplate file:
-            //  - Update ProjectItem elements for files w/ markup namespaces (such as XAML or manifest) with ReplaceParameters parameter values of 'false' to 'true'. *NOTE - Export task already does this.*
-            //  - If not an SDK-style project, add wizard elements.
             string vsixProductId = ReadVSIXManifestId(Path.Combine(context.AbsolutePathToRepo, "src"));
             string vstemplatePath = Path.Combine(stagingDir, "MyTemplate.vstemplate");
             AddWizardElementsToVSTemplate(templateProject.CsprojFilePathAbsolute, vsixProductId, vstemplatePath, templateProject.IsSdkStyleProject, context);
@@ -88,22 +79,34 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         context.Log.Information($"Modification of project templates complete ({completionTime}s)");
     }
 
-    private static void ApplySafeExternalUsings(string stagingDirectory, HashSet<string> referencedProjectNames, BuildContext context)
+    private static void ApplySafeExternalUsings(TemplateProject templateProject, string stagingDirectory, BuildContext context)
     {
+        // As application projects have names that differ from their templates, when the default
+        // template generation task looks for instances of the project name to replace with $ext_safeprojectname$,
+        // using statements for the other projects are missed. For example, "namespace Win98App.Views" gets replaced fine,
+        // but "using DotNetFramework.Business;" is missed because "DotNetFramework" isn't being looked for.
+        if (!templateProject.IsApplication)
+        {
+            return;
+        }
+
         // In .cs files, modify 'using' statements to referenced projects to use parameters.
         foreach (string csFile in Directory.GetFiles(stagingDirectory, "*.cs", SearchOption.AllDirectories))
         {
             string text = File.ReadAllText(csFile);
             bool changed = false;
 
-            foreach (string referencedProjectPrefix in referencedProjectNames)
+            foreach (string referencedProjectName in templateProject.ProjectNamesReferenced)
             {
+                int firstDot = referencedProjectName.IndexOf('.');
+                string prefix = firstDot >= 0 ? referencedProjectName[..firstDot] : referencedProjectName;
+
                 // Pattern: using ReferencedPrefix(.AnythingElse);
-                string pattern = $@"using\s+{Regex.Escape(referencedProjectPrefix)}(\.[\w\.]*)?;";
+                string pattern = $@"using\s+{Regex.Escape(prefix)}(\.[\w\.]*)?;";
                 string newText = Regex.Replace(
                     text,
                     pattern,
-                    m => $"using $ext_safeprojectname${m.Groups[1].Value};",
+                    m => $"using {PARAM_SAFE_PROJECT_NAME_PARENT}{m.Groups[1].Value};",
                     RegexOptions.None
                 );
 
@@ -187,8 +190,11 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         }
     }
 
-    private static void StepUpNuGetPackageHintPaths(string csprojPath, bool isSdkStyle)
+    private static void StepDownNuGetPackageHintPaths(string csprojPath, bool isSdkStyle)
     {
+        // If the user creates the solution in a new folder (the recommended/default in Visual Studio) the hint paths will be one too deep.
+        // So we'll step them up one level to mirror the default. Would need a post-process wizard to customize conditional to the user selection.
+
         if (isSdkStyle)
         {
             return;
@@ -203,9 +209,12 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             if (hintPath != null && hintPath.Value.Contains(@"packages\", StringComparison.OrdinalIgnoreCase))
             {
                 string value = hintPath.Value;
-                if (value.Contains("packages\\", StringComparison.OrdinalIgnoreCase) || value.Contains("packages/", StringComparison.OrdinalIgnoreCase))
+
+                // Remove leading "..\" or "../" if present
+                if (value.StartsWith(@"..\", StringComparison.Ordinal) || value.StartsWith("../", StringComparison.Ordinal))
                 {
-                    hintPath.Value = @"..\" + value;
+                    string newValue = value.Substring(3);
+                    hintPath.Value = newValue;
                     changed = true;
                 }
             }
@@ -350,7 +359,8 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
                             if (parts.Length > 0)
                             {
                                 string idAndVersion = parts[0]; // e.g., Newtonsoft.Json.12.0.3
-                                                                // Extract ID and version.
+                                
+                                // Extract ID and version.
                                 StringBuilder versionBuilder = new();
                                 int i = idAndVersion.Length - 1;
                                 bool foundDot = false;

@@ -1,14 +1,13 @@
 ﻿using System.Windows.Controls;
 using Win7App.Base.Extensions;
 
-namespace Win7App.Views.SampleTools
+namespace Win7App.Views.SampleTools;
+
+public partial class UUIDGeneratorView : UserControl
 {
-    public partial class UUIDGeneratorView : UserControl
+    public UUIDGeneratorView()
     {
-        public UUIDGeneratorView()
-        {
-            InitializeComponent();
-            this.SetDataContext((System.Windows.Application.Current as App)?.Services);
-        }
+        InitializeComponent();
+        this.SetDataContext((System.Windows.Application.Current as App)?.Services);
     }
 }

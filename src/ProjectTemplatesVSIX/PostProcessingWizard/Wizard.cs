@@ -9,13 +9,19 @@ public class Wizard : IWizard
 {
     public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams)
     {
-        // Get the project name from the replacements dictionary
-        if (replacementsDictionary.TryGetValue("$safeprojectname$", out var safeProjectName))
-        {
-            // Prettify: insert spaces before capital letters
-            string prettyName = Regex.Replace(safeProjectName, "(\\B[A-Z])", " $1");
-            replacementsDictionary["$prettyprojectname$"] = prettyName;
-        }
+        //TODO: Group using statements that start with $ext_safeprojectname$ together at the bottom of the usings block.
+
+        //TODO: The Product element of SDK-style executable projects should be a friendly version of $ext_safeprojectname$
+
+        //TODO: If not a SDK-style project and user selects to create solution in its own folder, update package hint paths to step up (..\).
+
+        //// Get the project name from the replacements dictionary
+        //if (replacementsDictionary.TryGetValue("$safeprojectname$", out var safeProjectName))
+        //{
+        //    // Prettify: insert spaces before capital letters
+        //    string prettyName = Regex.Replace(safeProjectName, "(\\B[A-Z])", " $1");
+        //    replacementsDictionary["$prettyprojectname$"] = prettyName;
+        //}
     }
 
     public void ProjectFinishedGenerating(Project project) { }

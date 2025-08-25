@@ -1,14 +1,13 @@
 ﻿using System.Windows.Forms;
 
-namespace WinXPApp.Base.MVP
+namespace WinXPApp.Base.MVP;
+
+internal class Presenter
 {
-    internal class Presenter
-    {
-        // This class is not abstract and has a constructor so that the Forms Designer can instantiate it.
-        public Presenter() { }
+    // This class is not abstract and has a constructor so that the Forms Designer can instantiate it.
+    public Presenter() { }
 
-        internal virtual void Setup(UserControl view) { }
+    internal virtual void Setup(UserControl view) { }
 
-        internal virtual void Dismiss() { }
-    }
+    internal virtual void Dismiss() { }
 }

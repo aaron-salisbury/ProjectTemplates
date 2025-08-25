@@ -3,39 +3,38 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace WinXPApp.Base.Helpers
+namespace WinXPApp.Base.Helpers;
+
+internal class StandardErrorProvider : ErrorProvider
 {
-    internal class StandardErrorProvider : ErrorProvider
+    private const int DEFAULT_ICON_PADDING = 5;
+
+    internal StandardErrorProvider()
     {
-        private const int DEFAULT_ICON_PADDING = 5;
+        BlinkStyle = ErrorBlinkStyle.NeverBlink;
+        Icon = Properties.Resources.ErrorSymbol;
+    }
 
-        internal StandardErrorProvider()
+    internal void UpdateError(Control control, string errorMessage)
+    {
+        if (!string.IsNullOrEmpty(errorMessage))
         {
-            BlinkStyle = ErrorBlinkStyle.NeverBlink;
-            Icon = Properties.Resources.ErrorSymbol;
+            SetIconPadding(control, DEFAULT_ICON_PADDING);
+            SetError(control, errorMessage);
         }
-
-        internal void UpdateError(Control control, string errorMessage)
+        else
         {
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                SetIconPadding(control, DEFAULT_ICON_PADDING);
-                SetError(control, errorMessage);
-            }
-            else
-            {
-                SetError(control, string.Empty);
-            }
+            SetError(control, string.Empty);
         }
+    }
 
-        private void SetIconFromEmbeddedImageFile(string embeddedImageFilePath)
+    private void SetIconFromEmbeddedImageFile(string embeddedImageFilePath)
+    {
+        using (Stream iconStream = GetType().Assembly.GetManifestResourceStream(embeddedImageFilePath))
         {
-            using (Stream iconStream = GetType().Assembly.GetManifestResourceStream(embeddedImageFilePath))
-            {
-                Bitmap iconBitmap = new Bitmap(iconStream);
-                iconBitmap = (Bitmap)iconBitmap.GetThumbnailImage(16, 16, null, IntPtr.Zero);
-                Icon = Icon.FromHandle(iconBitmap.GetHicon());
-            }
+            Bitmap iconBitmap = new Bitmap(iconStream);
+            iconBitmap = (Bitmap)iconBitmap.GetThumbnailImage(16, 16, null, IntPtr.Zero);
+            Icon = Icon.FromHandle(iconBitmap.GetHicon());
         }
     }
 }

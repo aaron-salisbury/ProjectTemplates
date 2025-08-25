@@ -40,6 +40,7 @@ public sealed class ProcessImagesTask : AsyncFrostingTask<BuildContext>
         context.Log.Information($"Creating icons suitable for various deployments...");
         await Task.WhenAll(
             ConvertPngToIcoAsync(pngPath, Path.Combine(contentDir, "favicon.ico")),
+            ConvertPngToIcoAsync(pngPath, Path.Combine(contentDir, "vs-extension-icon.ico"), 64),
             ResizePngAsync(pngPath, Path.Combine(contentDir, "vs-extension-icon.png"), 90, 90), // Microsoft recommends 90x90 pixels.
             ResizePngAsync(pngPath, Path.Combine(contentDir, "nuget-package-icon.png"), 128, 128) // Microsoft recommends 128x128 pixels.
         );

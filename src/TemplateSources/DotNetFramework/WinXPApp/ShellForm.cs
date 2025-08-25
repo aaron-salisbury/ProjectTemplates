@@ -5,42 +5,41 @@ using System.Windows.Forms;
 using WinXPApp.Base;
 using WinXPApp.Forms;
 
-namespace WinXPApp
+namespace WinXPApp;
+
+public partial class ShellForm : BaseForm
 {
-    public partial class ShellForm : BaseForm
+    public ShellForm()
     {
-        public ShellForm()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            Text = Properties.Settings.Default.ApplicationFriendlyName;
+        Text = Properties.Settings.Default.ApplicationFriendlyName;
 
-            AppearanceManager.LoadBaseSettings(this);
+        AppearanceManager.LoadBaseSettings(this);
 
-            // Sometimes the designer will regenerate the selected index of a tab control to be something different, but they should always initialize at 0.
-            mainTabControl.SelectedIndex = 0;
-        }
+        // Sometimes the designer will regenerate the selected index of a tab control to be something different, but they should always initialize at 0.
+        mainTabControl.SelectedIndex = 0;
+    }
 
-        private void SettingsLink_Click(object sender, EventArgs e)
-        {
-            SettingsForm settingsForm = new(this);
-            settingsForm.Activated += (o, ea) => { Enabled = false; };
-            settingsForm.FormClosed += (o, fce) => { Enabled = true; };
-            settingsForm.Show();
-        }
+    private void SettingsLink_Click(object sender, EventArgs e)
+    {
+        SettingsForm settingsForm = new(this);
+        settingsForm.Activated += (o, ea) => { Enabled = false; };
+        settingsForm.FormClosed += (o, fce) => { Enabled = true; };
+        settingsForm.Show();
+    }
 
-        private void HelpLink_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start(Properties.Settings.Default.HelpLink);
-        }
+    private void HelpLink_Click(object sender, EventArgs e)
+    {
+        System.Diagnostics.Process.Start(Properties.Settings.Default.HelpLink);
+    }
 
-        private IEnumerable<Control> GetAllControlsByTag(Control control, string tag)
-        {
-            IEnumerable<Control> controls = control.Controls.Cast<Control>();
+    private IEnumerable<Control> GetAllControlsByTag(Control control, string tag)
+    {
+        IEnumerable<Control> controls = control.Controls.Cast<Control>();
 
-            return controls.SelectMany(ctrl => GetAllControlsByTag(ctrl, tag))
-                .Concat(controls)
-                .Where(c => string.Equals(c.Tag, tag));
-        }
+        return controls.SelectMany(ctrl => GetAllControlsByTag(ctrl, tag))
+            .Concat(controls)
+            .Where(c => string.Equals(c.Tag, tag));
     }
 }

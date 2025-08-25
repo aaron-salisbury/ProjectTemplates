@@ -1,14 +1,13 @@
 ﻿using System.Windows.Controls;
 using Win7App.Base.Extensions;
 
-namespace Win7App.Views
+namespace Win7App.Views;
+
+public partial class SettingsAppearanceView : UserControl
 {
-    public partial class SettingsAppearanceView : UserControl
+    public SettingsAppearanceView()
     {
-        public SettingsAppearanceView()
-        {
-            InitializeComponent();
-            this.SetDataContext((System.Windows.Application.Current as App)?.Services);
-        }
+        InitializeComponent();
+        this.SetDataContext((System.Windows.Application.Current as App)?.Services);
     }
 }

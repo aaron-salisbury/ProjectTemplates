@@ -4,45 +4,44 @@ using Win98App.Base.MVP;
 using Win98App.Views.SampleTools;
 using static System.Windows.Forms.Control;
 
-namespace Win98App.Presenters.SampleTools
+namespace Win98App.Presenters.SampleTools;
+
+internal class UUIDGeneratorPresenter : Presenter
 {
-    internal class UUIDGeneratorPresenter : Presenter
+    private readonly ISampleToolsService _sampleToolsService;
+
+    private UUIDGeneratorView _view;
+
+    public UUIDGeneratorPresenter(Navigator navigator, ISampleToolsService sampleToolsService) : base(navigator)
     {
-        private readonly ISampleToolsService _sampleToolsService;
+        _sampleToolsService = sampleToolsService;
+    }
 
-        private UUIDGeneratorView _view;
+    internal override void Display(Control view, ControlCollection window)
+    {
+        _view = (UUIDGeneratorView)view;
 
-        public UUIDGeneratorPresenter(Navigator navigator, ISampleToolsService sampleToolsService) : base(navigator)
+        _view.GenerateCommand += View_GenerateCommand;
+
+        window.Clear();
+        window.Add(_view);
+    }
+
+    internal override void Dismiss()
+    {
+        if (_view != null)
         {
-            _sampleToolsService = sampleToolsService;
+            _view.GenerateCommand -= View_GenerateCommand;
         }
+    }
 
-        internal override void Display(Control view, ControlCollection window)
+    private void View_GenerateCommand(object sender, GenerateCommandEventArgs e)
+    {
+        if (_view != null)
         {
-            _view = (UUIDGeneratorView)view;
+            string generatedUUID = _sampleToolsService.InitializeGUIDGeneration(e.ShouldCapitalize);
 
-            _view.GenerateCommand += View_GenerateCommand;
-
-            window.Clear();
-            window.Add(_view);
-        }
-
-        internal override void Dismiss()
-        {
-            if (_view != null)
-            {
-                _view.GenerateCommand -= View_GenerateCommand;
-            }
-        }
-
-        private void View_GenerateCommand(object sender, GenerateCommandEventArgs e)
-        {
-            if (_view != null)
-            {
-                string generatedUUID = _sampleToolsService.InitializeGUIDGeneration(e.ShouldCapitalize);
-
-                _view.UUIDGenerated(generatedUUID);
-            }
+            _view.UUIDGenerated(generatedUUID);
         }
     }
 }

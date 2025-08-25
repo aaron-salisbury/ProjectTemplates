@@ -1,14 +1,13 @@
 ﻿using System.Windows.Controls;
 using Win7App.Base.Extensions;
 
-namespace Win7App.Views
+namespace Win7App.Views;
+
+public partial class HomeView : UserControl
 {
-    public partial class HomeView : UserControl
+    public HomeView()
     {
-        public HomeView()
-        {
-            InitializeComponent();
-            this.SetDataContext((System.Windows.Application.Current as App)?.Services);
-        }
+        InitializeComponent();
+        this.SetDataContext((System.Windows.Application.Current as App)?.Services);
     }
 }

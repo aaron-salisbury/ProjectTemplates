@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<Optimize>true</Optimize>
-	<Description>Data tier of application.</Description>
+    <Optimize>true</Optimize>
+    <Description>Data tier of application.</Description>
   </PropertyGroup>
 
   <ItemGroup>

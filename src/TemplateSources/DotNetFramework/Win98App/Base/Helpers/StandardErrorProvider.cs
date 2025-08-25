@@ -1,27 +1,26 @@
 ﻿using System.Windows.Forms;
 
-namespace Win98App.Base.Helpers
+namespace Win98App.Base.Helpers;
+
+internal class StandardErrorProvider : ErrorProvider
 {
-    internal class StandardErrorProvider : ErrorProvider
+    private const int DEFAULT_ICON_PADDING = 5;
+
+    internal StandardErrorProvider()
     {
-        private const int DEFAULT_ICON_PADDING = 5;
+        BlinkStyle = ErrorBlinkStyle.NeverBlink;
+    }
 
-        internal StandardErrorProvider()
+    internal void UpdateError(Control control, string errorMessage)
+    {
+        if (!string.IsNullOrEmpty(errorMessage))
         {
-            BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            SetIconPadding(control, DEFAULT_ICON_PADDING);
+            SetError(control, errorMessage);
         }
-
-        internal void UpdateError(Control control, string errorMessage)
+        else
         {
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                SetIconPadding(control, DEFAULT_ICON_PADDING);
-                SetError(control, errorMessage);
-            }
-            else
-            {
-                SetError(control, string.Empty);
-            }
+            SetError(control, string.Empty);
         }
     }
 }

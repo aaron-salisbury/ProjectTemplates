@@ -7,63 +7,62 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNet.Business.Modules.Sample.DomainServices
+namespace DotNet.Business.Modules.Sample.DomainServices;
+
+public class LineSorter
 {
-    public class LineSorter
+    private static readonly string[] SEPARATOR = ["\r\n", "\r", "\n"];
+
+    public enum SortTypes
     {
-        private static readonly string[] SEPARATOR = ["\r\n", "\r", "\n"];
+        Alphabetical,
+        [Display(Name = "Reverse Alphabetical")]
+        ReverseAlphabetical
+    }
 
-        public enum SortTypes
+    private readonly IEventSystem _events;
+    private readonly ILogger _logger;
+
+    public LineSorter(IEventSystem eventSystem, ILogger logger)
+    {
+        _events = eventSystem;
+        _logger = logger;
+    }
+
+    public async Task InitiateAsync(string? textToSort, SortTypes selectedSortType = SortTypes.Alphabetical)
+    {
+        await Task.Run(() =>
         {
-            Alphabetical,
-            [Display(Name = "Reverse Alphabetical")]
-            ReverseAlphabetical
-        }
+            string? sortedText;
 
-        private readonly IEventSystem _events;
-        private readonly ILogger _logger;
-
-        public LineSorter(IEventSystem eventSystem, ILogger logger)
-        {
-            _events = eventSystem;
-            _logger = logger;
-        }
-
-        public async Task InitiateAsync(string? textToSort, SortTypes selectedSortType = SortTypes.Alphabetical)
-        {
-            await Task.Run(() =>
+            try
             {
-                string? sortedText;
-
-                try
+                if (!string.IsNullOrEmpty(textToSort))
                 {
-                    if (!string.IsNullOrEmpty(textToSort))
+                    List<string> lines = [.. textToSort.Split(SEPARATOR, StringSplitOptions.None)];
+
+                    lines.Sort();
+
+                    if (selectedSortType == SortTypes.ReverseAlphabetical)
                     {
-                        List<string> lines = [.. textToSort.Split(SEPARATOR, StringSplitOptions.None)];
-
-                        lines.Sort();
-
-                        if (selectedSortType == SortTypes.ReverseAlphabetical)
-                        {
-                            lines.Reverse();
-                        }
-
-                        sortedText = new StringBuilder(string.Join("\r\n", [.. lines])).ToString();
+                        lines.Reverse();
                     }
-                    else
-                    {
-                        _logger.LogWarning("Attempted to sort empty text.");
-                        sortedText = string.Empty;
-                    }
+
+                    sortedText = new StringBuilder(string.Join("\r\n", [.. lines])).ToString();
                 }
-                catch (Exception ex)
+                else
                 {
-                    _logger.LogError(ex, "Failed to sort text.");
-                    sortedText = null;
+                    _logger.LogWarning("Attempted to sort empty text.");
+                    sortedText = string.Empty;
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to sort text.");
+                sortedText = null;
+            }
 
-                _events.Publish(this, new TextSorted() { SortedText = sortedText });
-            });
-        }
+            _events.Publish(this, new TextSorted() { SortedText = sortedText });
+        });
     }
 }

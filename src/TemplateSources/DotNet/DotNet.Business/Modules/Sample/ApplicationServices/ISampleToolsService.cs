@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using static DotNet.Business.Modules.Sample.DomainServices.LineSorter;
 
-namespace DotNet.Business.Modules.Sample.ApplicationServices
+namespace DotNet.Business.Modules.Sample.ApplicationServices;
+
+public interface ISampleToolsService
 {
-    public interface ISampleToolsService
-    {
-        IEnumerable<FlatColorDto> GetFlatColors();
+    IEnumerable<FlatColorDto> GetFlatColors();
 
-        Task InitializeLineSortingAsync(SortTypes _selectedSortType, string? textToSort);
+    Task InitializeLineSortingAsync(SortTypes _selectedSortType, string? textToSort);
 
-        Task InitializeGUIDGenerationAsync(bool shouldCapitalize = true);
-    }
+    Task InitializeGUIDGenerationAsync(bool shouldCapitalize = true);
 }

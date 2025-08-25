@@ -51,15 +51,6 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
         context.Log.Information($"Export of default project templates complete ({completionTime}s)");
     }
 
-    internal static string GetAppProjectReplacementParameter()
-    {
-        // The ProjectTemplates solution projects are designed to be three-tier. The business and data tiers are named accordingly, 
-        // but for simplicity & clarity the presentation tier (apps w/ platform-UI specific frameworks) are all named after the platform they target (e.g., WinXPApp).
-        // However, when users of the extension export templates, all tiers being suffixed is the expectation.
-
-        return "$safeprojectname$.Presentation";
-    }
-
     private static bool ExportDefaultTemplate(TemplateProject templateProject, string templateStagingDir, BuildContext context)
     {
         try
@@ -75,7 +66,6 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
 
             // Apply parameters.
             ApplySafeProjectNameToFiles(templateProject.CsprojFilePathAbsolute, templateStagingDir, templateProject.IsApplication);
-            SetAssemblyNameToSafeProjectName(templateProject.CsprojFilePathAbsolute, templateStagingDir, templateProject.IsApplication);
             ReplaceProjectGuidWithTemplateParameter(Path.Combine(templateStagingDir, Path.GetFileName(templateProject.CsprojFilePathAbsolute)), templateProject.IsSdkStyleProject);
 
             // Create the .vstemplate file.
@@ -127,17 +117,20 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
     {
         string fullProjectName = Path.GetFileNameWithoutExtension(csprojPath);
 
-        string replacementName = "$safeprojectname$";
+        string replacementName = PARAM_SAFE_PROJECT_NAME_PARENT;
         if (isProjectAnApplication && !fullProjectName.Contains('.'))
         {
-            replacementName = GetAppProjectReplacementParameter();
+            // The ProjectTemplates solution projects are designed to be three-tier. The business and data tiers are named accordingly, 
+            // but for simplicity & clarity the presentation tier (apps w/ platform-UI specific frameworks) are all named after the platform they target (e.g., WinXPApp).
+            // However, when users of the extension export templates, all tiers being suffixed is the expectation.
+            replacementName += ".Presentation";
         }
 
-        // We want something like MyCoolApp.Presentation.Web to become $safeprojectname$.Presentation.Web
+        // We want something like MyCoolApp.Presentation.Web to become $ext_safeprojectname$.Presentation.Web
         int firstDot = fullProjectName.IndexOf('.');
         string projectNamePrefix = firstDot > 0 ? fullProjectName[..firstDot] : fullProjectName;
 
-        // Regex: match the prefix only if followed by a non-word char, dot, semicolon, or end of string.
+        // Regex: Match the prefix only if followed by a non-word char, dot, semicolon, or end of string.
         string pattern = $@"\b{Regex.Escape(projectNamePrefix)}(?=[\s\.;:,<>\[\]\(\)""'/\\]|$)";
 
         foreach (string file in Directory.EnumerateFiles(stagingDirectory, "*", SearchOption.AllDirectories))
@@ -160,32 +153,6 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
                 // Ignore files that can't be read as text.
                 continue;
             }
-        }
-    }
-
-    private static void SetAssemblyNameToSafeProjectName(string csprojPath, string stagingDirectory, bool isProjectAnApplication)
-    {
-        // The intention of the design of these solutions is the projects are suffixed with their tier (e.g., .Presentation, .Business, .Data),
-        // however, the assembly of the application project should be named after the solution itself as it is the solution's deliverable.
-
-        if (!isProjectAnApplication)
-        {
-            return;
-        }
-
-        string projectFileName = Path.GetFileName(csprojPath);
-        string stagedCsprojPath = Path.Combine(stagingDirectory, projectFileName);
-        if (!File.Exists(stagedCsprojPath))
-        {
-            return;
-        }
-
-        var doc = XDocument.Load(stagedCsprojPath);
-        var assemblyNameElement = doc.Descendants("AssemblyName").FirstOrDefault();
-        if (assemblyNameElement != null)
-        {
-            assemblyNameElement.Value = "$safeprojectname$";
-            doc.Save(stagedCsprojPath);
         }
     }
 
@@ -218,7 +185,7 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
                     continue;
                 }
 
-                project.Items.Add(new DTOs.ProjectItem
+                project.Items.Add(new ProjectItem
                 {
                     ReplaceParameters = true,
                     TargetFileName = fileName,
@@ -270,7 +237,7 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
                 Name = projectName,
                 Description = "&lt;No description available&gt;",
                 ProjectType = "CSharp",
-                ProjectSubType = "",
+                ProjectSubType = string.Empty,
                 SortOrder = 1000,
                 CreateNewFolder = true,
                 DefaultName = projectName,

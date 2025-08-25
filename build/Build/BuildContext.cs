@@ -20,6 +20,10 @@ public sealed class BuildContext : FrostingContext
     internal const string REPO_NAME = "ProjectTemplates";
     internal const string LOGO_SVG_FILENAME = "logo.svg";
 
+    // Reserved Template Parameters: https://learn.microsoft.com/en-us/visualstudio/ide/template-parameters?view=vs-2019
+    internal const string PARAM_SAFE_PROJECT_NAME = "$safeprojectname$";
+    internal const string PARAM_SAFE_PROJECT_NAME_PARENT = "$ext_safeprojectname$";
+
     public enum BuildConfigurations
     {
         Debug,
@@ -124,7 +128,7 @@ public sealed class BuildContext : FrostingContext
         }
 
         // Get name.
-        string? name;
+        string? nameFriendly;
         if (isApplication && isSdkStyle)
         {
             XElement? productElement = doc.Descendants(ns + "Product").FirstOrDefault();
@@ -133,32 +137,34 @@ public sealed class BuildContext : FrostingContext
                 throw new InvalidOperationException($"Product element not found in SDK-style project '{projectName}' at '{csprojPath}'.");
             }
 
-            name = productElement.Value.Trim();
+            nameFriendly = productElement.Value.Trim();
         }
         else
         {
-            name = InsertSpacesInPascalCase(projectName);
+            nameFriendly = InsertSpacesInPascalCase(projectName.Replace("Win", "Windows"));
         }
 
-        return (name, description);
+        return (nameFriendly, description);
 
         // Helper: Insert spaces before capital letters (except the first).
         static string InsertSpacesInPascalCase(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
-                return input;
-
-            var sb = new System.Text.StringBuilder();
-            sb.Append(input[0]);
-            for (int i = 1; i < input.Length; i++)
             {
-                if (char.IsUpper(input[i]) && !char.IsWhiteSpace(input[i - 1]))
-                {
-                    sb.Append(' ');
-                }
-                sb.Append(input[i]);
+                return input;
             }
-            return sb.ToString();
+
+            // Insert space before:
+            // - an uppercase letter that follows a lowercase letter (word boundary)
+            // - an uppercase letter that follows another uppercase letter and is followed by a lowercase letter (acronym boundary)
+            // - a digit that follows a letter
+            // - a letter that follows a digit
+            string pattern = @"(?<=[a-z])(?=[A-Z0-9])|(?<=[A-Z])(?=[A-Z][a-z])|(?<=[0-9])(?=[A-Za-z])";
+
+            string result = System.Text.RegularExpressions.Regex.Replace(input, pattern, " ");
+            result = result.Replace('.', ' ');
+
+            return result.Trim();
         }
     }
 
