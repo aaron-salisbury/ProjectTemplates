@@ -1,5 +1,4 @@
-﻿using DotNetFramework.Business;
-using DotNetFrameworkToolkit.Modules.DependencyInjection;
+﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 using System.Reflection;
@@ -22,30 +21,30 @@ namespace Win7App
             // Application level infrastructure.
             InMemorySinkPNP inMemorySink = new();
             //InMemorySinkPNP inMemorySink = new(formatter: new TextFormatter("{message}")); //TODO: Try this after changing logs view to use a control with columns.
-            services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, inMemorySink))
-                .AddSingleton(inMemorySink); // So the logs view model can subscribe to emit event.
+            ServiceCollectionExtensions.AddSingleton<ILogger>(services, new LoggerPNP(LogLevel.Debug, inMemorySink));
+            ServiceCollectionExtensions.AddSingleton(services, inMemorySink); // So the logs view model can subscribe to emit event.
 
             // Presentation services.
-            services.AddScoped(typeof(IAgnosticDispatcher), typeof(WPFDispatcher));
+            ServiceCollectionExtensions.AddScoped(services, typeof(IAgnosticDispatcher), typeof(WPFDispatcher));
 
             // View models.
             foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if (assemblyType.Name.EndsWith("ViewModel") && !assemblyType.Name.Equals("BaseViewModel"))
                 {
-                    services.AddScoped(assemblyType);
+                    ServiceCollectionExtensions.AddScoped(services, assemblyType);
                 }
             }
 
             // Business domain services.
-            services.AddBusinessServices();
+            DotNetFramework.Business.Startup.AddBusinessServices(services);
 
             return services.BuildServiceProvider();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            LogsViewModel logsVM = Services.GetRequiredService<LogsViewModel>();
+            LogsViewModel logsVM = ServiceProviderExtensions.GetRequiredService<LogsViewModel>(Services);
             logsVM.WireErrors();
         }
 
@@ -53,7 +52,7 @@ namespace Win7App
         {
             if (Services != null)
             {
-                if (Services.GetService<ILogger>() is IDisposable disposableLogger)
+                if (Services.GetService(typeof(ILogger)) is IDisposable disposableLogger)
                 {
                     disposableLogger.Dispose();
                 }

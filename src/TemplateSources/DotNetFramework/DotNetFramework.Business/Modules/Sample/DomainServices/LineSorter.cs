@@ -43,13 +43,13 @@ namespace DotNetFramework.Business.Modules.Sample.DomainServices
                 }
                 else
                 {
-                    _logger.LogWarning("Attempted to sort empty text.");
+                    LoggerExtensions.LogWarning(_logger, "Attempted to sort empty text.");
                     sortedText = string.Empty;
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to sort text.");
+                LoggerExtensions.LogError(_logger, ex, "Failed to sort text.");
                 sortedText = null;
             }
 

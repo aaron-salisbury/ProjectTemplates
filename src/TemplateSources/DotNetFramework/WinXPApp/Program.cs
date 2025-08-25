@@ -31,20 +31,20 @@ static class Program
         // Application level infrastructure.
         InMemorySinkPNP inMemorySink = new();
         //InMemorySinkPNP inMemorySink = new(formatter: new TextFormatter("{message}")); //TODO: Try this after changing logs view to use a control with columns.
-        services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, inMemorySink))
-            .AddSingleton(inMemorySink); // So the logs presenter can subscribe to emit event.
+        ServiceCollectionExtensions.AddSingleton<ILogger>(services, new LoggerPNP(LogLevel.Debug, inMemorySink));
+        ServiceCollectionExtensions.AddSingleton(services, inMemorySink); // So the logs presenter can subscribe to emit event.
 
         // Presenters.
         foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())
         {
             if (assemblyType.Name.EndsWith("Presenter") && !assemblyType.Name.Equals("Presenter"))
             {
-                services.AddScoped(assemblyType);
+                ServiceCollectionExtensions.AddScoped(services, assemblyType);
             }
         }
 
         // Business domain services.
-        services.AddBusinessServices();
+        Startup.AddBusinessServices(services);
 
         return services.BuildServiceProvider();
     }
@@ -53,7 +53,7 @@ static class Program
     {
         if (Services != null)
         {
-            if (Services.GetService<ILogger>() is IDisposable disposableLogger)
+            if (Services.GetService(typeof(ILogger)) is IDisposable disposableLogger)
             {
                 disposableLogger.Dispose();
             }

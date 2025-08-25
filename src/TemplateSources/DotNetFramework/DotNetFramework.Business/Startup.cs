@@ -13,19 +13,19 @@ namespace DotNetFramework.Business
         /// Dependent on <see cref="ILogger"/>.
         /// </summary>
         /// <returns>A reference to this instance after the operation has completed.</returns>
-        public static IServiceCollection AddBusinessServices(this IServiceCollection services)
+        public static IServiceCollection AddBusinessServices(IServiceCollection services)
         {
             // Necessary infrastructure.
-            services.AddScoped<IFileSystemAccess, FileSystemAccess>()
-                .AddScoped<IEmbeddedDataAccess, EmbeddedDataAccess>();
+            ServiceCollectionExtensions.AddScoped<IFileSystemAccess, FileSystemAccess>(services);
+            ServiceCollectionExtensions.AddScoped<IEmbeddedDataAccess, EmbeddedDataAccess>(services);
 
             // Internal business domain logic.
-            services.AddScoped<FlatUIColorProvider, FlatUIColorProvider>()
-                .AddScoped<LineSorter, LineSorter>()
-                .AddScoped<UUIDGenerator, UUIDGenerator>();
+            ServiceCollectionExtensions.AddScoped<FlatUIColorProvider, FlatUIColorProvider>(services);
+            ServiceCollectionExtensions.AddScoped<LineSorter, LineSorter>(services);
+            ServiceCollectionExtensions.AddScoped<UUIDGenerator, UUIDGenerator>(services);
 
             // Orchestrated public-facing (application) services.
-            services.AddScoped<ISampleToolsService, SampleToolsService>();
+            ServiceCollectionExtensions.AddScoped<ISampleToolsService, SampleToolsService>(services);
 
             return services;
         }

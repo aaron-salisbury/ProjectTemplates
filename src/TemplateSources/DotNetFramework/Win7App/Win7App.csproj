@@ -11,7 +11,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Win7App</RootNamespace>
     <AssemblyName>Win7App</AssemblyName>
-	<Description>WPF, three-tier, application that targets Windows 7 (.Net Framework 4.5.1).</Description>
+    <Description>WPF, three-tier, application that targets Windows 7 (.Net Framework 4.5.1).</Description>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -45,7 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetFrameworkToolkit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.2.2\lib\net20\obj\Release\DotNetFrameworkToolkit.dll</HintPath>
+      <HintPath>..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.2.5\lib\net20\obj\Release\DotNetFrameworkToolkit.dll</HintPath>
     </Reference>
     <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>

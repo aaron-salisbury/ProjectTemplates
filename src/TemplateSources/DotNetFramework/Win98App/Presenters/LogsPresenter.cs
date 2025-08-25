@@ -76,7 +76,7 @@ internal class LogsPresenter : Presenter
         ProcessResult<string> appDirectoryResult = _fileSystemAccess.GetAppDirectoryPath();
         if (!appDirectoryResult.IsSuccessful)
         {
-            _logger.LogError(appDirectoryResult.Error, "Could not get app directory path to write logs to.");
+            LoggerExtensions.LogError(_logger, appDirectoryResult.Error, "Could not get app directory path to write logs to.");
             return;
         }
 
@@ -87,7 +87,7 @@ internal class LogsPresenter : Presenter
         ProcessResult<bool> writeResult = _fileSystemAccess.WriteFile(_errorLogs, fileName, logsPath);
         if (writeResult.IsSuccessful)
         {
-            _logger.LogInformation("Wrote log file '{0}' to '{1}'", fileName, logsPath);
+            LoggerExtensions.LogInformation(_logger, "Wrote log file '{0}' to '{1}'", fileName, logsPath);
 
             try
             {
@@ -98,7 +98,7 @@ internal class LogsPresenter : Presenter
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to open file.");
+                LoggerExtensions.LogError(_logger, ex, "Failed to open file.");
             }
         }
     }

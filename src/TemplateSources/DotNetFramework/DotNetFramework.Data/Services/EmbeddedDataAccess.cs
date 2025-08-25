@@ -34,7 +34,7 @@ namespace DotNetFramework.Data
             ProcessResult<string> embeddedReadResult = _fileSystemAccess.GetEmbeddedResourceText(Assembly.GetExecutingAssembly(), EMBEDDED_COLORS_ABSOLUTE_FILEPATH);
             if (!embeddedReadResult.IsSuccessful)
             {
-                _logger.LogError(embeddedReadResult.Error, "EmbeddedDataAccess.ReadFlatColors: Failed to read embedded resource text for '{0}'", EMBEDDED_COLORS_ABSOLUTE_FILEPATH);
+                LoggerExtensions.LogError(_logger, embeddedReadResult.Error, "EmbeddedDataAccess.ReadFlatColors: Failed to read embedded resource text for '{0}'", EMBEDDED_COLORS_ABSOLUTE_FILEPATH);
                 return flatColors;
             }
 
