@@ -1,4 +1,5 @@
-﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+﻿using DotNetFramework.Business;
+using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 using System.Reflection;
@@ -37,7 +38,7 @@ namespace Win7App
             }
 
             // Business domain services.
-            DotNetFramework.Business.Startup.AddBusinessServices(services);
+            Builder.BuildBusinessServices(services);
 
             return services.BuildServiceProvider();
         }

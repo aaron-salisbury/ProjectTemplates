@@ -249,6 +249,11 @@ public sealed class TemplatesDefaultExportTask : FrostingTask<BuildContext>
             TemplateContent = new TemplateContent
             {
                 Project = BuildProject(stagingDirectory)
+            },
+            WizardExtension = new WizardExtension // Add the WizardExtension element for the post-processing wizard.
+            {
+                Assembly = "PostProcessingWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                FullClassName = "PostProcessingWizard.Wizard"
             }
         };
 

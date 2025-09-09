@@ -6,14 +6,14 @@ using DotNetFrameworkToolkit.Modules.DependencyInjection;
 
 namespace DotNetFramework.Business
 {
-    public static class Startup
+    public static class Builder
     {
         /// <summary>
         /// Adds business-tier services.
         /// Dependent on <see cref="ILogger"/>.
         /// </summary>
         /// <returns>A reference to this instance after the operation has completed.</returns>
-        public static IServiceCollection AddBusinessServices(IServiceCollection services)
+        public static IServiceCollection BuildBusinessServices(IServiceCollection services)
         {
             // Necessary infrastructure.
             ServiceCollectionExtensions.AddScoped<IFileSystemAccess, FileSystemAccess>(services);

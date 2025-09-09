@@ -51,12 +51,11 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             ZipFile.ExtractToDirectory(zipPath, stagingDir);
 
             ApplySafeExternalUsings(templateProject, stagingDir, context);
-            //TODO: It would be nice to group usings that start with $ext_safeprojectname$ together at the bottom of the usings block.
 
             string stagedCsprojPath = Path.Combine(stagingDir, Path.GetFileName(templateProject.CsprojFilePathAbsolute));
             ApplySafeExternalProjectReferences(stagedCsprojPath, templateProject.ProjectNamesReferenced, context);
             StepDownNuGetPackageHintPaths(stagedCsprojPath, templateProject.IsSdkStyleProject);
-            //TODO: The Product element of SDK-style executable projects should be a friendly version of $ext_safeprojectname$
+            SetProductElementToSafeProjectName(stagedCsprojPath, templateProject.IsSdkStyleProject);
 
             string vsixProductId = ReadVSIXManifestId(Path.Combine(context.AbsolutePathToRepo, "src"));
             string vstemplatePath = Path.Combine(stagingDir, "MyTemplate.vstemplate");
@@ -224,6 +223,28 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         {
             doc.Save(csprojPath);
         }
+    }
+
+    private static void SetProductElementToSafeProjectName(string stagedCsprojPath, bool isSdkStyleProject)
+    {
+        // Post-processing wizard builds the $prettyprojectname$ parameter.
+
+        if (!isSdkStyleProject || !File.Exists(stagedCsprojPath))
+        {
+            return;
+        }
+
+        XDocument doc = XDocument.Load(stagedCsprojPath);
+        XNamespace ns = doc.Root?.Name.Namespace ?? XNamespace.None;
+        XElement? productElement = doc.Descendants(ns + "Product").FirstOrDefault();
+
+        if (productElement == null)
+        {
+            return;
+        }
+
+        productElement.Value = "$prettyprojectname$";
+        doc.Save(stagedCsprojPath);
     }
 
     private static string ReadVSIXManifestId(string rootDirectory)

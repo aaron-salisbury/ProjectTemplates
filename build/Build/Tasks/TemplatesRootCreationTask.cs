@@ -145,7 +145,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
         }
 
         // Build the VSTemplate DTO
-        var vsTemplate = new VSTemplate
+        VSTemplate vsTemplate = new()
         {
             Version = "3.0.0",
             Type = "ProjectGroup",
@@ -156,7 +156,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
                 DefaultName = templateProject.Name + "_Solution",
                 Icon = "vs-extension-icon.png",
                 LanguageTag = "C#",
-                PlatformTags = templateProject.IsSdkStyleProject ? ["Windows" , "Linux"] : ["Windows"],
+                PlatformTags = templateProject.IsSdkStyleProject ? ["Windows", "Linux"] : ["Windows"],
                 ProjectTypeTag = "Desktop",
                 ProjectType = "CSharp",
                 ProjectSubType = string.Empty,
@@ -172,6 +172,11 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
                 {
                     ProjectTemplateLinks = projectLinks
                 }
+            },
+            WizardExtension = new WizardExtension // Add the WizardExtension element for the post-processing wizard.
+            {
+                Assembly = "PostProcessingWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                FullClassName = "PostProcessingWizard.Wizard"
             }
         };
 

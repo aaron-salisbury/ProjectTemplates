@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Cake.Frosting" Version="5.0.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
-    <PackageReference Include="Svg.Skia" Version="3.0.5" />
+    <PackageReference Include="Svg.Skia" Version="3.0.6" />
   </ItemGroup>
 
 </Project>

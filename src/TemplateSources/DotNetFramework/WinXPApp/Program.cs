@@ -44,7 +44,7 @@ static class Program
         }
 
         // Business domain services.
-        Startup.AddBusinessServices(services);
+        Builder.BuildBusinessServices(services);
 
         return services.BuildServiceProvider();
     }
