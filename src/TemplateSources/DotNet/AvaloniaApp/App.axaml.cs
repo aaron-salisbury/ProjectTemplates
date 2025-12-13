@@ -3,7 +3,9 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using AvaloniaApp.Base.Services;
+using AvaloniaApp.ViewModels;
 using AvaloniaApp.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using DotNet.Business;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,8 +20,6 @@ namespace AvaloniaApp;
 
 public partial class App : Application
 {
-    public IServiceProvider Services { get; set; } = null!; // Set during the Startup event to avoid conflicts prior to Initialization completing.
-
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -27,24 +27,34 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // Line below is needed to remove Avalonia data validation.
+        // Without this line you will get duplicate validations from both Avalonia and CT
+        BindingPlugins.DataValidators.RemoveAt(0);
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Line below is needed to remove Avalonia data validation.
-            // Without this line you will get duplicate validations from both Avalonia and CT
-            BindingPlugins.DataValidators.RemoveAt(0);
-
-            desktop.Startup += Desktop_Startup;
-            desktop.Exit += Desktop_Exit;
+            desktop.Startup += OnDesktopStartup;
+            desktop.Exit += OnDesktopExit;
+        }
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        {
+            singleViewPlatform.MainView = new MainView
+            {
+                DataContext = new MainViewModel()
+            };
         }
 
         base.OnFrameworkInitializationCompleted();
     }
 
-    private void Desktop_Startup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
+    private void OnDesktopStartup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
     {
         // Services need to be gathered after app initialization but before
         // the MainWindow is created as that starts the chain of dependency injections.
-        Services = ConfigureServices();
+
+        IServiceCollection services = BuildServiceCollection();
+        IServiceProvider provider = services.BuildServiceProvider();
+        Ioc.Default.ConfigureServices(provider);
 
         if (sender is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -52,19 +62,24 @@ public partial class App : Application
         }
     }
 
-    private void Desktop_Exit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
+    private void OnDesktopExit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
     {
         Serilog.Log.CloseAndFlush();
+
+        if (sender is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Startup -= OnDesktopStartup;
+        }
     }
 
-    private static ServiceProvider ConfigureServices()
+    private static IServiceCollection BuildServiceCollection()
     {
         Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.MemorySink(out ILogSource<LogEvent> logSource)
             .CreateLogger();
 
-        ServiceCollection services = new();
+        IServiceCollection services = new ServiceCollection();
 
         // Application level infrastructure.
         services.AddLogging(configure => configure.AddSerilog(Serilog.Log.Logger))
@@ -86,6 +101,6 @@ public partial class App : Application
         // Business domain services.
         services.AddBusinessServices();
 
-        return services.BuildServiceProvider();
+        return services;
     }
 }

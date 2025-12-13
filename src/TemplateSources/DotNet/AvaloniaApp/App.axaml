@@ -1,18 +1,18 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="AvaloniaApp.App"
-             xmlns:rosMVVM="using:RunnethOverStudio.AppToolkit.Presentation.MVVM"
-             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             RequestedThemeVariant="Dark">
+             xmlns:ros="using:RunnethOverStudio.AppToolkit.Presentation.MVVM"
+             xmlns:i="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
 	<Application.DataTemplates>
-		<rosMVVM:ViewLocator />
+		<ros:ViewLocator />
 	</Application.DataTemplates>
 
 	<Application.Styles>
 		<FluentTheme />
-		<materialIcons:MaterialIconStyles />
+		<i:MaterialIconStyles />
 		<StyleInclude Source="/Base/Styles/Colors.axaml" />
 		<StyleInclude Source="/Base/Styles/UserControlStyles.axaml" />
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />

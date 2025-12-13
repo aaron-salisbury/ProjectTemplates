@@ -2,9 +2,10 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using DotNet.Business.Modules.Sample.DTOs;
 using AvaloniaApp.Base.Extensions;
 using AvaloniaApp.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DotNet.Business.Modules.Sample.DTOs;
 using System;
 using System.Linq;
 
@@ -15,7 +16,7 @@ public partial class FlatUIColorPickerView : UserControl
     public FlatUIColorPickerView()
     {
         InitializeComponent();
-        this.SetDataContext((Avalonia.Application.Current as App)?.Services);
+        this.SetDataContext(Ioc.Default);
 
         InitializeColorsGrid();
     }
@@ -93,10 +94,10 @@ public partial class FlatUIColorPickerView : UserControl
 
             if (clipboard != null)
             {
-                var dataObject = new DataObject();
-                dataObject.Set(DataFormats.Text, HexTB.Text);
+                DataTransfer dataObject = new();
+                dataObject.Add(DataTransferItem.Create(DataFormat.Text, HexTB.Text));
 
-                await clipboard.SetDataObjectAsync(dataObject);
+                await clipboard.SetDataAsync(dataObject);
             }
         }
     }

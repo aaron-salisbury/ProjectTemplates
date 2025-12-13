@@ -17,7 +17,7 @@
 		</Style>
 	</UserControl.Styles>
 	
-    <Border Background="{DynamicResource SystemChromeMediumColor}" Height="60">
+    <Border Background="{DynamicResource SystemListLowColor}" Height="60">
         <Grid ColumnDefinitions="30,Auto,10,Auto,10,*,30" VerticalAlignment="Center">
 
             <TextBlock Grid.Column="1"

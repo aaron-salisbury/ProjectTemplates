@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using RunnethOverStudio.AppToolkit.Presentation.MVVM;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,9 @@ internal static class UserControlExtensions
 
                 if (viewModelType != null)
                 {
-                    view.DataContext = services?.GetService(viewModelType);
+                    view.DataContext = Design.IsDesignMode
+                        ? Activator.CreateInstance(viewModelType)
+                        : Ioc.Default.GetService(viewModelType);
                 }
             }
         }

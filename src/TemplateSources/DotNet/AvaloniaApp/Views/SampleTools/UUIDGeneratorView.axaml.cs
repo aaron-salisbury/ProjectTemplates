@@ -1,10 +1,10 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using AvaloniaApp.Base.Extensions;
 using AvaloniaApp.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace AvaloniaApp.Views;
 
@@ -13,7 +13,7 @@ public partial class UUIDGeneratorView : UserControl
     public UUIDGeneratorView()
     {
         InitializeComponent();
-        this.SetDataContext((Application.Current as App)?.Services);
+        this.SetDataContext(Ioc.Default);
     }
 
     private async void CopyBtn_Click(object? sender, RoutedEventArgs e)
@@ -24,10 +24,10 @@ public partial class UUIDGeneratorView : UserControl
 
             if (clipboard != null)
             {
-                DataObject dataObject = new();
-                dataObject.Set(DataFormats.Text, viewModel.UUID);
+                DataTransfer dataObject = new();
+                dataObject.Add(DataTransferItem.Create(DataFormat.Text, viewModel.UUID));
 
-                await clipboard.SetDataObjectAsync(dataObject);
+                await clipboard.SetDataAsync(dataObject);
             }
         }
     }

@@ -1,6 +1,6 @@
-using Avalonia;
 using AvaloniaApp.Base.Controls.RibbonControls;
 using AvaloniaApp.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace AvaloniaApp.Base.Controls;
 
@@ -9,6 +9,6 @@ public partial class LogsRibbonControl : BaseRibbonControl
     public LogsRibbonControl()
     {
         InitializeComponent();
-        this.DataContext = (Application.Current as App)?.Services.GetService(typeof(LogsViewModel));
+        this.DataContext = Ioc.Default.GetService(typeof(LogsViewModel));
     }
 }
