@@ -82,7 +82,7 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
     {
         // Copy default template icon to staging directory.
         string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
-        string iconSourcePath = Path.Combine(contentDir, "vs-extension-icon.ico");
+        string iconSourcePath = Path.Combine(contentDir, "extension-icon.ico");
 
         if (File.Exists(iconSourcePath))
         {

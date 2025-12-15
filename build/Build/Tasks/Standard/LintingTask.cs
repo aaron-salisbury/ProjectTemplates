@@ -4,7 +4,7 @@ using Cake.Frosting;
 using System;
 using System.Diagnostics;
 
-namespace Build.Tasks;
+namespace Build.Tasks.Standard;
 
 [TaskName("Linting")]
 [IsDependentOn(typeof(RestoreTask))]
@@ -21,8 +21,7 @@ public sealed class LintingTask : FrostingTask<BuildContext>
 
         context.Log.Information($"Formatting code...");
 
-        string srcPath = System.IO.Path.Combine(context.AbsolutePathToRepo, "src");
-        string[] solutionPaths = System.IO.Directory.GetFiles(srcPath, "*.sln", System.IO.SearchOption.AllDirectories);
+        string[] solutionPaths = System.IO.Directory.GetFiles(context.SourceDirectory, "*.sln", System.IO.SearchOption.AllDirectories);
 
         foreach (string solutionPath in solutionPaths)
         {

@@ -33,6 +33,7 @@ public sealed class BuildContext : FrostingContext
     public BuildConfigurations Config { get; }
     public JsonSerializerOptions SerializerOptions { get; }
     public string AbsolutePathToRepo { get; }
+    public ConvertableDirectoryPath SourceDirectory { get; }
     public IEnumerable<TemplateProject> TemplateProjects { get; }
 
     public BuildContext(ICakeContext context) : base(context)
@@ -46,7 +47,27 @@ public sealed class BuildContext : FrostingContext
 
         SerializerOptions = new() { PropertyNameCaseInsensitive = true };
         AbsolutePathToRepo = GetRepoAbsolutePath(REPO_NAME, this);
+        SourceDirectory = AbsolutePathToRepo + context.Directory("src");
         TemplateProjects = GatherTemplateProjects(this);
+    }
+
+    private static string GetRepoAbsolutePath(string repoName, ICakeContext context)
+    {
+        // Start from the working directory
+        DirectoryPath dir = context.Environment.WorkingDirectory;
+
+        // Traverse up until we find the directory named after the repository name.
+        while (dir != null && !dir.GetDirectoryName().Equals(repoName, StringComparison.OrdinalIgnoreCase))
+        {
+            dir = dir.GetParent();
+        }
+
+        if (dir == null)
+        {
+            throw new InvalidOperationException($"Could not find repository root directory named '{repoName}' in parent chain.");
+        }
+
+        return dir.FullPath;
     }
 
     private static IEnumerable<TemplateProject> GatherTemplateProjects(BuildContext context)
@@ -200,25 +221,6 @@ public sealed class BuildContext : FrostingContext
         }
 
         return discoveredNames;
-    }
-
-    private static string GetRepoAbsolutePath(string repoName, ICakeContext context)
-    {
-        // Start from the working directory
-        DirectoryPath dir = context.Environment.WorkingDirectory;
-
-        // Traverse up until we find the directory named after the repository name.
-        while (dir != null && !dir.GetDirectoryName().Equals(repoName, StringComparison.OrdinalIgnoreCase))
-        {
-            dir = dir.GetParent();
-        }
-
-        if (dir == null)
-        {
-            throw new InvalidOperationException($"Could not find repository root directory named '{repoName}' in parent chain.");
-        }
-
-        return dir.FullPath;
     }
 
     private static ConvertableDirectoryPath? GetConfiguredOutputPath(string csprojPath, BuildConfigurations config, ICakeContext context)

@@ -68,7 +68,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
 
             // Copy icon into the root template directory.
             string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
-            string iconPath = Path.Combine(contentDir, "vs-extension-icon.png");
+            string iconPath = Path.Combine(contentDir, "extension-icon.png");
             string destIconPath = Path.Combine(templateRootDir, Path.GetFileName(iconPath));
             File.Copy(iconPath, destIconPath, overwrite: true);
 
@@ -154,7 +154,7 @@ public sealed class TemplatesRootCreationTask : FrostingTask<BuildContext>
                 Name = templateProject.FriendlyName + " Solution Template",
                 Description = templateProject.Description,
                 DefaultName = templateProject.Name + "_Solution",
-                Icon = "vs-extension-icon.png",
+                Icon = "extension-icon.png",
                 LanguageTag = "C#",
                 PlatformTags = templateProject.IsSdkStyleProject ? ["Windows", "Linux"] : ["Windows"],
                 ProjectTypeTag = "Desktop",

@@ -1,4 +1,5 @@
-﻿using Cake.Core.Diagnostics;
+﻿using Build.Tasks.Standard;
+using Cake.Core.Diagnostics;
 using Cake.Frosting;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
@@ -40,9 +41,9 @@ public sealed class ProcessImagesTask : AsyncFrostingTask<BuildContext>
         context.Log.Information($"Creating icons suitable for various deployments...");
         await Task.WhenAll(
             ConvertPngToIcoAsync(pngPath, Path.Combine(contentDir, "favicon.ico")),
-            ConvertPngToIcoAsync(pngPath, Path.Combine(contentDir, "vs-extension-icon.ico"), 64),
-            ResizePngAsync(pngPath, Path.Combine(contentDir, "vs-extension-icon.png"), 90, 90), // Microsoft recommends 90x90 pixels.
-            ResizePngAsync(pngPath, Path.Combine(contentDir, "nuget-package-icon.png"), 128, 128) // Microsoft recommends 128x128 pixels.
+            ConvertPngToIcoAsync(pngPath, Path.Combine(contentDir, "extension-icon.ico"), 64),
+            ResizePngAsync(pngPath, Path.Combine(contentDir, "extension-icon.png"), 90, 90),
+            ResizePngAsync(pngPath, Path.Combine(contentDir, "package-icon.png"), 128, 128)
         );
 
         stopwatch.Stop();
