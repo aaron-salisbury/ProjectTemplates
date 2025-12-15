@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetFrameworkToolkit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.2.5\lib\net20\obj\Release\DotNetFrameworkToolkit.dll</HintPath>
+      <HintPath>..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.2.6\lib\net20\obj\Release\DotNetFrameworkToolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PatternsAndPractices.Cryptography.2.0.1\lib\net20\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>

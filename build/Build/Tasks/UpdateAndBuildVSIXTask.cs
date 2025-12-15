@@ -1,5 +1,7 @@
 ﻿using Build.DTOs;
 using Cake.Common.Tools.MSBuild;
+using Cake.Common.Tools.VSWhere;
+using Cake.Common.Tools.VSWhere.Latest;
 using Cake.Core.Diagnostics;
 using Cake.Frosting;
 using System;
@@ -32,8 +34,7 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         Stopwatch stopwatch = Stopwatch.StartNew();
         context.Log.Information($"Finalizing VSIX project...");
 
-        string sourceDir = Path.Combine(context.AbsolutePathToRepo, "src");
-        string solutionDir = Path.Combine(sourceDir, VSIX_SOLUTION_NAME);
+        string solutionDir = Path.Combine(context.SourceDirectory, VSIX_SOLUTION_NAME);
         string projectDir = Path.Combine(solutionDir, VSIX_PROJECT_NAME);
         string vsTemplateDir = Path.Combine(projectDir, VS_TEMPLATE_FOLDER_NAME);
         string packagesDir = Path.Combine(projectDir, TEMPLATE_PACKAGES_FOLDER_NAME);
@@ -45,18 +46,13 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
 
         List<string> templateFileNames = ImportVSTemplates(vsTemplateDir, context);
 
-        List<string> nupkgFileNames = ImportTemplateNuGetPackages(sourceDir, packagesDir);
+        List<string> nupkgFileNames = ImportTemplateNuGetPackages(context.SourceDirectory, packagesDir);
 
         UpdateVSIXProjectFile(csprojPath, templateFileNames, nupkgFileNames);
 
         UpdateVSIXManifestFile(projectDir, templateFileNames, nupkgFileNames);
 
-        context.MSBuild(csprojPath, new MSBuildSettings
-        {
-            Target = "Build",
-            Configuration = context.Config.ToString(),
-            Verbosity = Verbosity.Minimal
-        });
+        BuildVSIXProject(context, csprojPath);
 
         stopwatch.Stop();
         double completionTime = Math.Round(stopwatch.Elapsed.TotalSeconds, 1);
@@ -278,5 +274,41 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         }
 
         doc.Save(manifestPath);
+    }
+
+    private static void BuildVSIXProject(BuildContext context, string vsixCsprojPath)
+    {
+        Cake.Core.IO.DirectoryPath vsInstallDir = context.VSWhereLatest(new VSWhereLatestSettings
+        {
+            Requires = "Microsoft.VisualStudio.Component.VSSDK"
+        });
+
+        // VS 2026 uses v18.0 for MSBuild tooling paths
+        string vsToolsPath = Path.Combine(vsInstallDir.FullPath, "MSBuild", "Microsoft", "VisualStudio", "v18.0");
+
+        context.Log.Information($"Using VSToolsPath: {vsToolsPath}");
+
+        // Verify the path exists
+        if (!Directory.Exists(vsToolsPath))
+        {
+            throw new DirectoryNotFoundException($"VSToolsPath not found: {vsToolsPath}. Ensure Visual Studio 2026 with VSSDK is installed.");
+        }
+
+        // Use Visual Studio's MSBuild, not the .NET SDK MSBuild
+        string msbuildPath = Path.Combine(vsInstallDir.FullPath, "MSBuild", "Current", "Bin", "MSBuild.exe");
+
+        context.MSBuild(vsixCsprojPath, new MSBuildSettings
+        {
+            Targets = { "Restore", "Build" },
+            Configuration = context.Config.ToString(),
+            Verbosity = Verbosity.Minimal,
+            ToolPath = new Cake.Core.IO.FilePath(msbuildPath),
+            Properties =
+            {
+                { "VSToolsPath", new[] { vsToolsPath } },
+                { "DeployExtension", new[] { "false" } },
+                { "VisualStudioVersion", new[] { "18.0" } }
+            }
+        });
     }
 }
