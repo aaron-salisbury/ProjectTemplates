@@ -1,41 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.2.0" Language="en-US" Publisher="Aaron Salisbury" />
-    <DisplayName>Windows Project Templates</DisplayName>
-    <Description xml:space="preserve">Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario. 
-	The templates help when you want to quickly get started with a utility application that feels idiomatic.</Description>
-    <MoreInfo>https://github.com/aaron-salisbury/ProjectTemplates</MoreInfo>
-    <License>License.txt</License>
-    <Icon>vs-extension-icon.png</Icon>
-    <Tags>legacy windows templates</Tags>
-  </Metadata>
-  <Installation>
-    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>
-  </Installation>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
-  </Prerequisites>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="PostProcessingWizard" Path="|PostProcessingWizard|" AssemblyName="|PostProcessingWizard;AssemblyName|" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\AaronSalisbury.DotNetFrameworkToolkit.0.2.5.nupkg" Type="AaronSalisbury.DotNetFrameworkToolkit.0.2.5.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\Krypton.Components.Suite.4.5.9.nupkg" Type="Krypton.Components.Suite.4.5.9.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\LinqBridge.1.3.0.nupkg" Type="LinqBridge.1.3.0.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\MetroModernUI.1.4.0.0.nupkg" Type="MetroModernUI.1.4.0.0.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\ModernUI.WPF.1.0.9.nupkg" Type="ModernUI.WPF.1.0.9.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\PatternsAndPractices.Cryptography.2.0.1.nupkg" Type="PatternsAndPractices.Cryptography.2.0.1.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\PatternsAndPractices.Logging.2.0.0.nupkg" Type="PatternsAndPractices.Logging.2.0.0.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\PatternsAndPractices.Unity.1.2.0.nupkg" Type="PatternsAndPractices.Unity.1.2.0.nupkg" />
-    <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\System.Data.SqlServerCe_unofficial.4.0.8482.1.nupkg" Type="System.Data.SqlServerCe_unofficial.4.0.8482.1.nupkg" />
-    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\AvaloniaApp_Template.zip" />
-    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Win7App_Template.zip" />
-    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Win98App_Template.zip" />
-    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\WinXPApp_Template.zip" />
-  </Assets>
+    <Metadata>
+        <Identity Id="ProjectTemplates.10af0e32-efeb-48aa-b1ad-0f95a249367d" Version="1.2.0" Language="en-US" Publisher="Aaron Salisbury" />
+        <DisplayName>Windows Project Templates</DisplayName>
+        <Description xml:space="preserve">Visual Studio extension for mostly legacy project templates just in case you find yourself in a restricted development scenario. 
+The templates help when you want to quickly get started with a utility application that feels idiomatic.</Description>
+        <MoreInfo>https://github.com/aaron-salisbury/ProjectTemplates</MoreInfo>
+        <License>License.txt</License>
+        <Icon>vs-extension-icon.png</Icon>
+        <Tags>legacy windows templates</Tags>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="PostProcessingWizard" Path="|PostProcessingWizard|" AssemblyName="|PostProcessingWizard;AssemblyName|" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\AaronSalisbury.DotNetFrameworkToolkit.0.2.6.nupkg" Type="AaronSalisbury.DotNetFrameworkToolkit.0.2.6.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\Krypton.Components.Suite.4.5.9.nupkg" Type="Krypton.Components.Suite.4.5.9.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\LinqBridge.1.3.0.nupkg" Type="LinqBridge.1.3.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\MetroModernUI.1.4.0.0.nupkg" Type="MetroModernUI.1.4.0.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\ModernUI.WPF.1.0.9.nupkg" Type="ModernUI.WPF.1.0.9.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\PatternsAndPractices.Cryptography.2.0.1.nupkg" Type="PatternsAndPractices.Cryptography.2.0.1.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\PatternsAndPractices.Logging.2.0.0.nupkg" Type="PatternsAndPractices.Logging.2.0.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\PatternsAndPractices.Unity.1.2.0.nupkg" Type="PatternsAndPractices.Unity.1.2.0.nupkg" />
+        <Asset d:Source="File" d:VsixSubPath="TemplatePackages" Path="TemplatePackages\System.Data.SqlServerCe_unofficial.4.0.8482.1.nupkg" Type="System.Data.SqlServerCe_unofficial.4.0.8482.1.nupkg" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Win7App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\Win98App_Template.zip" />
+        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="VSTemplates" d:TargetPath="VSTemplates\WinXPApp_Template.zip" />
+    </Assets>
 </PackageManifest>
