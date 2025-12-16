@@ -16,16 +16,16 @@ namespace DotNetFramework.Business
         public static IServiceCollection BuildBusinessServices(IServiceCollection services)
         {
             // Necessary infrastructure.
-            ServiceCollectionExtensions.AddScoped<IFileSystemAccess, FileSystemAccess>(services);
-            ServiceCollectionExtensions.AddScoped<IEmbeddedDataAccess, EmbeddedDataAccess>(services);
+            services.AddScoped<IFileSystemAccess, FileSystemAccess>();
+            services.AddScoped<IEmbeddedDataAccess, EmbeddedDataAccess>();
 
             // Internal business domain logic.
-            ServiceCollectionExtensions.AddScoped<FlatUIColorProvider, FlatUIColorProvider>(services);
-            ServiceCollectionExtensions.AddScoped<LineSorter, LineSorter>(services);
-            ServiceCollectionExtensions.AddScoped<UUIDGenerator, UUIDGenerator>(services);
+            services.AddScoped<FlatUIColorProvider, FlatUIColorProvider>();
+            services.AddScoped<LineSorter, LineSorter>();
+            services.AddScoped<UUIDGenerator, UUIDGenerator>();
 
             // Orchestrated public-facing (application) services.
-            ServiceCollectionExtensions.AddScoped<ISampleToolsService, SampleToolsService>(services);
+            services.AddScoped<ISampleToolsService, SampleToolsService>();
 
             return services;
         }

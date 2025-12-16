@@ -22,18 +22,18 @@ namespace Win7App
             // Application level infrastructure.
             InMemorySinkPNP inMemorySink = new();
             //InMemorySinkPNP inMemorySink = new(formatter: new TextFormatter("{message}")); //TODO: Try this after changing logs view to use a control with columns.
-            ServiceCollectionExtensions.AddSingleton<ILogger>(services, new LoggerPNP(LogLevel.Debug, inMemorySink));
-            ServiceCollectionExtensions.AddSingleton(services, inMemorySink); // So the logs view model can subscribe to emit event.
+            services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, inMemorySink));
+            services.AddSingleton(inMemorySink); // So the logs view model can subscribe to emit event.
 
             // Presentation services.
-            ServiceCollectionExtensions.AddScoped(services, typeof(IAgnosticDispatcher), typeof(WPFDispatcher));
+            services.AddScoped(typeof(IAgnosticDispatcher), typeof(WPFDispatcher));
 
             // View models.
             foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if (assemblyType.Name.EndsWith("ViewModel") && !assemblyType.Name.Equals("BaseViewModel"))
                 {
-                    ServiceCollectionExtensions.AddScoped(services, assemblyType);
+                    services.AddScoped(assemblyType);
                 }
             }
 

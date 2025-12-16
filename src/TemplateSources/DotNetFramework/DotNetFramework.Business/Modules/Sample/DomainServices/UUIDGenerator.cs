@@ -20,7 +20,7 @@ namespace DotNetFramework.Business.Modules.Sample.DomainServices
                 ? newGuid.ToString().ToUpper()
                 : newGuid.ToString();
 
-            LoggerExtensions.LogInformation(_logger, $"Generated new UUID: {uUID}");
+            _logger.LogInformation("Generated new UUID: {0}", uUID);
 
             return uUID;
         }

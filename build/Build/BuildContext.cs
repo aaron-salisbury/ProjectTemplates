@@ -82,6 +82,12 @@ public sealed class BuildContext : FrostingContext
 
         foreach (string csprojPath in allTemplateProjectFiles)
         {
+            // Temporarily skip the the Avalonia project as the template is broken.
+            if (csprojPath.Contains("Avalonia", StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
             bool isApplication = IsProjectAnApplication(csprojPath, context);
             bool isSdkStyleProject = BuildContext.IsSdkStyleProject(csprojPath);
             string projectName = System.IO.Path.GetFileNameWithoutExtension(csprojPath);

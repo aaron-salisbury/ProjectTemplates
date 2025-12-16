@@ -31,15 +31,15 @@ static class Program
         // Application level infrastructure.
         InMemorySinkPNP inMemorySink = new();
         //InMemorySinkPNP inMemorySink = new(formatter: new TextFormatter("{message}")); //TODO: Try this after changing logs view to use a control with columns.
-        ServiceCollectionExtensions.AddSingleton<ILogger>(services, new LoggerPNP(LogLevel.Debug, inMemorySink));
-        ServiceCollectionExtensions.AddSingleton(services, inMemorySink); // So the logs presenter can subscribe to emit event.
+        services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, inMemorySink));
+        services.AddSingleton(inMemorySink); // So the logs presenter can subscribe to emit event.
 
         // Presenters.
         foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())
         {
             if (assemblyType.Name.EndsWith("Presenter") && !assemblyType.Name.Equals("Presenter"))
             {
-                ServiceCollectionExtensions.AddScoped(services, assemblyType);
+                services.AddScoped(assemblyType);
             }
         }
 

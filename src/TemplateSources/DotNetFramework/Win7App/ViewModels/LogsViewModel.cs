@@ -61,7 +61,7 @@ public class LogsViewModel : BaseViewModel
         ProcessResult<string> appDirectoryResult = _fileSystemAccess.GetAppDirectoryPath();
         if (!appDirectoryResult.IsSuccessful)
         {
-            LoggerExtensions.LogError(_logger, appDirectoryResult.Error, "Could not get app directory path to write logs to.");
+            _logger.LogError(appDirectoryResult.Error, "Could not get app directory path to write logs to.");
             return;
         }
 
@@ -72,7 +72,7 @@ public class LogsViewModel : BaseViewModel
         ProcessResult<bool> writeResult = _fileSystemAccess.WriteFile(_errorLogs, fileName, logsPath);
         if (writeResult.IsSuccessful)
         {
-            LoggerExtensions.LogInformation(_logger, "Wrote log file '{0}' to '{1}'", fileName, logsPath);
+            _logger.LogInformation("Wrote log file '{0}' to '{1}'", fileName, logsPath);
 
             try
             {
@@ -83,7 +83,7 @@ public class LogsViewModel : BaseViewModel
             }
             catch (Exception ex)
             {
-                LoggerExtensions.LogError(_logger, ex, "Failed to open file.");
+                _logger.LogError(ex, "Failed to open file.");
             }
         }
     }
