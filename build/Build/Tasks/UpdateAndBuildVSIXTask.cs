@@ -198,6 +198,25 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
             doc.Root?.Add(templatesItemGroup);
         }
 
+        // --- EXTENSION ICON PNG ---
+        // Ensure extension-icon.png has IncludeInVSIX=true
+        XElement? pngIconElement = doc.Descendants(ns + "Content")
+            .FirstOrDefault(e => (string?)e.Attribute("Include") == "extension-icon.png");
+
+        if (pngIconElement != null)
+        {
+            // Check if IncludeInVSIX element exists
+            XElement? includeInVsix = pngIconElement.Element(ns + "IncludeInVSIX");
+            if (includeInVsix == null)
+            {
+                pngIconElement.Add(new XElement(ns + "IncludeInVSIX", "true"));
+            }
+            else
+            {
+                includeInVsix.Value = "true";
+            }
+        }
+
         // --- TEMPLATE PACKAGES ---
         // Find or create the ItemGroup with Label="TemplatePackages".
         XElement? packagesItemGroup = doc.Descendants(ns + "ItemGroup")
@@ -215,12 +234,13 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
             .ToList()
             .ForEach(e => e.Remove());
 
-        // Add new <None> elements.
+        // Add new <None> elements with IncludeInVSIX=true
         foreach (string nupkgFile in nupkgFileNames)
         {
             XElement noneElement = new(ns + "None",
                 new XAttribute("Include", $"{TEMPLATE_PACKAGES_FOLDER_NAME}\\{nupkgFile}"),
-                new XElement(ns + "CopyToOutputDirectory", "Always")
+                new XElement(ns + "CopyToOutputDirectory", "Always"),
+                new XElement(ns + "IncludeInVSIX", "true")
             );
             packagesItemGroup.Add(noneElement);
         }

@@ -69,30 +69,39 @@
   <ItemGroup Label="TemplatePackages">
     <None Include="TemplatePackages\AaronSalisbury.DotNetFrameworkToolkit.0.2.9.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\Krypton.Components.Suite.4.5.9.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\LinqBridge.1.3.0.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\MetroModernUI.1.4.0.0.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\ModernUI.WPF.1.0.9.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\PatternsAndPractices.Cryptography.2.0.1.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\PatternsAndPractices.Logging.2.0.0.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\PatternsAndPractices.Unity.1.2.0.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
     <None Include="TemplatePackages\System.Data.SqlServerCe_unofficial.4.0.8482.1.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </None>
   </ItemGroup>
   <ItemGroup>
