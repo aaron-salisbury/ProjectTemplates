@@ -260,8 +260,6 @@ public class Wizard : IWizard
             return;
         }
 
-        int stepsUp = 1;
-
         // Update XML.
         string csprojXml = File.ReadAllText(csproj);
         XmlDocument doc = new();
@@ -288,28 +286,13 @@ public class Wizard : IWizard
             {
                 if (hintPath.InnerText.Contains(@"packages\"))
                 {
-                    string cleaned = hintPath.InnerText;
-                    while (cleaned.StartsWith(@"..\", StringComparison.Ordinal) || cleaned.StartsWith("../", StringComparison.Ordinal))
-                    {
-                        cleaned = cleaned.Substring(3);
-                    }
+                    // Simply prepend one more ".." to the existing path
+                    string newHintPath = @".." + Path.DirectorySeparatorChar + hintPath.InnerText;
 
-                    string newHintPath;
-                    if (stepsUp == 0)
-                    {
-                        newHintPath = cleaned;
-                    }
-                    else
-                    {
-                        string prefix = string.Concat(Enumerable.Repeat(@".." + Path.DirectorySeparatorChar, stepsUp));
-                        newHintPath = prefix + cleaned;
-                    }
+                    hintPath.InnerText = newHintPath;
+                    changed = true;
 
-                    if (hintPath.InnerText != newHintPath)
-                    {
-                        hintPath.InnerText = newHintPath;
-                        changed = true;
-                    }
+                    Log($"Updated hint path: {newHintPath}");
                 }
             }
         }
