@@ -1,3 +1,7 @@
+<p align="left">
+  <img src="https://raw.githubusercontent.com/aaron-salisbury/ProjectTemplates/refs/heads/master/content/logo.png" width="175" alt=".Net Framework Toolkit Logo">
+</p>
+
 Project Templates
 ==========================
 
