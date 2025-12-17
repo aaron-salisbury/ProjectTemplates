@@ -11,7 +11,7 @@
 			 xmlns:c="clr-namespace:AvaloniaApp.Base.Controls"
 			 xmlns:i="using:Material.Icons.Avalonia">
 
-	<SplitView IsPaneOpen="{Binding IsPaneOpen}" OpenPaneLength="300" DisplayMode="CompactInline" CompactPaneLength="45" PaneBackground="{DynamicResource SystemListLowColor}">
+	<SplitView IsPaneOpen="{Binding IsPaneOpen}" OpenPaneLength="200" DisplayMode="CompactInline" CompactPaneLength="45" PaneBackground="{DynamicResource SystemListLowColor}">
 
 		<SplitView.Pane>
 			<Grid RowDefinitions="Auto,*,Auto">
