@@ -78,8 +78,8 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
     {
         // Copy default template icon to staging directory.
         string contentDir = Path.Combine(context.AbsolutePathToRepo, "content");
-        string iconSourcePath = Path.Combine(contentDir, "extension-icon.ico");
 
+        string iconSourcePath = Path.Combine(contentDir, "extension-icon.ico");
         if (File.Exists(iconSourcePath))
         {
             string iconDestinationPath = Path.Combine(projectDir, Path.GetFileName(iconSourcePath));
@@ -88,6 +88,17 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         else
         {
             context.Log.Error($"VS extension icon file not found at {iconSourcePath}");
+        }
+
+        string imgSourcePath = Path.Combine(contentDir, "extension-icon.png");
+        if (File.Exists(imgSourcePath))
+        {
+            string imgDestinationPath = Path.Combine(projectDir, Path.GetFileName(imgSourcePath));
+            File.Copy(imgSourcePath, imgDestinationPath, overwrite: true);
+        }
+        else
+        {
+            context.Log.Error($"VS extension image file not found at {imgSourcePath}");
         }
     }
 

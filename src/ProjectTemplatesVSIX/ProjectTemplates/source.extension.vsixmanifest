@@ -7,7 +7,7 @@
 The templates help when you want to quickly get started with a utility application that feels idiomatic.</Description>
     <MoreInfo>https://github.com/aaron-salisbury/ProjectTemplates</MoreInfo>
     <License>License.txt</License>
-    <Icon>vs-extension-icon.png</Icon>
+    <Icon>extension-icon.png</Icon>
     <Tags>legacy windows templates</Tags>
   </Metadata>
   <Installation>
