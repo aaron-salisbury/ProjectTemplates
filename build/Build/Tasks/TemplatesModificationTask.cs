@@ -54,7 +54,7 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
 
             string stagedCsprojPath = Path.Combine(stagingDir, Path.GetFileName(templateProject.CsprojFilePathAbsolute));
             ApplySafeExternalProjectReferences(stagedCsprojPath, templateProject.ProjectNamesReferenced, context);
-            StepDownNuGetPackageHintPaths(stagedCsprojPath, templateProject.IsSdkStyleProject);
+            CorrectNuGetPackageHintPaths(stagedCsprojPath, templateProject.IsSdkStyleProject);
             SetProductElementToSafeProjectName(stagedCsprojPath, templateProject.IsSdkStyleProject);
 
             string vsixProductId = ReadVSIXManifestId(Path.Combine(context.AbsolutePathToRepo, "src"));
@@ -189,10 +189,11 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
         }
     }
 
-    private static void StepDownNuGetPackageHintPaths(string csprojPath, bool isSdkStyle)
+    private static void CorrectNuGetPackageHintPaths(string csprojPath, bool isSdkStyle)
     {
-        // If the user creates the solution in a new folder (the recommended/default in Visual Studio) the hint paths will be one too deep.
-        // So we'll step them up one level to mirror the default. Would need a post-process wizard to customize conditional to the user selection.
+        // Normalize all package hint paths to have exactly one leading "..\".
+        // This assumes the user chooses to "Place solution and project in the same directory" (Visual Studio default).
+        // The post-processing wizard could potentially add another step up when user doesn't select this option.
 
         if (isSdkStyle)
         {
@@ -209,10 +210,17 @@ public sealed class TemplatesModificationTask : FrostingTask<BuildContext>
             {
                 string value = hintPath.Value;
 
-                // Remove leading "..\" or "../" if present
-                if (value.StartsWith(@"..\", StringComparison.Ordinal) || value.StartsWith("../", StringComparison.Ordinal))
+                // Remove all leading "..\" or "../" sequences
+                while (value.StartsWith(@"..\", StringComparison.Ordinal) || value.StartsWith("../", StringComparison.Ordinal))
                 {
-                    string newValue = value.Substring(3);
+                    value = value.Substring(3);
+                }
+
+                // Ensure exactly one "..\" prefix exists
+                string newValue = @"..\" + value;
+
+                if (hintPath.Value != newValue)
+                {
                     hintPath.Value = newValue;
                     changed = true;
                 }

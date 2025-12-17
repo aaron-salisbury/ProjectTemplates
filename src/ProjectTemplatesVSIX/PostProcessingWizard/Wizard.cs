@@ -15,6 +15,7 @@ public class Wizard : IWizard
 {
     private static readonly object _logLock = new();
     private static string _rootDirectory = null;
+    private static bool _isSolutionAndProjectInSameDirectory = true;
 
     private readonly bool _isDebug = true;
     private readonly string _extensionDirectory;
@@ -42,12 +43,24 @@ public class Wizard : IWizard
         }
         Log($"CustomParams:{Environment.NewLine}{customParamsBuilder}");
 
-        // Determine the root directory.
+        // Determine the root directory and detect if solution/project are in same directory.
         if (string.IsNullOrEmpty(_rootDirectory))
         {
             if (runKind == WizardRunKind.AsMultiProject && replacementsDictionary.TryGetValue("$destinationdirectory$", out string destinationDirectory))
             {
                 _rootDirectory = destinationDirectory.Replace('\\', Path.DirectorySeparatorChar);
+
+                // Detect if "Place solution and project in the same directory" was NOT selected
+                if (replacementsDictionary.TryGetValue("$solutiondirectory$", out string solutionDirectory))
+                {
+                    string normalizedSolutionDir = solutionDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
+                    string normalizedDestinationDir = destinationDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
+
+                    // If destination is not the same as solution directory, they're in separate folders
+                    _isSolutionAndProjectInSameDirectory = string.Equals(normalizedSolutionDir, normalizedDestinationDir, StringComparison.OrdinalIgnoreCase);
+
+                    Log($"Solution and project in same directory: {_isSolutionAndProjectInSameDirectory}");
+                }
             }
             else if (replacementsDictionary.TryGetValue("$solutiondirectory$", out string solutionDirectory))
             {
@@ -212,6 +225,12 @@ public class Wizard : IWizard
 
     private void UpdatePackageHintPaths(Project project)
     {
+        if (_isSolutionAndProjectInSameDirectory)
+        {
+            // The build defaults package hint paths with one step up. This is correct when solution and project folder are in the same directory.
+            return;
+        }
+
         if (project == null)
         {
             return;
@@ -232,29 +251,7 @@ public class Wizard : IWizard
             return;
         }
 
-        // Find the directory containing the .sln file.
-        string projectDir = Path.GetDirectoryName(csproj);
-        string currentDir = projectDir;
-        int stepsUp = 0;
-
-        while (!string.IsNullOrEmpty(currentDir) && currentDir.StartsWith(_rootDirectory, StringComparison.OrdinalIgnoreCase))
-        {
-            if (Directory.EnumerateFiles(currentDir, "*.sln", SearchOption.TopDirectoryOnly).Any())
-            {
-                break;
-            }
-
-            DirectoryInfo parent = Directory.GetParent(currentDir);
-            if (parent == null || parent.FullName == currentDir)
-            {
-                break;
-            }
-
-            currentDir = parent.FullName;
-            stepsUp++;
-        }
-
-        Log($"Number of Steps Found: {stepsUp}");
+        int stepsUp = 1;
 
         // Update XML.
         string csprojXml = File.ReadAllText(csproj);

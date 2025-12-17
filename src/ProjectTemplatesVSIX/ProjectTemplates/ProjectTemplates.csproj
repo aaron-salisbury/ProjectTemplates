@@ -67,7 +67,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup Label="TemplatePackages">
-    <None Include="TemplatePackages\AaronSalisbury.DotNetFrameworkToolkit.0.2.8.nupkg">
+    <None Include="TemplatePackages\AaronSalisbury.DotNetFrameworkToolkit.0.2.9.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TemplatePackages\Krypton.Components.Suite.4.5.9.nupkg">
