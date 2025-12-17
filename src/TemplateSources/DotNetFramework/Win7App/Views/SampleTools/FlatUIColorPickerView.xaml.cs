@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,7 +13,7 @@ public partial class FlatUIColorPickerView : UserControl
     public FlatUIColorPickerView()
     {
         InitializeComponent();
-        this.SetDataContext((System.Windows.Application.Current as App)?.Services);
+        this.SetDataContext(Ioc.Default);
         BuildDynamicColorGrid();
     }
 

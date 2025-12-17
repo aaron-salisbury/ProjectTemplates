@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using System.Windows;
 using System.Windows.Controls;
 using Win7App.Base.Extensions;
 
@@ -9,7 +10,7 @@ public partial class LineSorterView : UserControl
     public LineSorterView()
     {
         InitializeComponent();
-        this.SetDataContext((System.Windows.Application.Current as App)?.Services);
+        this.SetDataContext(Ioc.Default);
     }
 
     private async void SelectAll_Click(object sender, RoutedEventArgs e)

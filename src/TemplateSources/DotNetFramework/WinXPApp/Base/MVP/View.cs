@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using System;
 using System.Windows.Forms;
 
 namespace WinXPApp.Base.MVP;
@@ -11,7 +12,7 @@ public partial class View : UserControl
     {
         string presenterName = this.GetType().FullName!.Replace("View", "Presenter");
         Type presenterType = Type.GetType(presenterName);
-        _presenter = Program.Services.GetService(presenterType) as Presenter;
+        _presenter = Ioc.Default.GetService(presenterType) as Presenter;
 
         this.Load += View_Load;
     }

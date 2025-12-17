@@ -58,7 +58,7 @@
       <HintPath>..\..\packages\Krypton.Components.Suite.4.5.9\lib\net20\ComponentFactory.Krypton.Workspace.dll</HintPath>
     </Reference>
     <Reference Include="DotNetFrameworkToolkit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.2.6\lib\net20\obj\Release\DotNetFrameworkToolkit.dll</HintPath>
+      <HintPath>..\..\packages\AaronSalisbury.DotNetFrameworkToolkit.0.2.7\lib\net20\obj\Release\DotNetFrameworkToolkit.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>

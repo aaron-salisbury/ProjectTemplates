@@ -9,14 +9,16 @@ namespace WinXPApp;
 
 static class Program
 {
-    internal static IServiceProvider Services = ConfigureServices();
-
     /// <summary>
     /// The main entry point for the application.
     /// </summary>
     [STAThread]
     static void Main()
     {
+        IServiceCollection services = BuildServiceCollection();
+        IServiceProvider provider = services.BuildServiceProvider();
+        Ioc.Default.ConfigureServices(provider);
+
         Application.ApplicationExit += Application_ApplicationExit;
 
         Application.EnableVisualStyles();
@@ -24,7 +26,7 @@ static class Program
         Application.Run(new ShellForm());
     }
 
-    private static IServiceProvider ConfigureServices()
+    private static IServiceCollection BuildServiceCollection()
     {
         IServiceCollection services = new ServiceCollectionPNP();
 
@@ -46,14 +48,14 @@ static class Program
         // Business domain services.
         Builder.BuildBusinessServices(services);
 
-        return services.BuildServiceProvider();
+        return services;
     }
 
     private static void Application_ApplicationExit(object sender, EventArgs e)
     {
-        if (Services != null)
+        if (Ioc.Default != null)
         {
-            if (Services.GetService(typeof(ILogger)) is IDisposable disposableLogger)
+            if (Ioc.Default.GetService(typeof(ILogger)) is IDisposable disposableLogger)
             {
                 disposableLogger.Dispose();
             }

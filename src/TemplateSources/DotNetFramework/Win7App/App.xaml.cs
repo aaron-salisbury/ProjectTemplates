@@ -11,11 +11,14 @@ namespace Win7App
 {
     public partial class App : Application
     {
-        public IServiceProvider Services { get; set; } = ConfigureServices();
+        static App()
+        {
+            IServiceCollection services = BuildServiceCollection();
+            IServiceProvider provider = services.BuildServiceProvider();
+            Ioc.Default.ConfigureServices(provider);
+        }
 
-        static App() { }
-
-        private static IServiceProvider ConfigureServices()
+        private static IServiceCollection BuildServiceCollection()
         {
             IServiceCollection services = new ServiceCollectionPNP();
 
@@ -40,20 +43,20 @@ namespace Win7App
             // Business domain services.
             Builder.BuildBusinessServices(services);
 
-            return services.BuildServiceProvider();
+            return services;
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            LogsViewModel logsVM = ServiceProviderExtensions.GetRequiredService<LogsViewModel>(Services);
+            LogsViewModel logsVM = ServiceProviderExtensions.GetRequiredService<LogsViewModel>(Ioc.Default);
             logsVM.WireErrors();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            if (Services != null)
+            if (Ioc.Default != null)
             {
-                if (Services.GetService(typeof(ILogger)) is IDisposable disposableLogger)
+                if (Ioc.Default.GetService(typeof(ILogger)) is IDisposable disposableLogger)
                 {
                     disposableLogger.Dispose();
                 }
