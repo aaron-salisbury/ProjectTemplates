@@ -9,6 +9,6 @@ public partial class LogsRibbonControl : BaseRibbonControl
     public LogsRibbonControl()
     {
         InitializeComponent();
-        this.DataContext = Ioc.Default.GetService(typeof(LogsViewModel));
+        this.DataContext = Ioc.Default.GetService<LogsViewModel>();
     }
 }

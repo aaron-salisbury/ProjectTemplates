@@ -55,7 +55,7 @@ static class Program
     {
         if (Ioc.Default != null)
         {
-            if (Ioc.Default.GetService(typeof(ILogger)) is IDisposable disposableLogger)
+            if (Ioc.Default.GetService<ILogger>() is IDisposable disposableLogger)
             {
                 disposableLogger.Dispose();
             }

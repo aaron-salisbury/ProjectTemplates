@@ -48,7 +48,7 @@ namespace Win7App
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            LogsViewModel logsVM = ServiceProviderExtensions.GetRequiredService<LogsViewModel>(Ioc.Default);
+            LogsViewModel logsVM = Ioc.Default.GetRequiredService<LogsViewModel>();
             logsVM.WireErrors();
         }
 
@@ -56,7 +56,7 @@ namespace Win7App
         {
             if (Ioc.Default != null)
             {
-                if (Ioc.Default.GetService(typeof(ILogger)) is IDisposable disposableLogger)
+                if (Ioc.Default.GetService<ILogger>() is IDisposable disposableLogger)
                 {
                     disposableLogger.Dispose();
                 }

@@ -24,7 +24,7 @@ static class Program
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(ServiceProviderExtensions.GetRequiredService<ShellForm>(Ioc.Default));
+        Application.Run(Ioc.Default.GetRequiredService<ShellForm>());
     }
 
     private static IServiceCollection BuildServiceCollection()
@@ -58,7 +58,7 @@ static class Program
     {
         if (Ioc.Default != null)
         {
-            if (Ioc.Default.GetService(typeof(ILogger)) is IDisposable disposableLogger)
+            if (Ioc.Default.GetService<ILogger>() is IDisposable disposableLogger)
             {
                 disposableLogger.Dispose();
             }
