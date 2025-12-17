@@ -100,9 +100,14 @@ public class Wizard : IWizard
             string normalizedSolutionDir = solutionDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
             string normalizedDestinationDir = destinationDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
 
-            // If destination is not the same as solution directory, they're in separate folders
-            isSolutionAndProjectInSameDirectory = string.Equals(normalizedSolutionDir, normalizedDestinationDir, StringComparison.OrdinalIgnoreCase);
+            // Get the parent directory of the destination (which is where the project folder will be created).
+            string destinationParentDir = Path.GetDirectoryName(normalizedDestinationDir)?.TrimEnd(Path.DirectorySeparatorChar) ?? string.Empty;
 
+            // If the parent of destination is the same as solution directory, they're in the same folder.
+            isSolutionAndProjectInSameDirectory = string.Equals(normalizedSolutionDir, destinationParentDir, StringComparison.OrdinalIgnoreCase);
+
+            Log($"Solution directory: {normalizedSolutionDir}");
+            Log($"Destination parent directory: {destinationParentDir}");
             Log($"Solution and project in same directory: {isSolutionAndProjectInSameDirectory}");
         }
 
