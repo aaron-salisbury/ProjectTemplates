@@ -46,7 +46,7 @@ public class Wizard : IWizard
         // Determine the root directory and detect if solution/project are in same directory.
         if (string.IsNullOrEmpty(_rootDirectory))
         {
-            if (runKind == WizardRunKind.AsMultiProject && replacementsDictionary.TryGetValue("$destinationdirectory$", out string destinationDirectory))
+            if (replacementsDictionary.TryGetValue("$destinationdirectory$", out string destinationDirectory))
             {
                 _rootDirectory = destinationDirectory.Replace('\\', Path.DirectorySeparatorChar);
 
