@@ -43,30 +43,20 @@ public class Wizard : IWizard
         }
         Log($"CustomParams:{Environment.NewLine}{customParamsBuilder}");
 
-        // Determine the root directory and detect if solution/project are in same directory.
+        // Determine the root directory.
         if (string.IsNullOrEmpty(_rootDirectory))
         {
             if (replacementsDictionary.TryGetValue("$destinationdirectory$", out string destinationDirectory))
             {
                 _rootDirectory = destinationDirectory.Replace('\\', Path.DirectorySeparatorChar);
-
-                // Detect if "Place solution and project in the same directory" was NOT selected
-                if (replacementsDictionary.TryGetValue("$solutiondirectory$", out string solutionDirectory))
-                {
-                    string normalizedSolutionDir = solutionDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
-                    string normalizedDestinationDir = destinationDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
-
-                    // If destination is not the same as solution directory, they're in separate folders
-                    _isSolutionAndProjectInSameDirectory = string.Equals(normalizedSolutionDir, normalizedDestinationDir, StringComparison.OrdinalIgnoreCase);
-
-                    Log($"Solution and project in same directory: {_isSolutionAndProjectInSameDirectory}");
-                }
             }
             else if (replacementsDictionary.TryGetValue("$solutiondirectory$", out string solutionDirectory))
             {
                 _rootDirectory = solutionDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
             }
         }
+
+        _isSolutionAndProjectInSameDirectory = SolutionAndProjectInSameDirectory(replacementsDictionary);
 
         try
         {
@@ -99,6 +89,25 @@ public class Wizard : IWizard
     public void BeforeOpeningFile(ProjectItem projectItem) { }
 
     public void RunFinished() { }
+
+    private bool SolutionAndProjectInSameDirectory(Dictionary<string, string> replacementsDictionary)
+    {
+        bool isSolutionAndProjectInSameDirectory = true; // Defualt to true since that is the Visual Studio default.
+
+        // Detect if solution/project are in same directory.
+        if (replacementsDictionary.TryGetValue("$destinationdirectory$", out string destinationDirectory) && replacementsDictionary.TryGetValue("$solutiondirectory$", out string solutionDirectory))
+        {
+            string normalizedSolutionDir = solutionDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
+            string normalizedDestinationDir = destinationDirectory.Replace('\\', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
+
+            // If destination is not the same as solution directory, they're in separate folders
+            isSolutionAndProjectInSameDirectory = string.Equals(normalizedSolutionDir, normalizedDestinationDir, StringComparison.OrdinalIgnoreCase);
+
+            Log($"Solution and project in same directory: {isSolutionAndProjectInSameDirectory}");
+        }
+
+        return isSolutionAndProjectInSameDirectory;
+    }
 
     private void SetPrettyProjectNameParam(Dictionary<string, string> replacementsDictionary)
     {
