@@ -328,6 +328,21 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
         // Use Visual Studio's MSBuild, not the .NET SDK MSBuild
         string msbuildPath = Path.Combine(vsInstallDir.FullPath, "MSBuild", "Current", "Bin", "MSBuild.exe");
 
+        // Clean first to remove cached files
+        context.MSBuild(vsixCsprojPath, new MSBuildSettings
+        {
+            Targets = { "Clean" },
+            Configuration = context.Config.ToString(),
+            Verbosity = Verbosity.Minimal,
+            ToolPath = new Cake.Core.IO.FilePath(msbuildPath),
+            Properties =
+            {
+                { "VSToolsPath", new[] { vsToolsPath } },
+                { "VisualStudioVersion", new[] { "18.0" } }
+            }
+        });
+
+        // Then restore and build
         context.MSBuild(vsixCsprojPath, new MSBuildSettings
         {
             Targets = { "Restore", "Build" },
