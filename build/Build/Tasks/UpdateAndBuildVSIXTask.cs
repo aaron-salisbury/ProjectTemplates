@@ -234,15 +234,20 @@ public sealed class UpdateAndBuildVSIXTask : FrostingTask<BuildContext>
             .ToList()
             .ForEach(e => e.Remove());
 
-        // Add new <None> elements with IncludeInVSIX=true
+        packagesItemGroup.Elements(ns + "Content")
+            .Where(e => ((string?)e.Attribute("Include"))?.StartsWith($"{TEMPLATE_PACKAGES_FOLDER_NAME}\\") == true)
+            .ToList()
+            .ForEach(e => e.Remove());
+
+        // Add new <Content> elements (NOT <None>) with IncludeInVSIX=true
         foreach (string nupkgFile in nupkgFileNames)
         {
-            XElement noneElement = new(ns + "None",
+            XElement contentElement = new(ns + "Content",
                 new XAttribute("Include", $"{TEMPLATE_PACKAGES_FOLDER_NAME}\\{nupkgFile}"),
                 new XElement(ns + "CopyToOutputDirectory", "Always"),
                 new XElement(ns + "IncludeInVSIX", "true")
             );
-            packagesItemGroup.Add(noneElement);
+            packagesItemGroup.Add(contentElement);
         }
 
         if (packagesItemGroupIsNew)
