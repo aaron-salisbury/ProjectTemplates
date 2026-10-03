@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using static DotNetFramework.Business.Modules.Sample.DomainServices.LineSorter;
 
-namespace DotNetFramework.Business.Modules.Sample.ApplicationServices
+namespace DotNetFramework.Business.Modules.Sample.ApplicationServices;
+
+public interface ISampleToolsService
 {
-    public interface ISampleToolsService
-    {
-        IEnumerable<FlatColorDto> GetFlatColors();
+    IEnumerable<FlatColorDto> GetFlatColors();
 
-        string InitializeLineSorting(SortTypes _selectedSortType, string textToSort);
+    string InitializeLineSorting(SortTypes _selectedSortType, string textToSort);
 
-        string InitializeGUIDGeneration(bool shouldCapitalize = true);
-    }
+    string InitializeGUIDGeneration(bool shouldCapitalize = true);
 }

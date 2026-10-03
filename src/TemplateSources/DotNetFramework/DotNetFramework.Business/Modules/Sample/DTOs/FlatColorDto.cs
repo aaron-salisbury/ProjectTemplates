@@ -1,30 +1,29 @@
 ﻿using DotNetFramework.Data.Entities;
 
-namespace DotNetFramework.Business.Modules.Sample.DTOs
+namespace DotNetFramework.Business.Modules.Sample.DTOs;
+
+public class FlatColorDto
 {
-    public class FlatColorDto
+    private string _name;
+    public string Name
     {
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        get { return _name; }
+        set { _name = value; }
+    }
 
-        private string _hex;
-        public string Hex
-        {
-            get { return _hex; }
-            set { _hex = value; }
-        }
+    private string _hex;
+    public string Hex
+    {
+        get { return _hex; }
+        set { _hex = value; }
+    }
 
-        internal static FlatColorDto MapToDto(FlatColor entity)
+    internal static FlatColorDto MapToDto(FlatColor entity)
+    {
+        return new FlatColorDto()
         {
-            return new FlatColorDto()
-            {
-                Name = entity.Name,
-                Hex = entity.Hex
-            };
-        }
+            Name = entity.Name,
+            Hex = entity.Hex
+        };
     }
 }

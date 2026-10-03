@@ -32,10 +32,7 @@ public class Navigator
             throw new ApplicationException($"{nameof(Window)} property not set on {nameof(Navigator)}. It is required for views (Controls) to be added to.");
         }
 
-        if (_current != null)
-        {
-            _current.Dismiss();
-        }
+        _current?.Dismiss();
 
         _current = nextPresenter;
         _current.Display(FindView(nextPresenter), Window);

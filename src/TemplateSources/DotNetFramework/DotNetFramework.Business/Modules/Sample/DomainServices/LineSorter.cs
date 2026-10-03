@@ -3,57 +3,56 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DotNetFramework.Business.Modules.Sample.DomainServices
+namespace DotNetFramework.Business.Modules.Sample.DomainServices;
+
+public class LineSorter
 {
-    public class LineSorter
+    private static readonly string[] SEPARATOR = ["\r\n", "\r", "\n"];
+
+    public enum SortTypes
     {
-        private static readonly string[] SEPARATOR = ["\r\n", "\r", "\n"];
+        Alphabetical,
+        ReverseAlphabetical
+    }
 
-        public enum SortTypes
+    private readonly ILogger _logger;
+
+    public LineSorter(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+    public string Initiate(string textToSort, SortTypes selectedSortType = SortTypes.Alphabetical)
+    {
+        string sortedText;
+
+        try
         {
-            Alphabetical,
-            ReverseAlphabetical
-        }
-
-        private readonly ILogger _logger;
-
-        public LineSorter(ILogger logger)
-        {
-            _logger = logger;
-        }
-
-        public string Initiate(string textToSort, SortTypes selectedSortType = SortTypes.Alphabetical)
-        {
-            string sortedText;
-
-            try
+            if (!string.IsNullOrEmpty(textToSort))
             {
-                if (!string.IsNullOrEmpty(textToSort))
+                List<string> lines = [.. textToSort.Split(SEPARATOR, StringSplitOptions.None)];
+
+                lines.Sort();
+
+                if (selectedSortType == SortTypes.ReverseAlphabetical)
                 {
-                    List<string> lines = [.. textToSort.Split(SEPARATOR, StringSplitOptions.None)];
-
-                    lines.Sort();
-
-                    if (selectedSortType == SortTypes.ReverseAlphabetical)
-                    {
-                        lines.Reverse();
-                    }
-
-                    sortedText = new StringBuilder(string.Join("\r\n", [.. lines])).ToString();
+                    lines.Reverse();
                 }
-                else
-                {
-                    _logger.LogWarning("Attempted to sort empty text.");
-                    sortedText = string.Empty;
-                }
+
+                sortedText = new StringBuilder(string.Join("\r\n", [.. lines])).ToString();
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, "An error occurred while sorting the text.");
-                sortedText = null;
+                _logger.LogWarning("Attempted to sort empty text.");
+                sortedText = string.Empty;
             }
-
-            return sortedText;
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while sorting the text.");
+            sortedText = null;
+        }
+
+        return sortedText;
     }
 }

@@ -1,28 +1,27 @@
 ﻿using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 
-namespace DotNetFramework.Business.Modules.Sample.DomainServices
+namespace DotNetFramework.Business.Modules.Sample.DomainServices;
+
+public class UUIDGenerator
 {
-    public class UUIDGenerator
+    private readonly ILogger _logger;
+
+    public UUIDGenerator(ILogger logger)
     {
-        private readonly ILogger _logger;
+        _logger = logger;
+    }
 
-        public UUIDGenerator(ILogger logger)
-        {
-            _logger = logger;
-        }
+    public string Initiate(bool shouldCapitalize = true)
+    {
+        Guid newGuid = Guid.NewGuid();
 
-        public string Initiate(bool shouldCapitalize = true)
-        {
-            Guid newGuid = Guid.NewGuid();
+        string uUID = shouldCapitalize
+            ? newGuid.ToString().ToUpper()
+            : newGuid.ToString();
 
-            string uUID = shouldCapitalize
-                ? newGuid.ToString().ToUpper()
-                : newGuid.ToString();
+        _logger.LogInformation("Generated new UUID: {0}", uUID);
 
-            _logger.LogInformation("Generated new UUID: {0}", uUID);
-
-            return uUID;
-        }
+        return uUID;
     }
 }

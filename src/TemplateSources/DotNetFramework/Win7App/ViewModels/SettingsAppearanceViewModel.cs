@@ -105,7 +105,7 @@ public class SettingsAppearanceViewModel : NotifyPropertyChanged
 
     public string[] Palettes
     {
-        get { return new string[] { PALETTE_METRO, PALETTE_WP }; }
+        get { return [PALETTE_METRO, PALETTE_WP]; }
     }
 
     public Color[] AccentColors

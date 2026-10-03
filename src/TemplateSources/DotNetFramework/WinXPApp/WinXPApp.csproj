@@ -121,6 +121,7 @@
     <Compile Include="Base\MVP\View.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="DependencyInjection.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -226,6 +227,10 @@
     <ProjectReference Include="..\DotNetFramework.Business\DotNetFramework.Business.csproj">
       <Project>{6a320f96-9bd5-4736-9170-4298add3a469}</Project>
       <Name>DotNetFramework.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetFramework.Data\DotNetFramework.Data.csproj">
+      <Project>{1c04e92d-bea9-4dc4-b877-429a81d9b9a6}</Project>
+      <Name>DotNetFramework.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

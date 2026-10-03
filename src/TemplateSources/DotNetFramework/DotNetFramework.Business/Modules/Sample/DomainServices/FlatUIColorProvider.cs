@@ -3,27 +3,26 @@ using DotNetFramework.Data;
 using DotNetFramework.Data.Entities;
 using System.Collections.Generic;
 
-namespace DotNetFramework.Business.Modules.Sample.DomainServices
+namespace DotNetFramework.Business.Modules.Sample.DomainServices;
+
+public class FlatUIColorProvider
 {
-    public class FlatUIColorProvider
+    private readonly IEmbeddedDataAccess _embeddedDataAccess;
+
+    public FlatUIColorProvider(IEmbeddedDataAccess embeddedDataAccess)
     {
-        private readonly IEmbeddedDataAccess _embeddedDataAccess;
+        _embeddedDataAccess = embeddedDataAccess;
+    }
 
-        public FlatUIColorProvider(IEmbeddedDataAccess embeddedDataAccess)
+    public IEnumerable<FlatColorDto> GetFlatColors()
+    {
+        List<FlatColorDto> flatColors = [];
+
+        foreach (FlatColor colorEntity in _embeddedDataAccess.ReadFlatColors())
         {
-            _embeddedDataAccess = embeddedDataAccess;
+            flatColors.Add(FlatColorDto.MapToDto(colorEntity));
         }
 
-        public IEnumerable<FlatColorDto> GetFlatColors()
-        {
-            List<FlatColorDto> flatColors = [];
-
-            foreach (FlatColor colorEntity in _embeddedDataAccess.ReadFlatColors())
-            {
-                flatColors.Add(FlatColorDto.MapToDto(colorEntity));
-            }
-
-            return flatColors;
-        }
+        return flatColors;
     }
 }

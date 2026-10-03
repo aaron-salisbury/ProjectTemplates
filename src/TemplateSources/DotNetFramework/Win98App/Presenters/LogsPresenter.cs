@@ -58,7 +58,7 @@ internal class LogsPresenter : Presenter
     {
         if (_view != null)
         {
-            _errorLogs = new List<string>(_logSource.Logs);
+            _errorLogs = [.. _logSource.Logs];
 
             _view.UpdateLogs(_errorLogs);
         }

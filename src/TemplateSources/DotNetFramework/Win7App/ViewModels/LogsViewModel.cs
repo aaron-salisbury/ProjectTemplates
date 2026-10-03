@@ -46,7 +46,7 @@ public class LogsViewModel : BaseViewModel
         _logger = logger;
         _fileSystemAccess = fileSystemAccess;
         _dispatcher = dispatcher;
-        _errorLogs = new List<string>(_logSource.Logs);
+        _errorLogs = [.. _logSource.Logs];
 
         DownloadCommand = new RelayCommand(async () => await DownloadLogAsync(), () => !IsBusy);
     }

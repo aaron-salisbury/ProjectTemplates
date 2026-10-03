@@ -29,10 +29,7 @@ internal class UUIDGeneratorPresenter : Presenter
 
     internal override void Dismiss()
     {
-        if (_view != null)
-        {
-            _view.GenerateCommand -= View_GenerateCommand;
-        }
+        _view?.GenerateCommand -= View_GenerateCommand;
     }
 
     private void View_GenerateCommand(object sender, GenerateCommandEventArgs e)
