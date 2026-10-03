@@ -16,8 +16,4 @@
     <Folder Include="Base\Extensions\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DotNet.Data\DotNet.Data.csproj" />
-  </ItemGroup>
-
 </Project>
