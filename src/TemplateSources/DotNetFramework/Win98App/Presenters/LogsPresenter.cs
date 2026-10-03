@@ -1,6 +1,6 @@
 ﻿using DotNetFrameworkToolkit.Core;
 using DotNetFrameworkToolkit.Core.Extensions;
-using DotNetFrameworkToolkit.Modules.DataAccess.FileSystem;
+using DotNetFrameworkToolkit.Modules.FileSystem;
 using DotNetFrameworkToolkit.Modules.Logging;
 using System;
 using System.Collections.Generic;

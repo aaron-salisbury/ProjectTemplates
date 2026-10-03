@@ -1,8 +1,8 @@
 ﻿using DotNetFramework.Business.Modules.Sample.ApplicationServices;
 using DotNetFramework.Business.Modules.Sample.DomainServices;
 using DotNetFramework.Data;
-using DotNetFrameworkToolkit.Modules.DataAccess.FileSystem;
 using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using DotNetFrameworkToolkit.Modules.FileSystem;
 
 namespace DotNetFramework.Business
 {
