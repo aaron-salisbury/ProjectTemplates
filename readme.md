@@ -5,7 +5,7 @@
 Project Templates
 ==========================
 
-Visual Studio extension for mostly legacy project templates just in case I find myself in a restricted development scenario.
+Visual Studio extension for legacy project templates just in case I find myself in a restricted development scenario.
 
 The templates help me when I want to quickly get started with a utility application that feels idiomatic.
 
@@ -15,7 +15,7 @@ Info
 ----
 The extension has project templates that create a sample application that targets specific generations of Windows and/or .Net frameworks and contain example screens and processes.
 
-Each legacy solution contains three projects, following a three-tier design. Data, Business, and Presentation. The app (presentation) project should be set as the startup project. For utilities that I know will always remain very small, I've found this design to suffice. If your app could be more than that however, it may be worth it to break the architecture down further into say services, domains, models, infrastructure, etc. Whatever your design pattern calls for.
+Each legacy solution follows a modified three-tier design. Data, Business, and Presentation. The app (presentation) project should be set as the startup project. For utilities that I know will always remain very small, I've found this design to suffice.
 
 The sample applications used to generate those project templates are also included in this repository.
 
